@@ -1,0 +1,24 @@
+#服务端配置
+system:
+  RunMode: debug
+  HttpPort: 9000
+  UseRedis: true  # 使用redis
+
+# mysql 配置
+mysql:
+  path: ""
+  port: ""
+  config: ""
+  db-name: ""
+  username: ""
+  password: ""
+  max-idle-conns: 10
+  max-open-conns: 100
+  log-mode: ""
+  log-zap: false
+
+# redis 配置
+redis:
+  db: 0
+  addr: 127.0.0.1:6379
+  password: ""
