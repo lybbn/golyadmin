@@ -17,5 +17,5 @@ type ExampleApi struct{}
 // @Success   2000   {object}  response.Response{data=exampleRes.ExaCustomerResponse,msg=string}
 // @Router    /example/example [get]
 func (e *ExampleApi) GetExaExample(c *gin.Context) {
-	response.DetailResponse("", "获取成功", c)
+	response.DetailResponse(nil, "获取成功", c)
 }
