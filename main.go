@@ -3,10 +3,11 @@ package main
 import (
 	"fmt"
 	"time"
-	"go.uber.org/zap"
+
 	"gitee.com/lybbn/go-vue-lyadmin/global"
 	"gitee.com/lybbn/go-vue-lyadmin/initialize"
 	"gitee.com/lybbn/go-vue-lyadmin/utils/core"
+	"go.uber.org/zap"
 )
 
 //go:generate go env -w GO111MODULE=on
@@ -15,19 +16,18 @@ import (
 //go:generate go mod download
 
 func main() {
-	// 初始化Viper
-	global.GVLA_VP = core.Viper() 
-	// 初始化zap日志库
-	global.GVLA_LOG = core.Zap()
+	global.GVLA_VP = core.Viper() // 初始化Viper
+	global.GVLA_LOG = core.Zap()  // 初始化zap日志库
 	zap.ReplaceGlobals(global.GVLA_LOG)
-	if global.GVLA_CONFIG.System.UseRedis {
-		// 初始化redis服务
-		initialize.InitRedis()
+	if global.GVLA_CONFIG.System.UseMultipoint || global.GVLA_CONFIG.System.UseRedis {
+		initialize.InitRedis() // 初始化redis服务
 	}
-	//初始化路由
-	r := initialize.Routers()
+	global.GVLA_DB = initialize.Gorm() // gorm连接数据库
+	if global.GVLA_DB != nil {
+		global.GVLA_LOG.Info("database connect success")
+	}
+	r := initialize.Routers() //初始化路由
 	address := fmt.Sprintf(":%d", global.GVLA_CONFIG.System.HttpPort)
-	fmt.Println(global.GVLA_CONFIG.System.UseRedis)
 	//启动
 	// r.Run(address)
 	s := initialize.InitServer(address, r)

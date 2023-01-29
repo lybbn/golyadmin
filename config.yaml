@@ -1,12 +1,50 @@
 #服务端配置
 system:
-  run-mode: release # debug、release、test
+  run-mode: debug # debug、release、test
   http-port: 9000
   use-redis: true  # 使用redis
   is-cors: true #是否启用跨域(启用跨域需要配置cors)
+  db-type: mysql #数据库类型 mysql(默认)|sqlite|sqlserver|postgresql
+  use-multipoint: false  #使用多点登录（false表示使用单点登录）
 
 # mysql 配置
 mysql:
+  path: "127.0.0.1"
+  port: "3306" #mysql的连接地址及端口
+  config: "" #高级配置
+  db-name: "lyadmin_db"
+  username: "root"
+  password: "root"
+  max-idle-conns: 10 #设置空闲中的最大连接数
+  max-open-conns: 100 #设置打开到数据库的最大连接数
+  log-mode: "" #开启Gorm全局日志等级 "silent"、"error"、"warn"、"info" 不填默认info 填入silent可以关闭控制台日志
+  log-zap: false #是否写入zap
+# mssql 配置
+mssql:
+  path: ""
+  port: ""
+  config: ""
+  db-name: ""
+  username: ""
+  password: ""
+  max-idle-conns: 10
+  max-open-conns: 100
+  log-mode: ""
+  log-zap: false 
+# oracle 配置
+oracle:
+  path: ""
+  port: ""
+  config: ""
+  db-name: ""
+  username: ""
+  password: ""
+  max-idle-conns: 10
+  max-open-conns: 100
+  log-mode: ""
+  log-zap: false
+# pgsql 配置
+pgsql:
   path: ""
   port: ""
   config: ""
@@ -26,12 +64,12 @@ redis:
 
 # zap 日志配置
 zap:
-  level: info
-  format: console
-  prefix: "[gitee.com/lybbn/go-vue-lyadmin]"
-  director: logs
-  show-line: true
-  encode-level: LowercaseColorLevelEncoder
+  level: info #info模式,无错误的堆栈信息,只输出信息、debug:debug模式,有错误的堆栈详细信息、error: error模式,有错误的堆栈详细信息、其他详见zap官方文档
+  format: console #格式console、json（线上部署建议这个）
+  prefix: "[gitee.com/lybbn/go-vue-lyadmin]" #日志的前缀
+  director: logs #存放日志的文件夹
+  show-line: true #显示行号
+  encode-level: LowercaseColorLevelEncoder #LowercaseLevelEncoder:小写 、LowercaseColorLevelEncoder:小写带颜色、CapitalLevelEncoder: 大写、CapitalColorLevelEncoder: 大写带颜色
   stacktrace-key: stacktrace
   log-in-console: true
 
