@@ -31,7 +31,7 @@ mssql:
   max-open-conns: 100
   log-mode: ""
   log-zap: false 
-# oracle 配置
+# oracle 配置(需修改initialize/gorm_oracle.go的配置)
 oracle:
   path: ""
   port: ""

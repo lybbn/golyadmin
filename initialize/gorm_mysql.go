@@ -25,8 +25,9 @@ func GormMysql() *gorm.DB {
 	} else {
 		db.InstanceSet("gorm:table_options", "ENGINE="+m.Engine)
 		sqlDB, _ := db.DB()
-		sqlDB.SetMaxIdleConns(m.MaxIdleConns)
-		sqlDB.SetMaxOpenConns(m.MaxOpenConns)
+		sqlDB.SetMaxIdleConns(m.MaxIdleConns) // SetMaxIdleConns 设置空闲连接池中连接的最大数量
+		sqlDB.SetMaxOpenConns(m.MaxOpenConns) // SetMaxOpenConns 设置打开数据库连接的最大数量。
+		// sqlDB.SetConnMaxLifetime(time.Hour)   // SetConnMaxLifetime 设置了连接可复用的最大时间。
 		return db
 	}
 }
@@ -48,6 +49,7 @@ func GormMysqlByConfig(m config.Mysql) *gorm.DB {
 		sqlDB, _ := db.DB()
 		sqlDB.SetMaxIdleConns(m.MaxIdleConns)
 		sqlDB.SetMaxOpenConns(m.MaxOpenConns)
+		// sqlDB.SetConnMaxLifetime(time.Hour)   // SetConnMaxLifetime 设置了连接可复用的最大时间。
 		return db
 	}
 }
