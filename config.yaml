@@ -1,8 +1,8 @@
 #服务端配置
 system:
-  RunMode: debug
-  HttpPort: 9000
-  UseRedis: true  # 使用redis
+  run-mode: debug # debug、release、test
+  http-port: 9000
+  use-redis: true  # 使用redis
 
 # mysql 配置
 mysql:
@@ -22,3 +22,14 @@ redis:
   db: 0
   addr: 127.0.0.1:6379
   password: ""
+
+# zap 日志配置
+zap:
+  level: info
+  format: console
+  prefix: "[gitee.com/lybbn/go-vue-lyadmin]"
+  director: logs
+  show-line: true
+  encode-level: LowercaseColorLevelEncoder
+  stacktrace-key: stacktrace
+  log-in-console: true
