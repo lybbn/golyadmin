@@ -15,6 +15,13 @@ import (
 //go:generate go mod tidy
 //go:generate go mod download
 
+// @title                       Swagger Example API
+// @version                     0.0.1
+// @description                 This is a sample Server
+// @securityDefinitions.apikey  ApiKeyAuth
+// @in                          header
+// @name                        x-token
+// @BasePath                    /
 func main() {
 	global.GVLA_VP = core.Viper() // 初始化Viper
 	global.GVLA_LOG = core.Zap()  // 初始化zap日志库
@@ -36,6 +43,7 @@ func main() {
 	fmt.Printf(`
 	欢迎使用 go-vue-lyadmin
 	当前版本:v1.0.0
+	默认自动化文档地址:http://127.0.0.1%s/swagger/index.html
 	默认接口地址:http://127.0.0.1%s
 `, address)
 	global.GVLA_LOG.Error(s.ListenAndServe().Error())

@@ -5,6 +5,7 @@ type System struct {
 	HttpPort      int    `mapstructure:"http-port" json:"http-port" yaml:"http-port"`                // 端口值
 	UseRedis      bool   `mapstructure:"use-redis" json:"use-redis" yaml:"use-redis"`                // 使用redis
 	IsCors        bool   `mapstructure:"is-cors" json:"is-cors" yaml:"is-cors"`                      // 跨域
-	DbType        string `mapstructure:"db-type" json:"db-type" yaml:"db-type"`                      // 数据库类型:mysql(默认)|sqlite|sqlserver|postgresql
+	DbType        string `mapstructure:"db-type" json:"db-type" yaml:"db-type"`                      // 数据库类型:mysql(默认)|sqlite|sqlserver|postgresql|mssql
 	UseMultipoint bool   `mapstructure:"use-multipoint" json:"use-multipoint" yaml:"use-multipoint"` // 多点登录拦截
+	RouterPrefix  string `mapstructure:"router-prefix" json:"router-prefix" yaml:"router-prefix"`
 }
