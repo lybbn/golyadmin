@@ -1,16 +1,26 @@
 package response
 
 import (
-	"fmt"
 	"net/http"
 
+	"gitee.com/lybbn/go-vue-lyadmin/utils/pagination"
 	"github.com/gin-gonic/gin"
 )
 
-type Response struct {
+type StructResponse struct {
 	Code int         `json:"code"`
 	Data interface{} `json:"data"`
 	Msg  string      `json:"msg"`
+}
+
+type StructPageResponse struct {
+	Code        int         `json:"code"`
+	Msg         string      `json:"msg"`
+	CurrentPage int64       `json:"page"`  // 当前页码
+	PageSize    int64       `json:"limit"` // 每页条数
+	Total       int64       `json:"total"` // 总数据量
+	Pages       int64       `json:"pages"` // 总分页数
+	Data        interface{} `json:"data"`  // 分页数据
 }
 
 const (
@@ -21,37 +31,27 @@ const (
 )
 
 func Result(code int, data interface{}, msg string, c *gin.Context) {
-	c.JSON(http.StatusOK, Response{
+	c.JSON(http.StatusOK, StructResponse{
 		code,
 		data,
 		msg,
 	})
 }
 
-/**
- * 分页
- * query 为查询要分页的记录
- * 需要传入当前页码和每页条数
- */
-func PageResponse(current int64, limit int64, query interface{}, message string, c *gin.Context) {
+// 分页
+func PaginateResponse[T any](data interface{}, page pagination.Page[T], message string, c *gin.Context) {
 	if message == "" {
 		message = MSGSUCCESS
 	}
-	page := NewPage(current, limit)
-	var count int64 // 统计总的记录数
-	query.Count(&count)
-	if count > 0 {
-		result := query.Limit(int(page.GetSize())).Offset(int(page.GetOffset())).Find(&sysUserList)
-		// 返回 error
-		if result.Error != nil {
-			fmt.Println("数据分页查询异常：", result.Error)
-			return nil, result.Error
-		}
-	}
-
-	page.SetTotal(count)
-	page.SetRecords(sysUserList)
-	Result(SUCCESS, data, message, c)
+	var p StructPageResponse
+	p.Code = SUCCESS
+	p.Msg = message
+	p.Data = data
+	p.CurrentPage = page.CurrentPage
+	p.PageSize = page.PageSize
+	p.Total = page.Total
+	p.Pages = page.Pages
+	c.JSON(http.StatusOK, p)
 }
 
 // 详情
