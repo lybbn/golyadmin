@@ -38,13 +38,14 @@ func main() {
 	//启动
 	// r.Run(address)
 	s := initialize.InitServer(address, r)
+	newaddress := address + global.GVLA_CONFIG.System.RouterPrefix
 	time.Sleep(10 * time.Microsecond)
 	global.GVLA_LOG.Info("server run success on ", zap.String("address", address))
 	fmt.Printf(`
 	欢迎使用 go-vue-lyadmin
 	当前版本:v1.0.0
 	默认自动化文档地址:http://127.0.0.1%s/swagger/index.html
-	默认接口地址:http://127.0.0.1%s
-`, address)
+	默认接口基础地址:http://127.0.0.1%s
+`, newaddress, newaddress)
 	global.GVLA_LOG.Error(s.ListenAndServe().Error())
 }
