@@ -37,15 +37,13 @@ go build -o server main.go (windows编译命令为go build -o server.exe main.go
 
 ##### （1）可以访问外国网站
 
-````
 go get -u github.com/swaggo/swag/cmd/swag
-````
 
 ##### （2）无法访问外国网站
 
 由于国内没法安装 go.org/x 包下面的东西，推荐使用 [goproxy.cn](https://goproxy.cn) 或者 [goproxy.io](https://goproxy.io/zh/)
 
-```bash
+
 # 如果您使用的 Go 版本是 1.13 - 1.15 需要手动设置GO111MODULE=on, 开启方式如下命令, 如果你的 Go 版本 是 1.16 ~ 最新版 可以忽略以下步骤一
 # 步骤一、启用 Go Modules 功能
 go env -w GO111MODULE=on 
@@ -58,16 +56,15 @@ go generate -run "go env -w .*?"
 
 # 使用如下命令下载swag
 go get -u github.com/swaggo/swag/cmd/swag
-```
 
 #### 生成API文档
 
-```` shell
-cd server
-swag init
-````
+cd 项目根目录
 
-> 执行上面的命令后，server目录下会出现docs文件夹里的 `docs.go`, `swagger.json`, `swagger.yaml` 三个文件更新，启动go服务之后, 在浏览器输入 [http://localhost:8888/swagger/index.html](http://localhost:8888/swagger/index.html) 即可查看swagger文档
+swag init
+```
+
+> 执行上面的命令后，server目录下会出现docs文件夹里的 `docs.go`, `swagger.json`, `swagger.yaml` 三个文件更新，启动go服务之后, 在浏览器输入 [http://localhost:9000/api/v1/swagger/index.html](http://localhost:9000/api/v1/swagger/index.html) 即可查看swagger文档
 
 ## 技术选型
 
