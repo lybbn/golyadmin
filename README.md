@@ -31,19 +31,23 @@ go build -o server main.go (windows编译命令为go build -o server.exe main.go
 # 运行二进制
 ./server (windows运行命令为 server.exe)
 
-### 2.3 swagger自动化API文档
+```
 
-#### 2.3.1 安装 swagger
+### swagger自动化API文档
+
+#### 安装 swagger
 
 ##### （1）可以访问外国网站
 
+```bash
 go get -u github.com/swaggo/swag/cmd/swag
+```
 
 ##### （2）无法访问外国网站
 
 由于国内没法安装 go.org/x 包下面的东西，推荐使用 [goproxy.cn](https://goproxy.cn) 或者 [goproxy.io](https://goproxy.io/zh/)
 
-
+```bash
 # 如果您使用的 Go 版本是 1.13 - 1.15 需要手动设置GO111MODULE=on, 开启方式如下命令, 如果你的 Go 版本 是 1.16 ~ 最新版 可以忽略以下步骤一
 # 步骤一、启用 Go Modules 功能
 go env -w GO111MODULE=on 
@@ -51,16 +55,17 @@ go env -w GO111MODULE=on
 go env -w GOPROXY=https://goproxy.cn,https://goproxy.io,direct
 
 # 如果嫌弃麻烦,可以使用go generate 编译前自动执行代码, 不过这个不能使用 `Goland` 或者 `Vscode` 的 命令行终端
-cd server
+cd 项目根目录
 go generate -run "go env -w .*?"
 
 # 使用如下命令下载swag
 go get -u github.com/swaggo/swag/cmd/swag
+```
 
 #### 生成API文档
 
+```bash
 cd 项目根目录
-
 swag init
 ```
 
