@@ -12,5 +12,6 @@ func (e *ExampleRouter) InitExampleRouter(Router *gin.RouterGroup) {
 	exaExampleApi := v1.ApiGroupApp.ExampleApiGroup.ExampleApi
 	{
 		customerRouterWithoutRecord.GET("example", exaExampleApi.GetExaExample)
+		customerRouterWithoutRecord.GET("exampleList", exaExampleApi.GetExaExampleList)
 	}
 }

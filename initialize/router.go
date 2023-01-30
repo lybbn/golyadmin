@@ -16,10 +16,12 @@ func Routers() *gin.Engine {
 	exampleRouter := router.RouterGroupApp.Example
 	// 跨域
 	if global.GVLA_CONFIG.System.IsCors {
-		Router.Use(middleware.Cors()) // 直接放行全部跨域请求
+		Router.Use(middleware.Cors())        // 直接放行全部跨域请求
 		Router.Use(middleware.CorsByRules()) // 按照配置的规则放行跨域请求
 		global.GVLA_LOG.Info("use middleware cors")
 	}
+	//错误异常捕获
+	Router.Use(middleware.GinRecovery(false))
 
 	PrivateGroup := Router.Group("")
 	{

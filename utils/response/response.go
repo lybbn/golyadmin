@@ -55,7 +55,7 @@ func PaginateResponse[T any](data interface{}, page pagination.Page[T], message 
 }
 
 // 详情
-func DetailResponse(data interface{}, message string, c *gin.Context) {
+func SuccessResponse(data interface{}, message string, c *gin.Context) {
 	if message == "" {
 		message = MSGSUCCESS
 	}
@@ -63,9 +63,22 @@ func DetailResponse(data interface{}, message string, c *gin.Context) {
 }
 
 // 错误
-func ErrorResponse(data interface{}, message string, c *gin.Context) {
+func ErrorResponse(message string, c *gin.Context) {
 	if message == "" {
 		message = MSGERROR
 	}
+	var data interface{}
 	Result(ERROR, data, message, c)
+}
+
+// 错误支持自定义错误码
+func ErrorCodeResponse(code int, message string, c *gin.Context) {
+	if message == "" {
+		message = MSGERROR
+	}
+	if code == 0 {
+		code = ERROR
+	}
+	var data interface{}
+	Result(code, data, message, c)
 }

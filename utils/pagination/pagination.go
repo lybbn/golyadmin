@@ -31,10 +31,6 @@ func (page *Page[T]) PaginateQuery(query *gorm.DB, c *gin.Context) (e error) {
 	current_page, _ := strconv.ParseInt(c.Query(current_page_query_param), 10, 64)
 	page_size, _ := strconv.ParseInt(c.Query(page_size_query_param), 10, 64)
 	page.CurrentPage = current_page
-	if current_page <= 0 {
-		page.Data = []T{}
-		return
-	}
 	page.PageSize = page_size
 	var model T
 	query.Model(&model).Count(&page.Total)

@@ -18,23 +18,32 @@ type ExampleService struct {
 
 // GetExaExample
 // @Tags      ExaExample
-// @Summary   获取信息
+// @Summary   不分页获取信息
 // @Security  ApiKeyAuth
 // @accept    application/json
 // @Produce   application/json
-// @Param     data  query     example.ExaExample
-// @Success   2000   {object}  response.Response{data=exampleRes.ExaCustomerResponse,msg=string}
+// @Param     data  query
+// @Success   2000   {object}
 // @Router    /example/example [get]
 func (e *ExampleApi) GetExaExample(c *gin.Context) {
 	// 详情不带分页
-	// var result []ExampleService
-	// global.GVLA_DB.Table("lyadmin_users").Select("id", "name", "username").Scan(&result)
-	// response.DetailResponse(result, "获取成功", c)
+	var result []ExampleService
+	global.GVLA_DB.Table("lyadmin_users").Select("id", "name", "username").Scan(&result)
+	response.SuccessResponse(result, "获取成功", c)
+}
 
-	//分页
+// GetExaExampleList
+// @Tags      ExaExample
+// @Summary   分页获取信息列表
+// @Security  ApiKeyAuth
+// @accept    application/json
+// @Produce   application/json
+// @Param     data  query
+// @Success   2000   {object}
+// @Router    /example/exampleList [get]
+func (e *ExampleApi) GetExaExampleList(c *gin.Context) {
 	query := global.GVLA_DB.Table("lyadmin_users").Select("id", "name", "username")
 	p := pagination.Page[ExampleService]{}
 	p.PaginateQuery(query, c)
-	println(p.PageSize)
-	response.PaginateResponse(p.Data, p, "", c)
+	response.PaginateResponse(p.Data, p, "获取成功", c)
 }
