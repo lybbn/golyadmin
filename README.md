@@ -55,7 +55,7 @@ go env -w GO111MODULE=on
 go env -w GOPROXY=https://goproxy.cn,https://goproxy.io,direct
 
 # 如果嫌弃麻烦,可以使用go generate 编译前自动执行代码, 不过这个不能使用 `Goland` 或者 `Vscode` 的 命令行终端
-cd 项目根目录
+cd go-vue-lyadmin
 go generate -run "go env -w .*?"
 
 # 使用如下命令下载swag
@@ -65,7 +65,7 @@ go get -u github.com/swaggo/swag/cmd/swag
 #### 生成API文档
 
 ```bash
-cd 项目根目录
+cd go-vue-lyadmin
 swag init
 ```
 
