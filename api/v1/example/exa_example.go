@@ -22,7 +22,7 @@ type ExampleService struct {
 // @Security  ApiKeyAuth
 // @accept    application/json
 // @Produce   application/json
-// @Router    /api/v1/example/example [get]
+// @Router    /example/example [get]
 func (e *ExampleApi) GetExaExample(c *gin.Context) {
 	// 详情不带分页
 	var result []ExampleService
@@ -36,7 +36,7 @@ func (e *ExampleApi) GetExaExample(c *gin.Context) {
 // @Security  ApiKeyAuth
 // @accept    application/json
 // @Produce   application/json
-// @Router    /api/v1/example/exampleList [get]
+// @Router    /example/exampleList [get]
 func (e *ExampleApi) GetExaExampleList(c *gin.Context) {
 	query := global.GVLA_DB.Table("lyadmin_users").Select("id", "name", "username")
 	p := pagination.Page[ExampleService]{}
