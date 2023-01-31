@@ -49,7 +49,12 @@ type ExampleQueryParmas struct {
 // @Success 2000 {object} response.StructPageResponse{data=ExampleService}
 // @Router    /example/exampleList [get]
 func (e *ExampleApi) GetExaExampleList(c *gin.Context) {
-	//接收请求参数
+	//单独获取请求参数
+	name := c.Query("name")
+	fmt.Println("====== single By Query String ======")
+	fmt.Println(name)
+
+	//按结构体接收请求参数
 	var pageParams ExampleQueryParmas
 	err := c.ShouldBindQuery(&pageParams)
 	fmt.Println("====== Only Bind By Query String ======")
@@ -60,6 +65,7 @@ func (e *ExampleApi) GetExaExampleList(c *gin.Context) {
 		return
 	}
 
+	//分页方法
 	query := global.GVLA_DB.Table("lyadmin_users").Select("id", "name", "username")
 	p := pagination.Page[ExampleService]{}
 	p.PaginateQuery(query, c)

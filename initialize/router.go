@@ -1,6 +1,8 @@
 package initialize
 
 import (
+	"net/http"
+
 	docs "gitee.com/lybbn/go-vue-lyadmin/docs"
 	"gitee.com/lybbn/go-vue-lyadmin/global"
 	"gitee.com/lybbn/go-vue-lyadmin/router"
@@ -32,6 +34,13 @@ func Routers() *gin.Engine {
 	{
 		exampleRouter.InitExampleRouter(PrivateGroup)
 	}
+	//不存在路由
+	Router.NoRoute(func(c *gin.Context) {
+		c.JSON(http.StatusNotFound, gin.H{
+			"code": 404,
+			"msg":  "404 not found",
+		})
+	})
 
 	global.GVLA_LOG.Info("router register success")
 	return Router

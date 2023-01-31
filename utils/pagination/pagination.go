@@ -15,8 +15,7 @@ const (
 	current_page_query_param = "page"
 )
 
-// 标准分页结构体，接收最原始的DO
-// 建议在外部再建一个字段一样的结构体，用以将DO转换成DTO或VO
+// 标准分页结构体
 type Page[T any] struct {
 	CurrentPage int64 `json:"page"`  // 当前页码
 	PageSize    int64 `json:"limit"` // 每页条数
