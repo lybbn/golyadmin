@@ -1,28 +1,98 @@
+definitions:
+  example.ExampleService:
+    properties:
+      id:
+        type: string
+      name:
+        type: string
+      username:
+        type: string
+    type: object
+  response.StructPageResponse:
+    properties:
+      code:
+        type: integer
+      data:
+        description: 分页数据
+      limit:
+        description: 每页条数
+        type: integer
+      msg:
+        type: string
+      page:
+        description: 当前页码
+        type: integer
+      pages:
+        description: 总分页数
+        type: integer
+      total:
+        description: 总数据量
+        type: integer
+    type: object
+  response.StructResponse:
+    properties:
+      code:
+        type: integer
+      data: {}
+      msg:
+        type: string
+    type: object
 info:
   contact: {}
   description: This is a sample Server
   title: Swagger Example API
   version: 0.0.1
 paths:
-  /api/v1/example/example:
+  /example/example:
     get:
       consumes:
       - application/json
       produces:
       - application/json
-      responses: {}
+      responses:
+        "2000":
+          description: ""
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.StructResponse'
+            - properties:
+                data:
+                  $ref: '#/definitions/example.ExampleService'
+              type: object
       security:
       - ApiKeyAuth: []
       summary: 不分页获取信息
       tags:
       - ExaExample
-  /api/v1/example/exampleList:
+  /example/exampleList:
     get:
       consumes:
       - application/json
+      parameters:
+      - description: 每页大小
+        in: query
+        name: limit
+        type: integer
+      - description: 查询参数
+        in: query
+        name: name
+        type: string
+      - description: 当前页码
+        in: query
+        name: page
+        type: integer
       produces:
       - application/json
-      responses: {}
+      responses:
+        "2000":
+          description: ""
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.StructPageResponse'
+            - properties:
+                data:
+                  $ref: '#/definitions/example.ExampleService'
+              type: object
       security:
       - ApiKeyAuth: []
       summary: 分页获取信息列表

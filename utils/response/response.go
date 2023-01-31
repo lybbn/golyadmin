@@ -7,12 +7,20 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// 分页请求参数
+type StructPageQueryParams struct {
+	Page  int `json:"page" form:"page"`   // 当前页码
+	Limit int `json:"limit" form:"limit"` // 每页大小
+}
+
+// 不分页响应结构数据
 type StructResponse struct {
 	Code int         `json:"code"`
 	Data interface{} `json:"data"`
 	Msg  string      `json:"msg"`
 }
 
+// 分页响应结构数据
 type StructPageResponse struct {
 	Code        int         `json:"code"`
 	Msg         string      `json:"msg"`

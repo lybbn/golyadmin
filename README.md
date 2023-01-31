@@ -60,6 +60,7 @@ go generate -run "go env -w .*?"
 
 # 使用如下命令下载swag
 go get -u github.com/swaggo/swag/cmd/swag
+go install github.com/swaggo/swag/cmd/swag@latest
 ```
 
 #### 生成API文档
