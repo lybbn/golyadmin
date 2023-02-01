@@ -6,7 +6,7 @@ system:
   is-cors: true #是否启用跨域(启用跨域需要配置cors)
   db-type: mysql #数据库类型 mysql(默认)|sqlite|sqlserver|postgresql
   use-multipoint: false  #使用多点登录（false表示使用单点登录）
-  router-prefix: "/api/v1" #路由全局前缀
+  router-prefix: "/api" #路由全局前缀
 
 # mysql 配置
 mysql:
