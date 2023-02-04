@@ -3,15 +3,15 @@ package core
 import (
 	"flag"
 	"fmt"
+	"os"
+
 	"gitee.com/lybbn/go-vue-lyadmin/utils/core/internal"
 	"github.com/gin-gonic/gin"
-	"os"
 
 	"github.com/fsnotify/fsnotify"
 	"github.com/spf13/viper"
 
 	"gitee.com/lybbn/go-vue-lyadmin/global"
-	_ "gitee.com/lybbn/go-vue-lyadmin/utils/packfile"
 )
 
 // Viper
