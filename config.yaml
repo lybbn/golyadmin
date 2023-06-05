@@ -12,7 +12,7 @@ system:
 mysql:
   path: "127.0.0.1"
   port: "3306" #mysql的连接地址及端口
-  config: "" #高级配置
+  config: "charset=utf8mb4&parseTime=True&loc=Local&timeout=1000ms" #高级配置
   db-name: "lyadmin_db"
   username: "root"
   password: "root"
