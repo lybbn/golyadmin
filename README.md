@@ -31,6 +31,9 @@ go build -o server main.go (windows编译命令为go build -o server.exe main.go
 # 运行二进制
 ./server (windows运行命令为 server.exe)
 
+# 或直接非编译运行
+go run main.go
+
 ```
 
 ### swagger自动化API文档
@@ -54,7 +57,7 @@ go env -w GO111MODULE=on
 # 步骤二、配置 GOPROXY 环境变量
 go env -w GOPROXY=https://goproxy.cn,https://goproxy.io,direct
 
-# 如果嫌弃麻烦,可以使用go generate 编译前自动执行代码, 不过这个不能使用 `Goland` 或者 `Vscode` 的 命令行终端
+# 如果嫌麻烦,可以使用go generate 编译前自动执行代码, 不过这个不能使用 `Goland` 或者 `Vscode` 的 命令行终端
 cd go-vue-lyadmin
 go generate -run "go env -w .*?"
 
