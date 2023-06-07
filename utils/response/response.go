@@ -32,8 +32,8 @@ type StructPageResponse struct {
 }
 
 const (
-	ERROR      = 4000
-	SUCCESS    = 2000
+	ERROR      = 400
+	SUCCESS    = 200
 	MSGERROR   = "error"
 	MSGSUCCESS = "success"
 )

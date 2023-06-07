@@ -10,7 +10,7 @@ import (
 
 const (
 	page_size                = 10
-	max_page_size            = 9999
+	max_page_size            = 999
 	page_size_query_param    = "limit"
 	current_page_query_param = "page"
 )
