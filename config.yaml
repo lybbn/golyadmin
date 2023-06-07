@@ -86,3 +86,9 @@ cors:
       allow-methods: POST, GET, PUT, DELETE, PATCH
       expose-headers: Content-Length, Access-Control-Allow-Origin, Access-Control-Allow-Headers, Content-Type
       allow-credentials: true # 布尔值，请求是否可以包含cookie，HTTP身份验证或客户端SSL证书等用户凭据
+
+    - allow-origin: example2.com
+      allow-headers: Content-Type,AccessToken,X-CSRF-Token, Authorization, Token,X-Token,X-User-Id
+      allow-methods: POST, GET, PUT, DELETE, PATCH
+      expose-headers: Content-Length, Access-Control-Allow-Origin, Access-Control-Allow-Headers, Content-Type
+      allow-credentials: true # 布尔值，请求是否可以包含cookie，HTTP身份验证或客户端SSL证书等用户凭据
