@@ -2,7 +2,7 @@ package system
 
 import (
 	"gitee.com/lybbn/go-vue-lyadmin/global"
-	"gitee.com/lybbn/go-vue-lyadmin/utils"
+	"gitee.com/lybbn/go-vue-lyadmin/utils/uuid"
 	"gorm.io/gorm"
 )
 
@@ -16,6 +16,6 @@ func (SysUsers) TableName() string {
 }
 
 func (u *SysUsers) BeforeCreate(tx *gorm.DB) (err error) {
-	u.UUID = utils.MakeUUID()
+	u.UUID = uuid.MakeUUID()
 	return
 }

@@ -26,13 +26,13 @@ cd go-vue-lyadmin
 go generate
 
 # 编译 
-go build -o server main.go (windows编译命令为go build -o server.exe main.go )
+go build -o golyadmin main.go (windows编译命令为go build -o golyadmin.exe main.go )
 
 # 运行二进制
-./server (windows运行命令为 server.exe)
+./golyadmin start (windows运行命令为 golyadmin.exe start)
 
 # 或直接非编译运行
-go run main.go
+go run main.go start
 
 ```
 

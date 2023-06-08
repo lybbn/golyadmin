@@ -8,6 +8,11 @@ import (
 	"gorm.io/gorm"
 )
 
+const (
+	// Version go-vue-lyadmin version info
+	GVLA_VERSION = "1.0.1"
+)
+
 var (
 	GVLA_DB     *gorm.DB
 	GVLA_REDIS  *redis.Client //Redis客户端
