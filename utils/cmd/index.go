@@ -31,7 +31,7 @@ var rootCmd = &cobra.Command{
 }
 
 func tip() {
-	usageStr := `主命令 ` + utils.Green(`golyadmin `) + ` 可以使用 ` + utils.Red(`-h`) + ` 查看帮助`
+	usageStr := `主命令 ` + utils.Green(`golyadmin `) + ` 可以使用 ` + utils.Red(`help`) + ` 查看帮助`
 	fmt.Printf("%s\n", usageStr)
 }
 

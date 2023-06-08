@@ -42,6 +42,8 @@ func (g *_gorm) Config(prefix string, singular bool) *gorm.Config {
 		logMode = &global.GVLA_CONFIG.Pgsql
 	case "oracle":
 		logMode = &global.GVLA_CONFIG.Oracle
+	case "sqlite":
+		logMode = &global.GVLA_CONFIG.Sqlite
 	default:
 		logMode = &global.GVLA_CONFIG.Mysql
 	}

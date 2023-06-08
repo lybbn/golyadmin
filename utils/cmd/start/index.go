@@ -35,7 +35,7 @@ func run() {
 	newaddress := utils.GetLocaHost() + global.GVLA_CONFIG.System.RouterPrefix
 	time.Sleep(10 * time.Microsecond)
 	global.GVLA_LOG.Info("server run success on ", zap.String("address", address))
-	fmt.Println("欢迎使用 go-vue-lyadmin")
+	fmt.Println("\r\n欢迎使用 go-vue-lyadmin")
 	fmt.Printf("当前版本:v%s\r\n", global.GVLA_VERSION)
 	tip()
 	fmt.Println(utils.Green("Server run at:"))
@@ -47,6 +47,6 @@ func run() {
 }
 
 func tip() {
-	usageStr := `主命令 ` + utils.Green(`golyadmin `) + ` 可以使用 ` + utils.Red(`-h`) + ` 查看帮助`
+	usageStr := `主命令 ` + utils.Green(`golyadmin `) + ` 可以使用 ` + utils.Red(`help`) + ` 查看帮助`
 	fmt.Printf("%s\n", usageStr)
 }
