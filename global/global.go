@@ -17,7 +17,7 @@ const (
 
 var (
 	GVLA_DB        *gorm.DB            //默认数据库
-	GVLA_DATABASES map[string]*gorm.DB //多数据源
+	GVLA_DATABASES map[string]*gorm.DB //多数据源,访问使用GVLA_DATABASES[数据库别名]形式指定数据源
 	GVLA_REDIS     *redis.Client       //Redis客户端
 	GVLA_CONFIG    config.Server       //服务端配置
 	GVLA_LOG       *zap.Logger
