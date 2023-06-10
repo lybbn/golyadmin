@@ -19,12 +19,7 @@ func NewWriter(w logger.Writer) *writer {
 // Printf 格式化打印日志
 func (w *writer) Printf(message string, data ...interface{}) {
 	var logZap bool
-	switch global.GVLA_CONFIG.System.DbType {
-	case "mysql":
-		logZap = global.GVLA_CONFIG.Mysql.LogZap
-	case "pgsql":
-		logZap = global.GVLA_CONFIG.Pgsql.LogZap
-	}
+	logZap = global.GVLA_CONFIG.System.GormLogZap
 	if logZap {
 		global.GVLA_LOG.Info(fmt.Sprintf(message+"\n", data...))
 	} else {

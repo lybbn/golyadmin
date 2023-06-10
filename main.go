@@ -24,7 +24,7 @@ func main() {
 	global.GVLA_VP = core.Viper() // 初始化Viper
 	global.GVLA_LOG = core.Zap()  // 初始化zap日志库
 	zap.ReplaceGlobals(global.GVLA_LOG)
-	global.GVLA_DB = initialize.Gorm() // gorm连接数据库
+	initialize.DBInit() // gorm连接数据库
 	if global.GVLA_DB != nil {
 		global.GVLA_LOG.Info("database connect success")
 	}

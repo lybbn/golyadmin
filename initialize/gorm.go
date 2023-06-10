@@ -2,23 +2,34 @@ package initialize
 
 import (
 	"gitee.com/lybbn/go-vue-lyadmin/global"
+	"gitee.com/lybbn/go-vue-lyadmin/utils/databases/dbinitialize"
 	"gorm.io/gorm"
 )
 
+const defaultDBName = "default"
+
 // Gorm 初始化数据库并产生数据库全局变量
-func Gorm() *gorm.DB {
-	switch global.GVLA_CONFIG.System.DbType {
-	case "mysql":
-		return GormMysql()
-	case "pgsql":
-		return GormPgSql()
-	case "oracle":
-		return GormOracle()
-	case "mssql":
-		return GormMssql()
-	case "sqlite":
-		return GormSqlite()
-	default:
-		return GormMysql()
+func DBInit() {
+	dbMap := make(map[string]*gorm.DB)
+	for _, info := range global.GVLA_CONFIG.Databases {
+		switch info.DbType {
+		case "mysql":
+			dbMap[info.AliasName] = dbinitialize.GormMysqlByConfig(dbinitialize.Mysql{GeneralDB: info})
+		case "mssql":
+			dbMap[info.AliasName] = dbinitialize.GormMssqlByConfig(dbinitialize.Mssql{GeneralDB: info})
+		case "pgsql":
+			dbMap[info.AliasName] = dbinitialize.GormPgSqlByConfig(dbinitialize.Pgsql{GeneralDB: info})
+		case "oracle":
+			dbMap[info.AliasName] = dbinitialize.GormOracleByConfig(dbinitialize.Oracle{GeneralDB: info})
+		case "sqlite":
+			dbMap[info.AliasName] = dbinitialize.GormSqliteByConfig(dbinitialize.Sqlite{GeneralDB: info})
+		default:
+			continue
+		}
 	}
+	//默认数据库
+	if dfDB, ok := dbMap[defaultDBName]; ok {
+		global.GVLA_DB = dfDB
+	}
+	global.GVLA_DATABASES = dbMap
 }

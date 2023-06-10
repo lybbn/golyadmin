@@ -9,4 +9,6 @@ type System struct {
 	DbType        string `mapstructure:"db-type" json:"db-type" yaml:"db-type"`                      // 数据库类型:mysql(默认)|sqlite|sqlserver|postgresql|mssql
 	UseMultipoint bool   `mapstructure:"use-multipoint" json:"use-multipoint" yaml:"use-multipoint"` // 多点登录拦截
 	RouterPrefix  string `mapstructure:"router-prefix" json:"router-prefix" yaml:"router-prefix"`
+	GormLogMode   string `mapstructure:"gorm-log-mode" json:"gorm-log-mode" yaml:"gorm-log-mode"` // 是否开启Gorm全局日志
+	GormLogZap    bool   `mapstructure:"gorm-log-zap" json:"gorm-log-zap" yaml:"gorm-log-zap"`    // 是否通过zap写入日志文件
 }

@@ -12,10 +12,6 @@ import (
 	"gorm.io/gorm/logger"
 )
 
-type DBBASE interface {
-	GetLogMode() string
-}
-
 var Gorm = new(_gorm)
 
 type _gorm struct{}
@@ -34,21 +30,8 @@ func (g *_gorm) Config(prefix string, singular bool) *gorm.Config {
 		LogLevel:      logger.Warn,
 		Colorful:      true,
 	})
-	var logMode DBBASE
-	switch global.GVLA_CONFIG.System.DbType {
-	case "mysql":
-		logMode = &global.GVLA_CONFIG.Mysql
-	case "pgsql":
-		logMode = &global.GVLA_CONFIG.Pgsql
-	case "oracle":
-		logMode = &global.GVLA_CONFIG.Oracle
-	case "sqlite":
-		logMode = &global.GVLA_CONFIG.Sqlite
-	default:
-		logMode = &global.GVLA_CONFIG.Mysql
-	}
 
-	switch logMode.GetLogMode() {
+	switch global.GVLA_CONFIG.System.GormLogMode {
 	case "silent", "Silent":
 		config.Logger = _default.LogMode(logger.Silent)
 	case "error", "Error":
