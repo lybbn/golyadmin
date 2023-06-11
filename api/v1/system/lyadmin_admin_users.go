@@ -26,7 +26,7 @@ type Login struct {
 // @Summary   用户登录
 // @accept    application/json
 // @Produce   application/json
-// @Success 2000 {object} response.SuccessResponse{LoginResponse,string}
+// @Success 200 {object} response.StructResponse{data=LoginResponse,msg=string}
 // @Router    /login [post]
 func (e *LyadminAdminUsersApi) Login(c *gin.Context) {
 

@@ -37,6 +37,40 @@ definitions:
       msg:
         type: string
     type: object
+  system.LoginResponse:
+    properties:
+      expiresAt:
+        type: integer
+      token:
+        type: string
+      user:
+        $ref: '#/definitions/system.LyadminAdminUsers'
+    type: object
+  system.LyadminAdminUsers:
+    properties:
+      avatar:
+        type: string
+      create_at:
+        type: string
+      email:
+        type: string
+      gender:
+        type: string
+      id:
+        description: 主键ID
+        type: integer
+      mobile:
+        type: string
+      nickname:
+        type: string
+      update_at:
+        type: string
+      username:
+        type: string
+      uuid:
+        description: 允许读和创建
+        type: string
+    type: object
 info:
   contact: {}
   description: This is a sample Server
@@ -50,8 +84,8 @@ paths:
       produces:
       - application/json
       responses:
-        "2000":
-          description: ""
+        "200":
+          description: OK
           schema:
             allOf:
             - $ref: '#/definitions/response.StructResponse'
@@ -63,7 +97,7 @@ paths:
       - ApiKeyAuth: []
       summary: 不分页获取信息
       tags:
-      - ExaExample
+      - Example
   /example/exampleList:
     get:
       consumes:
@@ -84,8 +118,8 @@ paths:
       produces:
       - application/json
       responses:
-        "2000":
-          description: ""
+        "200":
+          description: OK
           schema:
             allOf:
             - $ref: '#/definitions/response.StructPageResponse'
@@ -97,7 +131,28 @@ paths:
       - ApiKeyAuth: []
       summary: 分页获取信息列表
       tags:
-      - ExaExample
+      - Example
+  /login:
+    post:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.StructResponse'
+            - properties:
+                data:
+                  $ref: '#/definitions/system.LoginResponse'
+                msg:
+                  type: string
+              type: object
+      summary: 用户登录
+      tags:
+      - Base
 securityDefinitions:
   ApiKeyAuth:
     in: header

@@ -29,12 +29,12 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "ExaExample"
+                    "Example"
                 ],
                 "summary": "不分页获取信息",
                 "responses": {
-                    "2000": {
-                        "description": "",
+                    "200": {
+                        "description": "OK",
                         "schema": {
                             "allOf": [
                                 {
@@ -68,7 +68,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "ExaExample"
+                    "Example"
                 ],
                 "summary": "分页获取信息列表",
                 "parameters": [
@@ -92,8 +92,8 @@ const docTemplate = `{
                     }
                 ],
                 "responses": {
-                    "2000": {
-                        "description": "",
+                    "200": {
+                        "description": "OK",
                         "schema": {
                             "allOf": [
                                 {
@@ -104,6 +104,43 @@ const docTemplate = `{
                                     "properties": {
                                         "data": {
                                             "$ref": "#/definitions/example.ExampleService"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/login": {
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Base"
+                ],
+                "summary": "用户登录",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.StructResponse"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/system.LoginResponse"
+                                        },
+                                        "msg": {
+                                            "type": "string"
                                         }
                                     }
                                 }
@@ -167,6 +204,57 @@ const docTemplate = `{
                 },
                 "data": {},
                 "msg": {
+                    "type": "string"
+                }
+            }
+        },
+        "system.LoginResponse": {
+            "type": "object",
+            "properties": {
+                "expiresAt": {
+                    "type": "integer"
+                },
+                "token": {
+                    "type": "string"
+                },
+                "user": {
+                    "$ref": "#/definitions/system.LyadminAdminUsers"
+                }
+            }
+        },
+        "system.LyadminAdminUsers": {
+            "type": "object",
+            "properties": {
+                "avatar": {
+                    "type": "string"
+                },
+                "create_at": {
+                    "type": "string"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "gender": {
+                    "type": "string"
+                },
+                "id": {
+                    "description": "主键ID",
+                    "type": "integer"
+                },
+                "mobile": {
+                    "type": "string"
+                },
+                "nickname": {
+                    "type": "string"
+                },
+                "update_at": {
+                    "type": "string"
+                },
+                "username": {
+                    "type": "string"
+                },
+                "uuid": {
+                    "description": "允许读和创建",
                     "type": "string"
                 }
             }

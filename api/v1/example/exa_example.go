@@ -19,12 +19,12 @@ type ExampleService struct {
 }
 
 // GetExaExample
-// @Tags      ExaExample
+// @Tags      Example
 // @Summary   不分页获取信息
 // @Security  ApiKeyAuth
 // @accept    application/json
 // @Produce   application/json
-// @Success 2000 {object} response.StructResponse{data=ExampleService}
+// @Success 200 {object} response.StructResponse{data=ExampleService}
 // @Router    /example/example [get]
 func (e *ExampleApi) GetExaExample(c *gin.Context) {
 	// 详情不带分页
@@ -40,13 +40,13 @@ type ExampleQueryParmas struct {
 }
 
 // GetExaExampleList
-// @Tags      ExaExample
+// @Tags      Example
 // @Summary   分页获取信息列表
 // @Security  ApiKeyAuth
 // @accept    application/json
 // @Produce   application/json
 // @Param     data  query     ExampleQueryParmas                                        true  "页码, 每页大小"
-// @Success 2000 {object} response.StructPageResponse{data=ExampleService}
+// @Success 200 {object} response.StructPageResponse{data=ExampleService}
 // @Router    /example/exampleList [get]
 func (e *ExampleApi) GetExaExampleList(c *gin.Context) {
 	//单独获取请求参数
