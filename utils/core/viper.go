@@ -1,7 +1,6 @@
 package core
 
 import (
-	"flag"
 	"fmt"
 	"os"
 
@@ -20,8 +19,6 @@ func Viper(path ...string) *viper.Viper {
 	var config string
 
 	if len(path) == 0 {
-		flag.StringVar(&config, "c", "", "choose config file.")
-		flag.Parse()
 		if config == "" { // 判断命令行参数是否为空
 			if configEnv := os.Getenv(internal.ConfigEnv); configEnv == "" { // 判断 internal.ConfigEnv 常量存储的环境变量是否为空
 				switch gin.Mode() {
@@ -44,7 +41,7 @@ func Viper(path ...string) *viper.Viper {
 		}
 	} else { // 函数传递的可变参数的第一个值赋值于config
 		config = path[0]
-		fmt.Printf("您正在使用func Viper()传递的值,配置文件为%s\n", config)
+		fmt.Printf("您正在使用配置文件为%s\n", config)
 	}
 
 	v := viper.New()

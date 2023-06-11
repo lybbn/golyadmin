@@ -1,11 +1,7 @@
 package main
 
 import (
-	"gitee.com/lybbn/go-vue-lyadmin/global"
-	"gitee.com/lybbn/go-vue-lyadmin/initialize"
 	"gitee.com/lybbn/go-vue-lyadmin/utils/cmd"
-	"gitee.com/lybbn/go-vue-lyadmin/utils/core"
-	"go.uber.org/zap"
 )
 
 //go:generate go env -w GO111MODULE=on
@@ -21,12 +17,5 @@ import (
 // @name                        x-token
 // @BasePath                    /
 func main() {
-	global.GVLA_VP = core.Viper() // 初始化Viper
-	global.GVLA_LOG = core.Zap()  // 初始化zap日志库
-	zap.ReplaceGlobals(global.GVLA_LOG)
-	initialize.DBInit() // gorm连接数据库
-	if global.GVLA_DB != nil {
-		global.GVLA_LOG.Info("database connect success")
-	}
 	cmd.Execute()
 }

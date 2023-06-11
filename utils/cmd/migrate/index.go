@@ -4,14 +4,15 @@ import (
 	"fmt"
 
 	"gitee.com/lybbn/go-vue-lyadmin/global"
-	"gitee.com/lybbn/go-vue-lyadmin/model/system"
+	mmodel "gitee.com/lybbn/go-vue-lyadmin/model"
 	"github.com/spf13/cobra"
 )
 
 var (
+	database string
 	StartCmd = &cobra.Command{
 		Use:     "migrate",
-		Short:   "Initialize the database",
+		Short:   "migrate the modles to database",
 		Example: "golyadmin migrate",
 		Run: func(cmd *cobra.Command, args []string) {
 			run()
@@ -19,21 +20,32 @@ var (
 	}
 )
 
+func init() {
+	StartCmd.Flags().StringVarP(&database, "database", "d", "default", "database alias-name")
+}
+
 func run() {
 	initDB()
 }
 
-func migrateModel() error {
-	err := global.GVLA_DB.Debug().AutoMigrate(&system.SysAdminUsers{})
-	if err != nil {
-		return err
+// 迁移数据库表
+func migrateModel() {
+	db := global.GVLA_DB
+	if database == "" {
+
+	} else {
+		db = global.GetGlobalDBByName(database)
 	}
-	return err
+	tables := mmodel.MigrateModelList
+	for _, t := range tables {
+		_ = db.Debug().AutoMigrate(&t)
+	}
+
 }
 
 func initDB() {
-	//4. 数据库迁移
+	//数据库迁移
 	fmt.Println("数据库迁移开始")
-	_ = migrateModel()
+	migrateModel()
 	fmt.Println(`数据库迁移成功`)
 }

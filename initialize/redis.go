@@ -6,6 +6,7 @@ package initialize
 
 import (
 	"context"
+	"fmt"
 	"time"
 
 	"gitee.com/lybbn/go-vue-lyadmin/global"
@@ -29,6 +30,7 @@ func InitRedis() {
 		global.GVLA_LOG.Error("redis连接错误, err:", zap.Error(err))
 	} else {
 		global.GVLA_LOG.Info("redis connect ping response:", zap.String("pong", pong))
+		fmt.Printf("redis连接成功\n")
 		global.GVLA_REDIS = client
 	}
 }

@@ -29,10 +29,15 @@ go generate
 go build -o golyadmin main.go (windows编译命令为go build -o golyadmin.exe main.go )
 
 # 运行二进制
-./golyadmin start (windows运行命令为 golyadmin.exe start)
+./golyadmin start [-c 配置文件] (windows运行命令为 golyadmin.exe start)
 
 # 或直接非编译运行
-go run main.go start
+go run main.go start [-c 配置文件]
+
+# 同步model表
+
+go run main.go migrate [-d 数据库别名] [-c 配置文件]
+
 
 ```
 
