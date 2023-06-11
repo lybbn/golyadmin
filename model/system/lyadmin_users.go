@@ -6,16 +6,16 @@ import (
 	"gorm.io/gorm"
 )
 
-type SysUsers struct {
+type LyadminUsers struct {
 	global.GVLA_MODEL
 	UUID string `gorm:"<-:create;type:varchar(50)" form:"uuid" json:"uuid"`
 }
 
-func (SysUsers) TableName() string {
+func (LyadminUsers) TableName() string {
 	return "lyadmin_users"
 }
 
-func (u *SysUsers) BeforeCreate(tx *gorm.DB) (err error) {
+func (u *LyadminUsers) BeforeCreate(tx *gorm.DB) (err error) {
 	u.UUID = uuid.MakeUUID()
 	return
 }

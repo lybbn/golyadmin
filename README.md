@@ -7,7 +7,7 @@
 ## 使用说明
 
 ```
-- golang版本 >= v1.18
+- golang版本 >= v1.20
 - IDE推荐：vscode
 ```
 
@@ -34,7 +34,7 @@ go build -o golyadmin main.go (windows编译命令为go build -o golyadmin.exe m
 # 或直接非编译运行
 go run main.go start [-c 配置文件]
 
-# 同步model表
+# migrate同步model表（需要同步的model写入modle/migrate.go中）
 
 go run main.go migrate [-d 数据库别名] [-c 配置文件]
 

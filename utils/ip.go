@@ -6,9 +6,10 @@ import (
 	"io/ioutil"
 	"net"
 	"net/http"
+	"strings"
 )
 
-// 获取外网ip地址
+// 获取外网ip地址详情
 func GetIpLocation(ip, key string) string {
 	if ip == "127.0.0.1" || ip == "localhost" {
 		return "内部IP"
@@ -34,17 +35,16 @@ func GetIpLocation(ip, key string) string {
 	return m["country"] + "-" + m["province"] + "-" + m["city"] + "-" + m["district"] + "-" + m["isp"]
 }
 
-// 获取局域网ip地址
+// 获取局域网ip地址(此获取ip方式存在多网卡时，ip不准确问题)
 func GetLocaHost() string {
-	netInterfaces, err := net.Interfaces()
+	netifaces, err := net.Interfaces()
 	if err != nil {
 		fmt.Println("net.Interfaces failed, err:", err.Error())
 	}
 
-	for i := 0; i < len(netInterfaces); i++ {
-		if (netInterfaces[i].Flags & net.FlagUp) != 0 {
-			addrs, _ := netInterfaces[i].Addrs()
-
+	for i := 0; i < len(netifaces); i++ {
+		if (netifaces[i].Flags & net.FlagUp) != 0 {
+			addrs, _ := netifaces[i].Addrs()
 			for _, address := range addrs {
 				if ipnet, ok := address.(*net.IPNet); ok && !ipnet.IP.IsLoopback() {
 					if ipnet.IP.To4() != nil {
@@ -56,4 +56,19 @@ func GetLocaHost() string {
 
 	}
 	return ""
+}
+
+// GetLocalIpAddr 利用udp 网络连接 获取本地IP地址(出口流量的IP地址)
+func GetLocalIpAddr() string {
+	conn, err := net.Dial("udp", "8.8.8.8:53")
+	if err != nil {
+		fmt.Println(err)
+		return GetLocaHost()
+	}
+	localAddr := conn.LocalAddr().(*net.UDPAddr)
+	// 192.168.0.101:61085
+	ip := strings.Split(localAddr.String(), ":")[0]
+
+	return ip
+
 }

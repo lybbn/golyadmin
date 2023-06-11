@@ -36,11 +36,11 @@ func migrateModel() {
 	} else {
 		db = global.GetGlobalDBByName(database)
 	}
+
 	tables := mmodel.MigrateModelList
 	for _, t := range tables {
 		_ = db.Debug().AutoMigrate(&t)
 	}
-
 }
 
 func initDB() {

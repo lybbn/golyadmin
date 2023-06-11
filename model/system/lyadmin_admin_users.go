@@ -6,7 +6,7 @@ import (
 	"gorm.io/gorm"
 )
 
-type SysAdminUsers struct {
+type LyadminAdminUsers struct {
 	global.GVLA_MODEL
 	UUID     string `gorm:"<-:create;type:varchar(50);comment:uuid" form:"uuid" json:"uuid"` // 允许读和创建
 	Username string `json:"username" gorm:"type:varchar(50);not null;index;comment:用户名"`
@@ -18,11 +18,11 @@ type SysAdminUsers struct {
 	Gender   string `json:"gender" gorm:"type:varchar(10);comment:性别"`
 }
 
-func (SysAdminUsers) TableName() string {
+func (LyadminAdminUsers) TableName() string {
 	return "lyadmin_admin_users"
 }
 
-func (u *SysAdminUsers) BeforeCreate(tx *gorm.DB) (err error) {
+func (u *LyadminAdminUsers) BeforeCreate(tx *gorm.DB) (err error) {
 	u.UUID = uuid.MakeUUID()
 	return
 }
