@@ -63,13 +63,13 @@ cors:
   mode: allow-all # 放行模式: allow-all, 放行全部; whitelist, 白名单模式, 来自白名单内域名的请求添加 cors 头; strict-whitelist 严格白名单模式, 白名单外的请求一律拒绝
   whitelist:
     - allow-origin: example1.com
-      allow-headers: Content-Type,AccessToken,X-CSRF-Token, Authorization, Token,X-Token,X-User-Id
+      allow-headers: Content-Type,AccessToken,X-CSRF-Token, Authorization, Token
       allow-methods: POST, GET, PUT, DELETE, PATCH
       expose-headers: Content-Length, Access-Control-Allow-Origin, Access-Control-Allow-Headers, Content-Type
       allow-credentials: true # 布尔值，请求是否可以包含cookie，HTTP身份验证或客户端SSL证书等用户凭据
 
     - allow-origin: example2.com
-      allow-headers: Content-Type,AccessToken,X-CSRF-Token, Authorization, Token,X-Token,X-User-Id
+      allow-headers: Content-Type,AccessToken,X-CSRF-Token, Authorization, Token
       allow-methods: POST, GET, PUT, DELETE, PATCH
       expose-headers: Content-Length, Access-Control-Allow-Origin, Access-Control-Allow-Headers, Content-Type
       allow-credentials: true # 布尔值，请求是否可以包含cookie，HTTP身份验证或客户端SSL证书等用户凭据

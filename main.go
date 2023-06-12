@@ -12,9 +12,9 @@ import (
 // @title                       Swagger Example API
 // @version                     0.0.1
 // @description                 This is a sample Server
-// @securityDefinitions.apikey  ApiKeyAuth
+// @securityDefinitions.apikey  JWT (apiKey)
 // @in                          header
-// @name                        x-token
+// @name                        Authorization
 // @BasePath                    /
 func main() {
 	cmd.Execute()

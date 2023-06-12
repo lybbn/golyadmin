@@ -19,6 +19,7 @@ func Routers() *gin.Engine {
 	//创建路由
 	Router := gin.Default()
 	exampleRouter := router.RouterGroupApp.Example
+	systemRouter := router.RouterGroupApp.System
 	// 跨域
 	if global.GVLA_CONFIG.System.IsCors {
 		// Router.Use(middleware.CorsAllowAll())        // 直接放行全部跨域请求
@@ -30,6 +31,10 @@ func Routers() *gin.Engine {
 	docs.SwaggerInfo.BasePath = global.GVLA_CONFIG.System.RouterPrefix
 	Router.GET(global.GVLA_CONFIG.System.RouterPrefix+"/swagger/*any", ginSwagger.WrapHandler(swaggerfiles.Handler))
 	global.GVLA_LOG.Info("register swagger handler")
+	PublicGroup := Router.Group(global.GVLA_CONFIG.System.RouterPrefix)
+	{
+		systemRouter.InitBaseRouter(PublicGroup)
+	}
 	PrivateGroup := Router.Group(global.GVLA_CONFIG.System.RouterPrefix)
 	{
 		exampleRouter.InitExampleRouter(PrivateGroup)

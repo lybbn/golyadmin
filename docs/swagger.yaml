@@ -37,6 +37,21 @@ definitions:
       msg:
         type: string
     type: object
+  system.LoginRequest:
+    properties:
+      captcha:
+        description: 验证码
+        type: string
+      captchaKey:
+        description: 验证码key
+        type: string
+      password:
+        description: 密码
+        type: string
+      username:
+        description: 用户名
+        type: string
+    type: object
   system.LoginResponse:
     properties:
       expiresAt:
@@ -77,6 +92,34 @@ info:
   title: Swagger Example API
   version: 0.0.1
 paths:
+  /base/login:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 用户名, 密码, 验证码
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/system.LoginRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 返回包括用户信息,token,过期时间
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.StructResponse'
+            - properties:
+                data:
+                  $ref: '#/definitions/system.LoginResponse'
+                msg:
+                  type: string
+              type: object
+      summary: 用户登录
+      tags:
+      - Base
   /example/example:
     get:
       consumes:
@@ -132,30 +175,9 @@ paths:
       summary: 分页获取信息列表
       tags:
       - Example
-  /login:
-    post:
-      consumes:
-      - application/json
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            allOf:
-            - $ref: '#/definitions/response.StructResponse'
-            - properties:
-                data:
-                  $ref: '#/definitions/system.LoginResponse'
-                msg:
-                  type: string
-              type: object
-      summary: 用户登录
-      tags:
-      - Base
 securityDefinitions:
   ApiKeyAuth:
     in: header
-    name: x-token
+    name: Authorization
     type: apiKey
 swagger: "2.0"

@@ -62,7 +62,7 @@ func PaginateResponse[T any](data interface{}, page pagination.Page[T], message 
 	c.JSON(http.StatusOK, p)
 }
 
-// 详情
+// 正常返回
 func SuccessResponse(data interface{}, message string, c *gin.Context) {
 	if message == "" {
 		message = MSGSUCCESS
