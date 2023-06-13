@@ -37,7 +37,7 @@ definitions:
       msg:
         type: string
     type: object
-  system.LoginRequest:
+  system.LoginRequestParams:
     properties:
       captcha:
         description: 验证码
@@ -51,6 +51,9 @@ definitions:
       username:
         description: 用户名
         type: string
+    required:
+    - password
+    - username
     type: object
   system.LoginResponse:
     properties:
@@ -102,7 +105,7 @@ paths:
         name: data
         required: true
         schema:
-          $ref: '#/definitions/system.LoginRequest'
+          $ref: '#/definitions/system.LoginRequestParams'
       produces:
       - application/json
       responses:
@@ -176,7 +179,7 @@ paths:
       tags:
       - Example
 securityDefinitions:
-  ApiKeyAuth:
+  JWT (apiKey):
     in: header
     name: Authorization
     type: apiKey

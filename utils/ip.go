@@ -7,7 +7,25 @@ import (
 	"net"
 	"net/http"
 	"strings"
+
+	"github.com/gin-gonic/gin"
 )
+
+// 获取客户端真实IP
+func GetRealClientIP(c *gin.Context) string {
+	ip := c.Request.Header.Get("X-Forwarded-For")
+	if strings.Contains(ip, "127.0.0.1") || ip == "" {
+		ip = c.Request.Header.Get("X-real-ip")
+	}
+	if ip == "" {
+		ip = "127.0.0.1"
+	}
+	ClientIP := c.ClientIP()
+	if ClientIP != "127.0.0.1" {
+		ip = ClientIP
+	}
+	return ip
+}
 
 // 获取外网ip地址详情
 func GetIpLocation(ip, key string) string {

@@ -34,7 +34,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/system.LoginRequest"
+                            "$ref": "#/definitions/system.LoginRequestParams"
                         }
                     }
                 ],
@@ -219,8 +219,12 @@ const docTemplate = `{
                 }
             }
         },
-        "system.LoginRequest": {
+        "system.LoginRequestParams": {
             "type": "object",
+            "required": [
+                "password",
+                "username"
+            ],
             "properties": {
                 "captcha": {
                     "description": "验证码",
@@ -293,7 +297,7 @@ const docTemplate = `{
         }
     },
     "securityDefinitions": {
-        "ApiKeyAuth": {
+        "JWT (apiKey)": {
             "type": "apiKey",
             "name": "Authorization",
             "in": "header"

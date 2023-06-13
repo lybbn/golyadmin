@@ -26,7 +26,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/system.LoginRequest"
+                            "$ref": "#/definitions/system.LoginRequestParams"
                         }
                     }
                 ],
@@ -211,8 +211,12 @@
                 }
             }
         },
-        "system.LoginRequest": {
+        "system.LoginRequestParams": {
             "type": "object",
+            "required": [
+                "password",
+                "username"
+            ],
             "properties": {
                 "captcha": {
                     "description": "验证码",
@@ -285,7 +289,7 @@
         }
     },
     "securityDefinitions": {
-        "ApiKeyAuth": {
+        "JWT (apiKey)": {
             "type": "apiKey",
             "name": "Authorization",
             "in": "header"
