@@ -10,12 +10,21 @@ system:
   router-prefix: "/api" #路由全局前缀
   gorm-log-mode: "" #开启Gorm全局日志等级 "silent"、"error"、"warn"、"info" 不填默认info 填入silent可以关闭控制台日志
   gorm-log-zap: false #是否写入zap
+
 # jwt 认证
 jwt:
   signing-key: lybbn
   expires-time: 7d
   buffer-time: 1d
   issuer: lybbn
+
+# 验证码配置
+captcha:
+  key-length: 6 # 字符个数
+  img-width: 240
+  img-height: 80
+  open-captcha: 0 # 0代表一直开启，大于0代表限制次数
+  open-captcha-timeout: 3600 # open-captcha大于0时才生效
 
 #数据库
 databases:

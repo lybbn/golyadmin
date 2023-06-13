@@ -29,8 +29,6 @@ func run() {
 	}
 	r := initialize.Routers() //初始化路由
 	address := fmt.Sprintf("%s:%d", global.GVLA_CONFIG.System.Host, global.GVLA_CONFIG.System.HttpPort)
-	//启动
-	// r.Run(address)
 	s := initialize.InitServer(address, r)
 	newaddress := utils.GetLocalIpAddr() + utils.GetServerPort() + global.GVLA_CONFIG.System.RouterPrefix
 	time.Sleep(10 * time.Microsecond)
@@ -44,6 +42,8 @@ func run() {
 	fmt.Printf("默认自动化文档地址:http://%s/swagger/index.html \r\n", newaddress)
 	fmt.Printf("默认接口基础地址:http://%s \r\n", newaddress)
 	global.GVLA_LOG.Error(s.ListenAndServe().Error())
+	//gin启动
+	// r.Run(address)
 }
 
 func tip() {

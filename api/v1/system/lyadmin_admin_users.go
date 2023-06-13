@@ -2,6 +2,7 @@ package system
 
 import (
 	"gitee.com/lybbn/go-vue-lyadmin/model/system"
+	"gitee.com/lybbn/go-vue-lyadmin/utils"
 	"gitee.com/lybbn/go-vue-lyadmin/utils/response"
 	"github.com/gin-gonic/gin"
 )
@@ -16,10 +17,10 @@ type LoginResponse struct {
 }
 
 type LoginRequestParams struct {
-	Username   string `json:"username" binding:"required"` // 用户名
-	Password   string `json:"password" binding:"required"` // 密码
-	Captcha    string `json:"captcha"`                     // 验证码
-	CaptchaKey string `json:"captchaKey"`                  // 验证码key
+	Username   string `form:"username" json:"username" binding:"required" msg:"用户名不能为空"` // 用户名
+	Password   string `form:"password" json:"password" binding:"required" msg:"密码不能为空"`  // 密码
+	Captcha    string `form:"captcha" json:"captcha" binding:"required" msg:"验证码不能为空"`   // 验证码
+	CaptchaKey string `form:"captchaKey" json:"captchaKey"`                              // 验证码key
 }
 
 // Login
@@ -32,11 +33,11 @@ type LoginRequestParams struct {
 // @Router    /base/login [post]
 func (l *LyadminAdminUsersApi) Login(c *gin.Context) {
 	var req LoginRequestParams
-	err := c.ShouldBindJSON(&req)
-	ip := c.ClientIP()
+	err := c.ShouldBind(&req)
+	ip := utils.GetRealClientIP(c)
 
 	if err != nil {
-		response.ErrorResponse(err.Error(), c)
+		response.ErrorResponse(utils.GetValidMsg(err, &req), c)
 		return
 	}
 	response.SuccessResponse(ip, "", c)
