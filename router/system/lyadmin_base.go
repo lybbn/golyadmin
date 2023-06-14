@@ -9,8 +9,9 @@ type BaseRouter struct{}
 
 func (e *BaseRouter) InitBaseRouter(Router *gin.RouterGroup) {
 	customerRouterWithoutRecord := Router.Group("base")
-	systemApi := v1.ApiGroupApp.SystemApiGroup.LyadminAdminUsersApi
+	systemApi := v1.ApiGroupApp.SystemApiGroup.BaseApi
 	{
 		customerRouterWithoutRecord.POST("login", systemApi.Login)
+		customerRouterWithoutRecord.POST("captcha", systemApi.Captcha)
 	}
 }

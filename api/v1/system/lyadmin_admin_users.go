@@ -7,7 +7,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-type LyadminAdminUsersApi struct {
+type BaseApi struct {
 }
 
 type LoginResponse struct {
@@ -31,7 +31,7 @@ type LoginRequestParams struct {
 // @Param    data  body      LoginRequestParams 			true  "用户名, 密码, 验证码"
 // @Success 200 {object} response.StructResponse{data=LoginResponse,msg=string} "返回包括用户信息,token,过期时间"
 // @Router    /base/login [post]
-func (l *LyadminAdminUsersApi) Login(c *gin.Context) {
+func (l *BaseApi) Login(c *gin.Context) {
 	var req LoginRequestParams
 	err := c.ShouldBind(&req)
 	ip := utils.GetRealClientIP(c)
@@ -39,6 +39,11 @@ func (l *LyadminAdminUsersApi) Login(c *gin.Context) {
 	if err != nil {
 		response.ErrorResponse(utils.GetValidMsg(err, &req), c)
 		return
+	}
+	if store.VerifyCaptcha(req.CaptchaKey, req.Captcha, true) {
+
+	} else {
+		response.ErrorResponse("验证码错误", c)
 	}
 	response.SuccessResponse(ip, "", c)
 
