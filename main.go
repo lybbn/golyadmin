@@ -1,8 +1,6 @@
 package main
 
-import (
-	"gitee.com/lybbn/go-vue-lyadmin/utils/cmd"
-)
+import "gitee.com/lybbn/go-vue-lyadmin/utils/cmd"
 
 //go:generate go env -w GO111MODULE=on
 //go:generate go env -w GOPROXY=https://goproxy.cn,direct

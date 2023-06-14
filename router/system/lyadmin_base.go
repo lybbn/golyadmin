@@ -7,11 +7,12 @@ import (
 
 type BaseRouter struct{}
 
-func (e *BaseRouter) InitBaseRouter(Router *gin.RouterGroup) {
-	customerRouterWithoutRecord := Router.Group("base")
-	systemApi := v1.ApiGroupApp.SystemApiGroup.BaseApi
+func (e *BaseRouter) InitBaseRouter(Router *gin.RouterGroup) (R gin.IRoutes) {
+	baseRouter := Router.Group("base")
+	baseApi := v1.ApiGroupApp.SystemApiGroup.BaseApi
 	{
-		customerRouterWithoutRecord.POST("login", systemApi.Login)
-		customerRouterWithoutRecord.POST("captcha", systemApi.Captcha)
+		baseRouter.POST("login", baseApi.Login)
+		baseRouter.GET("captcha", baseApi.GetCaptcha)
 	}
+	return baseRouter
 }

@@ -5,14 +5,15 @@ import (
 	"time"
 
 	"gitee.com/lybbn/go-vue-lyadmin/global"
-	"github.com/mojocn/base64Captcha"
 
 	"go.uber.org/zap"
 )
 
+var ctx = context.Background()
+
 func NewDefaultRedisStore() *RedisStore {
 	return &RedisStore{
-		Expiration: time.Second * global.GVLA_CONFIG.Captcha.CaptchaTimeout,
+		Expiration: time.Second * time.Duration(global.GVLA_CONFIG.Captcha.CaptchaTimeout),
 		PreKey:     "LYADMIN_CAPTCHA_",
 	}
 }
@@ -20,29 +21,26 @@ func NewDefaultRedisStore() *RedisStore {
 type RedisStore struct {
 	Expiration time.Duration
 	PreKey     string
-	Context    context.Context
 }
 
-func (rs *RedisStore) UseWithCtx(ctx context.Context) base64Captcha.Store {
-	rs.Context = ctx
-	return rs
-}
-
-func (rs *RedisStore) Set(id string, value string) {
-	err := global.GVLA_REDIS.Set(rs.Context, rs.PreKey+id, value, rs.Expiration).Err()
+func (rs *RedisStore) Set(id string, value string) error {
+	key := rs.PreKey + id
+	err := global.GVLA_REDIS.Set(ctx, key, value, rs.Expiration).Err()
 	if err != nil {
 		global.GVLA_LOG.Error("RedisStoreSetError!", zap.Error(err))
 	}
+	return err
 }
 
-func (rs *RedisStore) Get(key string, clear bool) string {
-	val, err := global.GVLA_REDIS.Get(rs.Context, key).Result()
+func (rs *RedisStore) Get(id string, clear bool) string {
+	key := rs.PreKey + id
+	val, err := global.GVLA_REDIS.Get(ctx, key).Result()
 	if err != nil {
 		global.GVLA_LOG.Error("RedisStoreGetError!", zap.Error(err))
 		return ""
 	}
 	if clear {
-		err := global.GVLA_REDIS.Del(rs.Context, key).Err()
+		err := global.GVLA_REDIS.Del(ctx, key).Err()
 		if err != nil {
 			global.GVLA_LOG.Error("RedisStoreClearError!", zap.Error(err))
 			return ""
@@ -51,7 +49,7 @@ func (rs *RedisStore) Get(key string, clear bool) string {
 	return val
 }
 
-func (rs *RedisStore) VerifyCaptcha(id, answer string, clear bool) bool {
+func (rs *RedisStore) Verify(id, answer string, clear bool) bool {
 	key := rs.PreKey + id
 	v := rs.Get(key, clear)
 	return v == answer

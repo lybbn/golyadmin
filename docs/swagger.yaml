@@ -52,6 +52,7 @@ definitions:
         description: 用户名
         type: string
     required:
+    - captcha
     - password
     - username
     type: object
@@ -89,12 +90,44 @@ definitions:
         description: 允许读和创建
         type: string
     type: object
+  system.captchaResponse:
+    properties:
+      captcha:
+        type: string
+      captchaKey:
+        type: string
+      captchaLength:
+        type: integer
+    type: object
 info:
   contact: {}
   description: This is a sample Server
   title: Swagger Example API
   version: 0.0.1
 paths:
+  /base/captcha:
+    get:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 生成验证码,返回包括随机数id,base64,验证码长度,是否开启验证码
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.StructResponse'
+            - properties:
+                data:
+                  $ref: '#/definitions/system.captchaResponse'
+                msg:
+                  type: string
+              type: object
+      security:
+      - ApiKeyAuth: []
+      summary: 生成验证码
+      tags:
+      - Base
   /base/login:
     post:
       consumes:
