@@ -24,9 +24,7 @@ var (
 
 func run() {
 	fmt.Println("正在启动后端服务")
-	if global.GVLA_CONFIG.System.UseMultipoint || global.GVLA_CONFIG.System.UseRedis {
-		initialize.InitRedis() // 初始化redis服务
-	}
+	initialize.InitRedis()    // 初始化redis服务
 	r := initialize.Routers() //初始化路由
 	address := fmt.Sprintf("%s:%d", global.GVLA_CONFIG.System.Host, global.GVLA_CONFIG.System.HttpPort)
 	s := initialize.InitServer(address, r)

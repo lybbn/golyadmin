@@ -3,7 +3,6 @@ system:
   run-mode: debug # debug、release、test
   host: 0.0.0.0
   http-port: 9000
-  use-redis: true  # 使用redis
   is-cors: true #是否启用跨域(启用跨域需要配置cors)
   db-type: mysql #数据库类型 mysql(默认)|sqlite|sqlserver|postgresql|sqlite
   use-multipoint: false  #使用多点登录（false表示使用单点登录）
