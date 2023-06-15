@@ -10,7 +10,7 @@
 - golang版本 >= v1.20
 - IDE推荐：vscode
 - 默认集成mysql和sqlite驱动，如需sqlserver、oracle、postgresql需要到utils/databases/dbinitialize放开相应的驱动和方法注释
-- 验证码captcha默认为mem内存模式(180s过期时间)，需要redis存储请客修改api/v1/system/lyadmin_captcha.go
+- 验证码captcha默认为mem内存模式(180s过期时间)，需要redis存储可修改api/v1/system/lyadmin_captcha.go
 ```
 
 ### 项目
