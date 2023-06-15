@@ -36,6 +36,7 @@ func Routers() *gin.Engine {
 		systemRouter.InitBaseRouter(PublicGroup)
 	}
 	PrivateGroup := Router.Group(global.GVLA_CONFIG.System.RouterPrefix)
+	PrivateGroup.Use(middleware.JWTAuthMiddleware())
 	{
 		exampleRouter.InitExampleRouter(PrivateGroup)
 	}

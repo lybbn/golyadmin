@@ -2,10 +2,6 @@ package core
 
 import (
 	"fmt"
-	"os"
-
-	"gitee.com/lybbn/go-vue-lyadmin/utils/core/internal"
-	"github.com/gin-gonic/gin"
 
 	"github.com/fsnotify/fsnotify"
 	"github.com/spf13/viper"
@@ -20,22 +16,8 @@ func Viper(path ...string) *viper.Viper {
 
 	if len(path) == 0 {
 		if config == "" { // 判断命令行参数是否为空
-			if configEnv := os.Getenv(internal.ConfigEnv); configEnv == "" { // 判断 internal.ConfigEnv 常量存储的环境变量是否为空
-				switch gin.Mode() {
-				case gin.DebugMode:
-					config = internal.ConfigDefaultFile
-					fmt.Printf("当前为%s模式,配置文件为%s\n", gin.DebugMode, internal.ConfigDefaultFile)
-				case gin.ReleaseMode:
-					config = internal.ConfigReleaseFile
-					fmt.Printf("当前为%s模式,配置文件为%s\n", gin.ReleaseMode, internal.ConfigReleaseFile)
-				case gin.TestMode:
-					config = internal.ConfigTestFile
-					fmt.Printf("当前为%s模式,配置文件为%s\n", gin.TestMode, internal.ConfigTestFile)
-				}
-			} else { // internal.ConfigEnv 常量存储的环境变量不为空 将值赋值于config
-				config = configEnv
-				fmt.Printf("您正在使用%s环境变量,配置文件为%s\n", internal.ConfigEnv, config)
-			}
+			config = "config.yaml"
+			fmt.Printf("您正在使用%s环境变量,配置文件为%s\n", "GVLA_CONFIG", config)
 		} else { // 命令行参数不为空 将值赋值于config
 			fmt.Printf("您正在使用命令行的-c参数传递的值,配置文件为%s\n", config)
 		}

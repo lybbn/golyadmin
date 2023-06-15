@@ -13,10 +13,9 @@ system:
 
 # jwt 认证
 jwt:
-  signing-key: lybbn
+  secret-key: lybbn
   expires-time: 7d
   buffer-time: 1d
-  issuer: lybbn
 
 # 验证码配置
 captcha:

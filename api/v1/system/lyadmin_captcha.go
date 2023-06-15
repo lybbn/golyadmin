@@ -1,6 +1,7 @@
 package system
 
 import (
+	"fmt"
 	"image/color"
 	"time"
 
@@ -22,6 +23,7 @@ var store base64Captcha.Store
 
 // 可自定义存储对象 设置存储的验证码为 10240个，过期时间为 2分钟
 func init() {
+	fmt.Println(global.GVLA_CONFIG.Captcha.StoreType)
 	if global.GVLA_CONFIG.Captcha.StoreType == "mem" {
 		store = base64Captcha.NewMemoryStore(10240, time.Duration(global.GVLA_CONFIG.Captcha.CaptchaTimeout)*time.Second)
 	} else {
@@ -113,11 +115,6 @@ type captchaResponse struct {
 	CaptchaKey    string `json:"captchaKey"`
 	Captcha       string `json:"captcha"`
 	CaptchaLength int    `json:"captchaLength"`
-}
-
-// VerifyCaptcha 校验验证码，id 验证码id、 VerifyValue 验证码的值、clear 验证成功后是否删除原来的验证码
-func VerifyCaptcha(id, VerifyValue string, clear bool) bool {
-	return store.Verify(id, VerifyValue, clear)
 }
 
 // Captcha
