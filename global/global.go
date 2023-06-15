@@ -7,6 +7,7 @@ import (
 	"github.com/redis/go-redis/v9"
 	"github.com/spf13/viper"
 	"go.uber.org/zap"
+	"golang.org/x/sync/singleflight"
 	"gorm.io/gorm"
 )
 
@@ -16,13 +17,14 @@ const (
 )
 
 var (
-	GVLA_DB        *gorm.DB            //默认数据库
-	GVLA_DATABASES map[string]*gorm.DB //多数据源,访问使用GVLA_DATABASES[数据库别名]形式指定数据源
-	GVLA_REDIS     *redis.Client       //Redis客户端
-	GVLA_CONFIG    config.Server       //服务端配置
-	GVLA_LOG       *zap.Logger
-	GVLA_VP        *viper.Viper
-	lock           sync.RWMutex
+	GVLA_DB           *gorm.DB            //默认数据库
+	GVLA_DATABASES    map[string]*gorm.DB //多数据源,访问使用GVLA_DATABASES[数据库别名]形式指定数据源
+	GVLA_REDIS        *redis.Client       //Redis客户端
+	GVLA_CONFIG       config.Server       //服务端配置
+	GVLA_LOG          *zap.Logger
+	GVLA_VP           *viper.Viper
+	GVLA_Singleflight = &singleflight.Group{} //处理并发，合并相同请求（防缓存击穿）
+	lock              sync.RWMutex
 )
 
 // 通过数据库别名获取GVLA_DATABASES中的db

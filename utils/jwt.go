@@ -21,7 +21,7 @@ type BaseClaims struct {
 	UUID     string
 	ID       uint
 	Username string
-	NickName string
+	Nickname string
 }
 
 type JWT struct {
@@ -57,8 +57,16 @@ func (j *JWT) CreateToken(claims CustomClaims) (token string, err error) {
 	return withClaims.SignedString(j.SecretKey)
 }
 
-// ParseToken 验证 Token
-func (j *JWT) ParseToken(tokenString string) (*CustomClaims, error) {
+// RefreshTokenByOldToken 旧token 换新token 使用Singleflight避免并发问题
+func (j *JWT) RefreshTokenByOldToken(oldToken string, claims CustomClaims) (string, error) {
+	v, err, _ := global.GVLA_Singleflight.Do("JWT:"+oldToken, func() (interface{}, error) {
+		return j.CreateToken(claims)
+	})
+	return v.(string), err
+}
+
+// VerifyToken 验证 Token
+func (j *JWT) VerifyToken(tokenString string) (*CustomClaims, error) {
 	// 解析token
 	var mc = new(CustomClaims)
 	token, err := jwt.ParseWithClaims(tokenString, mc, func(token *jwt.Token) (i interface{}, e error) {

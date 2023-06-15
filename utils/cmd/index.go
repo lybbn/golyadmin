@@ -56,11 +56,11 @@ func tip() {
 }
 
 func init() {
+	cobra.OnInitialize(initEnvironment)
 	rootCmd.PersistentFlags().StringVarP(&configYaml, "config", "c", "config.yaml", "provided configuration file")
 	rootCmd.AddCommand(version.StartCmd)
 	rootCmd.AddCommand(migrate.StartCmd)
 	rootCmd.AddCommand(start.StartCmd)
-	cobra.OnInitialize(initEnvironment)
 }
 
 func Execute() {
