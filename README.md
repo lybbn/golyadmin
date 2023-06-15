@@ -9,8 +9,6 @@
 ```
 - golang版本 >= v1.20
 - IDE推荐：vscode
-- 默认集成mysql和sqlite驱动，如需sqlserver、oracle、postgresql需要到utils/databases/dbinitialize放开相应的驱动和方法注释
-- 验证码captcha默认为mem内存模式(180s过期时间)，需要redis存储可修改api/v1/system/lyadmin_captcha.go
 ```
 
 ### 项目
@@ -90,6 +88,13 @@ swag init
 - API文档：使用`Swagger`构建自动化文档。
 - 配置文件：使用 [fsnotify](https://github.com/fsnotify/fsnotify) 和 [viper](https://github.com/spf13/viper) 实现`yaml`格式的配置文件。
 - 日志：使用 [zap](https://github.com/uber-go/zap) 实现日志记录。
+
+## 项目二开
+
+```
+- 默认集成mysql和sqlite驱动，如需sqlserver、oracle、postgresql需要到utils/databases/dbinitialize放开相应的驱动和方法注释
+- 验证码captcha默认为mem内存模式(180s过期时间)，需要redis存储可修改api/v1/system/lyadmin_captcha.go
+```
 
 ## 商用注意事项
 
