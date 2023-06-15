@@ -40,12 +40,11 @@ func (l *BaseApi) Login(c *gin.Context) {
 		response.ErrorResponse(utils.GetValidMsg(err, &req), c)
 		return
 	}
-	if store.Verify(req.CaptchaKey, req.Captcha, true) {
+	if capchaStore.Verify(req.CaptchaKey, req.Captcha, true) {
 
 	} else {
 		response.ErrorResponse("验证码错误", c)
 		return
 	}
 	response.SuccessResponse(ip, "", c)
-
 }

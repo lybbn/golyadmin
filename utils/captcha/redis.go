@@ -13,7 +13,7 @@ var ctx = context.Background()
 
 func NewDefaultRedisStore() *RedisStore {
 	return &RedisStore{
-		Expiration: time.Second * time.Duration(global.GVLA_CONFIG.Captcha.CaptchaTimeout),
+		Expiration: time.Second * 180, //180s
 		PreKey:     "LYADMIN_CAPTCHA_",
 	}
 }

@@ -1,12 +1,10 @@
 package system
 
 import (
-	"fmt"
 	"image/color"
 	"time"
 
 	"gitee.com/lybbn/go-vue-lyadmin/global"
-	"gitee.com/lybbn/go-vue-lyadmin/utils/captcha"
 	"gitee.com/lybbn/go-vue-lyadmin/utils/response"
 	"github.com/gin-gonic/gin"
 	"github.com/mojocn/base64Captcha"
@@ -17,19 +15,17 @@ import (
 
 // DefaultMemStore适用单服务器场景，多服务器场景可使用redis共享存储验证码
 
-var store base64Captcha.Store
-
 // var store = base64Captcha.DefaultMemStore //存储的验证码为 10240 个，过期时间为 10分钟,
 
-// 可自定义存储对象 设置存储的验证码为 10240个，过期时间为 2分钟
-func init() {
-	fmt.Println(global.GVLA_CONFIG.Captcha.StoreType)
-	if global.GVLA_CONFIG.Captcha.StoreType == "mem" {
-		store = base64Captcha.NewMemoryStore(10240, time.Duration(global.GVLA_CONFIG.Captcha.CaptchaTimeout)*time.Second)
-	} else {
-		store = captcha.NewDefaultRedisStore()
-	}
-}
+// 可自定义存储对象 设置存储的验证码为 10240个，过期时间为 3分钟
+
+var capchaStore = base64Captcha.NewMemoryStore(10240, 180*time.Second)
+
+// var capchaStore = base64Captcha.NewMemoryStore(10240, time.Duration(global.GVLA_CONFIG.Captcha.CaptchaTimeout)*time.Second)
+
+// 使用redis存储
+
+// var capchaStore = captcha.NewDefaultRedisStore()
 
 // mathConfig 生成图形化算术验证码配置
 func mathConfig() *base64Captcha.DriverMath {
@@ -144,7 +140,7 @@ func (b *BaseApi) GetCaptcha(c *gin.Context) {
 		driver = stringConfig()
 	}
 
-	cp := base64Captcha.NewCaptcha(driver, store)
+	cp := base64Captcha.NewCaptcha(driver, capchaStore)
 
 	id, b64s, err := cp.Generate()
 

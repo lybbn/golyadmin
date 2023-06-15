@@ -19,12 +19,10 @@ jwt:
 
 # 验证码配置
 captcha:
-  store-type: mem  # mem 内存存储、redis redis存储 
   captcha-type: math # math 计算、digit 数字、string 英文数字、chinese 中文、audit 音频
   key-length: 6 # 字符个数
   img-width: 240
   img-height: 80
-  captcha-timeout: 120 # 验证码过期时间单位秒
 
 #数据库
 databases:
