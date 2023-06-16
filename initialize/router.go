@@ -18,7 +18,6 @@ func Routers() *gin.Engine {
 	gin.SetMode(global.GVLA_CONFIG.System.RunMode)
 	//创建路由
 	Router := gin.Default()
-	exampleRouter := router.RouterGroupApp.Example
 	systemRouter := router.RouterGroupApp.System
 	// 跨域
 	if global.GVLA_CONFIG.System.IsCors {
@@ -31,14 +30,16 @@ func Routers() *gin.Engine {
 	docs.SwaggerInfo.BasePath = global.GVLA_CONFIG.System.RouterPrefix
 	Router.GET(global.GVLA_CONFIG.System.RouterPrefix+"/swagger/*any", ginSwagger.WrapHandler(swaggerfiles.Handler))
 	global.GVLA_LOG.Info("register swagger handler")
+	//不需要认证
 	PublicGroup := Router.Group(global.GVLA_CONFIG.System.RouterPrefix)
 	{
 		systemRouter.InitBaseRouter(PublicGroup)
 	}
+	//需要认证
 	PrivateGroup := Router.Group(global.GVLA_CONFIG.System.RouterPrefix)
 	PrivateGroup.Use(middleware.JWTAuthMiddleware())
 	{
-		exampleRouter.InitExampleRouter(PrivateGroup)
+
 	}
 	//不存在路由
 	Router.NoRoute(func(c *gin.Context) {

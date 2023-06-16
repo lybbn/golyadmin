@@ -11,9 +11,9 @@ type BaseApi struct {
 }
 
 type LoginResponse struct {
-	User      system.LyadminAdminUsers `json:"user"`
-	Token     string                   `json:"token"`
-	ExpiresAt int64                    `json:"expiresAt"`
+	User      system.LyadminUsers `json:"user"`
+	Token     string              `json:"token"`
+	ExpiresAt int64               `json:"expiresAt"`
 }
 
 type LoginRequestParams struct {
@@ -48,3 +48,42 @@ func (l *BaseApi) Login(c *gin.Context) {
 	}
 	response.SuccessResponse(ip, "", c)
 }
+
+// 请求参数结构（分页）
+// type ExampleQueryParmas struct {
+// 	response.StructPageQueryParams
+// 	Name string `json:"name" form:"name"` //查询参数
+// }
+
+// GetExaExampleList
+// @Tags      Example
+// @Summary   分页获取信息列表
+// @Security  ApiKeyAuth
+// @accept    application/json
+// @Produce   application/json
+// @Param     data  query     ExampleQueryParmas                                        true  "页码, 每页大小"
+// @Success 200 {object} response.StructPageResponse{data=ExampleService}
+// @Router    /example/exampleList [get]
+// func (e *ExampleApi) GetExaExampleList(c *gin.Context) {
+// 	//单独获取请求参数
+// 	name := c.Query("name")
+// 	fmt.Println("====== single By Query String ======")
+// 	fmt.Println(name)
+
+// 	//按结构体接收请求参数
+// 	var pageParams ExampleQueryParmas
+// 	err := c.ShouldBindQuery(&pageParams)
+// 	fmt.Println("====== Only Bind By Query String ======")
+// 	fmt.Println(pageParams)
+// 	fmt.Println(pageParams.Name)
+// 	if err != nil {
+// 		response.ErrorResponse(err.Error(), c)
+// 		return
+// 	}
+
+// 	//分页方法
+// 	query := global.GVLA_DB.Table("lyadmin_users").Select("id", "name", "username")
+// 	p := pagination.Page[ExampleService]{}
+// 	p.PaginateQuery(query, c)
+// 	response.PaginateResponse(p.Data, p, "获取成功", c)
+// }
