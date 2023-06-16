@@ -5,6 +5,7 @@ import (
 	"time"
 
 	"gitee.com/lybbn/go-vue-lyadmin/global"
+	"github.com/gin-gonic/gin"
 	jwt "github.com/golang-jwt/jwt/v5"
 )
 
@@ -80,4 +81,14 @@ func (j *JWT) VerifyToken(tokenString string) (*CustomClaims, error) {
 		return mc, nil
 	}
 	return nil, errors.New("invalid token")
+}
+
+func GetClaims(c *gin.Context) (*CustomClaims, error) {
+	token := c.Request.Header.Get("x-token")
+	j := NewJWT()
+	claims, err := j.VerifyToken(token)
+	if err != nil {
+		global.GVLA_LOG.Error("从Gin的Context中获取从jwt解析信息失败, 请检查请求头是否存在x-token且claims是否为规定结构")
+	}
+	return claims, err
 }

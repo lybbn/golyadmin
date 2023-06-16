@@ -81,7 +81,7 @@ const docTemplate = `{
                     }
                 ],
                 "responses": {
-                    "200": {
+                    "2000": {
                         "description": "返回包括用户信息,token,过期时间",
                         "schema": {
                             "allOf": [
@@ -105,8 +105,8 @@ const docTemplate = `{
                 }
             }
         },
-        "/example/example": {
-            "get": {
+        "/operationlog/deletelogbyids": {
+            "delete": {
                 "security": [
                     {
                         "ApiKeyAuth": []
@@ -119,12 +119,23 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Example"
+                    "OperationLog"
                 ],
-                "summary": "不分页获取信息",
+                "summary": "批量删除OperationLog",
+                "parameters": [
+                    {
+                        "description": "批量删除LyadminOperationLog",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.Ids"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
-                        "description": "OK",
+                        "description": "批量删除LyadminOperationLog",
                         "schema": {
                             "allOf": [
                                 {
@@ -133,8 +144,8 @@ const docTemplate = `{
                                 {
                                     "type": "object",
                                     "properties": {
-                                        "data": {
-                                            "$ref": "#/definitions/example.ExampleService"
+                                        "msg": {
+                                            "type": "string"
                                         }
                                     }
                                 }
@@ -144,7 +155,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/example/exampleList": {
+        "/operationlog/log": {
             "get": {
                 "security": [
                     {
@@ -158,10 +169,148 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Example"
+                    "OperationLog"
                 ],
-                "summary": "分页获取信息列表",
+                "summary": "用id查询OperationLog",
                 "parameters": [
+                    {
+                        "type": "integer",
+                        "name": "id",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "用id查询LyadminOperationLog",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.StructResponse"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/system.LyadminOperationLog"
+                                        },
+                                        "msg": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "OperationLog"
+                ],
+                "summary": "删除OperationLog",
+                "parameters": [
+                    {
+                        "description": "LyadminOperationLog模型",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.Id"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "删除LyadminOperationLog",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.StructResponse"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "msg": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/operationlog/loglist": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "OperationLog"
+                ],
+                "summary": "分页获取LyadminOperationLog列表",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "UserAgent代理",
+                        "name": "agent",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "请求Body",
+                        "name": "body",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "请求状态",
+                        "name": "code",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "name": "create_at",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "name": "id",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "请求ip",
+                        "name": "ip",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "延迟",
+                        "name": "latency",
+                        "in": "query"
+                    },
                     {
                         "type": "integer",
                         "description": "每页大小",
@@ -170,8 +319,14 @@ const docTemplate = `{
                     },
                     {
                         "type": "string",
-                        "description": "查询参数",
-                        "name": "name",
+                        "description": "请求方法",
+                        "name": "method",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "错误信息",
+                        "name": "msg",
                         "in": "query"
                     },
                     {
@@ -179,11 +334,34 @@ const docTemplate = `{
                         "description": "当前页码",
                         "name": "page",
                         "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "请求路径",
+                        "name": "path",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "响应Body",
+                        "name": "resp",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "name": "update_at",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "用户id",
+                        "name": "user_id",
+                        "in": "query"
                     }
                 ],
                 "responses": {
                     "200": {
-                        "description": "OK",
+                        "description": "分页获取LyadminOperationLog列表,返回包括列表,总数,页码,每页数量",
                         "schema": {
                             "allOf": [
                                 {
@@ -193,7 +371,56 @@ const docTemplate = `{
                                     "type": "object",
                                     "properties": {
                                         "data": {
-                                            "$ref": "#/definitions/example.ExampleService"
+                                            "type": "object",
+                                            "additionalProperties": true
+                                        },
+                                        "msg": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/user/user": {
+            "post": {
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "User"
+                ],
+                "summary": "创建用户",
+                "parameters": [
+                    {
+                        "description": "用户名, 昵称, 密码, 角色ID",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/system.CreateUserRequestParams"
+                        }
+                    }
+                ],
+                "responses": {
+                    "2000": {
+                        "description": "创建用户,返回包括用户信息",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.StructResponse"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/system.CreateUserRequestParams"
+                                        },
+                                        "msg": {
+                                            "type": "string"
                                         }
                                     }
                                 }
@@ -205,17 +432,25 @@ const docTemplate = `{
         }
     },
     "definitions": {
-        "example.ExampleService": {
+        "request.Id": {
             "type": "object",
+            "required": [
+                "id"
+            ],
             "properties": {
                 "id": {
-                    "type": "string"
-                },
-                "name": {
-                    "type": "string"
-                },
-                "username": {
-                    "type": "string"
+                    "type": "integer"
+                }
+            }
+        },
+        "request.Ids": {
+            "type": "object",
+            "properties": {
+                "ids": {
+                    "type": "array",
+                    "items": {
+                        "type": "integer"
+                    }
                 }
             }
         },
@@ -261,6 +496,9 @@ const docTemplate = `{
                 }
             }
         },
+        "system.CreateUserRequestParams": {
+            "type": "object"
+        },
         "system.LoginRequestParams": {
             "type": "object",
             "required": [
@@ -297,11 +535,68 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "user": {
-                    "$ref": "#/definitions/system.LyadminAdminUsers"
+                    "$ref": "#/definitions/system.LyadminUsers"
                 }
             }
         },
-        "system.LyadminAdminUsers": {
+        "system.LyadminOperationLog": {
+            "type": "object",
+            "properties": {
+                "agent": {
+                    "description": "UserAgent代理",
+                    "type": "string"
+                },
+                "body": {
+                    "description": "请求Body",
+                    "type": "string"
+                },
+                "code": {
+                    "description": "请求状态",
+                    "type": "integer"
+                },
+                "create_at": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "ip": {
+                    "description": "请求ip",
+                    "type": "string"
+                },
+                "latency": {
+                    "description": "延迟",
+                    "type": "string"
+                },
+                "method": {
+                    "description": "请求方法",
+                    "type": "string"
+                },
+                "msg": {
+                    "description": "错误信息",
+                    "type": "string"
+                },
+                "path": {
+                    "description": "请求路径",
+                    "type": "string"
+                },
+                "resp": {
+                    "description": "响应Body",
+                    "type": "string"
+                },
+                "update_at": {
+                    "type": "string"
+                },
+                "user": {
+                    "$ref": "#/definitions/system.LyadminUsers"
+                },
+                "user_id": {
+                    "description": "用户id",
+                    "type": "integer"
+                }
+            }
+        },
+        "system.LyadminUsers": {
             "type": "object",
             "properties": {
                 "avatar": {
@@ -310,6 +605,9 @@ const docTemplate = `{
                 "create_at": {
                     "type": "string"
                 },
+                "dept_id": {
+                    "type": "integer"
+                },
                 "email": {
                     "type": "string"
                 },
@@ -317,14 +615,32 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "id": {
-                    "description": "主键ID",
                     "type": "integer"
+                },
+                "identity": {
+                    "description": "1后台用户、2前台用户",
+                    "type": "integer"
+                },
+                "is_active": {
+                    "type": "boolean"
+                },
+                "is_staff": {
+                    "type": "boolean"
+                },
+                "is_superuser": {
+                    "type": "boolean"
                 },
                 "mobile": {
                     "type": "string"
                 },
                 "nickname": {
                     "type": "string"
+                },
+                "post_id": {
+                    "type": "integer"
+                },
+                "role_id": {
+                    "type": "integer"
                 },
                 "update_at": {
                     "type": "string"
@@ -354,7 +670,7 @@ const docTemplate = `{
         }
     },
     "securityDefinitions": {
-        "JWT (apiKey)": {
+        "ApiKeyAuth": {
             "type": "apiKey",
             "name": "Authorization",
             "in": "header"
@@ -368,8 +684,8 @@ var SwaggerInfo = &swag.Spec{
 	Host:             "",
 	BasePath:         "",
 	Schemes:          []string{},
-	Title:            "Swagger Example API",
-	Description:      "This is a sample Server",
+	Title:            "Swagger API",
+	Description:      "This is a go-vue-lyadmin Server",
 	InfoInstanceName: "swagger",
 	SwaggerTemplate:  docTemplate,
 }

@@ -34,12 +34,13 @@ func Routers() *gin.Engine {
 	PublicGroup := Router.Group(global.GVLA_CONFIG.System.RouterPrefix)
 	{
 		systemRouter.InitBaseRouter(PublicGroup)
+		systemRouter.InitUserRouter(PublicGroup)
 	}
 	//需要认证
 	PrivateGroup := Router.Group(global.GVLA_CONFIG.System.RouterPrefix)
 	PrivateGroup.Use(middleware.JWTAuthMiddleware())
 	{
-
+		systemRouter.InitOperationLogRouter(PrivateGroup)
 	}
 	//不存在路由
 	Router.NoRoute(func(c *gin.Context) {

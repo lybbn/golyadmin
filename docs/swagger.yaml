@@ -1,12 +1,17 @@
 definitions:
-  example.ExampleService:
+  request.Id:
     properties:
       id:
-        type: string
-      name:
-        type: string
-      username:
-        type: string
+        type: integer
+    required:
+    - id
+    type: object
+  request.Ids:
+    properties:
+      ids:
+        items:
+          type: integer
+        type: array
     type: object
   response.StructPageResponse:
     properties:
@@ -37,6 +42,8 @@ definitions:
       msg:
         type: string
     type: object
+  system.CreateUserRequestParams:
+    type: object
   system.LoginRequestParams:
     properties:
       captcha:
@@ -63,25 +70,80 @@ definitions:
       token:
         type: string
       user:
-        $ref: '#/definitions/system.LyadminAdminUsers'
+        $ref: '#/definitions/system.LyadminUsers'
     type: object
-  system.LyadminAdminUsers:
+  system.LyadminOperationLog:
+    properties:
+      agent:
+        description: UserAgent代理
+        type: string
+      body:
+        description: 请求Body
+        type: string
+      code:
+        description: 请求状态
+        type: integer
+      create_at:
+        type: string
+      id:
+        type: integer
+      ip:
+        description: 请求ip
+        type: string
+      latency:
+        description: 延迟
+        type: string
+      method:
+        description: 请求方法
+        type: string
+      msg:
+        description: 错误信息
+        type: string
+      path:
+        description: 请求路径
+        type: string
+      resp:
+        description: 响应Body
+        type: string
+      update_at:
+        type: string
+      user:
+        $ref: '#/definitions/system.LyadminUsers'
+      user_id:
+        description: 用户id
+        type: integer
+    type: object
+  system.LyadminUsers:
     properties:
       avatar:
         type: string
       create_at:
         type: string
+      dept_id:
+        type: integer
       email:
         type: string
       gender:
         type: string
       id:
-        description: 主键ID
         type: integer
+      identity:
+        description: 1后台用户、2前台用户
+        type: integer
+      is_active:
+        type: boolean
+      is_staff:
+        type: boolean
+      is_superuser:
+        type: boolean
       mobile:
         type: string
       nickname:
         type: string
+      post_id:
+        type: integer
+      role_id:
+        type: integer
       update_at:
         type: string
       username:
@@ -101,8 +163,8 @@ definitions:
     type: object
 info:
   contact: {}
-  description: This is a sample Server
-  title: Swagger Example API
+  description: This is a go-vue-lyadmin Server
+  title: Swagger API
   version: 0.0.1
 paths:
   /base/captcha:
@@ -142,7 +204,7 @@ paths:
       produces:
       - application/json
       responses:
-        "200":
+        "2000":
           description: 返回包括用户信息,token,过期时间
           schema:
             allOf:
@@ -156,63 +218,199 @@ paths:
       summary: 用户登录
       tags:
       - Base
-  /example/example:
-    get:
+  /operationlog/deletelogbyids:
+    delete:
       consumes:
       - application/json
+      parameters:
+      - description: 批量删除LyadminOperationLog
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/request.Ids'
       produces:
       - application/json
       responses:
         "200":
-          description: OK
+          description: 批量删除LyadminOperationLog
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.StructResponse'
+            - properties:
+                msg:
+                  type: string
+              type: object
+      security:
+      - ApiKeyAuth: []
+      summary: 批量删除OperationLog
+      tags:
+      - OperationLog
+  /operationlog/log:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: LyadminOperationLog模型
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/request.Id'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 删除LyadminOperationLog
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.StructResponse'
+            - properties:
+                msg:
+                  type: string
+              type: object
+      security:
+      - ApiKeyAuth: []
+      summary: 删除OperationLog
+      tags:
+      - OperationLog
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - in: query
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 用id查询LyadminOperationLog
           schema:
             allOf:
             - $ref: '#/definitions/response.StructResponse'
             - properties:
                 data:
-                  $ref: '#/definitions/example.ExampleService'
+                  $ref: '#/definitions/system.LyadminOperationLog'
+                msg:
+                  type: string
               type: object
       security:
       - ApiKeyAuth: []
-      summary: 不分页获取信息
+      summary: 用id查询OperationLog
       tags:
-      - Example
-  /example/exampleList:
+      - OperationLog
+  /operationlog/loglist:
     get:
       consumes:
       - application/json
       parameters:
+      - description: UserAgent代理
+        in: query
+        name: agent
+        type: string
+      - description: 请求Body
+        in: query
+        name: body
+        type: string
+      - description: 请求状态
+        in: query
+        name: code
+        type: integer
+      - in: query
+        name: create_at
+        type: string
+      - in: query
+        name: id
+        type: integer
+      - description: 请求ip
+        in: query
+        name: ip
+        type: string
+      - description: 延迟
+        in: query
+        name: latency
+        type: string
       - description: 每页大小
         in: query
         name: limit
         type: integer
-      - description: 查询参数
+      - description: 请求方法
         in: query
-        name: name
+        name: method
+        type: string
+      - description: 错误信息
+        in: query
+        name: msg
         type: string
       - description: 当前页码
         in: query
         name: page
         type: integer
+      - description: 请求路径
+        in: query
+        name: path
+        type: string
+      - description: 响应Body
+        in: query
+        name: resp
+        type: string
+      - in: query
+        name: update_at
+        type: string
+      - description: 用户id
+        in: query
+        name: user_id
+        type: integer
       produces:
       - application/json
       responses:
         "200":
-          description: OK
+          description: 分页获取LyadminOperationLog列表,返回包括列表,总数,页码,每页数量
           schema:
             allOf:
             - $ref: '#/definitions/response.StructPageResponse'
             - properties:
                 data:
-                  $ref: '#/definitions/example.ExampleService'
+                  additionalProperties: true
+                  type: object
+                msg:
+                  type: string
               type: object
       security:
       - ApiKeyAuth: []
-      summary: 分页获取信息列表
+      summary: 分页获取LyadminOperationLog列表
       tags:
-      - Example
+      - OperationLog
+  /user/user:
+    post:
+      parameters:
+      - description: 用户名, 昵称, 密码, 角色ID
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/system.CreateUserRequestParams'
+      produces:
+      - application/json
+      responses:
+        "2000":
+          description: 创建用户,返回包括用户信息
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.StructResponse'
+            - properties:
+                data:
+                  $ref: '#/definitions/system.CreateUserRequestParams'
+                msg:
+                  type: string
+              type: object
+      summary: 创建用户
+      tags:
+      - User
 securityDefinitions:
-  JWT (apiKey):
+  ApiKeyAuth:
     in: header
     name: Authorization
     type: apiKey

@@ -1,0 +1,112 @@
+package system
+
+import (
+	"gitee.com/lybbn/go-vue-lyadmin/global"
+	"gitee.com/lybbn/go-vue-lyadmin/model/common/request"
+	"gitee.com/lybbn/go-vue-lyadmin/model/system"
+	systemReq "gitee.com/lybbn/go-vue-lyadmin/model/system/request"
+	"gitee.com/lybbn/go-vue-lyadmin/utils"
+	"gitee.com/lybbn/go-vue-lyadmin/utils/pagination"
+	"gitee.com/lybbn/go-vue-lyadmin/utils/response"
+	"github.com/gin-gonic/gin"
+	"go.uber.org/zap"
+)
+
+type OperationLogApi struct{}
+
+// DeleteLyadminOperationLog
+// @Tags      OperationLog
+// @Summary   删除OperationLog
+// @Security  ApiKeyAuth
+// @accept    application/json
+// @Produce   application/json
+// @Param     data  body      request.Id      true  "LyadminOperationLog模型"
+// @Success   200   {object}  response.StructResponse{msg=string}  "删除LyadminOperationLog"
+// @Router    /operationlog/log [delete]
+func (s *OperationLogApi) DeleteLyadminOperationLog(c *gin.Context) {
+	var req request.Id
+	err := c.ShouldBind(&req)
+	if err != nil {
+		response.ErrorResponse(utils.GetValidMsg(err, &req), c)
+		return
+	}
+	err = operationLogService.DeleteLyadminOperationLog(uint(req.Id))
+	if err != nil {
+		global.GVLA_LOG.Error("删除失败!", zap.Error(err))
+		response.ErrorResponse("删除失败", c)
+		return
+	}
+	response.SuccessResponse(nil, "删除成功", c)
+}
+
+// DeleteLyadminOperationLogByIds
+// @Tags      OperationLog
+// @Summary   批量删除OperationLog
+// @Security  ApiKeyAuth
+// @accept    application/json
+// @Produce   application/json
+// @Param     data  body      request.Ids                 true  "批量删除LyadminOperationLog"
+// @Success   200   {object}  response.StructResponse{msg=string}  "批量删除LyadminOperationLog"
+// @Router    /operationlog/deletelogbyids [delete]
+func (s *OperationLogApi) DeleteLyadminOperationLogByIds(c *gin.Context) {
+	var IDS request.Ids
+	err := c.ShouldBind(&IDS)
+	if err != nil {
+		response.ErrorResponse(err.Error(), c)
+		return
+	}
+	err = operationLogService.DeleteLyadminOperationLogByIds(IDS)
+	if err != nil {
+		global.GVLA_LOG.Error("批量删除失败!", zap.Error(err))
+		response.ErrorResponse("批量删除失败", c)
+		return
+	}
+	response.SuccessResponse(nil, "批量删除成功", c)
+}
+
+// GetLyadminOperationLogDetail
+// @Tags      OperationLog
+// @Summary   用id查询OperationLog
+// @Security  ApiKeyAuth
+// @accept    application/json
+// @Produce   application/json
+// @Param     data  query     request.Id                                  true  "Id"
+// @Success   200   {object}  response.StructResponse{data=system.LyadminOperationLog,msg=string}  "用id查询LyadminOperationLog"
+// @Router    /operationlog/log [get]
+func (s *OperationLogApi) GetLyadminOperationLogDetail(c *gin.Context) {
+	var req request.Id
+	err := c.ShouldBindQuery(&req)
+	if err != nil {
+		response.ErrorResponse(utils.GetValidMsg(err, &req), c)
+		return
+	}
+	data, err := operationLogService.GetLyadminOperationLogDetail(uint(req.Id))
+	if err != nil {
+		global.GVLA_LOG.Error("查询失败!", zap.Error(err))
+		response.ErrorResponse("查询失败", c)
+		return
+	}
+	response.SuccessResponse(data, "查询成功", c)
+}
+
+// GetLyadminOperationLogList
+// @Tags      OperationLog
+// @Summary   分页获取LyadminOperationLog列表
+// @Security  ApiKeyAuth
+// @accept    application/json
+// @Produce   application/json
+// @Param     data  query     systemReq.LyadminOperationLogSearch                        true  "页码, 每页大小, 搜索条件"
+// @Success   200   {object}  response.StructPageResponse{data=map[string]interface{},msg=string}  "分页获取LyadminOperationLog列表,返回包括列表,总数,页码,每页数量"
+// @Router    /operationlog/loglist [get]
+func (s *OperationLogApi) GetLyadminOperationLogList(c *gin.Context) {
+	var pageInfo systemReq.LyadminOperationLogSearch
+	err := c.ShouldBind(&pageInfo)
+	if err != nil {
+		response.ErrorResponse(err.Error(), c)
+		return
+	}
+	query := operationLogService.GetLyadminOperationLogList(pageInfo)
+	p := pagination.Page[system.LyadminOperationLog]{}
+	p.PaginateQuery(query, c)
+	response.PaginateResponse(p.Data, p, "获取成功", c)
+}

@@ -7,10 +7,10 @@ import "gitee.com/lybbn/go-vue-lyadmin/utils/cmd"
 //go:generate go mod tidy
 //go:generate go mod download
 
-// @title                       Swagger Example API
+// @title                       Swagger API
 // @version                     0.0.1
-// @description                 This is a sample Server
-// @securityDefinitions.apikey  JWT (apiKey)
+// @description                 This is a go-vue-lyadmin Server
+// @securityDefinitions.apikey  ApiKeyAuth
 // @in                          header
 // @name                        Authorization
 // @BasePath                    /
