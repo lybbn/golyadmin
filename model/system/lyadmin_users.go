@@ -27,9 +27,9 @@ type LyadminUsers struct {
 	DeptId      int    `json:"dept_id" gorm:"size:20;comment:部门"`
 	PostId      int    `json:"post_id" gorm:"size:20;comment:岗位"`
 	RoleId      int    `json:"role_id" gorm:"size:20;comment:角色ID"`
-	IsStaff     bool   `json:"is_staff" gorm:"size:4;default:true;comment:是否可登录后台"`
-	IsSuperuser bool   `json:"is_superuser" gorm:"size:4;default:false;comment:是否超管"`
-	IsActive    bool   `json:"is_active" gorm:"size:4;default:true;comment:状态(1正常、2冻结)"`
+	IsStaff     bool   `json:"is_staff" gorm:"default:true;comment:是否可登录后台"`
+	IsSuperuser bool   `json:"is_superuser" gorm:"default:false;comment:是否超管"`
+	IsActive    bool   `json:"is_active" gorm:"default:true;comment:状态(1正常、0冻结)"`
 	Identity    int    `json:"identity" gorm:"size:4;default:1;comment:身份(1后台、2前台)"` //1后台用户、2前台用户
 }
 
