@@ -6,6 +6,7 @@ import (
 	"gitee.com/lybbn/go-vue-lyadmin/global"
 	mmodel "gitee.com/lybbn/go-vue-lyadmin/model"
 	"github.com/spf13/cobra"
+	"gorm.io/gorm"
 )
 
 var (
@@ -30,16 +31,19 @@ func run() {
 
 // 迁移数据库表
 func migrateModel() {
-	db := global.GVLA_DB
+	var db *gorm.DB
 	if database == "" {
-
+		db = global.GVLA_DB
 	} else {
 		db = global.GetGlobalDBByName(database)
 	}
 
 	tables := mmodel.MigrateModelList
 	for _, t := range tables {
-		_ = db.Debug().AutoMigrate(&t)
+		err := db.Debug().Set("gorm:table_options", "ENGINE=InnoDB").AutoMigrate(&t)
+		if err != nil {
+			panic(err)
+		}
 	}
 }
 
