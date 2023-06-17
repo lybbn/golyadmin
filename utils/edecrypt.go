@@ -5,6 +5,7 @@ import (
 	"encoding/hex"
 
 	"golang.org/x/crypto/bcrypt"
+	"golang.org/x/crypto/scrypt"
 )
 
 //@function: MD5
@@ -28,4 +29,20 @@ func MakePassowrd(password string) string {
 func CheckPassword(password, hash string) bool {
 	err := bcrypt.CompareHashAndPassword([]byte(hash), []byte(password))
 	return err == nil
+}
+
+// MakePasswordSalt 根据明文密码和加盐值生成加密密码
+func MakePasswordSalt(password string, salt string) string {
+	var rb []byte
+	rb, err := scrypt.Key([]byte(password), []byte(salt), 16384, 8, 1, 32)
+	if err != nil {
+		return ""
+	}
+	return hex.EncodeToString(rb)
+}
+
+// CheckPasswordSalt 对比明文密码和数据库的哈希值和加盐值
+func CheckPasswordSalt(password, hash string, salt string) bool {
+	passwordHash := MakePasswordSalt(password, salt)
+	return hash == passwordHash
 }

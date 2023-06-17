@@ -1,11 +1,17 @@
 package utils
 
 import (
+	"crypto/rand"
 	"strconv"
 	"strings"
 	"time"
 
 	"gitee.com/lybbn/go-vue-lyadmin/global"
+)
+
+const (
+	symbol = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()-_=+,.?/:;{}[]`~"
+	letter = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
 )
 
 // 获取当前日期时间格式为 2006-01-02 15:04:05
@@ -52,4 +58,37 @@ func ParseDuration(d string) (time.Duration, error) {
 
 	dv, err := strconv.ParseInt(d, 10, 64)
 	return time.Duration(dv), err
+}
+
+func generateRandString(length int, s string) string {
+	var chars = []byte(s)
+	clen := len(chars)
+	if clen < 2 || clen > 256 {
+		panic("Wrong charset length for NewLenChars()")
+	}
+	maxrb := 255 - (256 % clen)
+	b := make([]byte, length)
+	r := make([]byte, length+(length/4))
+	i := 0
+	for {
+		if _, err := rand.Read(r); err != nil {
+			panic("Error reading random bytes: " + err.Error())
+		}
+		for _, rb := range r {
+			c := int(rb)
+			if c > maxrb {
+				continue
+			}
+			b[i] = chars[c%clen]
+			i++
+			if i == length {
+				return string(b)
+			}
+		}
+	}
+}
+
+// GenerateRandomKey6 生成6为随机字符串
+func GenerateRandomKey6() string {
+	return generateRandString(6, letter)
 }

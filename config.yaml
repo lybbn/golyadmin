@@ -12,7 +12,7 @@ system:
 
 # jwt 认证
 jwt:
-  secret-key: lybbn
+  secret-key: golyadmin-lybbn-insecure-$p1b+kob@eb%wh0bn&8yj&!8
   expires-time: 7d
   buffer-time: 1d
 

@@ -37,7 +37,7 @@ func run() {
 	}
 	var count int64
 	if err := global.GVLA_DB.Model(&system.LyadminUsers{}).Where("is_superuser = 1").Count(&count).Error; err != nil {
-		fmt.Printf(err.Error())
+		fmt.Println(err.Error())
 		return
 	}
 	if count > 0 {
