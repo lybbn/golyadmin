@@ -18,11 +18,12 @@ type LyadminUsers struct {
 	UUID        string `gorm:"<-:create;type:varchar(50);comment:uuid" form:"uuid" json:"uuid"` // 允许读和创建
 	Username    string `json:"username" gorm:"type:varchar(50);not null;index;unique;comment:用户名"`
 	Password    string `json:"-"  gorm:"type:varchar(128);comment:密码"`
-	Nickname    string `json:"nickname" gorm:"type:varchar(20);default:系统用户;comment:昵称"`
+	Name        string `json:"name" gorm:"type:varchar(20);comment:姓名"`
+	Nickname    string `json:"nickname" gorm:"type:varchar(20);comment:昵称"`
 	Mobile      string `json:"mobile"  gorm:"type:char(25);comment:手机号"`
 	Email       string `json:"email"  gorm:"type:varchar(100);comment:邮箱"`
 	Avatar      string `json:"avatar" gorm:"type:varchar(255);comment:头像"`
-	Gender      string `json:"gender" gorm:"type:varchar(10);comment:性别"`
+	Gender      string `json:"gender" gorm:"type:varchar(10);default:男;comment:性别"` //男、女
 	DeptId      int    `json:"dept_id" gorm:"size:20;comment:部门"`
 	PostId      int    `json:"post_id" gorm:"size:20;comment:岗位"`
 	RoleId      int    `json:"role_id" gorm:"size:20;comment:角色ID"`

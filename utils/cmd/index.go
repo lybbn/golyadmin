@@ -8,6 +8,8 @@ import (
 	"gitee.com/lybbn/go-vue-lyadmin/global"
 	"gitee.com/lybbn/go-vue-lyadmin/initialize"
 	"gitee.com/lybbn/go-vue-lyadmin/utils"
+	"gitee.com/lybbn/go-vue-lyadmin/utils/cmd/auth/password"
+	"gitee.com/lybbn/go-vue-lyadmin/utils/cmd/auth/superadmin"
 	"gitee.com/lybbn/go-vue-lyadmin/utils/cmd/migrate"
 	"gitee.com/lybbn/go-vue-lyadmin/utils/cmd/start"
 	"gitee.com/lybbn/go-vue-lyadmin/utils/cmd/version"
@@ -61,6 +63,8 @@ func init() {
 	rootCmd.AddCommand(version.StartCmd)
 	rootCmd.AddCommand(migrate.StartCmd)
 	rootCmd.AddCommand(start.StartCmd)
+	rootCmd.AddCommand(superadmin.StartCmd)
+	rootCmd.AddCommand(password.StartCmd)
 }
 
 func Execute() {

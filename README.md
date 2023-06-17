@@ -34,11 +34,22 @@ go build -o golyadmin main.go (windows编译命令为go build -o golyadmin.exe m
 # 或直接非编译运行
 go run main.go start [-c 配置文件]
 
+```
+
+其他命令(打包后go run main.go替换成golyadmin)
+
+```bash
 # migrate同步model表（需要同步的model写入modle/migrate.go中）
 
 go run main.go migrate [-d 数据库别名] [-c 配置文件]
 
+# 创建超级管理员用户
 
+go run main.go createsuperuser -u superadmin -p 123456
+
+# 修改用户密码
+
+go run main.go changepassword -u superadmin -p 123456
 ```
 
 ### swagger自动化API文档
