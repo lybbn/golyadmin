@@ -52,15 +52,15 @@ func (b *BaseApi) Login(c *gin.Context) {
 				return
 			}
 			if !user.IsActive {
-				global.GVLA_LOG.Error("该用户被禁用，请联系管理员!")
+				global.GVLA_LOG.Error("该用户被禁用，请联系管理员:" + req.Username)
 				response.ErrorResponse("该用户被禁用，请联系管理员!", c)
 				return
 			}
-			b.TokenNext(c, user)
+			b.GetJwtToken(c, user)
 			return
 		} else {
-			global.GVLA_LOG.Error("登陆失败! 用户名不存在或者密码错误!", zap.Error(err))
-			response.ErrorResponse("用户名不存在或者密码错误", c)
+			global.GVLA_LOG.Error("登陆失败! 用户名不存在或密码错误!", zap.Error(err))
+			response.ErrorResponse("用户名不存在或密码错误", c)
 			return
 		}
 	} else {
@@ -69,8 +69,8 @@ func (b *BaseApi) Login(c *gin.Context) {
 	}
 }
 
-// TokenNext 登录以后签发jwt
-func (b *BaseApi) TokenNext(c *gin.Context, user system.LyadminUsers) {
+// GetJwtToken 登录以后签发jwt
+func (b *BaseApi) GetJwtToken(c *gin.Context, user system.LyadminUsers) {
 	j := &utils.JWT{SecretKey: []byte(global.GVLA_CONFIG.JWT.SecretKey)} // 唯一签名
 	claims := j.CreateClaims(utils.BaseClaims{
 		UUID:     user.UUID,
@@ -84,6 +84,7 @@ func (b *BaseApi) TokenNext(c *gin.Context, user system.LyadminUsers) {
 		response.ErrorResponse("获取token失败", c)
 		return
 	}
+
 	if !global.GVLA_CONFIG.System.UseMultipoint {
 		response.SuccessResponse(LoginResponse{
 			User:      user,
@@ -111,7 +112,7 @@ func (b *BaseApi) TokenNext(c *gin.Context, user system.LyadminUsers) {
 		var blackJWT system.JwtBlacklist
 		blackJWT.Jwt = jwtStr
 		if err := jwtService.JoinBlacklist(blackJWT); err != nil {
-			response.ErrorResponse("jwt作废失败", c)
+			response.ErrorResponse("jwt黑名单作废失败", c)
 			return
 		}
 		if err := jwtService.SetRedisJWT(token, user.Username); err != nil {

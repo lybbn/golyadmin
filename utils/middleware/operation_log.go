@@ -6,7 +6,6 @@ import (
 	"io"
 	"net/http"
 	"net/url"
-	"strconv"
 	"strings"
 	"sync"
 	"time"
@@ -55,18 +54,18 @@ func OperationLog() gin.HandlerFunc {
 			}
 			body, _ = json.Marshal(&m)
 		}
-		claims, _ := utils.GetClaims(c)
-		if claims.BaseClaims.ID != 0 {
-			userId = int(claims.BaseClaims.ID)
+		claims, err := utils.GetClaims(c)
+		if err != nil {
+			userId = 0
 		} else {
-			id, err := strconv.Atoi(c.Request.Header.Get("x-user-id"))
-			if err != nil {
+			if claims.BaseClaims.ID != 0 {
+				userId = int(claims.BaseClaims.ID)
+			} else {
 				userId = 0
 			}
-			userId = id
 		}
 		record := system.LyadminOperationLog{
-			Ip:     c.ClientIP(),
+			Ip:     utils.GetRealClientIP(c),
 			Method: c.Request.Method,
 			Path:   c.Request.URL.Path,
 			Agent:  c.Request.UserAgent(),

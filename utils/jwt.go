@@ -84,11 +84,11 @@ func (j *JWT) VerifyToken(tokenString string) (*CustomClaims, error) {
 }
 
 func GetClaims(c *gin.Context) (*CustomClaims, error) {
-	token := c.Request.Header.Get("x-token")
+	token := c.Request.Header.Get("Authorization")
 	j := NewJWT()
 	claims, err := j.VerifyToken(token)
 	if err != nil {
-		global.GVLA_LOG.Error("从Gin的Context中获取从jwt解析信息失败, 请检查请求头是否存在x-token且claims是否为规定结构")
+		global.GVLA_LOG.Error("获取请求头Authorization的jwt解析信息失败, 请检查请求头是否存在Authorization且claims是否为规定结构")
 	}
 	return claims, err
 }
