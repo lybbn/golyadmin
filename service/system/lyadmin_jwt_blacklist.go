@@ -15,7 +15,7 @@ func (js *JwtService) getBlackListKey(tokenStr string) string {
 	return "jwt_black_list:" + utils.MD5([]byte(tokenStr))
 }
 
-func (js *JwtService) JoinBlacklist(jwtList system.JwtBlacklist) (err error) {
+func (js *JwtService) JoinBlacklist(jwtList system.LyadminJwtBlacklist) (err error) {
 	err = global.GVLA_DB.Create(&jwtList).Error
 	if err != nil {
 		return

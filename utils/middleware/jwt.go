@@ -77,7 +77,7 @@ func JWTAuthMiddleware() gin.HandlerFunc {
 				if err != nil {
 					global.GVLA_LOG.Error("get redis jwt failed", zap.Error(err))
 				} else { // 当之前的取成功时才进行拉黑操作
-					_ = jwtService.JoinBlacklist(system.JwtBlacklist{Jwt: RedisJwtToken})
+					_ = jwtService.JoinBlacklist(system.LyadminJwtBlacklist{Jwt: RedisJwtToken})
 				}
 				// 无论如何都要记录当前的活跃状态
 				_ = jwtService.SetRedisJWT(newToken, newClaims.Username)

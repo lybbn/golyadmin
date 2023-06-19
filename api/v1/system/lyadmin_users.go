@@ -109,7 +109,7 @@ func (b *BaseApi) GetJwtToken(c *gin.Context, user system.LyadminUsers) {
 		global.GVLA_LOG.Error("设置登录状态失败!", zap.Error(err))
 		response.ErrorResponse("设置登录状态失败", c)
 	} else {
-		var blackJWT system.JwtBlacklist
+		var blackJWT system.LyadminJwtBlacklist
 		blackJWT.Jwt = jwtStr
 		if err := jwtService.JoinBlacklist(blackJWT); err != nil {
 			response.ErrorResponse("jwt黑名单作废失败", c)

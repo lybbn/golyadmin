@@ -6,5 +6,7 @@ import "gitee.com/lybbn/go-vue-lyadmin/model/system"
 var MigrateModelList = []interface{}{
 	system.LyadminUsers{},
 	system.LyadminOperationLog{},
-	system.JwtBlacklist{},
+	system.LyadminJwtBlacklist{},
+	system.LyadminMenu{},
+	system.LyadminMenuButton{},
 }
