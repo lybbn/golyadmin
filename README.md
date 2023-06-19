@@ -2,7 +2,7 @@
 
 ### 项目介绍
 
-> go-vue-lyadmin是一个基于 [vue](https://vuejs.org) 和 [gin](https://gin-gonic.com) 开发的全栈前后端分离的开发基础平台，集成jwt鉴权，动态路由，动态菜单，casbin鉴权等功能，提供多种示例文件，让您的开发效率更高。
+> go-vue-lyadmin是一个基于 [vue](https://vuejs.org) 和 [gin](https://gin-gonic.com) 开发的全栈前后端分离的开发基础平台，集成jwt鉴权，动态路由，动态菜单，RBAC鉴权等功能，提供多种示例文件，让您的开发效率更高。
 
 ## 使用说明
 
@@ -19,9 +19,9 @@
 
 # 克隆项目
 git clone https://gitee.com/lybbn/go-vue-lyadmin.git
-# 进入go-vue-lyadmin文件夹
+# 进入go-vue-lyadmin/backend文件夹
 cd go-vue-lyadmin
-
+cd backend
 # 使用 go mod 并安装go依赖包
 go generate
 
@@ -75,6 +75,7 @@ go env -w GOPROXY=https://goproxy.cn,https://goproxy.io,direct
 
 # 如果嫌麻烦,可以使用go generate 编译前自动执行代码, 不过这个不能使用 `Goland` 或者 `Vscode` 的 命令行终端
 cd go-vue-lyadmin
+cd backend
 go generate -run "go env -w .*?"
 
 # 使用如下命令下载swag
@@ -86,6 +87,7 @@ go install github.com/swaggo/swag/cmd/swag@latest
 
 ```bash
 cd go-vue-lyadmin
+cd backend
 swag init
 ```
 
