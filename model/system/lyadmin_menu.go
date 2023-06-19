@@ -6,10 +6,11 @@ import (
 
 type LyadminMenu struct {
 	global.GVLA_BASE_MODEL
-	ParentId      string              `json:"parent_id" gorm:"comment:父菜单ID"`
+	ParentId      uint                `json:"parent_id" gorm:"comment:父菜单ID"`
 	Name          string              `json:"name" gorm:"comment:菜单名称"`
 	Icon          string              `json:"icon" gorm:"comment:菜单图标"`
 	WebPath       string              `json:"web_path" gorm:"comment:路由地址"`
+	IsLink        bool                `json:"is_link" gorm:"default:false;comment:是否外链"`
 	Visible       bool                `json:"visible" gorm:"default:true;comment:是否显示菜单"`
 	Component     string              `json:"component" gorm:"comment:对应前端文件路径"`
 	ComponentName string              `json:"component_name" gorm:"comment:对应前端文件名称"`

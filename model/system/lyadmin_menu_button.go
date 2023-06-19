@@ -16,3 +16,13 @@ type LyadminMenuButton struct {
 func (LyadminMenuButton) TableName() string {
 	return "lyadmin_menu_button"
 }
+
+type LyadminButton struct {
+	global.GVLA_BASE_MODEL
+	Name  string `json:"name" gorm:"varchar(30);comment:按钮名称"`
+	Value string `json:"value" gorm:"comment:按钮值"`
+}
+
+func (LyadminButton) TableName() string {
+	return "lyadmin_button"
+}

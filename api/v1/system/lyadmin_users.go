@@ -135,9 +135,6 @@ type CreateUserRequestParams struct {
 	Email    string `form:"email" json:"email"  example:"电子邮箱"`
 	Avatar   string `form:"avatar" json:"avatar" example:"头像"`
 	Gender   string `form:"gender" json:"gender" example:"性别"`
-	DeptId   int    `form:"dept_id" json:"dept_id" example:"int 部门id"`
-	PostId   int    `form:"post_id" json:"post_id" example:"int 岗位id"`
-	RoleId   int    `form:"role_id" json:"role_id" example:"int 角色id"`
 }
 
 // Create
@@ -165,7 +162,7 @@ func (b *BaseApi) CreateUser(c *gin.Context) {
 		response.ErrorResponse("用户名已存在！", c)
 		return
 	}
-	user := &system.LyadminUsers{Username: req.Username, Nickname: req.Nickname, Password: req.Password, Avatar: req.Avatar, Mobile: req.Mobile, Gender: req.Gender, DeptId: req.DeptId, PostId: req.PostId, RoleId: req.RoleId, Email: req.Email}
+	user := &system.LyadminUsers{Username: req.Username, Nickname: req.Nickname, Password: req.Password, Avatar: req.Avatar, Mobile: req.Mobile, Gender: req.Gender, Email: req.Email}
 	// 加密密码
 	user.Password = utils.MakePassowrd(req.Password)
 	err = global.GVLA_DB.Create(&user).Error
