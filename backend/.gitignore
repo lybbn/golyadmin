@@ -1,0 +1,15 @@
+.idea
+.vscode
+*/.DS_Store
+/logs/
+*.log
+golyadmin.exe
+golyadmin
+main.exe
+vendor
+go.sum
+dist
+node_modules
+package-lock.json
+yarn.lock
+
