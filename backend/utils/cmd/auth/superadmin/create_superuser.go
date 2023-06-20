@@ -44,7 +44,7 @@ func run() {
 		fmt.Println(utils.Red("已存在超级管理员，无需再创建，如需更改超级管理员密码请使用changepassword命令！"))
 		return
 	}
-	user := &system.LyadminUsers{Username: username, Nickname: "超级管理员", Name: "超级管理员", Password: password, IsSuperuser: true}
+	user := &system.LyadminUsers{Username: username, Nickname: "超级管理员", Name: "超级管理员", Password: password, IsSuperuser: true, Identity: 1}
 	// 加密密码
 	user.Password = utils.MakePassowrd(password)
 	err := global.GVLA_DB.Create(&user).Error

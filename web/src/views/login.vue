@@ -597,6 +597,9 @@
      .box{
       width: 100% !important;
     }
+    #lyadmincanvas{
+      display: none;
+    }
   }
   @media screen and (max-width: 1600px) {
    

@@ -28,6 +28,12 @@ func (o *OperationLogService) DeleteLyadminOperationLog(id uint) (err error) {
 	return err
 }
 
+// 清空全部操作日志
+func (o *OperationLogService) DeleteAllLyadminOperationLog() (err error) {
+	err = global.GVLA_DB.Where("id > ?", 0).Delete(&system.LyadminOperationLog{}).Error
+	return err
+}
+
 // 根据id获取单条操作记录
 func (o *OperationLogService) GetLyadminOperationLogDetail(id uint) (lyadminOperationLog system.LyadminOperationLog, err error) {
 	err = global.GVLA_DB.Where("id = ?", id).First(&lyadminOperationLog).Error

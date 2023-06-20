@@ -15,7 +15,7 @@ import (
 type OperationLogApi struct{}
 
 // @Tags      OperationLog
-// @Summary   删除OperationLog
+// @Summary   根据ID删除日志
 // @Security  ApiKeyAuth
 // @accept    application/json
 // @Produce   application/json
@@ -39,12 +39,35 @@ func (s *OperationLogApi) DeleteLyadminOperationLog(c *gin.Context) {
 }
 
 // @Tags      OperationLog
-// @Summary   批量删除OperationLog
+// @Summary   清除全部日志
 // @Security  ApiKeyAuth
 // @accept    application/json
 // @Produce   application/json
-// @Param     data  body      request.Ids                 true  "批量删除LyadminOperationLog"
-// @Success   200   {object}  response.StructResponse{msg=string}  "批量删除LyadminOperationLog"
+// @Param     data  body      request.Empty      false  "无"
+// @Success   200   {object}  response.StructResponse{msg=string}  "清除全部日志"
+// @Router    /operationlog/log [delete]
+func (s *OperationLogApi) DeleteAllLyadminOperationLog(c *gin.Context) {
+	identity := utils.GetUserIdentity(c)
+	if identity != 1 {
+		response.ErrorResponse("该账号权限不足！", c)
+		return
+	}
+	err := operationLogService.DeleteAllLyadminOperationLog()
+	if err != nil {
+		global.GVLA_LOG.Error("清空失败", zap.Error(err))
+		response.ErrorResponse("清空失败", c)
+		return
+	}
+	response.SuccessResponse(nil, "清空成功", c)
+}
+
+// @Tags      OperationLog
+// @Summary   批量删除日志
+// @Security  ApiKeyAuth
+// @accept    application/json
+// @Produce   application/json
+// @Param     data  body      request.Ids                 true  "批量删除日志"
+// @Success   200   {object}  response.StructResponse{msg=string}  "批量删除日志"
 // @Router    /operationlog/deletelogbyids [delete]
 func (s *OperationLogApi) DeleteLyadminOperationLogByIds(c *gin.Context) {
 	var IDS request.Ids

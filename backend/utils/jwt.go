@@ -2,6 +2,7 @@ package utils
 
 import (
 	"errors"
+	"strings"
 	"time"
 
 	"gitee.com/lybbn/go-vue-lyadmin/global"
@@ -23,6 +24,7 @@ type BaseClaims struct {
 	ID       uint
 	Username string
 	Nickname string
+	Identity int
 }
 
 type JWT struct {
@@ -84,7 +86,11 @@ func (j *JWT) VerifyToken(tokenString string) (*CustomClaims, error) {
 }
 
 func GetClaims(c *gin.Context) (*CustomClaims, error) {
-	token := c.Request.Header.Get("Authorization")
+	authHeader := c.Request.Header.Get("Authorization")
+	// 按空格分割
+	parts := strings.SplitN(authHeader, " ", 2)
+	// parts[1]是获取到的tokenString，我们使用之前定义好的解析JWT的函数来解析它
+	token := parts[1]
 	j := NewJWT()
 	claims, err := j.VerifyToken(token)
 	if err != nil {
@@ -104,6 +110,20 @@ func GetUserID(c *gin.Context) uint {
 	} else {
 		waitUser := claims.(*CustomClaims)
 		return waitUser.BaseClaims.ID
+	}
+}
+
+// GetUserIdentity 从Gin的Context中获取从jwt解析出来的用户身份
+func GetUserIdentity(c *gin.Context) int {
+	if claims, exists := c.Get("claims"); !exists {
+		if cl, err := GetClaims(c); err != nil {
+			return 0
+		} else {
+			return cl.BaseClaims.Identity
+		}
+	} else {
+		waitUser := claims.(*CustomClaims)
+		return waitUser.BaseClaims.Identity
 	}
 }
 
