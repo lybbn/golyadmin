@@ -30,7 +30,7 @@
     })
 
     //此内容不能删除
-    console.info(`%cgo-vue-lyadmin %cVer${config.APP_VER} %chttps://doc.lybbn.cn/`,
+    console.info(`%cgolyadmin %cVer${config.APP_VER} %chttps://doc.lybbn.cn/`,
           "color:#409EFF;font-size: 22px;font-weight:bolder",
           "color:#999;font-size: 12px",
           "color:#333"

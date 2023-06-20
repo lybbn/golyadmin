@@ -1,7 +1,7 @@
 package system
 
 import (
-	v1 "gitee.com/lybbn/go-vue-lyadmin/api/v1"
+	v1 "gitee.com/lybbn/golyadmin/api/v1"
 	"github.com/gin-gonic/gin"
 )
 

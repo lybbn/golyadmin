@@ -1,6 +1,6 @@
 package main
 
-import "gitee.com/lybbn/go-vue-lyadmin/utils/cmd"
+import "gitee.com/lybbn/golyadmin/utils/cmd"
 
 //go:generate go env -w GO111MODULE=on
 //go:generate go env -w GOPROXY=https://goproxy.cn,direct
@@ -9,7 +9,7 @@ import "gitee.com/lybbn/go-vue-lyadmin/utils/cmd"
 
 // @title                       Swagger API
 // @version                     0.0.1
-// @description                 This is a go-vue-lyadmin Server
+// @description                 This is a golyadmin Server
 // @securityDefinitions.apikey  ApiKeyAuth
 // @in                          header
 // @name                        Authorization

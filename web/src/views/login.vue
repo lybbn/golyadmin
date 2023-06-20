@@ -55,7 +55,7 @@
         </el-form>
       </div>
        <div class="login-copyright">
-           Copyright © 2022 go-vue-lyadmin All rights reserved.
+           Copyright © 2022 golyadmin All rights reserved.
        </div>
     </div>
 </template>
@@ -426,7 +426,7 @@
 </script>
 
 <style lang="scss" scoped>
-    //django-vue-lyadmin css
+    //djangolyadmin css
     ::v-deep(.el-input__inner){
         &::placeholder{
             font-size: 14px !important;

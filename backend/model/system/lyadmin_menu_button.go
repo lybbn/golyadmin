@@ -1,7 +1,7 @@
 package system
 
 import (
-	"gitee.com/lybbn/go-vue-lyadmin/global"
+	"gitee.com/lybbn/golyadmin/global"
 )
 
 type LyadminMenuButton struct {

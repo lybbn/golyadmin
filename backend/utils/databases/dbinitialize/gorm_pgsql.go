@@ -1,8 +1,8 @@
 package dbinitialize
 
 import (
-	"gitee.com/lybbn/go-vue-lyadmin/config"
-	"gitee.com/lybbn/go-vue-lyadmin/utils/databases/internal"
+	"gitee.com/lybbn/golyadmin/config"
+	"gitee.com/lybbn/golyadmin/utils/databases/internal"
 
 	//"gorm.io/driver/postgres"
 	"gorm.io/driver/mysql"

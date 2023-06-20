@@ -10,11 +10,11 @@ import (
 	"sync"
 	"time"
 
-	"gitee.com/lybbn/go-vue-lyadmin/utils"
+	"gitee.com/lybbn/golyadmin/utils"
 
-	"gitee.com/lybbn/go-vue-lyadmin/global"
-	"gitee.com/lybbn/go-vue-lyadmin/model/system"
-	"gitee.com/lybbn/go-vue-lyadmin/service"
+	"gitee.com/lybbn/golyadmin/global"
+	"gitee.com/lybbn/golyadmin/model/system"
+	"gitee.com/lybbn/golyadmin/service"
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
 )

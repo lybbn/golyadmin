@@ -1,7 +1,7 @@
 <!--
  * @Descripttion: 分类筛选器
  * @version: 1.0
- * @program: django-vue-lyadmin
+ * @program: djangolyadmin
  * @Author: lybbn
  * @Date: 2023.05.01
 -->

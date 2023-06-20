@@ -2,10 +2,11 @@ package internal
 
 import (
 	"fmt"
-	"gitee.com/lybbn/go-vue-lyadmin/global"
+	"time"
+
+	"gitee.com/lybbn/golyadmin/global"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
-	"time"
 )
 
 var Zap = new(_zap)

@@ -3,7 +3,7 @@ package internal
 import (
 	"fmt"
 
-	"gitee.com/lybbn/go-vue-lyadmin/global"
+	"gitee.com/lybbn/golyadmin/global"
 	"gorm.io/gorm/logger"
 )
 

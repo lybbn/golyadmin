@@ -2,8 +2,8 @@ package dbinitialize
 
 import (
 	//"github.com/dzwvip/oracle"
-	. "gitee.com/lybbn/go-vue-lyadmin/config"
-	"gitee.com/lybbn/go-vue-lyadmin/utils/databases/internal"
+	. "gitee.com/lybbn/golyadmin/config"
+	"gitee.com/lybbn/golyadmin/utils/databases/internal"
 
 	//_ "github.com/godror/godror"
 	"gorm.io/driver/mysql"

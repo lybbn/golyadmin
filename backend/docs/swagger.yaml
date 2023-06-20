@@ -1,4 +1,6 @@
 definitions:
+  request.Empty:
+    type: object
   request.Id:
     properties:
       id:
@@ -309,7 +311,7 @@ definitions:
         description: 主键
         type: integer
       identity:
-        description: 身份（1后台用户、2前台用户）
+        description: 身份（1 超级管理员,2后台用户、3前台用户）
         type: integer
       is_active:
         description: 状态(1正常、0冻结)
@@ -360,7 +362,7 @@ definitions:
     type: object
 info:
   contact: {}
-  description: This is a go-vue-lyadmin Server
+  description: This is a golyadmin Server
   title: Swagger API
   version: 0.0.1
 paths:
@@ -467,7 +469,7 @@ paths:
       consumes:
       - application/json
       parameters:
-      - description: 批量删除LyadminOperationLog
+      - description: 批量删除日志
         in: body
         name: data
         required: true
@@ -477,7 +479,7 @@ paths:
       - application/json
       responses:
         "200":
-          description: 批量删除LyadminOperationLog
+          description: 批量删除日志
           schema:
             allOf:
             - $ref: '#/definitions/response.StructResponse'
@@ -487,7 +489,7 @@ paths:
               type: object
       security:
       - ApiKeyAuth: []
-      summary: 批量删除OperationLog
+      summary: 批量删除日志
       tags:
       - OperationLog
   /operationlog/log:
@@ -495,17 +497,16 @@ paths:
       consumes:
       - application/json
       parameters:
-      - description: LyadminOperationLog模型
+      - description: 无
         in: body
         name: data
-        required: true
         schema:
-          $ref: '#/definitions/request.Id'
+          $ref: '#/definitions/request.Empty'
       produces:
       - application/json
       responses:
         "200":
-          description: 删除LyadminOperationLog
+          description: 清除全部日志
           schema:
             allOf:
             - $ref: '#/definitions/response.StructResponse'
@@ -515,7 +516,7 @@ paths:
               type: object
       security:
       - ApiKeyAuth: []
-      summary: 删除OperationLog
+      summary: 清除全部日志
       tags:
       - OperationLog
     get:

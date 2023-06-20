@@ -1,8 +1,8 @@
 package initialize
 
 import (
-	"gitee.com/lybbn/go-vue-lyadmin/global"
-	"gitee.com/lybbn/go-vue-lyadmin/utils/databases/dbinitialize"
+	"gitee.com/lybbn/golyadmin/global"
+	"gitee.com/lybbn/golyadmin/utils/databases/dbinitialize"
 	"gorm.io/gorm"
 )
 

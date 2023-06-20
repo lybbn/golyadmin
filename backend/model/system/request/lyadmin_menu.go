@@ -1,7 +1,7 @@
 package request
 
 import (
-	"gitee.com/lybbn/go-vue-lyadmin/utils/response"
+	"gitee.com/lybbn/golyadmin/utils/response"
 )
 
 type LyadminMenuSearch struct {

@@ -9,7 +9,7 @@ import (
 	"fmt"
 	"time"
 
-	"gitee.com/lybbn/go-vue-lyadmin/global"
+	"gitee.com/lybbn/golyadmin/global"
 	"github.com/redis/go-redis/v9"
 	"go.uber.org/zap"
 )

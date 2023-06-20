@@ -1,10 +1,10 @@
 package system
 
 import (
-	"gitee.com/lybbn/go-vue-lyadmin/global"
-	"gitee.com/lybbn/go-vue-lyadmin/model/system"
-	"gitee.com/lybbn/go-vue-lyadmin/utils"
-	"gitee.com/lybbn/go-vue-lyadmin/utils/response"
+	"gitee.com/lybbn/golyadmin/global"
+	"gitee.com/lybbn/golyadmin/model/system"
+	"gitee.com/lybbn/golyadmin/utils"
+	"gitee.com/lybbn/golyadmin/utils/response"
 	"github.com/gin-gonic/gin"
 	"github.com/redis/go-redis/v9"
 	"go.uber.org/zap"

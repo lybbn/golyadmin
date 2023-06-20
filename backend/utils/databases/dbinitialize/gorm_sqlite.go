@@ -1,7 +1,7 @@
 package dbinitialize
 
 import (
-	. "gitee.com/lybbn/go-vue-lyadmin/config"
+	. "gitee.com/lybbn/golyadmin/config"
 
 	//"gorm.io/driver/sqlite"
 	"github.com/glebarez/sqlite"

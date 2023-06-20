@@ -1,12 +1,13 @@
 package internal
 
 import (
-	"gitee.com/lybbn/go-vue-lyadmin/global"
-	rotatelogs "github.com/lestrrat-go/file-rotatelogs"
-	"go.uber.org/zap/zapcore"
 	"os"
 	"path"
 	"time"
+
+	"gitee.com/lybbn/golyadmin/global"
+	rotatelogs "github.com/lestrrat-go/file-rotatelogs"
+	"go.uber.org/zap/zapcore"
 )
 
 var FileRotatelogs = new(fileRotatelogs)

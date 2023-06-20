@@ -1,6 +1,6 @@
 <!--
  * @Descripttion: 弹窗扩展组件
- * @Program: django-vue-lyadmin
+ * @Program: djangolyadmin
  * @version: 1.1
  * @Author: lybbn
  * @Date: 2023年04月11日

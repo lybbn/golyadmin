@@ -1,4 +1,4 @@
-# go-vue-lyadmin web 前端框架
+# golyadmin web 前端框架
 
 #### slogon
 
@@ -6,7 +6,7 @@
 
 #### 介绍
 
-go-vue-lyadmin 是一套前后端分离的前端后台管理框架，是适配 go-vue-lyadmin 的 go语言 后台管理项目的专属框架，基于原生 vue3 elmentuiplus 开发，灵活自定义，可发挥空间大
+golyadmin 是一套前后端分离的前端后台管理框架，是适配 golyadmin 的 go语言 后台管理项目的专属框架，基于原生 vue3 elmentuiplus 开发，灵活自定义，可发挥空间大
 
 #### 软件架构
 

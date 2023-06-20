@@ -1,7 +1,7 @@
 <!--
  * @Descripttion: 地区选择组件
  * @version: 1.0
- * @Program: django-vue-lyadmin
+ * @Program: djangolyadmin
  * @Author: lybbn
  * @Date: 2023/02/11
 -->

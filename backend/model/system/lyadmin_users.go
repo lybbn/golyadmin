@@ -1,8 +1,8 @@
 package system
 
 import (
-	"gitee.com/lybbn/go-vue-lyadmin/global"
-	"gitee.com/lybbn/go-vue-lyadmin/utils/uuid"
+	"gitee.com/lybbn/golyadmin/global"
+	"gitee.com/lybbn/golyadmin/utils/uuid"
 	"gorm.io/gorm"
 )
 

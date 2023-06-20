@@ -1,7 +1,7 @@
 package v1
 
 import (
-	"gitee.com/lybbn/go-vue-lyadmin/api/v1/system"
+	"gitee.com/lybbn/golyadmin/api/v1/system"
 )
 
 type ApiGroup struct {

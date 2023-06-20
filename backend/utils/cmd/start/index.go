@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"time"
 
-	"gitee.com/lybbn/go-vue-lyadmin/global"
-	"gitee.com/lybbn/go-vue-lyadmin/initialize"
-	"gitee.com/lybbn/go-vue-lyadmin/utils"
+	"gitee.com/lybbn/golyadmin/global"
+	"gitee.com/lybbn/golyadmin/initialize"
+	"gitee.com/lybbn/golyadmin/utils"
 	"github.com/spf13/cobra"
 	"go.uber.org/zap"
 )
@@ -31,7 +31,7 @@ func run() {
 	newaddress := utils.GetLocalIpAddr() + utils.GetServerPort() + global.GVLA_CONFIG.System.RouterPrefix
 	time.Sleep(10 * time.Microsecond)
 	global.GVLA_LOG.Info("server run success on ", zap.String("address", address))
-	fmt.Println("\r\n欢迎使用 go-vue-lyadmin")
+	fmt.Println("\r\n欢迎使用 golyadmin")
 	fmt.Printf("当前版本:v%s\r\n", global.GVLA_VERSION)
 	tip()
 	fmt.Println(utils.Green("Server run at:"))

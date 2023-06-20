@@ -199,10 +199,10 @@ const docTemplate = `{
                 "tags": [
                     "OperationLog"
                 ],
-                "summary": "批量删除OperationLog",
+                "summary": "批量删除日志",
                 "parameters": [
                     {
-                        "description": "批量删除LyadminOperationLog",
+                        "description": "批量删除日志",
                         "name": "data",
                         "in": "body",
                         "required": true,
@@ -213,7 +213,7 @@ const docTemplate = `{
                 ],
                 "responses": {
                     "200": {
-                        "description": "批量删除LyadminOperationLog",
+                        "description": "批量删除日志",
                         "schema": {
                             "allOf": [
                                 {
@@ -298,21 +298,20 @@ const docTemplate = `{
                 "tags": [
                     "OperationLog"
                 ],
-                "summary": "删除OperationLog",
+                "summary": "清除全部日志",
                 "parameters": [
                     {
-                        "description": "LyadminOperationLog模型",
+                        "description": "无",
                         "name": "data",
                         "in": "body",
-                        "required": true,
                         "schema": {
-                            "$ref": "#/definitions/request.Id"
+                            "$ref": "#/definitions/request.Empty"
                         }
                     }
                 ],
                 "responses": {
                     "200": {
-                        "description": "删除LyadminOperationLog",
+                        "description": "清除全部日志",
                         "schema": {
                             "allOf": [
                                 {
@@ -514,6 +513,9 @@ const docTemplate = `{
         }
     },
     "definitions": {
+        "request.Empty": {
+            "type": "object"
+        },
         "request.Id": {
             "type": "object",
             "required": [
@@ -958,7 +960,7 @@ const docTemplate = `{
                     "type": "integer"
                 },
                 "identity": {
-                    "description": "身份（1后台用户、2前台用户）",
+                    "description": "身份（1 超级管理员,2后台用户、3前台用户）",
                     "type": "integer"
                 },
                 "is_active": {
@@ -1044,7 +1046,7 @@ var SwaggerInfo = &swag.Spec{
 	BasePath:         "",
 	Schemes:          []string{},
 	Title:            "Swagger API",
-	Description:      "This is a go-vue-lyadmin Server",
+	Description:      "This is a golyadmin Server",
 	InfoInstanceName: "swagger",
 	SwaggerTemplate:  docTemplate,
 }

@@ -3,7 +3,7 @@ package global
 import (
 	"sync"
 
-	"gitee.com/lybbn/go-vue-lyadmin/config"
+	"gitee.com/lybbn/golyadmin/config"
 	"github.com/redis/go-redis/v9"
 	"github.com/spf13/viper"
 	"go.uber.org/zap"
@@ -12,7 +12,7 @@ import (
 )
 
 const (
-	// Version go-vue-lyadmin version info
+	// Version golyadmin version info
 	GVLA_VERSION = "1.0.1"
 )
 

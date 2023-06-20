@@ -1,4 +1,4 @@
-module gitee.com/lybbn/go-vue-lyadmin
+module gitee.com/lybbn/golyadmin
 
 go 1.20
 
@@ -18,6 +18,7 @@ require (
 	github.com/swaggo/files v1.0.0
 	github.com/swaggo/gin-swagger v1.5.3
 	github.com/swaggo/swag v1.8.10
+	github.com/unrolled/secure v1.13.0
 	go.uber.org/zap v1.24.0
 	golang.org/x/crypto v0.5.0
 	golang.org/x/sync v0.1.0

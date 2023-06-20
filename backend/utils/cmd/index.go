@@ -5,15 +5,15 @@ import (
 	"fmt"
 	"os"
 
-	"gitee.com/lybbn/go-vue-lyadmin/global"
-	"gitee.com/lybbn/go-vue-lyadmin/initialize"
-	"gitee.com/lybbn/go-vue-lyadmin/utils"
-	"gitee.com/lybbn/go-vue-lyadmin/utils/cmd/auth/password"
-	"gitee.com/lybbn/go-vue-lyadmin/utils/cmd/auth/superadmin"
-	"gitee.com/lybbn/go-vue-lyadmin/utils/cmd/migrate"
-	"gitee.com/lybbn/go-vue-lyadmin/utils/cmd/start"
-	"gitee.com/lybbn/go-vue-lyadmin/utils/cmd/version"
-	"gitee.com/lybbn/go-vue-lyadmin/utils/core"
+	"gitee.com/lybbn/golyadmin/global"
+	"gitee.com/lybbn/golyadmin/initialize"
+	"gitee.com/lybbn/golyadmin/utils"
+	"gitee.com/lybbn/golyadmin/utils/cmd/auth/password"
+	"gitee.com/lybbn/golyadmin/utils/cmd/auth/superadmin"
+	"gitee.com/lybbn/golyadmin/utils/cmd/migrate"
+	"gitee.com/lybbn/golyadmin/utils/cmd/start"
+	"gitee.com/lybbn/golyadmin/utils/cmd/version"
+	"gitee.com/lybbn/golyadmin/utils/core"
 	"github.com/spf13/cobra"
 	"go.uber.org/zap"
 )
@@ -21,9 +21,9 @@ import (
 var configYaml string
 var rootCmd = &cobra.Command{
 	Use:          "golyadmin",
-	Short:        "golyadmin is a go-vue-lyadmin manage commond",
+	Short:        "golyadmin is a golyadmin manage commond",
 	SilenceUsage: true,
-	Long:         `golyadmin is a go-vue-lyadmin manage commond`,
+	Long:         `golyadmin is a golyadmin manage commond`,
 	Args: func(cmd *cobra.Command, args []string) error {
 		if len(args) < 1 {
 			tip()

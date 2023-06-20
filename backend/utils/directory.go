@@ -3,7 +3,8 @@ package utils
 import (
 	"errors"
 	"os"
-	"gitee.com/lybbn/go-vue-lyadmin/global"
+
+	"gitee.com/lybbn/golyadmin/global"
 	"go.uber.org/zap"
 )
 

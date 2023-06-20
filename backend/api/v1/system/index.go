@@ -1,6 +1,6 @@
 package system
 
-import "gitee.com/lybbn/go-vue-lyadmin/service"
+import "gitee.com/lybbn/golyadmin/service"
 
 type ApiGroup struct {
 	BaseApi

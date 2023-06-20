@@ -2,12 +2,13 @@ package core
 
 import (
 	"fmt"
-	"gitee.com/lybbn/go-vue-lyadmin/utils/core/internal"
-	"gitee.com/lybbn/go-vue-lyadmin/global"
-	"gitee.com/lybbn/go-vue-lyadmin/utils"
+	"os"
+
+	"gitee.com/lybbn/golyadmin/global"
+	"gitee.com/lybbn/golyadmin/utils"
+	"gitee.com/lybbn/golyadmin/utils/core/internal"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
-	"os"
 )
 
 // Zap 获取 zap.Logger

@@ -58,7 +58,7 @@ redis:
 zap:
   level: info #info模式,无错误的堆栈信息,只输出信息、debug:debug模式,有错误的堆栈详细信息、error: error模式,有错误的堆栈详细信息、其他详见zap官方文档
   format: console #格式console、json（线上部署建议这个）
-  prefix: "[gitee.com/lybbn/go-vue-lyadmin]" #日志的前缀
+  prefix: "[gitee.com/lybbn/golyadmin]" #日志的前缀
   director: logs #存放日志的文件夹
   show-line: true #显示行号
   encode-level: LowercaseColorLevelEncoder #LowercaseLevelEncoder:小写 、LowercaseColorLevelEncoder:小写带颜色、CapitalLevelEncoder: 大写、CapitalColorLevelEncoder: 大写带颜色

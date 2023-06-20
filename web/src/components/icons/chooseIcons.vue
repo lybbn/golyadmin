@@ -2,12 +2,12 @@
 /**
  * description：icon选择器
  * author: lybbn
- * program django-vue-lyadmin
+ * program djangolyadmin
  * email: 1042594286@qq.com
  * website: http://www.lybbn.cn
  * date: 2022.11.17
  * @version: 1.0
- * remark: 如果要分发django-vue-lyadmin源码或其中组件等，需在本文件顶部保留此文件头信息！！！
+ * remark: 如果要分发djangolyadmin源码或其中组件等，需在本文件顶部保留此文件头信息！！！
  */
 -->
 <template>

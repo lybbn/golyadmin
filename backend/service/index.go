@@ -1,7 +1,7 @@
 package service
 
 import (
-	"gitee.com/lybbn/go-vue-lyadmin/service/system"
+	"gitee.com/lybbn/golyadmin/service/system"
 )
 
 type ServiceGroup struct {

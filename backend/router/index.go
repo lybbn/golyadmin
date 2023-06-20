@@ -1,7 +1,7 @@
 package router
 
 import (
-	"gitee.com/lybbn/go-vue-lyadmin/router/system"
+	"gitee.com/lybbn/golyadmin/router/system"
 )
 
 type RouterGroup struct {

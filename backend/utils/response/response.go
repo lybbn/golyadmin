@@ -3,7 +3,7 @@ package response
 import (
 	"net/http"
 
-	"gitee.com/lybbn/go-vue-lyadmin/utils/pagination"
+	"gitee.com/lybbn/golyadmin/utils/pagination"
 	"github.com/gin-gonic/gin"
 )
 

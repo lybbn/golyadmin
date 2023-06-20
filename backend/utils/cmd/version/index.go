@@ -3,7 +3,7 @@ package version
 import (
 	"fmt"
 
-	"gitee.com/lybbn/go-vue-lyadmin/global"
+	"gitee.com/lybbn/golyadmin/global"
 	"github.com/spf13/cobra"
 )
 

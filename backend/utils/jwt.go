@@ -5,7 +5,7 @@ import (
 	"strings"
 	"time"
 
-	"gitee.com/lybbn/go-vue-lyadmin/global"
+	"gitee.com/lybbn/golyadmin/global"
 	"github.com/gin-gonic/gin"
 	jwt "github.com/golang-jwt/jwt/v5"
 )

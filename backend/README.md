@@ -2,7 +2,7 @@
 
 ### 项目介绍
 
-> go-vue-lyadmin是一个基于 [vue](https://vuejs.org) 和 [gin](https://gin-gonic.com) 开发的全栈前后端分离的开发基础平台，集成jwt鉴权，动态路由，动态菜单，RBAC鉴权等功能，提供多种示例文件，让您的开发效率更高。
+> golyadmin是一个基于 golang、 [vue](https://vuejs.org) 和 [gin](https://gin-gonic.com) 开发的全栈前后端分离的开发基础平台，集成jwt鉴权，动态路由，动态菜单，RBAC鉴权等功能，提供多种示例文件，让您的开发效率更高。
 
 ## 使用说明
 
@@ -18,9 +18,9 @@
 ```bash
 
 # 克隆项目
-git clone https://gitee.com/lybbn/go-vue-lyadmin.git
-# 进入go-vue-lyadmin/backend文件夹
-cd go-vue-lyadmin
+git clone https://gitee.com/lybbn/golyadmin.git
+# 进入golyadmin/backend文件夹
+cd golyadmin
 cd backend
 # 使用 go mod 并安装go依赖包
 go generate
@@ -74,7 +74,7 @@ go env -w GO111MODULE=on
 go env -w GOPROXY=https://goproxy.cn,https://goproxy.io,direct
 
 # 如果嫌麻烦,可以使用go generate 编译前自动执行代码, 不过这个不能使用 `Goland` 或者 `Vscode` 的 命令行终端
-cd go-vue-lyadmin
+cd golyadmin
 cd backend
 go generate -run "go env -w .*?"
 
@@ -86,7 +86,7 @@ go install github.com/swaggo/swag/cmd/swag@latest
 #### 生成API文档
 
 ```bash
-cd go-vue-lyadmin
+cd golyadmin
 cd backend
 swag init
 ```
@@ -101,6 +101,13 @@ swag init
 - API文档：使用`Swagger`构建自动化文档。
 - 配置文件：使用 [fsnotify](https://github.com/fsnotify/fsnotify) 和 [viper](https://github.com/spf13/viper) 实现`yaml`格式的配置文件。
 - 日志：使用 [zap](https://github.com/uber-go/zap) 实现日志记录。
+
+## 线上部署
+
+```
+方法一、前后端分离部署：按正常分离模式部署即可
+方法二、继承部署（不使用nginx）：前端执行打包命令 npm run build。把打包后的dist目录放入backend，然后在打开initialize/router.go下面相关集成部署注释即可
+```
 
 ## 项目二开
 

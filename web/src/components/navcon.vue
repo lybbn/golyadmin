@@ -12,7 +12,7 @@
           </p>
           <span style="font-size: 20px;color: white">{{config.APP_TITLE}}</span>
       </div>
-<!--      <span class="site-title">Django-Vue-Lyadmin后台管理系统</span>-->
+<!--      <span class="site-title">Djangolyadmin后台管理系统</span>-->
 <!--      <el-row class="buttonimg" type="info">-->
 <!--      </el-row>-->
       <div class="ly-header-right">

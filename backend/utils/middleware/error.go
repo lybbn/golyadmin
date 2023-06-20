@@ -8,8 +8,8 @@ import (
 	"runtime/debug"
 	"strings"
 
-	"gitee.com/lybbn/go-vue-lyadmin/global"
-	"gitee.com/lybbn/go-vue-lyadmin/utils/response"
+	"gitee.com/lybbn/golyadmin/global"
+	"gitee.com/lybbn/golyadmin/utils/response"
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
 )

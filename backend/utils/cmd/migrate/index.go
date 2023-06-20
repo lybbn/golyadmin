@@ -3,8 +3,8 @@ package migrate
 import (
 	"fmt"
 
-	"gitee.com/lybbn/go-vue-lyadmin/global"
-	mmodel "gitee.com/lybbn/go-vue-lyadmin/model"
+	"gitee.com/lybbn/golyadmin/global"
+	mmodel "gitee.com/lybbn/golyadmin/model"
 	"github.com/spf13/cobra"
 	"gorm.io/gorm"
 )

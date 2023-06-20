@@ -3,7 +3,7 @@ package system
 import (
 	"time"
 
-	"gitee.com/lybbn/go-vue-lyadmin/global"
+	"gitee.com/lybbn/golyadmin/global"
 )
 
 type LyadminOperationLog struct {

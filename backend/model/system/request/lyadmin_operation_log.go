@@ -1,8 +1,8 @@
 package request
 
 import (
-	"gitee.com/lybbn/go-vue-lyadmin/model/system"
-	"gitee.com/lybbn/go-vue-lyadmin/utils/response"
+	"gitee.com/lybbn/golyadmin/model/system"
+	"gitee.com/lybbn/golyadmin/utils/response"
 )
 
 type LyadminOperationLogSearch struct {

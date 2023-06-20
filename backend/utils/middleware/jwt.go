@@ -5,11 +5,11 @@ import (
 	"strings"
 	"time"
 
-	"gitee.com/lybbn/go-vue-lyadmin/global"
-	"gitee.com/lybbn/go-vue-lyadmin/model/system"
-	"gitee.com/lybbn/go-vue-lyadmin/service"
-	"gitee.com/lybbn/go-vue-lyadmin/utils"
-	"gitee.com/lybbn/go-vue-lyadmin/utils/response"
+	"gitee.com/lybbn/golyadmin/global"
+	"gitee.com/lybbn/golyadmin/model/system"
+	"gitee.com/lybbn/golyadmin/service"
+	"gitee.com/lybbn/golyadmin/utils"
+	"gitee.com/lybbn/golyadmin/utils/response"
 	"go.uber.org/zap"
 
 	"github.com/gin-gonic/gin"

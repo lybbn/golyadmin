@@ -1,6 +1,6 @@
 package system
 
-import "gitee.com/lybbn/go-vue-lyadmin/global"
+import "gitee.com/lybbn/golyadmin/global"
 
 type LyadminJwtBlacklist struct {
 	global.GVLA_BASE_MODEL

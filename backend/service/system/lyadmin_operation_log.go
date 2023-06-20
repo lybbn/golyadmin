@@ -1,10 +1,10 @@
 package system
 
 import (
-	"gitee.com/lybbn/go-vue-lyadmin/global"
-	"gitee.com/lybbn/go-vue-lyadmin/model/common/request"
-	"gitee.com/lybbn/go-vue-lyadmin/model/system"
-	systemReq "gitee.com/lybbn/go-vue-lyadmin/model/system/request"
+	"gitee.com/lybbn/golyadmin/global"
+	"gitee.com/lybbn/golyadmin/model/common/request"
+	"gitee.com/lybbn/golyadmin/model/system"
+	systemReq "gitee.com/lybbn/golyadmin/model/system/request"
 	"gorm.io/gorm"
 )
 

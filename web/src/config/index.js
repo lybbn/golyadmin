@@ -1,7 +1,7 @@
 //API DOMAIN
-const API_DOMAIN = process.env.NODE_ENV === 'development' ? "127.0.0.1:9000" : "go-vue-lyadmin.lybbn.cn"
+const API_DOMAIN = process.env.NODE_ENV === 'development' ? "127.0.0.1:9000" : "127.0.0.1:9000"
 // 接口地址
-const API_BASEURL = process.env.NODE_ENV === 'development' ? "http://"+ API_DOMAIN +"/api/" : "https://"+ API_DOMAIN +"/api/"
+const API_BASEURL = process.env.NODE_ENV === 'development' ? "http://"+ API_DOMAIN +"/api/" : "http://"+ API_DOMAIN +"/api/"
 //版本号
 const APP_VER = require('../../package.json').version
 //是否开启代理
@@ -23,13 +23,13 @@ module.exports = {
     API_URL : process.env.NODE_ENV === 'development' && VUE_APP_PROXY ? "/api/" : API_BASEURL,
 
     //标题
-    APP_TITLE : "go-vue-lyadmin后台管理系统",
+    APP_TITLE : "golyadmin后台管理系统",
 
 	//APP版本
     APP_VER : APP_VER,
 
 	//应用名称
-    APP_NAME : "go-vue-lyadmin后台管理系统",
+    APP_NAME : "golyadmin后台管理系统",
 
 	//项目布局: simple、msimple
 	PROGRAM_LAYOUT: 'msimple',

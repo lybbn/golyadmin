@@ -1,7 +1,7 @@
 <!--
  * @Descripttion: 终端服务
  * @version: 1.0
- * @program: django-vue-lyadmin
+ * @program: djangolyadmin
  * @Author: lybbn
  * @Email: 1042594286@qq.com
  * @Date: 2023.05.01
@@ -95,7 +95,7 @@
                 //websocket链接成功之后操作
                 this.lyws.onopen = () => {
                     this.term.fitAddon.fit()
-                    this.term.write("Welcome To Django-Vue-Lyadmin WebSSH ☺\r\n")
+                    this.term.write("Welcome To Djangolyadmin WebSSH ☺\r\n")
                     this.termResize({cols:this.cols,rows:this.rows})
                 };
 

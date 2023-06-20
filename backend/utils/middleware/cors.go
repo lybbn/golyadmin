@@ -3,8 +3,8 @@ package middleware
 import (
 	"net/http"
 
-	"gitee.com/lybbn/go-vue-lyadmin/config"
-	"gitee.com/lybbn/go-vue-lyadmin/global"
+	"gitee.com/lybbn/golyadmin/config"
+	"gitee.com/lybbn/golyadmin/global"
 	"github.com/gin-gonic/gin"
 )
 

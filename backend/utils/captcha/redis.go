@@ -4,7 +4,7 @@ import (
 	"context"
 	"time"
 
-	"gitee.com/lybbn/go-vue-lyadmin/global"
+	"gitee.com/lybbn/golyadmin/global"
 
 	"go.uber.org/zap"
 )

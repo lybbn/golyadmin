@@ -1,10 +1,10 @@
 package system
 
 import (
-	"gitee.com/lybbn/go-vue-lyadmin/model/system"
-	systemReq "gitee.com/lybbn/go-vue-lyadmin/model/system/request"
-	"gitee.com/lybbn/go-vue-lyadmin/utils/pagination"
-	"gitee.com/lybbn/go-vue-lyadmin/utils/response"
+	"gitee.com/lybbn/golyadmin/model/system"
+	systemReq "gitee.com/lybbn/golyadmin/model/system/request"
+	"gitee.com/lybbn/golyadmin/utils/pagination"
+	"gitee.com/lybbn/golyadmin/utils/response"
 	"github.com/gin-gonic/gin"
 )
 
