@@ -19,6 +19,12 @@ func Routers() *gin.Engine {
 	//创建路由
 	Router := gin.Default()
 	systemRouter := router.RouterGroupApp.System
+	// 集成部署web端（不使用nginx）
+	// 前端执行打包命令 npm run build。把dist生成目录放入backend，然后在打开下面4行注释
+	// Router.LoadHTMLGlob("./dist/*.html") // npm打包成dist的路径
+	// Router.Static("/favicon.ico", "./dist/favicon.ico")
+	// Router.Static("/static", "./dist/assets")   // dist里面的静态资源
+	// Router.StaticFile("/", "./dist/index.html") // 前端网页入口页面
 	// 跨域
 	if global.GVLA_CONFIG.System.IsCors {
 		// Router.Use(middleware.CorsAllowAll())        // 直接放行全部跨域请求
