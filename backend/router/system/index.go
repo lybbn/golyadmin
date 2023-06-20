@@ -7,4 +7,5 @@ type RouterGroup struct {
 	BaseRouter
 	UserRouter
 	OperationLogRouter
+	MenuRouter
 }

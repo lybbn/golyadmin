@@ -593,10 +593,13 @@
       }
     }
   }
-  @media screen and (max-width: 1600px) {
-    .box{
+  @media only screen and (max-width: 450px) {
+     .box{
       width: 100% !important;
     }
+  }
+  @media screen and (max-width: 1600px) {
+   
     .market-login{
       width: 1050px;
       .login-img {

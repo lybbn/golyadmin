@@ -97,6 +97,84 @@
                 }
             }
         },
+        "/menu/menu": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Menu"
+                ],
+                "summary": "获取菜单列表",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "每页大小",
+                        "name": "limit",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "名称",
+                        "name": "name",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "当前页码",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "boolean",
+                        "description": "状态",
+                        "name": "status",
+                        "in": "query"
+                    },
+                    {
+                        "type": "boolean",
+                        "description": "是否显示",
+                        "name": "visible",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "路径",
+                        "name": "web_path",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "分页获取菜单列表",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.StructResponse"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "object",
+                                            "additionalProperties": true
+                                        },
+                                        "msg": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
         "/operationlog/deletelogbyids": {
             "delete": {
                 "security": [
@@ -167,6 +245,7 @@
                 "parameters": [
                     {
                         "type": "integer",
+                        "description": "id",
                         "name": "id",
                         "in": "query",
                         "required": true
@@ -283,11 +362,13 @@
                     },
                     {
                         "type": "string",
+                        "description": "创建时间",
                         "name": "create_at",
                         "in": "query"
                     },
                     {
                         "type": "integer",
+                        "description": "主键",
                         "name": "id",
                         "in": "query"
                     },
@@ -341,12 +422,13 @@
                     },
                     {
                         "type": "string",
+                        "description": "更新时间",
                         "name": "update_at",
                         "in": "query"
                     },
                     {
                         "type": "integer",
-                        "description": "用户id",
+                        "description": "用户id Belongs To",
                         "name": "user_id",
                         "in": "query"
                     }
@@ -388,7 +470,7 @@
                 "summary": "创建用户",
                 "parameters": [
                     {
-                        "description": "用户名, 昵称, 密码, 角色ID",
+                        "description": "用户名, 密码",
                         "name": "data",
                         "in": "body",
                         "required": true,
@@ -431,6 +513,7 @@
             ],
             "properties": {
                 "id": {
+                    "description": "id",
                     "type": "integer"
                 }
             }
@@ -439,6 +522,7 @@
             "type": "object",
             "properties": {
                 "ids": {
+                    "description": "ID列表",
                     "type": "array",
                     "items": {
                         "type": "integer"
@@ -489,7 +573,40 @@
             }
         },
         "system.CreateUserRequestParams": {
-            "type": "object"
+            "type": "object",
+            "required": [
+                "password",
+                "username"
+            ],
+            "properties": {
+                "avatar": {
+                    "type": "string",
+                    "example": "头像"
+                },
+                "email": {
+                    "type": "string",
+                    "example": "电子邮箱"
+                },
+                "gender": {
+                    "type": "string",
+                    "example": "性别"
+                },
+                "mobile": {
+                    "type": "string",
+                    "example": "电话号码"
+                },
+                "nickname": {
+                    "type": "string",
+                    "example": "昵称"
+                },
+                "password": {
+                    "type": "string",
+                    "example": "密码"
+                },
+                "username": {
+                    "type": "string"
+                }
+            }
         },
         "system.LoginRequestParams": {
             "type": "object",
@@ -520,14 +637,141 @@
         "system.LoginResponse": {
             "type": "object",
             "properties": {
+                "access": {
+                    "type": "string"
+                },
                 "expiresAt": {
                     "type": "integer"
                 },
-                "token": {
-                    "type": "string"
-                },
                 "user": {
                     "$ref": "#/definitions/system.LyadminUsers"
+                }
+            }
+        },
+        "system.LyadminDept": {
+            "type": "object",
+            "properties": {
+                "create_at": {
+                    "description": "创建时间",
+                    "type": "string"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "id": {
+                    "description": "主键",
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "owner": {
+                    "type": "string"
+                },
+                "parent_id": {
+                    "type": "integer"
+                },
+                "phone": {
+                    "type": "string"
+                },
+                "sort": {
+                    "type": "integer"
+                },
+                "status": {
+                    "type": "boolean"
+                },
+                "update_at": {
+                    "description": "更新时间",
+                    "type": "string"
+                }
+            }
+        },
+        "system.LyadminMenu": {
+            "type": "object",
+            "properties": {
+                "component": {
+                    "type": "string"
+                },
+                "component_name": {
+                    "type": "string"
+                },
+                "create_at": {
+                    "description": "创建时间",
+                    "type": "string"
+                },
+                "icon": {
+                    "type": "string"
+                },
+                "id": {
+                    "description": "主键",
+                    "type": "integer"
+                },
+                "is_link": {
+                    "type": "boolean"
+                },
+                "keep_alive": {
+                    "type": "boolean"
+                },
+                "menu_button": {
+                    "description": "has many",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/system.LyadminMenuButton"
+                    }
+                },
+                "name": {
+                    "type": "string"
+                },
+                "parent_id": {
+                    "type": "integer"
+                },
+                "sort": {
+                    "type": "integer"
+                },
+                "status": {
+                    "type": "boolean"
+                },
+                "update_at": {
+                    "description": "更新时间",
+                    "type": "string"
+                },
+                "visible": {
+                    "type": "boolean"
+                },
+                "web_path": {
+                    "type": "string"
+                }
+            }
+        },
+        "system.LyadminMenuButton": {
+            "type": "object",
+            "properties": {
+                "api": {
+                    "type": "string"
+                },
+                "create_at": {
+                    "description": "创建时间",
+                    "type": "string"
+                },
+                "id": {
+                    "description": "主键",
+                    "type": "integer"
+                },
+                "menu_id": {
+                    "type": "integer"
+                },
+                "method": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "update_at": {
+                    "description": "更新时间",
+                    "type": "string"
+                },
+                "value": {
+                    "type": "string"
                 }
             }
         },
@@ -547,9 +791,11 @@
                     "type": "integer"
                 },
                 "create_at": {
+                    "description": "创建时间",
                     "type": "string"
                 },
                 "id": {
+                    "description": "主键",
                     "type": "integer"
                 },
                 "ip": {
@@ -577,14 +823,94 @@
                     "type": "string"
                 },
                 "update_at": {
+                    "description": "更新时间",
                     "type": "string"
                 },
                 "user": {
                     "$ref": "#/definitions/system.LyadminUsers"
                 },
                 "user_id": {
-                    "description": "用户id",
+                    "description": "用户id Belongs To",
                     "type": "integer"
+                }
+            }
+        },
+        "system.LyadminPost": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "string"
+                },
+                "create_at": {
+                    "description": "创建时间",
+                    "type": "string"
+                },
+                "id": {
+                    "description": "主键",
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "sort": {
+                    "type": "integer"
+                },
+                "status": {
+                    "type": "boolean"
+                },
+                "update_at": {
+                    "description": "更新时间",
+                    "type": "string"
+                }
+            }
+        },
+        "system.LyadminRole": {
+            "type": "object",
+            "properties": {
+                "create_at": {
+                    "description": "创建时间",
+                    "type": "string"
+                },
+                "dept": {
+                    "description": "manytomany",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/system.LyadminDept"
+                    }
+                },
+                "id": {
+                    "description": "主键",
+                    "type": "integer"
+                },
+                "key": {
+                    "type": "string"
+                },
+                "menu": {
+                    "description": "manytomany",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/system.LyadminMenu"
+                    }
+                },
+                "menu_button": {
+                    "description": "manytomany",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/system.LyadminMenuButton"
+                    }
+                },
+                "name": {
+                    "type": "string"
+                },
+                "sort": {
+                    "type": "integer"
+                },
+                "status": {
+                    "type": "boolean"
+                },
+                "update_at": {
+                    "description": "更新时间",
+                    "type": "string"
                 }
             }
         },
@@ -592,52 +918,85 @@
             "type": "object",
             "properties": {
                 "avatar": {
+                    "description": "头像",
                     "type": "string"
                 },
                 "create_at": {
+                    "description": "创建时间",
                     "type": "string"
                 },
+                "dept": {
+                    "description": "部门外键",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/system.LyadminDept"
+                        }
+                    ]
+                },
                 "dept_id": {
+                    "description": "部门ID",
                     "type": "integer"
                 },
                 "email": {
+                    "description": "邮箱",
                     "type": "string"
                 },
                 "gender": {
+                    "description": "性别（男、女）",
                     "type": "string"
                 },
                 "id": {
+                    "description": "主键",
                     "type": "integer"
                 },
                 "identity": {
-                    "description": "1后台用户、2前台用户",
+                    "description": "身份（1后台用户、2前台用户）",
                     "type": "integer"
                 },
                 "is_active": {
+                    "description": "状态(1正常、0冻结)",
                     "type": "boolean"
                 },
                 "is_staff": {
+                    "description": "是否可登录后台",
                     "type": "boolean"
                 },
                 "is_superuser": {
+                    "description": "是否超管",
                     "type": "boolean"
                 },
                 "mobile": {
+                    "description": "手机号",
+                    "type": "string"
+                },
+                "name": {
+                    "description": "姓名",
                     "type": "string"
                 },
                 "nickname": {
+                    "description": "昵称",
                     "type": "string"
                 },
-                "post_id": {
-                    "type": "integer"
+                "post": {
+                    "description": "岗位",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/system.LyadminPost"
+                    }
                 },
-                "role_id": {
-                    "type": "integer"
+                "role": {
+                    "description": "角色",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/system.LyadminRole"
+                    }
                 },
                 "update_at": {
+                    "description": "更新时间",
                     "type": "string"
                 },
                 "username": {
+                    "description": "用户名",
                     "type": "string"
                 },
                 "uuid": {

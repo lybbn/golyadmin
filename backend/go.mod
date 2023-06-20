@@ -19,6 +19,7 @@ require (
 	github.com/swaggo/gin-swagger v1.5.3
 	github.com/swaggo/swag v1.8.10
 	go.uber.org/zap v1.24.0
+	golang.org/x/crypto v0.5.0
 	golang.org/x/sync v0.1.0
 	gorm.io/driver/mysql v1.4.5
 	gorm.io/gorm v1.25.0
@@ -66,7 +67,6 @@ require (
 	github.com/ugorji/go/codec v1.2.8 // indirect
 	go.uber.org/atomic v1.10.0 // indirect
 	go.uber.org/multierr v1.8.0 // indirect
-	golang.org/x/crypto v0.5.0 // indirect
 	golang.org/x/image v0.0.0-20190802002840-cff245a6509b // indirect
 	golang.org/x/net v0.5.0 // indirect
 	golang.org/x/sys v0.4.0 // indirect

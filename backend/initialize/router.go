@@ -41,6 +41,7 @@ func Routers() *gin.Engine {
 	{
 		systemRouter.InitUserRouter(PrivateGroup)
 		systemRouter.InitOperationLogRouter(PrivateGroup)
+		systemRouter.InitMenuRouter(PrivateGroup)
 	}
 	//不存在路由
 	Router.NoRoute(func(c *gin.Context) {

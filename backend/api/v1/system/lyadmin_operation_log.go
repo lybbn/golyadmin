@@ -14,7 +14,6 @@ import (
 
 type OperationLogApi struct{}
 
-// DeleteLyadminOperationLog
 // @Tags      OperationLog
 // @Summary   删除OperationLog
 // @Security  ApiKeyAuth
@@ -39,7 +38,6 @@ func (s *OperationLogApi) DeleteLyadminOperationLog(c *gin.Context) {
 	response.SuccessResponse(nil, "删除成功", c)
 }
 
-// DeleteLyadminOperationLogByIds
 // @Tags      OperationLog
 // @Summary   批量删除OperationLog
 // @Security  ApiKeyAuth
@@ -64,7 +62,6 @@ func (s *OperationLogApi) DeleteLyadminOperationLogByIds(c *gin.Context) {
 	response.SuccessResponse(nil, "批量删除成功", c)
 }
 
-// GetLyadminOperationLogDetail
 // @Tags      OperationLog
 // @Summary   用id查询OperationLog
 // @Security  ApiKeyAuth
@@ -89,7 +86,6 @@ func (s *OperationLogApi) GetLyadminOperationLogDetail(c *gin.Context) {
 	response.SuccessResponse(data, "查询成功", c)
 }
 
-// GetLyadminOperationLogList
 // @Tags      OperationLog
 // @Summary   分页获取LyadminOperationLog列表
 // @Security  ApiKeyAuth

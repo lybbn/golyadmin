@@ -13,7 +13,7 @@ import "gitee.com/lybbn/go-vue-lyadmin/utils/cmd"
 // @securityDefinitions.apikey  ApiKeyAuth
 // @in                          header
 // @name                        Authorization
-// @BasePath                    /
+// @BasePath                    /api
 func main() {
 	cmd.Execute()
 }

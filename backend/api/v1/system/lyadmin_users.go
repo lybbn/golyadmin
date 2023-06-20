@@ -141,7 +141,7 @@ type CreateUserRequestParams struct {
 // @Tags     User
 // @Summary  创建用户
 // @Produce   application/json
-// @Param    data  body      CreateUserRequestParams                                            true  "用户名, 昵称, 密码, 角色ID"
+// @Param    data  body      CreateUserRequestParams                                            true  "用户名, 密码"
 // @Success  2000   {object}  response.StructResponse{data=CreateUserRequestParams,msg=string}  "创建用户,返回包括用户信息"
 // @Router   /user/user [post]
 func (b *BaseApi) CreateUser(c *gin.Context) {
