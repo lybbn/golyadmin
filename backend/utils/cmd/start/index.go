@@ -37,7 +37,9 @@ func run() {
 	fmt.Println(utils.Green("Server run at:"))
 	fmt.Printf("-  Local:   http://127.0.0.1%s \r\n", utils.GetServerPort())
 	fmt.Printf("-  Network: http://%s%s \r\n", utils.GetLocalIpAddr(), utils.GetServerPort())
-	fmt.Printf("默认自动化文档地址:http://%s/swagger/index.html \r\n", newaddress)
+	if global.GVLA_CONFIG.System.IsSwagger {
+		fmt.Printf("默认接口文档地址:http://%s/swagger/index.html \r\n", newaddress)
+	}
 	fmt.Printf("默认接口基础地址:http://%s \r\n", newaddress)
 	global.GVLA_LOG.Error(s.ListenAndServe().Error())
 	//gin启动

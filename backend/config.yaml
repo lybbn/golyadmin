@@ -7,6 +7,7 @@ system:
   db-type: mysql #数据库类型 mysql(默认)|sqlite|sqlserver|postgresql|sqlite
   use-multipoint: false  #使用多点登录（false表示使用单点登录）
   router-prefix: "/api" #路由全局前缀
+  is-swagger: true #是否路由注册swagger文档访问
   gorm-log-mode: "" #开启Gorm全局日志等级 "silent"、"error"、"warn"、"info" 不填默认info 填入silent可以关闭控制台日志
   gorm-log-zap: false #是否写入zap
 

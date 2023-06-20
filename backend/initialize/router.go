@@ -27,9 +27,12 @@ func Routers() *gin.Engine {
 	}
 	//错误异常捕获
 	Router.Use(middleware.GinRecovery(false))
-	docs.SwaggerInfo.BasePath = global.GVLA_CONFIG.System.RouterPrefix
-	Router.GET(global.GVLA_CONFIG.System.RouterPrefix+"/swagger/*any", ginSwagger.WrapHandler(swaggerfiles.Handler))
-	global.GVLA_LOG.Info("register swagger handler")
+	//swagger文档（正式环境可注释掉）
+	if global.GVLA_CONFIG.System.IsSwagger {
+		docs.SwaggerInfo.BasePath = global.GVLA_CONFIG.System.RouterPrefix
+		Router.GET(global.GVLA_CONFIG.System.RouterPrefix+"/swagger/*any", ginSwagger.WrapHandler(swaggerfiles.Handler))
+		global.GVLA_LOG.Info("register swagger handler")
+	}
 	//不需要认证
 	PublicGroup := Router.Group(global.GVLA_CONFIG.System.RouterPrefix)
 	{
