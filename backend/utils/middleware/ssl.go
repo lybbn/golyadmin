@@ -3,6 +3,7 @@ package middleware
 import (
 	"fmt"
 
+	"gitee.com/lybbn/golyadmin/global"
 	"github.com/gin-gonic/gin"
 	"github.com/unrolled/secure"
 )
@@ -13,7 +14,7 @@ func LoadSSL() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		middleware := secure.New(secure.Options{
 			SSLRedirect: true,
-			SSLHost:     "localhost:443",
+			SSLHost:     global.GL_CONFIG.Ssl.Domain,
 		})
 		err := middleware.Process(c.Writer, c.Request)
 		if err != nil {

@@ -14,7 +14,7 @@ binding required 表示必须传入
 */
 
 type LyadminUsers struct {
-	global.GVLA_BASE_MODEL
+	global.GL_BASE_MODEL
 	UUID        string        `gorm:"<-:create;type:varchar(50);comment:uuid" form:"uuid" json:"uuid"`    // 允许读和创建
 	Username    string        `json:"username" gorm:"type:varchar(50);not null;index;unique;comment:用户名"` //用户名
 	Password    string        `json:"-"  gorm:"type:varchar(128);comment:密码"`                             //密码

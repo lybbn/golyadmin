@@ -36,7 +36,7 @@ func run() {
 		password = "123456"
 	}
 	var count int64
-	if err := global.GVLA_DB.Model(&system.LyadminUsers{}).Where("is_superuser = 1").Count(&count).Error; err != nil {
+	if err := global.GL_DB.Model(&system.LyadminUsers{}).Where("is_superuser = 1").Count(&count).Error; err != nil {
 		fmt.Println(err.Error())
 		return
 	}
@@ -47,7 +47,7 @@ func run() {
 	user := &system.LyadminUsers{Username: username, Nickname: "超级管理员", Name: "超级管理员", Password: password, IsSuperuser: true, Identity: 1}
 	// 加密密码
 	user.Password = utils.MakePassowrd(password)
-	err := global.GVLA_DB.Create(&user).Error
+	err := global.GL_DB.Create(&user).Error
 
 	if err != nil {
 		fmt.Println(utils.Red("创建超级管理员失败!"), zap.Error(err))

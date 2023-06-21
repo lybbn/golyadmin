@@ -45,21 +45,21 @@ func (b *BaseApi) Login(c *gin.Context) {
 	}
 	if capchaStore.Verify(req.CaptchaKey, req.Captcha, true) {
 		var user system.LyadminUsers
-		err = global.GVLA_DB.Where("username = ?", req.Username).First(&user).Error
+		err = global.GL_DB.Where("username = ?", req.Username).First(&user).Error
 		if err == nil {
 			if ok := utils.CheckPassword(req.Password, user.Password); !ok {
 				response.ErrorResponse("账号密码错误", c)
 				return
 			}
 			if !user.IsActive {
-				global.GVLA_LOG.Error("该用户被禁用，请联系管理员:" + req.Username)
+				global.GL_LOG.Error("该用户被禁用，请联系管理员:" + req.Username)
 				response.ErrorResponse("该用户被禁用，请联系管理员!", c)
 				return
 			}
-			b.GetJwtToken(c, user)
+			b.IssueJwtToken(c, user)
 			return
 		} else {
-			global.GVLA_LOG.Error("登陆失败! 用户名不存在或密码错误!", zap.Error(err))
+			global.GL_LOG.Error("登陆失败! 用户名不存在或密码错误!", zap.Error(err))
 			response.ErrorResponse("用户名不存在或密码错误", c)
 			return
 		}
@@ -69,9 +69,9 @@ func (b *BaseApi) Login(c *gin.Context) {
 	}
 }
 
-// GetJwtToken 登录以后签发jwt
-func (b *BaseApi) GetJwtToken(c *gin.Context, user system.LyadminUsers) {
-	j := &utils.JWT{SecretKey: []byte(global.GVLA_CONFIG.JWT.SecretKey)} // 唯一签名
+// IssueJwtToken 登录以后签发jwt
+func (b *BaseApi) IssueJwtToken(c *gin.Context, user system.LyadminUsers) {
+	j := &utils.JWT{SecretKey: []byte(global.GL_CONFIG.JWT.SecretKey)} // 唯一签名
 	claims := j.CreateClaims(utils.BaseClaims{
 		UUID:     user.UUID,
 		ID:       uint(user.ID),
@@ -80,12 +80,12 @@ func (b *BaseApi) GetJwtToken(c *gin.Context, user system.LyadminUsers) {
 	})
 	token, err := j.CreateToken(claims)
 	if err != nil {
-		global.GVLA_LOG.Error("获取token失败!", zap.Error(err))
+		global.GL_LOG.Error("获取token失败!", zap.Error(err))
 		response.ErrorResponse("获取token失败", c)
 		return
 	}
 
-	if !global.GVLA_CONFIG.System.UseMultipoint {
+	if !global.GL_CONFIG.System.UseMultipoint {
 		response.SuccessResponse(LoginResponse{
 			User:      user,
 			Access:    token,
@@ -96,7 +96,7 @@ func (b *BaseApi) GetJwtToken(c *gin.Context, user system.LyadminUsers) {
 
 	if jwtStr, err := jwtService.GetRedisJWT(user.Username); err == redis.Nil {
 		if err := jwtService.SetRedisJWT(token, user.Username); err != nil {
-			global.GVLA_LOG.Error("设置登录状态失败!", zap.Error(err))
+			global.GL_LOG.Error("设置登录状态失败!", zap.Error(err))
 			response.ErrorResponse("设置登录状态失败", c)
 			return
 		}
@@ -106,7 +106,7 @@ func (b *BaseApi) GetJwtToken(c *gin.Context, user system.LyadminUsers) {
 			ExpiresAt: claims.RegisteredClaims.ExpiresAt.Unix() * 1000,
 		}, "登录成功", c)
 	} else if err != nil {
-		global.GVLA_LOG.Error("设置登录状态失败!", zap.Error(err))
+		global.GL_LOG.Error("设置登录状态失败!", zap.Error(err))
 		response.ErrorResponse("设置登录状态失败", c)
 	} else {
 		var blackJWT system.LyadminJwtBlacklist
@@ -152,9 +152,9 @@ func (b *BaseApi) CreateUser(c *gin.Context) {
 		return
 	}
 	var i int64
-	err = global.GVLA_DB.Model(&system.LyadminUsers{}).Where("username = ?", req.Username).Count(&i).Error
+	err = global.GL_DB.Model(&system.LyadminUsers{}).Where("username = ?", req.Username).Count(&i).Error
 	if err != nil {
-		global.GVLA_LOG.Error("创建用户失败!", zap.Error(err))
+		global.GL_LOG.Error("创建用户失败!", zap.Error(err))
 		response.ErrorResponse("创建用户失败", c)
 		return
 	}
@@ -165,10 +165,10 @@ func (b *BaseApi) CreateUser(c *gin.Context) {
 	user := &system.LyadminUsers{Username: req.Username, Nickname: req.Nickname, Password: req.Password, Avatar: req.Avatar, Mobile: req.Mobile, Gender: req.Gender, Email: req.Email}
 	// 加密密码
 	user.Password = utils.MakePassowrd(req.Password)
-	err = global.GVLA_DB.Create(&user).Error
+	err = global.GL_DB.Create(&user).Error
 
 	if err != nil {
-		global.GVLA_LOG.Error("创建用户失败!", zap.Error(err))
+		global.GL_LOG.Error("创建用户失败!", zap.Error(err))
 		response.ErrorResponse("创建用户失败!", c)
 		return
 	}
@@ -208,7 +208,7 @@ func (b *BaseApi) CreateUser(c *gin.Context) {
 // 	}
 
 // 	//分页方法
-// 	query := global.GVLA_DB.Table("lyadmin_users").Select("id", "name", "username")
+// 	query := global.GL_DB.Table("lyadmin_users").Select("id", "name", "username")
 // 	p := pagination.Page[ExampleService]{}
 // 	p.PaginateQuery(query, c)
 // 	response.PaginateResponse(p.Data, p, "获取成功", c)

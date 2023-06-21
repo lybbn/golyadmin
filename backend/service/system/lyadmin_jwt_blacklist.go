@@ -16,22 +16,22 @@ func (js *JwtService) getBlackListKey(tokenStr string) string {
 }
 
 func (js *JwtService) JoinBlacklist(jwtList system.LyadminJwtBlacklist) (err error) {
-	err = global.GVLA_DB.Create(&jwtList).Error
+	err = global.GL_DB.Create(&jwtList).Error
 	if err != nil {
 		return
 	}
-	dr, err := utils.ParseDuration(global.GVLA_CONFIG.JWT.ExpiresTime)
+	dr, err := utils.ParseDuration(global.GL_CONFIG.JWT.ExpiresTime)
 	if err != nil {
 		return err
 	}
 	timer := dr
-	err = global.GVLA_REDIS.Set(context.Background(), js.getBlackListKey(jwtList.Jwt), 1, timer).Err()
+	err = global.GL_REDIS.Set(context.Background(), js.getBlackListKey(jwtList.Jwt), 1, timer).Err()
 	return err
 }
 
 // IsInBlacklist 判断JWT是否在黑名单中
 func (js *JwtService) IsInBlacklist(tokenStr string) bool {
-	redisJWT, err := global.GVLA_REDIS.Get(context.Background(), js.getBlackListKey(tokenStr)).Result()
+	redisJWT, err := global.GL_REDIS.Get(context.Background(), js.getBlackListKey(tokenStr)).Result()
 	if redisJWT == "" || err != nil {
 		return false
 	}
@@ -40,17 +40,17 @@ func (js *JwtService) IsInBlacklist(tokenStr string) bool {
 
 // 从redis获取jwt
 func (js *JwtService) GetRedisJWT(username string) (redisJWT string, err error) {
-	redisJWT, err = global.GVLA_REDIS.Get(context.Background(), username).Result()
+	redisJWT, err = global.GL_REDIS.Get(context.Background(), username).Result()
 	return redisJWT, err
 }
 
 // jwt存入redis缓存并设置过期时间
 func (js *JwtService) SetRedisJWT(jwt string, username string) (err error) {
-	dr, err := utils.ParseDuration(global.GVLA_CONFIG.JWT.ExpiresTime)
+	dr, err := utils.ParseDuration(global.GL_CONFIG.JWT.ExpiresTime)
 	if err != nil {
 		return err
 	}
 	timer := dr
-	err = global.GVLA_REDIS.Set(context.Background(), username, jwt, timer).Err()
+	err = global.GL_REDIS.Set(context.Background(), username, jwt, timer).Err()
 	return err
 }

@@ -21,7 +21,7 @@ import (
 
 var capchaStore = base64Captcha.NewMemoryStore(10240, 180*time.Second)
 
-// var capchaStore = base64Captcha.NewMemoryStore(10240, time.Duration(global.GVLA_CONFIG.Captcha.CaptchaTimeout)*time.Second)
+// var capchaStore = base64Captcha.NewMemoryStore(10240, time.Duration(global.GL_CONFIG.Captcha.CaptchaTimeout)*time.Second)
 
 // 使用redis存储
 
@@ -30,8 +30,8 @@ var capchaStore = base64Captcha.NewMemoryStore(10240, 180*time.Second)
 // mathConfig 生成图形化算术验证码配置
 func mathConfig() *base64Captcha.DriverMath {
 	mathType := &base64Captcha.DriverMath{
-		Height:          global.GVLA_CONFIG.Captcha.ImgHeight,
-		Width:           global.GVLA_CONFIG.Captcha.ImgWidth,
+		Height:          global.GL_CONFIG.Captcha.ImgHeight,
+		Width:           global.GL_CONFIG.Captcha.ImgWidth,
 		NoiseCount:      0,
 		ShowLineOptions: base64Captcha.OptionShowHollowLine,
 		BgColor: &color.RGBA{
@@ -48,9 +48,9 @@ func mathConfig() *base64Captcha.DriverMath {
 // digitConfig 生成图形化数字验证码配置
 func digitConfig() *base64Captcha.DriverDigit {
 	digitType := &base64Captcha.DriverDigit{
-		Height:   global.GVLA_CONFIG.Captcha.ImgHeight,
-		Width:    global.GVLA_CONFIG.Captcha.ImgWidth,
-		Length:   global.GVLA_CONFIG.Captcha.KeyLength,
+		Height:   global.GL_CONFIG.Captcha.ImgHeight,
+		Width:    global.GL_CONFIG.Captcha.ImgWidth,
+		Length:   global.GL_CONFIG.Captcha.KeyLength,
 		MaxSkew:  0.45,
 		DotCount: 25,
 	}
@@ -60,11 +60,11 @@ func digitConfig() *base64Captcha.DriverDigit {
 // stringConfig 生成图形化字符串验证码配置
 func stringConfig() *base64Captcha.DriverString {
 	stringType := &base64Captcha.DriverString{
-		Height:          global.GVLA_CONFIG.Captcha.ImgHeight,
-		Width:           global.GVLA_CONFIG.Captcha.ImgWidth,
+		Height:          global.GL_CONFIG.Captcha.ImgHeight,
+		Width:           global.GL_CONFIG.Captcha.ImgWidth,
 		NoiseCount:      0,
 		ShowLineOptions: base64Captcha.OptionShowHollowLine, //base64Captcha.OptionShowHollowLine | base64Captcha.OptionShowSlimeLine
-		Length:          global.GVLA_CONFIG.Captcha.KeyLength,
+		Length:          global.GL_CONFIG.Captcha.KeyLength,
 		Source:          "1234567890qwertyuiopasdfghjklzxcvb", //1234567890qwertyuiopasdfghjklzxcvbQWERTYUIOPLKJHGFDSAZXCVBNM
 		BgColor: &color.RGBA{
 			R: 255,
@@ -80,11 +80,11 @@ func stringConfig() *base64Captcha.DriverString {
 // chineseConfig 生成图形化汉字验证码配置
 func chineseConfig() *base64Captcha.DriverChinese {
 	chineseType := &base64Captcha.DriverChinese{
-		Height:          global.GVLA_CONFIG.Captcha.ImgHeight,
-		Width:           global.GVLA_CONFIG.Captcha.ImgWidth,
+		Height:          global.GL_CONFIG.Captcha.ImgHeight,
+		Width:           global.GL_CONFIG.Captcha.ImgWidth,
 		NoiseCount:      0,
 		ShowLineOptions: base64Captcha.OptionShowSlimeLine,
-		Length:          global.GVLA_CONFIG.Captcha.KeyLength,
+		Length:          global.GL_CONFIG.Captcha.KeyLength,
 		Source:          "设想,你在,处理,消费者,的音,频输,出音,频可,能无,论什,么都,没有,任何,输出,或者,它可,能是,单声道,立体声,或是,环绕立,体声的,不想要,的值",
 		BgColor: &color.RGBA{
 			R: 40,
@@ -100,7 +100,7 @@ func chineseConfig() *base64Captcha.DriverChinese {
 // autoConfig 生成图形化数字音频验证码配置
 func audioConfig() *base64Captcha.DriverAudio {
 	audioType := &base64Captcha.DriverAudio{
-		Length:   global.GVLA_CONFIG.Captcha.KeyLength,
+		Length:   global.GL_CONFIG.Captcha.KeyLength,
 		Language: "zh",
 	}
 	return audioType
@@ -125,7 +125,7 @@ func (b *BaseApi) GetCaptcha(c *gin.Context) {
 
 	var driver base64Captcha.Driver
 
-	switch global.GVLA_CONFIG.Captcha.CaptchaType {
+	switch global.GL_CONFIG.Captcha.CaptchaType {
 	case "audio":
 		driver = audioConfig()
 	case "string":
@@ -145,7 +145,7 @@ func (b *BaseApi) GetCaptcha(c *gin.Context) {
 	id, b64s, err := cp.Generate()
 
 	if err != nil {
-		global.GVLA_LOG.Error("验证码获取失败!", zap.Error(err))
+		global.GL_LOG.Error("验证码获取失败!", zap.Error(err))
 		response.ErrorResponse("验证码获取失败", c)
 		return
 	}
@@ -153,6 +153,6 @@ func (b *BaseApi) GetCaptcha(c *gin.Context) {
 	response.SuccessResponse(captchaResponse{
 		CaptchaKey:    id,
 		Captcha:       b64s,
-		CaptchaLength: global.GVLA_CONFIG.Captcha.KeyLength,
+		CaptchaLength: global.GL_CONFIG.Captcha.KeyLength,
 	}, "验证码获取成功", c)
 }

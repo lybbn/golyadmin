@@ -5,7 +5,7 @@ import (
 )
 
 type LyadminDept struct {
-	global.GVLA_BASE_MODEL
+	global.GL_BASE_MODEL
 	ParentId uint   `json:"parent_id" gorm:"comment:上级部门"`
 	Name     string `json:"name" gorm:"comment:部门名称"`
 	Sort     int    `json:"sort" gorm:"default:1;comment:显示顺序"`

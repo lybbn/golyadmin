@@ -5,7 +5,7 @@ import (
 )
 
 type LyadminMenuButton struct {
-	global.GVLA_BASE_MODEL
+	global.GL_BASE_MODEL
 	LyadminMenuID uint   `json:"menu_id" gorm:"comment:关联菜单ID"`
 	Name          string `json:"name" gorm:"varchar(30);comment:名称"`
 	Value         string `json:"value" gorm:"comment:权限值"`
@@ -18,7 +18,7 @@ func (LyadminMenuButton) TableName() string {
 }
 
 type LyadminButton struct {
-	global.GVLA_BASE_MODEL
+	global.GL_BASE_MODEL
 	Name  string `json:"name" gorm:"varchar(30);comment:按钮名称"`
 	Value string `json:"value" gorm:"comment:按钮值"`
 }

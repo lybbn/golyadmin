@@ -7,7 +7,7 @@ import (
 )
 
 type LyadminOperationLog struct {
-	global.GVLA_BASE_MODEL
+	global.GL_BASE_MODEL
 	Ip      string        `json:"ip" form:"ip" gorm:"type:varchar(50);column:ip;comment:请求ip"`                  // 请求ip
 	Method  string        `json:"method" form:"method" gorm:"type:varchar(8);column:method;comment:请求方法"`       // 请求方法
 	Path    string        `json:"path" form:"path" gorm:"column:path;comment:请求路径"`                             // 请求路径

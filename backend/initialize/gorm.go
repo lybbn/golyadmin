@@ -11,7 +11,7 @@ const defaultDBName = "default"
 // Gorm 初始化数据库并产生数据库全局变量
 func DBInit() {
 	dbMap := make(map[string]*gorm.DB)
-	for _, info := range global.GVLA_CONFIG.Databases {
+	for _, info := range global.GL_CONFIG.Databases {
 		switch info.DbType {
 		case "mysql":
 			dbMap[info.AliasName] = dbinitialize.GormMysqlByConfig(dbinitialize.Mysql{GeneralDB: info})
@@ -29,7 +29,7 @@ func DBInit() {
 	}
 	//默认数据库
 	if dfDB, ok := dbMap[defaultDBName]; ok {
-		global.GVLA_DB = dfDB
+		global.GL_DB = dfDB
 	}
-	global.GVLA_DATABASES = dbMap
+	global.GL_DATABASES = dbMap
 }

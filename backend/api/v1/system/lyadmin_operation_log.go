@@ -31,7 +31,7 @@ func (s *OperationLogApi) DeleteLyadminOperationLog(c *gin.Context) {
 	}
 	err = operationLogService.DeleteLyadminOperationLog(uint(req.Id))
 	if err != nil {
-		global.GVLA_LOG.Error("删除失败!", zap.Error(err))
+		global.GL_LOG.Error("删除失败!", zap.Error(err))
 		response.ErrorResponse("删除失败", c)
 		return
 	}
@@ -54,7 +54,7 @@ func (s *OperationLogApi) DeleteAllLyadminOperationLog(c *gin.Context) {
 	}
 	err := operationLogService.DeleteAllLyadminOperationLog()
 	if err != nil {
-		global.GVLA_LOG.Error("清空失败", zap.Error(err))
+		global.GL_LOG.Error("清空失败", zap.Error(err))
 		response.ErrorResponse("清空失败", c)
 		return
 	}
@@ -78,7 +78,7 @@ func (s *OperationLogApi) DeleteLyadminOperationLogByIds(c *gin.Context) {
 	}
 	err = operationLogService.DeleteLyadminOperationLogByIds(IDS)
 	if err != nil {
-		global.GVLA_LOG.Error("批量删除失败!", zap.Error(err))
+		global.GL_LOG.Error("批量删除失败!", zap.Error(err))
 		response.ErrorResponse("批量删除失败", c)
 		return
 	}
@@ -102,7 +102,7 @@ func (s *OperationLogApi) GetLyadminOperationLogDetail(c *gin.Context) {
 	}
 	data, err := operationLogService.GetLyadminOperationLogDetail(uint(req.Id))
 	if err != nil {
-		global.GVLA_LOG.Error("查询失败!", zap.Error(err))
+		global.GL_LOG.Error("查询失败!", zap.Error(err))
 		response.ErrorResponse("查询失败", c)
 		return
 	}

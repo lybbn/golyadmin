@@ -31,7 +31,7 @@ func (g *_gorm) Config(prefix string, singular bool) *gorm.Config {
 		Colorful:      true,
 	})
 
-	switch global.GVLA_CONFIG.System.GormLogMode {
+	switch global.GL_CONFIG.System.GormLogMode {
 	case "silent", "Silent":
 		config.Logger = _default.LogMode(logger.Silent)
 	case "error", "Error":

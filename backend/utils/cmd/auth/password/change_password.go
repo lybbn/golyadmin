@@ -38,7 +38,7 @@ func run() {
 	}
 	// 加密密码
 	enpassword := utils.MakePassowrd(password)
-	result := global.GVLA_DB.Model(&system.LyadminUsers{}).Where("username = ?", username).Update("password", enpassword)
+	result := global.GL_DB.Model(&system.LyadminUsers{}).Where("username = ?", username).Update("password", enpassword)
 
 	if result.RowsAffected <= 0 {
 		fmt.Println(utils.Red("用户 " + username + " 不存在"))

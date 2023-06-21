@@ -5,7 +5,7 @@ import (
 )
 
 type LyadminMenu struct {
-	global.GVLA_BASE_MODEL
+	global.GL_BASE_MODEL
 	ParentId      uint                `json:"parent_id" gorm:"comment:父菜单ID"`
 	Name          string              `json:"name" gorm:"comment:菜单名称"`
 	Icon          string              `json:"icon" gorm:"comment:菜单图标"`

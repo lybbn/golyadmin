@@ -25,24 +25,24 @@ type RedisStore struct {
 
 func (rs *RedisStore) Set(id string, value string) error {
 	key := rs.PreKey + id
-	err := global.GVLA_REDIS.Set(ctx, key, value, rs.Expiration).Err()
+	err := global.GL_REDIS.Set(ctx, key, value, rs.Expiration).Err()
 	if err != nil {
-		global.GVLA_LOG.Error("RedisStoreSetError!", zap.Error(err))
+		global.GL_LOG.Error("RedisStoreSetError!", zap.Error(err))
 	}
 	return err
 }
 
 func (rs *RedisStore) Get(id string, clear bool) string {
 	key := rs.PreKey + id
-	val, err := global.GVLA_REDIS.Get(ctx, key).Result()
+	val, err := global.GL_REDIS.Get(ctx, key).Result()
 	if err != nil {
-		global.GVLA_LOG.Error("RedisStoreGetError!", zap.Error(err))
+		global.GL_LOG.Error("RedisStoreGetError!", zap.Error(err))
 		return ""
 	}
 	if clear {
-		err := global.GVLA_REDIS.Del(ctx, key).Err()
+		err := global.GL_REDIS.Del(ctx, key).Err()
 		if err != nil {
-			global.GVLA_LOG.Error("RedisStoreClearError!", zap.Error(err))
+			global.GL_LOG.Error("RedisStoreClearError!", zap.Error(err))
 			return ""
 		}
 	}

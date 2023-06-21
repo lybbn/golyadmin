@@ -42,12 +42,12 @@ func initEnvironment() {
 	if configYaml == "" {
 		configYaml = "config.yaml"
 	}
-	global.GVLA_VP = core.Viper(configYaml) // 初始化Viper
-	global.GVLA_LOG = core.Zap()            // 初始化zap日志库
-	zap.ReplaceGlobals(global.GVLA_LOG)
+	global.GL_VP = core.Viper(configYaml) // 初始化Viper
+	global.GL_LOG = core.Zap()            // 初始化zap日志库
+	zap.ReplaceGlobals(global.GL_LOG)
 	initialize.DBInit() // gorm连接数据库
-	if global.GVLA_DB != nil {
-		global.GVLA_LOG.Info("database connect success")
+	if global.GL_DB != nil {
+		global.GL_LOG.Info("database connect success")
 		fmt.Printf("数据库连接成功\n")
 	}
 }

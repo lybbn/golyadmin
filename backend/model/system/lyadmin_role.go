@@ -5,7 +5,7 @@ import (
 )
 
 type LyadminRole struct {
-	global.GVLA_BASE_MODEL
+	global.GL_BASE_MODEL
 	Name       string              `json:"name" gorm:"comment:角色名称"`
 	Key        string              `json:"key" gorm:"comment:权限字符"`
 	Sort       int                 `json:"sort" gorm:"default:1;comment:显示顺序"`

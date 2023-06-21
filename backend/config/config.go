@@ -10,4 +10,6 @@ type Server struct {
 	Databases []GeneralDB `mapstructure:"databases" json:"databases" yaml:"databases"`
 	// 跨域配置
 	Cors CORS `mapstructure:"cors" json:"cors" yaml:"cors"`
+	// HTTPS 支持
+	Ssl SSL `mapstructure:"ssl" json:"ssl" yaml:"ssl"`
 }

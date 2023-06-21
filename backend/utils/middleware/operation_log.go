@@ -37,7 +37,7 @@ func OperationLog() gin.HandlerFunc {
 			var err error
 			body, err = io.ReadAll(c.Request.Body)
 			if err != nil {
-				global.GVLA_LOG.Error("read body from request error:", zap.Error(err))
+				global.GL_LOG.Error("read body from request error:", zap.Error(err))
 			} else {
 				c.Request.Body = io.NopCloser(bytes.NewBuffer(body))
 			}
@@ -118,7 +118,7 @@ func OperationLog() gin.HandlerFunc {
 		}
 
 		if err := operationLogService.CreateLyadminOperationLog(record); err != nil {
-			global.GVLA_LOG.Error("create operation record error:", zap.Error(err))
+			global.GL_LOG.Error("create operation record error:", zap.Error(err))
 		}
 	}
 }

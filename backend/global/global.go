@@ -13,25 +13,25 @@ import (
 
 const (
 	// Version golyadmin version info
-	GVLA_VERSION = "1.0.1"
+	GL_VERSION = "1.0.1"
 )
 
 var (
-	GVLA_DB           *gorm.DB            //默认数据库
-	GVLA_DATABASES    map[string]*gorm.DB //多数据源,访问使用GVLA_DATABASES[数据库别名]形式指定数据源
-	GVLA_REDIS        *redis.Client       //Redis客户端
-	GVLA_CONFIG       config.Server       //服务端配置
-	GVLA_LOG          *zap.Logger
-	GVLA_VP           *viper.Viper
-	GVLA_Singleflight = &singleflight.Group{} //处理并发，合并相同请求（防缓存击穿）
-	lock              sync.RWMutex
+	GL_DB           *gorm.DB            //默认数据库
+	GL_DATABASES    map[string]*gorm.DB //多数据源,访问使用GL_DATABASES[数据库别名]形式指定数据源
+	GL_REDIS        *redis.Client       //Redis客户端
+	GL_CONFIG       config.Server       //服务端配置
+	GL_LOG          *zap.Logger
+	GL_VP           *viper.Viper
+	GL_Singleflight = &singleflight.Group{} //处理并发，合并相同请求（防缓存击穿）
+	lock            sync.RWMutex
 )
 
-// 通过数据库别名获取GVLA_DATABASES中的db
+// 通过数据库别名获取GL_DATABASES中的db
 func GetGlobalDBByName(dbname string) *gorm.DB {
 	lock.RLock()
 	defer lock.RUnlock()
-	db, ok := GVLA_DATABASES[dbname]
+	db, ok := GL_DATABASES[dbname]
 	if !ok || db == nil {
 		panic("the db no does not init")
 	}

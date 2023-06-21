@@ -33,7 +33,7 @@ func run() {
 func migrateModel() {
 	var db *gorm.DB
 	if database == "" {
-		db = global.GVLA_DB
+		db = global.GL_DB
 	} else {
 		db = global.GetGlobalDBByName(database)
 	}

@@ -12,7 +12,7 @@ type MenuService struct{}
 // 分页获取菜单列表
 func (m *MenuService) GetLyadminMenuList(info systemReq.LyadminMenuSearch) *gorm.DB {
 	// 创建db
-	db := global.GVLA_DB.Model(&system.LyadminMenu{})
+	db := global.GL_DB.Model(&system.LyadminMenu{})
 	// 如果有条件搜索 下方会自动创建搜索语句
 	if info.Status != nil {
 		db = db.Where("status = ?", info.Status)

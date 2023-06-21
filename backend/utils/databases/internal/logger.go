@@ -19,9 +19,9 @@ func NewWriter(w logger.Writer) *writer {
 // Printf 格式化打印日志
 func (w *writer) Printf(message string, data ...interface{}) {
 	var logZap bool
-	logZap = global.GVLA_CONFIG.System.GormLogZap
+	logZap = global.GL_CONFIG.System.GormLogZap
 	if logZap {
-		global.GVLA_LOG.Info(fmt.Sprintf(message+"\n", data...))
+		global.GL_LOG.Info(fmt.Sprintf(message+"\n", data...))
 	} else {
 		w.Writer.Printf(message, data...)
 	}

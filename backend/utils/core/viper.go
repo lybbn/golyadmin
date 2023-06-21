@@ -17,7 +17,7 @@ func Viper(path ...string) *viper.Viper {
 	if len(path) == 0 {
 		if config == "" { // 判断命令行参数是否为空
 			config = "config.yaml"
-			fmt.Printf("您正在使用%s环境变量,配置文件为%s\n", "GVLA_CONFIG", config)
+			fmt.Printf("您正在使用%s环境变量,配置文件为%s\n", "GL_CONFIG", config)
 		} else { // 命令行参数不为空 将值赋值于config
 			fmt.Printf("您正在使用命令行的-c参数传递的值,配置文件为%s\n", config)
 		}
@@ -37,11 +37,11 @@ func Viper(path ...string) *viper.Viper {
 
 	v.OnConfigChange(func(e fsnotify.Event) {
 		fmt.Println("config file changed:", e.Name)
-		if err = v.Unmarshal(&global.GVLA_CONFIG); err != nil {
+		if err = v.Unmarshal(&global.GL_CONFIG); err != nil {
 			fmt.Println(err)
 		}
 	})
-	if err = v.Unmarshal(&global.GVLA_CONFIG); err != nil {
+	if err = v.Unmarshal(&global.GL_CONFIG); err != nil {
 		fmt.Println(err)
 	}
 

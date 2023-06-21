@@ -31,10 +31,10 @@ func FormatString2Int(e string) (int, error) {
 
 // 获取配置文件的端口字符串形式 如   :9000
 func GetServerPort() string {
-	if global.GVLA_CONFIG.System.HttpPort == 80 {
+	if global.GL_CONFIG.System.HttpPort == 80 {
 		return ""
 	}
-	return ":" + FormatInt2String(global.GVLA_CONFIG.System.HttpPort)
+	return ":" + FormatInt2String(global.GL_CONFIG.System.HttpPort)
 }
 
 // 解析1d 2h 30m格式时间为time.Duration

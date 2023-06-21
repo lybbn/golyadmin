@@ -33,13 +33,13 @@ type JWT struct {
 
 func NewJWT() *JWT {
 	return &JWT{
-		[]byte(global.GVLA_CONFIG.JWT.SecretKey),
+		[]byte(global.GL_CONFIG.JWT.SecretKey),
 	}
 }
 
 func (j *JWT) CreateClaims(baseClaims BaseClaims) CustomClaims {
-	bf, _ := ParseDuration(global.GVLA_CONFIG.JWT.BufferTime)
-	ep, _ := ParseDuration(global.GVLA_CONFIG.JWT.ExpiresTime)
+	bf, _ := ParseDuration(global.GL_CONFIG.JWT.BufferTime)
+	ep, _ := ParseDuration(global.GL_CONFIG.JWT.ExpiresTime)
 	claims := CustomClaims{
 		BaseClaims: baseClaims,
 		BufferTime: int64(bf / time.Second), // 缓冲时间1天 缓冲时间内会获得新的token刷新令牌 此时一个用户会存在两个有效令牌 但是前端只留一个 另一个会丢失
@@ -62,7 +62,7 @@ func (j *JWT) CreateToken(claims CustomClaims) (token string, err error) {
 
 // RefreshTokenByOldToken 旧token 换新token 使用Singleflight避免并发问题
 func (j *JWT) RefreshTokenByOldToken(oldToken string, claims CustomClaims) (string, error) {
-	v, err, _ := global.GVLA_Singleflight.Do("JWT:"+oldToken, func() (interface{}, error) {
+	v, err, _ := global.GL_Singleflight.Do("JWT:"+oldToken, func() (interface{}, error) {
 		return j.CreateToken(claims)
 	})
 	return v.(string), err
@@ -94,7 +94,7 @@ func GetClaims(c *gin.Context) (*CustomClaims, error) {
 	j := NewJWT()
 	claims, err := j.VerifyToken(token)
 	if err != nil {
-		global.GVLA_LOG.Error("获取请求头Authorization的jwt解析信息失败, 请检查请求头是否存在Authorization且claims是否为规定结构")
+		global.GL_LOG.Error("获取请求头Authorization的jwt解析信息失败, 请检查请求头是否存在Authorization且claims是否为规定结构")
 	}
 	return claims, err
 }

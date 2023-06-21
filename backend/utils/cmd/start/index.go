@@ -26,24 +26,29 @@ func run() {
 	fmt.Println("正在启动后端服务")
 	initialize.InitRedis()    // 初始化redis服务
 	r := initialize.Routers() //初始化路由
-	address := fmt.Sprintf("%s:%d", global.GVLA_CONFIG.System.Host, global.GVLA_CONFIG.System.HttpPort)
-	s := initialize.InitServer(address, r)
-	newaddress := utils.GetLocalIpAddr() + utils.GetServerPort() + global.GVLA_CONFIG.System.RouterPrefix
+	address := fmt.Sprintf("%s:%d", global.GL_CONFIG.System.Host, global.GL_CONFIG.System.HttpPort)
+	newaddress := utils.GetLocalIpAddr() + utils.GetServerPort() + global.GL_CONFIG.System.RouterPrefix
 	time.Sleep(10 * time.Microsecond)
-	global.GVLA_LOG.Info("server run success on ", zap.String("address", address))
+	global.GL_LOG.Info("server run success on ", zap.String("address", address))
 	fmt.Println("\r\n欢迎使用 golyadmin")
-	fmt.Printf("当前版本:v%s\r\n", global.GVLA_VERSION)
+	fmt.Printf("当前版本:v%s\r\n", global.GL_VERSION)
 	tip()
 	fmt.Println(utils.Green("Server run at:"))
 	fmt.Printf("-  Local:   http://127.0.0.1%s \r\n", utils.GetServerPort())
 	fmt.Printf("-  Network: http://%s%s \r\n", utils.GetLocalIpAddr(), utils.GetServerPort())
-	if global.GVLA_CONFIG.System.IsSwagger {
+	if global.GL_CONFIG.System.IsSwagger {
 		fmt.Printf("默认接口文档地址:http://%s/swagger/index.html \r\n", newaddress)
 	}
 	fmt.Printf("默认接口基础地址:http://%s \r\n", newaddress)
-	global.GVLA_LOG.Error(s.ListenAndServe().Error())
-	//gin启动
-	// r.Run(address)
+	if global.GL_CONFIG.Ssl.Enable {
+		if err := r.RunTLS(address, global.GL_CONFIG.Ssl.CertFile, global.GL_CONFIG.Ssl.KeyFile); err != nil {
+			global.GL_LOG.Error(err.Error())
+		}
+	} else {
+		if err := r.Run(address); err != nil {
+			global.GL_LOG.Error(err.Error())
+		}
+	}
 }
 
 func tip() {

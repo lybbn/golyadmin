@@ -16,7 +16,7 @@ import (
 
 // 初始化redis客户端
 func InitRedis() {
-	redisCfg := global.GVLA_CONFIG.Redis
+	redisCfg := global.GL_CONFIG.Redis
 	client := redis.NewClient(&redis.Options{
 		Addr:         redisCfg.Addr,
 		Password:     redisCfg.Password,
@@ -27,10 +27,10 @@ func InitRedis() {
 	})
 	pong, err := client.Ping(context.Background()).Result()
 	if err != nil {
-		global.GVLA_LOG.Error("redis连接错误, err:", zap.Error(err))
+		global.GL_LOG.Error("redis连接错误, err:", zap.Error(err))
 	} else {
-		global.GVLA_LOG.Info("redis connect ping response:", zap.String("pong", pong))
+		global.GL_LOG.Info("redis connect ping response:", zap.String("pong", pong))
 		fmt.Printf("redis连接成功\n")
-		global.GVLA_REDIS = client
+		global.GL_REDIS = client
 	}
 }

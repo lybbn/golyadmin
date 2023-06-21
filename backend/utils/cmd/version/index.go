@@ -19,5 +19,5 @@ var (
 )
 
 func run() {
-	fmt.Println(global.GVLA_VERSION)
+	fmt.Println(global.GL_VERSION)
 }

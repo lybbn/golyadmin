@@ -3,7 +3,7 @@ package system
 import "gitee.com/lybbn/golyadmin/global"
 
 type LyadminJwtBlacklist struct {
-	global.GVLA_BASE_MODEL
+	global.GL_BASE_MODEL
 	Jwt string `gorm:"type:text;comment:jwt"`
 }
 
