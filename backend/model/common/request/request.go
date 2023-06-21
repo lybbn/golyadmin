@@ -10,4 +10,8 @@ type Id struct {
 	Id int `json:"id" form:"id" binding:"required" msg:"id不能为空"` //id
 }
 
+type Search struct {
+	Search string `json:"search" form:"search"` //search关键字
+}
+
 type Empty struct{}

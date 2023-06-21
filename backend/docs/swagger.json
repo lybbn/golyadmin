@@ -110,7 +110,183 @@
                 "tags": [
                     "Menu"
                 ],
-                "summary": "获取菜单列表",
+                "summary": "获取菜单全部列表",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "每页大小",
+                        "name": "limit",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "名称",
+                        "name": "name",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "当前页码",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "boolean",
+                        "description": "状态",
+                        "name": "status",
+                        "in": "query"
+                    },
+                    {
+                        "type": "boolean",
+                        "description": "是否显示",
+                        "name": "visible",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "路径",
+                        "name": "web_path",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "获取菜单全部列表",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.StructResponse"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "object",
+                                            "additionalProperties": true
+                                        },
+                                        "msg": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            },
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Menu"
+                ],
+                "summary": "新增菜单",
+                "parameters": [
+                    {
+                        "description": "名称",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/system.LyadminMenu"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "新增菜单",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.StructResponse"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "string"
+                                        },
+                                        "msg": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/menu/menu/:id": {
+            "put": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Menu"
+                ],
+                "summary": "编辑菜单",
+                "parameters": [
+                    {
+                        "description": "名称",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/system.LyadminMenu"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "编辑菜单",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.StructResponse"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "string"
+                                        },
+                                        "msg": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/menu/menulist": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Menu"
+                ],
+                "summary": "分页获取菜单列表",
                 "parameters": [
                     {
                         "type": "integer",
@@ -692,9 +868,11 @@
             "type": "object",
             "properties": {
                 "component": {
+                    "description": "对应前端文件路径",
                     "type": "string"
                 },
                 "component_name": {
+                    "description": "对应前端文件名称",
                     "type": "string"
                 },
                 "create_at": {
@@ -702,35 +880,39 @@
                     "type": "string"
                 },
                 "icon": {
+                    "description": "菜单图标",
                     "type": "string"
                 },
                 "id": {
                     "description": "主键",
                     "type": "integer"
                 },
+                "is_catalog": {
+                    "description": "是否目录",
+                    "type": "boolean"
+                },
                 "is_link": {
+                    "description": "是否外链",
                     "type": "boolean"
                 },
                 "keep_alive": {
+                    "description": "是否缓存页面",
                     "type": "boolean"
                 },
-                "menu_button": {
-                    "description": "has many",
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/system.LyadminMenuButton"
-                    }
-                },
                 "name": {
+                    "description": "菜单名称",
                     "type": "string"
                 },
                 "parent_id": {
+                    "description": "父菜单ID",
                     "type": "integer"
                 },
                 "sort": {
+                    "description": "显示顺序",
                     "type": "integer"
                 },
                 "status": {
+                    "description": "状态",
                     "type": "boolean"
                 },
                 "update_at": {
@@ -738,9 +920,11 @@
                     "type": "string"
                 },
                 "visible": {
+                    "description": "是否显示菜单",
                     "type": "boolean"
                 },
                 "web_path": {
+                    "description": "路由地址",
                     "type": "string"
                 }
             }

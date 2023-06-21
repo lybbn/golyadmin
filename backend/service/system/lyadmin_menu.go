@@ -26,6 +26,36 @@ func (m *MenuService) GetLyadminMenuList(info systemReq.LyadminMenuSearch) *gorm
 	if info.Name != "" {
 		db = db.Where("name LIKE ?", "%"+info.Name+"%")
 	}
-	db = db.Order("id desc")
+	db = db.Order("sort aesc")
 	return db
+}
+
+// 新增菜单
+func (m *MenuService) CreateMenu(menu system.LyadminMenu) error {
+	// if !errors.Is(global.GL_DB.Where("name = ?", menu.Name).First(&system.LyadminMenu{}).Error, gorm.ErrRecordNotFound) {
+	// 	return errors.New("存在重复name，请修改name")
+	// }
+	return global.GL_DB.Create(&menu).Error
+}
+
+// 编辑菜单
+func (m *MenuService) UpdateMenu(menu system.LyadminMenu) (err error) {
+	var oldData system.LyadminMenu
+	upDateMap := make(map[string]interface{})
+	upDateMap["keep_alive"] = menu.KeepAlive
+	upDateMap["parent_id"] = menu.ParentId
+	upDateMap["web_path"] = menu.WebPath
+	upDateMap["icon"] = menu.Icon
+	upDateMap["name"] = menu.Name
+	upDateMap["visible"] = menu.Visible
+	upDateMap["component"] = menu.Component
+	upDateMap["component_name"] = menu.ComponentName
+	upDateMap["is_link"] = menu.IsLink
+	upDateMap["sort"] = menu.Sort
+	upDateMap["is_catalog"] = menu.IsCatalog
+	upDateMap["status"] = menu.Status
+
+	db := global.GL_DB.Where("id = ?", menu.ID).Find(&oldData)
+	err = db.Updates(upDateMap).Error
+	return err
 }

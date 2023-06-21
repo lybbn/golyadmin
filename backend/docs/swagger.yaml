@@ -129,40 +129,49 @@ definitions:
   system.LyadminMenu:
     properties:
       component:
+        description: 对应前端文件路径
         type: string
       component_name:
+        description: 对应前端文件名称
         type: string
       create_at:
         description: 创建时间
         type: string
       icon:
+        description: 菜单图标
         type: string
       id:
         description: 主键
         type: integer
+      is_catalog:
+        description: 是否目录
+        type: boolean
       is_link:
+        description: 是否外链
         type: boolean
       keep_alive:
+        description: 是否缓存页面
         type: boolean
-      menu_button:
-        description: has many
-        items:
-          $ref: '#/definitions/system.LyadminMenuButton'
-        type: array
       name:
+        description: 菜单名称
         type: string
       parent_id:
+        description: 父菜单ID
         type: integer
       sort:
+        description: 显示顺序
         type: integer
       status:
+        description: 状态
         type: boolean
       update_at:
         description: 更新时间
         type: string
       visible:
+        description: 是否显示菜单
         type: boolean
       web_path:
+        description: 路由地址
         type: string
     type: object
   system.LyadminMenuButton:
@@ -448,6 +457,108 @@ paths:
       - application/json
       responses:
         "200":
+          description: 获取菜单全部列表
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.StructResponse'
+            - properties:
+                data:
+                  additionalProperties: true
+                  type: object
+                msg:
+                  type: string
+              type: object
+      security:
+      - ApiKeyAuth: []
+      summary: 获取菜单全部列表
+      tags:
+      - Menu
+    post:
+      parameters:
+      - description: 名称
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/system.LyadminMenu'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 新增菜单
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.StructResponse'
+            - properties:
+                data:
+                  type: string
+                msg:
+                  type: string
+              type: object
+      security:
+      - ApiKeyAuth: []
+      summary: 新增菜单
+      tags:
+      - Menu
+  /menu/menu/:id:
+    put:
+      parameters:
+      - description: 名称
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/system.LyadminMenu'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 编辑菜单
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.StructResponse'
+            - properties:
+                data:
+                  type: string
+                msg:
+                  type: string
+              type: object
+      security:
+      - ApiKeyAuth: []
+      summary: 编辑菜单
+      tags:
+      - Menu
+  /menu/menulist:
+    get:
+      parameters:
+      - description: 每页大小
+        in: query
+        name: limit
+        type: integer
+      - description: 名称
+        in: query
+        name: name
+        type: string
+      - description: 当前页码
+        in: query
+        name: page
+        type: integer
+      - description: 状态
+        in: query
+        name: status
+        type: boolean
+      - description: 是否显示
+        in: query
+        name: visible
+        type: boolean
+      - description: 路径
+        in: query
+        name: web_path
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
           description: 分页获取菜单列表
           schema:
             allOf:
@@ -461,7 +572,7 @@ paths:
               type: object
       security:
       - ApiKeyAuth: []
-      summary: 获取菜单列表
+      summary: 分页获取菜单列表
       tags:
       - Menu
   /operationlog/deletelogbyids:
