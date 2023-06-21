@@ -31,7 +31,7 @@ func FormatString2Int(e string) (int, error) {
 
 // 获取配置文件的端口字符串形式 如   :9000
 func GetServerPort() string {
-	if global.GL_CONFIG.System.HttpPort == 80 {
+	if global.GL_CONFIG.System.HttpPort == 80 || global.GL_CONFIG.System.HttpPort == 443 {
 		return ""
 	}
 	return ":" + FormatInt2String(global.GL_CONFIG.System.HttpPort)

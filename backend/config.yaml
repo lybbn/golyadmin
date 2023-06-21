@@ -14,8 +14,8 @@ system:
 # jwt 认证
 jwt:
   secret-key: golyadmin-lybbn-insecure-$p1b+kob@eb%wh0bn&8yj&!8 #秘钥
-  expires-time: 7d  #过期时间d表示天
-  buffer-time: 1d   #缓冲时间（距离过期还有N天时签发新jwt token）d表示天
+  expires-time: 7d  #过期时间d表示天、h 小时、m分钟
+  buffer-time: 1d   #缓冲时间（距离过期还有N天时签发新jwt token）d表示天、h 小时、m分钟
 
 # 验证码配置
 captcha:
