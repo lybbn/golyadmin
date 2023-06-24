@@ -11,6 +11,7 @@ type LyadminMenuButton struct {
 	Value         string `json:"value" gorm:"comment:权限值"`
 	Api           string `json:"api" gorm:"comment:接口地址"`
 	Method        string `json:"method" gorm:"varchar(30);comment:接口请求方法"`
+	global.GL_CONTROL_MODEL
 }
 
 func (LyadminMenuButton) TableName() string {
@@ -21,6 +22,7 @@ type LyadminButton struct {
 	global.GL_BASE_MODEL
 	Name  string `json:"name" gorm:"varchar(30);comment:按钮名称"`
 	Value string `json:"value" gorm:"comment:按钮值"`
+	global.GL_CONTROL_MODEL
 }
 
 func (LyadminButton) TableName() string {

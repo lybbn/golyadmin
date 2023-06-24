@@ -13,6 +13,7 @@ type LyadminDept struct {
 	Owner    string `json:"owner" gorm:"size:100;comment:负责人"`
 	Phone    string `json:"phone" gorm:"size:32;comment:手机"`
 	Email    string `json:"email" gorm:"size:64;comment:邮箱"`
+	global.GL_CONTROL_MODEL
 }
 
 func (LyadminDept) TableName() string {

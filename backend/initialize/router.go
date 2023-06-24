@@ -59,9 +59,12 @@ func Routers() *gin.Engine {
 	PrivateGroup := Router.Group(global.GL_CONFIG.System.RouterPrefix)
 	PrivateGroup.Use(middleware.JWTAuthMiddleware())
 	{
-		systemRouter.InitUserRouter(PrivateGroup)
-		systemRouter.InitOperationLogRouter(PrivateGroup)
-		systemRouter.InitMenuRouter(PrivateGroup)
+		SystemPrivateGroup := PrivateGroup.Group("system")
+		{
+			systemRouter.InitUserRouter(SystemPrivateGroup)
+			systemRouter.InitOperationLogRouter(SystemPrivateGroup)
+			systemRouter.InitMenuRouter(SystemPrivateGroup)
+		}
 	}
 
 	//不存在路由

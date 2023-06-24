@@ -10,6 +10,7 @@ type LyadminPost struct {
 	Code   string `json:"code" gorm:"size:100;comment:岗位编码"`
 	Sort   int    `json:"sort" gorm:"default:1;comment:显示顺序"`
 	Status bool   `json:"status" gorm:"default:true;comment:状态"`
+	global.GL_CONTROL_MODEL
 }
 
 func (LyadminPost) TableName() string {

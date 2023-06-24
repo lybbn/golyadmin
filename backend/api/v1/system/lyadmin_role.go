@@ -12,24 +12,24 @@ import (
 	"go.uber.org/zap"
 )
 
-type MenuApi struct{}
+type RoleApi struct{}
 
-// @Tags      Menu
-// @Summary   获取菜单全部列表
+// @Tags      Role
+// @Summary   获取角色全部列表
 // @Security  ApiKeyAuth
 // @Produce   application/json
-// @Param     data  query       systemReq.LyadminMenuSearch true "名称、是否显示、状态、路径"
-// @Success   200   {object}  response.StructResponse{data=map[string]interface{},msg=string}  "获取菜单全部列表"
-// @Router    /system/menu/menu [get]
-func (a *MenuApi) GetMenu(c *gin.Context) {
-	var req systemReq.LyadminMenuSearch
+// @Param     data  query       systemReq.LyadminRoleSearch false "搜索字段"
+// @Success   200   {object}  response.StructResponse{data=map[string]interface{},msg=string}  "获取角色全部列表"
+// @Router    /system/role/menu [get]
+func (r *RoleApi) GetRole(c *gin.Context) {
+	var req systemReq.LyadminRoleSearch
 	err := c.ShouldBind(&req)
 	if err != nil {
 		response.ErrorResponse(err.Error(), c)
 		return
 	}
-	query := menuService.GetLyadminMenuList(req)
-	var data []system.LyadminMenu
+	query := roleService.GetLyadminRoleList(req)
+	var data []system.LyadminRole
 	err = query.Find(&data).Error
 	if err != nil {
 		response.ErrorResponse(err.Error(), c)
@@ -38,41 +38,41 @@ func (a *MenuApi) GetMenu(c *gin.Context) {
 	response.SuccessResponse(data, "获取成功", c)
 }
 
-// @Tags      Menu
-// @Summary   分页获取菜单列表
+// @Tags      Role
+// @Summary   分页获取角色列表
 // @Security  ApiKeyAuth
 // @Produce   application/json
-// @Param     data  query       systemReq.LyadminMenuSearch true "名称、是否显示、状态、路径"
-// @Success   200   {object}  response.StructResponse{data=map[string]interface{},msg=string}  "分页获取菜单列表"
-// @Router    /system/menu/menulist [get]
-func (a *MenuApi) GetMenuList(c *gin.Context) {
-	var pageInfo systemReq.LyadminMenuSearch
+// @Param     data  query       systemReq.LyadminRoleSearch false "分页参数"
+// @Success   200   {object}  response.StructResponse{data=map[string]interface{},msg=string}  "分页获取角色列表"
+// @Router    /system/role/menulist [get]
+func (r *RoleApi) GetRoleList(c *gin.Context) {
+	var pageInfo systemReq.LyadminRoleSearch
 	err := c.ShouldBind(&pageInfo)
 	if err != nil {
 		response.ErrorResponse(err.Error(), c)
 		return
 	}
-	query := menuService.GetLyadminMenuList(pageInfo)
+	query := roleService.GetLyadminRoleList(pageInfo)
 	p := pagination.Page[system.LyadminMenu]{}
 	p.PaginateQuery(query, c)
 	response.PaginateResponse(p.Data, p, "获取成功", c)
 }
 
-// @Tags      Menu
-// @Summary   新增菜单
+// @Tags      Role
+// @Summary   新增角色
 // @Security  ApiKeyAuth
 // @Produce   application/json
-// @Param     data  body       system.LyadminMenu true "名称"
-// @Success   200   {object}  response.StructResponse{data=string,msg=string}  "新增菜单"
-// @Router    /system/menu/menu [post]
-func (a *MenuApi) CreateMenu(c *gin.Context) {
-	var req system.LyadminMenu
+// @Param     data  body       system.LyadminRole true "LyadminRole模型"
+// @Success   200   {object}  response.StructResponse{data=string,msg=string}  "新增角色"
+// @Router    /system/role/role [post]
+func (r *RoleApi) CreateRole(c *gin.Context) {
+	var req system.LyadminRole
 	err := c.ShouldBind(&req)
 	if err != nil {
 		response.ErrorResponse(utils.GetValidMsg(err, &req), c)
 		return
 	}
-	err = menuService.CreateMenu(req)
+	err = roleService.CreateRole(req)
 	if err != nil {
 		global.GL_LOG.Error("添加失败!", zap.Error(err))
 		response.ErrorResponse(err.Error(), c)
@@ -81,22 +81,22 @@ func (a *MenuApi) CreateMenu(c *gin.Context) {
 	response.SuccessResponse(nil, "添加成功", c)
 }
 
-// @Tags      Menu
-// @Summary   根据ID删除菜单
+// @Tags      Role
+// @Summary   根据ID删除角色
 // @Security  ApiKeyAuth
 // @accept    application/json
 // @Produce   application/json
-// @Param     data  body      request.Id      true  "LyadminMenu模型"
-// @Success   200   {object}  response.StructResponse{msg=string}  "删除LyadminMenu"
-// @Router    /system/menu/menu [delete]
-func (a *MenuApi) DeleteMenu(c *gin.Context) {
+// @Param     data  body      request.Id      true  "ID"
+// @Success   200   {object}  response.StructResponse{msg=string}  "删除角色"
+// @Router    /system/role/role [delete]
+func (r *RoleApi) DeleteRole(c *gin.Context) {
 	var req request.Id
 	err := c.ShouldBind(&req)
 	if err != nil {
 		response.ErrorResponse(utils.GetValidMsg(err, &req), c)
 		return
 	}
-	err = menuService.DeleteMenu(uint(req.Id))
+	err = roleService.DeleteRole(uint(req.Id))
 	if err != nil {
 		global.GL_LOG.Error("删除失败!", zap.Error(err))
 		response.ErrorResponse("删除失败", c)
@@ -105,21 +105,21 @@ func (a *MenuApi) DeleteMenu(c *gin.Context) {
 	response.SuccessResponse(nil, "删除成功", c)
 }
 
-// @Tags      Menu
-// @Summary   编辑菜单
+// @Tags      Role
+// @Summary   编辑角色
 // @Security  ApiKeyAuth
 // @Produce   application/json
-// @Param     data  body       system.LyadminMenu true "名称"
+// @Param     data  body       system.LyadminRole true "分页"
 // @Success   200   {object}  response.StructResponse{data=string,msg=string}  "编辑菜单"
-// @Router    /system/menu/menu/:id [put]
-func (a *MenuApi) UpdateMenu(c *gin.Context) {
-	var req system.LyadminMenu
+// @Router    /system/role/role/:id [put]
+func (r *RoleApi) UpdateRole(c *gin.Context) {
+	var req system.LyadminRole
 	err := c.ShouldBind(&req)
 	if err != nil {
 		response.ErrorResponse(utils.GetValidMsg(err, &req), c)
 		return
 	}
-	err = menuService.UpdateMenu(req)
+	err = roleService.UpdateRole(req)
 	if err != nil {
 		global.GL_LOG.Error("添加失败!", zap.Error(err))
 		response.ErrorResponse(err.Error(), c)

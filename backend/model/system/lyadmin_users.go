@@ -32,6 +32,7 @@ type LyadminUsers struct {
 	IsSuperuser bool          `json:"is_superuser" gorm:"default:false;comment:是否超管"`                     //是否超管
 	IsActive    bool          `json:"is_active" gorm:"default:true;comment:状态(1正常、0冻结)"`                  //状态(1正常、0冻结)
 	Identity    int           `json:"identity" gorm:"size:4;default:2;comment:身份(1 超级管理员 、2后台、3前台)"`      //身份（1 超级管理员,2后台用户、3前台用户）
+	global.GL_CONTROL_MODEL
 }
 
 func (LyadminUsers) TableName() string {

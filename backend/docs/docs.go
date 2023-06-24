@@ -105,7 +105,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/menu/menu": {
+        "/system/menu/menu": {
             "get": {
                 "security": [
                     {
@@ -229,9 +229,57 @@ const docTemplate = `{
                         }
                     }
                 }
+            },
+            "delete": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Menu"
+                ],
+                "summary": "根据ID删除菜单",
+                "parameters": [
+                    {
+                        "description": "LyadminMenu模型",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.Id"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "删除LyadminMenu",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.StructResponse"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "msg": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
             }
         },
-        "/menu/menu/:id": {
+        "/system/menu/menu/:id": {
             "put": {
                 "security": [
                     {
@@ -281,7 +329,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/menu/menulist": {
+        "/system/menu/menulist": {
             "get": {
                 "security": [
                     {
@@ -359,7 +407,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/operationlog/deletelogbyids": {
+        "/system/operationlog/deletelogbyids": {
             "delete": {
                 "security": [
                     {
@@ -409,7 +457,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/operationlog/log": {
+        "/system/operationlog/log": {
             "get": {
                 "security": [
                     {
@@ -507,7 +555,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/operationlog/loglist": {
+        "/system/operationlog/loglist": {
             "get": {
                 "security": [
                     {
@@ -532,6 +580,12 @@ const docTemplate = `{
                         "in": "query"
                     },
                     {
+                        "type": "integer",
+                        "description": "数据归属部门",
+                        "name": "belong_dept",
+                        "in": "query"
+                    },
+                    {
                         "type": "string",
                         "description": "请求Body",
                         "name": "body",
@@ -547,6 +601,12 @@ const docTemplate = `{
                         "type": "string",
                         "description": "创建时间",
                         "name": "create_at",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "创建者",
+                        "name": "create_by",
                         "in": "query"
                     },
                     {
@@ -611,6 +671,12 @@ const docTemplate = `{
                     },
                     {
                         "type": "integer",
+                        "description": "更新着",
+                        "name": "update_by",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
                         "description": "用户id Belongs To",
                         "name": "user_id",
                         "in": "query"
@@ -642,7 +708,287 @@ const docTemplate = `{
                 }
             }
         },
-        "/user/user": {
+        "/system/role/menu": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Role"
+                ],
+                "summary": "获取角色全部列表",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "每页大小",
+                        "name": "limit",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "名称",
+                        "name": "name",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "当前页码",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "boolean",
+                        "description": "状态",
+                        "name": "status",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "获取角色全部列表",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.StructResponse"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "object",
+                                            "additionalProperties": true
+                                        },
+                                        "msg": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/system/role/menulist": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Role"
+                ],
+                "summary": "分页获取角色列表",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "每页大小",
+                        "name": "limit",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "名称",
+                        "name": "name",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "当前页码",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "boolean",
+                        "description": "状态",
+                        "name": "status",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "分页获取角色列表",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.StructResponse"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "object",
+                                            "additionalProperties": true
+                                        },
+                                        "msg": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/system/role/role": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Role"
+                ],
+                "summary": "新增角色",
+                "parameters": [
+                    {
+                        "description": "LyadminRole模型",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/system.LyadminRole"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "新增角色",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.StructResponse"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "string"
+                                        },
+                                        "msg": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Role"
+                ],
+                "summary": "根据ID删除角色",
+                "parameters": [
+                    {
+                        "description": "ID",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.Id"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "删除角色",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.StructResponse"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "msg": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/system/role/role/:id": {
+            "put": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Role"
+                ],
+                "summary": "编辑角色",
+                "parameters": [
+                    {
+                        "description": "分页",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/system.LyadminRole"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "编辑菜单",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.StructResponse"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "string"
+                                        },
+                                        "msg": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/system/user/user": {
             "post": {
                 "produces": [
                     "application/json"
@@ -837,9 +1183,17 @@ const docTemplate = `{
         "system.LyadminDept": {
             "type": "object",
             "properties": {
+                "belong_dept": {
+                    "description": "数据归属部门",
+                    "type": "integer"
+                },
                 "create_at": {
                     "description": "创建时间",
                     "type": "string"
+                },
+                "create_by": {
+                    "description": "创建者",
+                    "type": "integer"
                 },
                 "email": {
                     "type": "string"
@@ -869,12 +1223,20 @@ const docTemplate = `{
                 "update_at": {
                     "description": "更新时间",
                     "type": "string"
+                },
+                "update_by": {
+                    "description": "更新着",
+                    "type": "integer"
                 }
             }
         },
         "system.LyadminMenu": {
             "type": "object",
             "properties": {
+                "belong_dept": {
+                    "description": "数据归属部门",
+                    "type": "integer"
+                },
                 "component": {
                     "description": "对应前端文件路径",
                     "type": "string"
@@ -886,6 +1248,10 @@ const docTemplate = `{
                 "create_at": {
                     "description": "创建时间",
                     "type": "string"
+                },
+                "create_by": {
+                    "description": "创建者",
+                    "type": "integer"
                 },
                 "icon": {
                     "description": "菜单图标",
@@ -927,6 +1293,10 @@ const docTemplate = `{
                     "description": "更新时间",
                     "type": "string"
                 },
+                "update_by": {
+                    "description": "更新着",
+                    "type": "integer"
+                },
                 "visible": {
                     "description": "是否显示菜单",
                     "type": "boolean"
@@ -943,9 +1313,17 @@ const docTemplate = `{
                 "api": {
                     "type": "string"
                 },
+                "belong_dept": {
+                    "description": "数据归属部门",
+                    "type": "integer"
+                },
                 "create_at": {
                     "description": "创建时间",
                     "type": "string"
+                },
+                "create_by": {
+                    "description": "创建者",
+                    "type": "integer"
                 },
                 "id": {
                     "description": "主键",
@@ -964,6 +1342,10 @@ const docTemplate = `{
                     "description": "更新时间",
                     "type": "string"
                 },
+                "update_by": {
+                    "description": "更新着",
+                    "type": "integer"
+                },
                 "value": {
                     "type": "string"
                 }
@@ -976,6 +1358,10 @@ const docTemplate = `{
                     "description": "UserAgent代理",
                     "type": "string"
                 },
+                "belong_dept": {
+                    "description": "数据归属部门",
+                    "type": "integer"
+                },
                 "body": {
                     "description": "请求Body",
                     "type": "string"
@@ -987,6 +1373,10 @@ const docTemplate = `{
                 "create_at": {
                     "description": "创建时间",
                     "type": "string"
+                },
+                "create_by": {
+                    "description": "创建者",
+                    "type": "integer"
                 },
                 "id": {
                     "description": "主键",
@@ -1020,6 +1410,10 @@ const docTemplate = `{
                     "description": "更新时间",
                     "type": "string"
                 },
+                "update_by": {
+                    "description": "更新着",
+                    "type": "integer"
+                },
                 "user": {
                     "$ref": "#/definitions/system.LyadminUsers"
                 },
@@ -1032,12 +1426,20 @@ const docTemplate = `{
         "system.LyadminPost": {
             "type": "object",
             "properties": {
+                "belong_dept": {
+                    "description": "数据归属部门",
+                    "type": "integer"
+                },
                 "code": {
                     "type": "string"
                 },
                 "create_at": {
                     "description": "创建时间",
                     "type": "string"
+                },
+                "create_by": {
+                    "description": "创建者",
+                    "type": "integer"
                 },
                 "id": {
                     "description": "主键",
@@ -1055,15 +1457,27 @@ const docTemplate = `{
                 "update_at": {
                     "description": "更新时间",
                     "type": "string"
+                },
+                "update_by": {
+                    "description": "更新着",
+                    "type": "integer"
                 }
             }
         },
         "system.LyadminRole": {
             "type": "object",
             "properties": {
+                "belong_dept": {
+                    "description": "数据归属部门",
+                    "type": "integer"
+                },
                 "create_at": {
                     "description": "创建时间",
                     "type": "string"
+                },
+                "create_by": {
+                    "description": "创建者",
+                    "type": "integer"
                 },
                 "dept": {
                     "description": "manytomany",
@@ -1086,15 +1500,15 @@ const docTemplate = `{
                         "$ref": "#/definitions/system.LyadminMenu"
                     }
                 },
-                "menu_button": {
+                "name": {
+                    "type": "string"
+                },
+                "permission": {
                     "description": "manytomany",
                     "type": "array",
                     "items": {
                         "$ref": "#/definitions/system.LyadminMenuButton"
                     }
-                },
-                "name": {
-                    "type": "string"
                 },
                 "sort": {
                     "type": "integer"
@@ -1105,6 +1519,10 @@ const docTemplate = `{
                 "update_at": {
                     "description": "更新时间",
                     "type": "string"
+                },
+                "update_by": {
+                    "description": "更新着",
+                    "type": "integer"
                 }
             }
         },
@@ -1115,9 +1533,17 @@ const docTemplate = `{
                     "description": "头像",
                     "type": "string"
                 },
+                "belong_dept": {
+                    "description": "数据归属部门",
+                    "type": "integer"
+                },
                 "create_at": {
                     "description": "创建时间",
                     "type": "string"
+                },
+                "create_by": {
+                    "description": "创建者",
+                    "type": "integer"
                 },
                 "dept": {
                     "description": "部门外键",
@@ -1188,6 +1614,10 @@ const docTemplate = `{
                 "update_at": {
                     "description": "更新时间",
                     "type": "string"
+                },
+                "update_by": {
+                    "description": "更新着",
+                    "type": "integer"
                 },
                 "username": {
                     "description": "用户名",

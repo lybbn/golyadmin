@@ -38,6 +38,12 @@ func (m *MenuService) CreateMenu(menu system.LyadminMenu) error {
 	return global.GL_DB.Create(&menu).Error
 }
 
+// 删除菜单
+func (m *MenuService) DeleteMenu(id uint) (err error) {
+	err = global.GL_DB.Where("id = ?", id).Delete(&system.LyadminMenu{}).Error
+	return err
+}
+
 // 编辑菜单
 func (m *MenuService) UpdateMenu(menu system.LyadminMenu) (err error) {
 	var oldData system.LyadminMenu

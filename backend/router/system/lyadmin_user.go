@@ -15,7 +15,4 @@ func (s *UserRouter) InitUserRouter(Router *gin.RouterGroup) {
 	{
 		userRouter.POST("user", baseApi.CreateUser) // 创建用户
 	}
-	{
-
-	}
 }

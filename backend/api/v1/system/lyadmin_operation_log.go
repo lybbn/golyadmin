@@ -21,7 +21,7 @@ type OperationLogApi struct{}
 // @Produce   application/json
 // @Param     data  body      request.Id      true  "LyadminOperationLog模型"
 // @Success   200   {object}  response.StructResponse{msg=string}  "删除LyadminOperationLog"
-// @Router    /operationlog/log [delete]
+// @Router    /system/operationlog/log [delete]
 func (s *OperationLogApi) DeleteLyadminOperationLog(c *gin.Context) {
 	var req request.Id
 	err := c.ShouldBind(&req)
@@ -45,7 +45,7 @@ func (s *OperationLogApi) DeleteLyadminOperationLog(c *gin.Context) {
 // @Produce   application/json
 // @Param     data  body      request.Empty      false  "无"
 // @Success   200   {object}  response.StructResponse{msg=string}  "清除全部日志"
-// @Router    /operationlog/log [delete]
+// @Router    /system/operationlog/log [delete]
 func (s *OperationLogApi) DeleteAllLyadminOperationLog(c *gin.Context) {
 	identity := utils.GetUserIdentity(c)
 	if identity != 1 {
@@ -68,7 +68,7 @@ func (s *OperationLogApi) DeleteAllLyadminOperationLog(c *gin.Context) {
 // @Produce   application/json
 // @Param     data  body      request.Ids                 true  "批量删除日志"
 // @Success   200   {object}  response.StructResponse{msg=string}  "批量删除日志"
-// @Router    /operationlog/deletelogbyids [delete]
+// @Router    /system/operationlog/deletelogbyids [delete]
 func (s *OperationLogApi) DeleteLyadminOperationLogByIds(c *gin.Context) {
 	var IDS request.Ids
 	err := c.ShouldBind(&IDS)
@@ -92,7 +92,7 @@ func (s *OperationLogApi) DeleteLyadminOperationLogByIds(c *gin.Context) {
 // @Produce   application/json
 // @Param     data  query     request.Id                                  true  "Id"
 // @Success   200   {object}  response.StructResponse{data=system.LyadminOperationLog,msg=string}  "用id查询LyadminOperationLog"
-// @Router    /operationlog/log [get]
+// @Router    /system/operationlog/log [get]
 func (s *OperationLogApi) GetLyadminOperationLogDetail(c *gin.Context) {
 	var req request.Id
 	err := c.ShouldBindQuery(&req)
@@ -116,7 +116,7 @@ func (s *OperationLogApi) GetLyadminOperationLogDetail(c *gin.Context) {
 // @Produce   application/json
 // @Param     data  query     systemReq.LyadminOperationLogSearch                        true  "页码, 每页大小, 搜索条件"
 // @Success   200   {object}  response.StructPageResponse{data=map[string]interface{},msg=string}  "分页获取LyadminOperationLog列表,返回包括列表,总数,页码,每页数量"
-// @Router    /operationlog/loglist [get]
+// @Router    /system/operationlog/loglist [get]
 func (s *OperationLogApi) GetLyadminOperationLogList(c *gin.Context) {
 	var pageInfo systemReq.LyadminOperationLogSearch
 	err := c.ShouldBind(&pageInfo)

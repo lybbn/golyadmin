@@ -19,6 +19,7 @@ type LyadminOperationLog struct {
 	Resp    string        `json:"resp" form:"resp" gorm:"type:text;column:resp;comment:响应Body"`                 // 响应Body
 	UserID  int           `json:"user_id" form:"user_id" gorm:"column:user_id;comment:用户id"`                    // 用户id Belongs To
 	User    LyadminUsers  `json:"user"`
+	global.GL_CONTROL_MODEL
 }
 
 func (LyadminOperationLog) TableName() string {
