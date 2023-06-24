@@ -25,11 +25,11 @@ func (r *RoleService) GetLyadminRoleList(info systemReq.LyadminRoleSearch) *gorm
 }
 
 // 新增角色
-func (r *RoleService) CreateRole(role system.LyadminRole) error {
+func (r *RoleService) CreateRole(ReqData system.LyadminRole) error {
 	// if !errors.Is(global.GL_DB.Where("name = ?", role.Name).First(&system.LyadminRole{}).Error, gorm.ErrRecordNotFound) {
 	// 	return errors.New("存在重复name，请修改name")
 	// }
-	return global.GL_DB.Create(&role).Error
+	return global.GL_DB.Create(&ReqData).Error
 }
 
 // 删除角色
@@ -39,15 +39,16 @@ func (r *RoleService) DeleteRole(id uint) (err error) {
 }
 
 // 编辑角色
-func (r *RoleService) UpdateRole(obj system.LyadminRole) (err error) {
+func (r *RoleService) UpdateRole(ReqData system.LyadminRole) (err error) {
 	var oldData system.LyadminRole
 	upDateMap := make(map[string]interface{})
-	upDateMap["name"] = obj.Name
-	upDateMap["key"] = obj.Key
-	upDateMap["sort"] = obj.Sort
-	upDateMap["status"] = obj.Status
+	upDateMap["name"] = ReqData.Name
+	upDateMap["key"] = ReqData.Key
+	upDateMap["sort"] = ReqData.Sort
+	upDateMap["status"] = ReqData.Status
+	upDateMap["update_by"] = ReqData.UpdateBy
 
-	db := global.GL_DB.Where("id = ?", obj.ID).Find(&oldData)
+	db := global.GL_DB.Where("id = ?", ReqData.ID).Find(&oldData)
 	err = db.Updates(upDateMap).Error
 	return err
 }

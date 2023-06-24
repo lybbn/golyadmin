@@ -7,6 +7,7 @@ type ApiGroup struct {
 	OperationLogApi
 	MenuApi
 	RoleApi
+	MenuButtonApi
 }
 
 var (
@@ -14,4 +15,7 @@ var (
 	operationLogService = service.ServiceGroupApp.SystemServiceGroup.OperationLogService
 	menuService         = service.ServiceGroupApp.SystemServiceGroup.MenuService
 	roleService         = service.ServiceGroupApp.SystemServiceGroup.RoleService
+	userService         = service.ServiceGroupApp.SystemServiceGroup.UserService
+	menuButtonService   = service.ServiceGroupApp.SystemServiceGroup.MenuButtonService
+	buttonService       = service.ServiceGroupApp.SystemServiceGroup.ButtonService
 )

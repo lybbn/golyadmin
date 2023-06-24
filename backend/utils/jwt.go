@@ -25,6 +25,7 @@ type BaseClaims struct {
 	Username string
 	Nickname string
 	Identity int
+	DeptId   uint
 }
 
 type JWT struct {
@@ -124,6 +125,20 @@ func GetUserIdentity(c *gin.Context) int {
 	} else {
 		waitUser := claims.(*CustomClaims)
 		return waitUser.BaseClaims.Identity
+	}
+}
+
+// GetDeptID 从Gin的Context中获取从jwt解析出来的用户部门ID
+func GetDeptID(c *gin.Context) uint {
+	if claims, exists := c.Get("claims"); !exists {
+		if cl, err := GetClaims(c); err != nil {
+			return 0
+		} else {
+			return cl.BaseClaims.DeptId
+		}
+	} else {
+		waitUser := claims.(*CustomClaims)
+		return waitUser.BaseClaims.DeptId
 	}
 }
 

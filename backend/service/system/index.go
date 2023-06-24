@@ -6,4 +6,6 @@ type ServiceGroup struct {
 	MenuService
 	UserService
 	RoleService
+	MenuButtonService
+	ButtonService
 }

@@ -13,9 +13,10 @@ func (m *MenuRouter) InitMenuRouter(Router *gin.RouterGroup) {
 	menuApi := v1.ApiGroupApp.SystemApiGroup.MenuApi
 	{
 		userRouter.GET("menu", menuApi.GetMenu) // 获取菜单全部列表
-		// userRouter.GET("menulist", menuApi.GetMenuList) // 分页获取菜单列表
-		userRouter.POST("menu", menuApi.CreateMenu)    // 新增菜单
-		userRouter.PUT("menu/:id", menuApi.CreateMenu) // 编辑菜单
-		userRouter.DELETE("menu", menuApi.DeleteMenu)  // 删除菜单
+		// userRouter.GET("pagelist", menuApi.GetMenuList) // 分页获取菜单列表
+		userRouter.POST("menu", menuApi.CreateMenu)        // 新增菜单
+		userRouter.PUT("menu/:id", menuApi.UpdateMenu)     // 编辑菜单
+		userRouter.DELETE("menu", menuApi.DeleteMenu)      // 删除菜单
+		userRouter.GET("web_router", menuApi.GetWebRouter) // 根据角色获取用户菜单权限
 	}
 }

@@ -3,6 +3,7 @@ package system
 import (
 	"gitee.com/lybbn/golyadmin/global"
 	"gitee.com/lybbn/golyadmin/model/system"
+	systemReq "gitee.com/lybbn/golyadmin/model/system/request"
 	"gitee.com/lybbn/golyadmin/utils"
 	"gitee.com/lybbn/golyadmin/utils/response"
 	"github.com/gin-gonic/gin"
@@ -19,23 +20,16 @@ type LoginResponse struct {
 	ExpiresAt int64               `json:"expiresAt"`
 }
 
-type LoginRequestParams struct {
-	Username   string `form:"username" json:"username" binding:"required" msg:"用户名不能为空"` // 用户名
-	Password   string `form:"password" json:"password" binding:"required" msg:"密码不能为空"`  // 密码
-	Captcha    string `form:"captcha" json:"captcha" binding:"required" msg:"验证码不能为空"`   // 验证码
-	CaptchaKey string `form:"captchaKey" json:"captchaKey"`                              // 验证码key
-}
-
 // Login
 // @Tags      Base
 // @Summary   用户登录
 // @accept    application/json
 // @Produce   application/json
-// @Param    data  body      LoginRequestParams 			true  "用户名, 密码, 验证码"
+// @Param    data  body      systemReq.LoginRequestParams 			true  "用户名, 密码, 验证码"
 // @Success 2000 {object} response.StructResponse{data=LoginResponse,msg=string} "返回包括用户信息,token,过期时间"
 // @Router    /base/login [post]
 func (b *BaseApi) Login(c *gin.Context) {
-	var req LoginRequestParams
+	var req systemReq.LoginRequestParams
 	err := c.ShouldBind(&req)
 	// ip := utils.GetRealClientIP(c)
 
@@ -127,25 +121,14 @@ func (b *BaseApi) IssueJwtToken(c *gin.Context, user system.LyadminUsers) {
 	}
 }
 
-type CreateUserRequestParams struct {
-	Username string `form:"username" json:"username"  binding:"required" msg:"用户名不能为空"`
-	Password string `form:"password" json:"password" binding:"required" example:"密码" msg:"密码不能为空"`
-	Nickname string `form:"nickname" json:"nickname" example:"昵称"`
-	Mobile   string `form:"mobile" json:"mobile"  example:"电话号码"`
-	Email    string `form:"email" json:"email"  example:"电子邮箱"`
-	Avatar   string `form:"avatar" json:"avatar" example:"头像"`
-	Gender   string `form:"gender" json:"gender" example:"性别"`
-}
-
-// Create
 // @Tags     User
 // @Summary  创建用户
 // @Produce   application/json
-// @Param    data  body      CreateUserRequestParams                                            true  "用户名, 密码"
-// @Success  2000   {object}  response.StructResponse{data=CreateUserRequestParams,msg=string}  "创建用户,返回包括用户信息"
+// @Param    data  body      systemReq.CreateUserRequestParams                                            true  "用户名, 密码"
+// @Success  2000   {object}  response.StructResponse{data=systemReq.CreateUserRequestParams,msg=string}  "创建用户,返回包括用户信息"
 // @Router   /system/user/user [post]
 func (b *BaseApi) CreateUser(c *gin.Context) {
-	var req CreateUserRequestParams
+	var req systemReq.CreateUserRequestParams
 	err := c.ShouldBind(&req)
 	if err != nil {
 		response.ErrorResponse(utils.GetValidMsg(err, &req), c)
@@ -173,6 +156,31 @@ func (b *BaseApi) CreateUser(c *gin.Context) {
 		return
 	}
 	response.SuccessResponse(user, "创建成功", c)
+}
+
+// @Tags      User
+// @Summary   用户修改密码
+// @Security  ApiKeyAuth
+// @Produce  application/json
+// @Param     data  body      systemReq.ChangePasswordReq    true  "用户名, 原密码, 新密码"
+// @Success   200   {object}  response.StructResponse{msg=string}  "用户修改密码"
+// @Router    /system/user/change_password [post]
+func (b *BaseApi) ChangePassword(c *gin.Context) {
+	var req systemReq.ChangePasswordReq
+	err := c.ShouldBind(&req)
+	if err != nil {
+		response.ErrorResponse(utils.GetValidMsg(err, &req), c)
+		return
+	}
+	uid := utils.GetUserID(c)
+	u := &system.LyadminUsers{GL_BASE_MODEL: global.GL_BASE_MODEL{ID: uid}, Password: req.Password}
+	_, err = userService.ChangePassword(u, req.NewPassword)
+	if err != nil {
+		global.GL_LOG.Error("修改失败!", zap.Error(err))
+		response.ErrorResponse("修改失败，原密码错误！", c)
+		return
+	}
+	response.SuccessResponse(nil, "修改成功", c)
 }
 
 // 请求参数结构（分页）

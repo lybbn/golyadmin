@@ -72,6 +72,8 @@ func (a *MenuApi) CreateMenu(c *gin.Context) {
 		response.ErrorResponse(utils.GetValidMsg(err, &req), c)
 		return
 	}
+	req.CreateBy = utils.GetUserID(c)
+	req.BelongDept = utils.GetDeptID(c)
 	err = menuService.CreateMenu(req)
 	if err != nil {
 		global.GL_LOG.Error("添加失败!", zap.Error(err))
@@ -119,6 +121,7 @@ func (a *MenuApi) UpdateMenu(c *gin.Context) {
 		response.ErrorResponse(utils.GetValidMsg(err, &req), c)
 		return
 	}
+	req.UpdateBy = utils.GetUserID(c)
 	err = menuService.UpdateMenu(req)
 	if err != nil {
 		global.GL_LOG.Error("添加失败!", zap.Error(err))
@@ -126,4 +129,16 @@ func (a *MenuApi) UpdateMenu(c *gin.Context) {
 		return
 	}
 	response.SuccessResponse(nil, "添加成功", c)
+}
+
+// @Tags      Menu
+// @Summary   获取菜单全部列表
+// @Security  ApiKeyAuth
+// @Produce   application/json
+// @Param     data  query       systemReq.LyadminMenuSearch true "名称、是否显示、状态、路径"
+// @Success   200   {object}  response.StructResponse{data=map[string]interface{},msg=string}  "获取菜单全部列表"
+// @Router    /system/menu/web_router [get]
+func (a *MenuApi) GetWebRouter(c *gin.Context) {
+	uid := utils.GetUserID(c)
+	response.SuccessResponse(uid, "获取成功", c)
 }

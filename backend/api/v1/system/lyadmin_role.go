@@ -1,6 +1,8 @@
 package system
 
 import (
+	"strings"
+
 	"gitee.com/lybbn/golyadmin/global"
 	"gitee.com/lybbn/golyadmin/model/common/request"
 	"gitee.com/lybbn/golyadmin/model/system"
@@ -72,10 +74,16 @@ func (r *RoleApi) CreateRole(c *gin.Context) {
 		response.ErrorResponse(utils.GetValidMsg(err, &req), c)
 		return
 	}
+	req.CreateBy = utils.GetUserID(c)
+	req.BelongDept = utils.GetDeptID(c)
 	err = roleService.CreateRole(req)
 	if err != nil {
 		global.GL_LOG.Error("添加失败!", zap.Error(err))
-		response.ErrorResponse(err.Error(), c)
+		msg := err.Error()
+		if strings.Contains(err.Error(), "Error 1062 (23000): Duplicate entry") {
+			msg = "存在相同权限字符，请更换！"
+		}
+		response.ErrorResponse(msg, c)
 		return
 	}
 	response.SuccessResponse(nil, "添加成功", c)
@@ -119,6 +127,7 @@ func (r *RoleApi) UpdateRole(c *gin.Context) {
 		response.ErrorResponse(utils.GetValidMsg(err, &req), c)
 		return
 	}
+	req.UpdateBy = utils.GetUserID(c)
 	err = roleService.UpdateRole(req)
 	if err != nil {
 		global.GL_LOG.Error("添加失败!", zap.Error(err))

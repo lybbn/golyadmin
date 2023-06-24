@@ -8,4 +8,6 @@ type RouterGroup struct {
 	UserRouter
 	OperationLogRouter
 	MenuRouter
+	MenuButtonRouter
+	ButtonRouter
 }

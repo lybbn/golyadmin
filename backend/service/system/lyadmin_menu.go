@@ -45,23 +45,24 @@ func (m *MenuService) DeleteMenu(id uint) (err error) {
 }
 
 // 编辑菜单
-func (m *MenuService) UpdateMenu(menu system.LyadminMenu) (err error) {
+func (m *MenuService) UpdateMenu(ReqData system.LyadminMenu) (err error) {
 	var oldData system.LyadminMenu
 	upDateMap := make(map[string]interface{})
-	upDateMap["keep_alive"] = menu.KeepAlive
-	upDateMap["parent_id"] = menu.ParentId
-	upDateMap["web_path"] = menu.WebPath
-	upDateMap["icon"] = menu.Icon
-	upDateMap["name"] = menu.Name
-	upDateMap["visible"] = menu.Visible
-	upDateMap["component"] = menu.Component
-	upDateMap["component_name"] = menu.ComponentName
-	upDateMap["is_link"] = menu.IsLink
-	upDateMap["sort"] = menu.Sort
-	upDateMap["is_catalog"] = menu.IsCatalog
-	upDateMap["status"] = menu.Status
+	upDateMap["keep_alive"] = ReqData.KeepAlive
+	upDateMap["parent_id"] = ReqData.ParentId
+	upDateMap["web_path"] = ReqData.WebPath
+	upDateMap["icon"] = ReqData.Icon
+	upDateMap["name"] = ReqData.Name
+	upDateMap["visible"] = ReqData.Visible
+	upDateMap["component"] = ReqData.Component
+	upDateMap["component_name"] = ReqData.ComponentName
+	upDateMap["is_link"] = ReqData.IsLink
+	upDateMap["sort"] = ReqData.Sort
+	upDateMap["is_catalog"] = ReqData.IsCatalog
+	upDateMap["status"] = ReqData.Status
+	upDateMap["update_by"] = ReqData.UpdateBy
 
-	db := global.GL_DB.Where("id = ?", menu.ID).Find(&oldData)
+	db := global.GL_DB.Where("id = ?", ReqData.ID).Find(&oldData)
 	err = db.Updates(upDateMap).Error
 	return err
 }

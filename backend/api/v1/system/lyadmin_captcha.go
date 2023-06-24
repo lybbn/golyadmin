@@ -85,7 +85,7 @@ func chineseConfig() *base64Captcha.DriverChinese {
 		NoiseCount:      0,
 		ShowLineOptions: base64Captcha.OptionShowSlimeLine,
 		Length:          global.GL_CONFIG.Captcha.KeyLength,
-		Source:          "设想,你在,处理,消费者,的音,频输,出音,频可,能无,论什,么都,没有,任何,输出,或者,它可,能是,单声道,立体声,或是,环绕立,体声的,不想要,的值",
+		Source:          "设想,你在,处理,消费者,的音,频输,出音,频可,能无,论什,么都,没有,任何,输出,或者,它可,能是,单声道,立体声,或是,环绕立,体声的,不想要,的值,但是,作者,可是,老眼",
 		BgColor: &color.RGBA{
 			R: 40,
 			G: 30,

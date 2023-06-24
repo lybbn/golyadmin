@@ -116,7 +116,7 @@ func (s *OperationLogApi) GetLyadminOperationLogDetail(c *gin.Context) {
 // @Produce   application/json
 // @Param     data  query     systemReq.LyadminOperationLogSearch                        true  "页码, 每页大小, 搜索条件"
 // @Success   200   {object}  response.StructPageResponse{data=map[string]interface{},msg=string}  "分页获取LyadminOperationLog列表,返回包括列表,总数,页码,每页数量"
-// @Router    /system/operationlog/loglist [get]
+// @Router    /system/operationlog/pagelist [get]
 func (s *OperationLogApi) GetLyadminOperationLogList(c *gin.Context) {
 	var pageInfo systemReq.LyadminOperationLogSearch
 	err := c.ShouldBind(&pageInfo)

@@ -14,7 +14,7 @@ func (m *MenuRouter) InitRoleRouter(Router *gin.RouterGroup) {
 	{
 		userRouter.GET("role", roleApi.GetRole)        // 获取角色全部列表
 		userRouter.POST("role", roleApi.CreateRole)    // 新增角色
-		userRouter.PUT("role/:id", roleApi.CreateRole) // 编辑角色
+		userRouter.PUT("role/:id", roleApi.UpdateRole) // 编辑角色
 		userRouter.DELETE("role", roleApi.DeleteRole)  // 删除角色
 	}
 }
