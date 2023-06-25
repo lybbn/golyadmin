@@ -16,6 +16,15 @@ func (s *UserService) FindUserById(id uint) (user *system.LyadminUsers, err erro
 	return &u, err
 }
 
+func (s *UserService) GetUserInfoById(id uint) (user system.LyadminUsers, err error) {
+	var u system.LyadminUsers
+	err = global.GL_DB.Preload("Post").Preload("Role").Preload("Dept").First(&u, "id = ?", id).Error
+	if err != nil {
+		return u, err
+	}
+	return u, err
+}
+
 func (s *UserService) ChangePassword(u *system.LyadminUsers, newPassword string) (userInter *system.LyadminUsers, err error) {
 	var user system.LyadminUsers
 	if err = global.GL_DB.Where("id = ?", u.ID).First(&user).Error; err != nil {

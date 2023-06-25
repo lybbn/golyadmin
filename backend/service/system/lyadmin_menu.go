@@ -66,3 +66,10 @@ func (m *MenuService) UpdateMenu(ReqData system.LyadminMenu) (err error) {
 	err = db.Updates(upDateMap).Error
 	return err
 }
+
+// 根据角色获取菜单权限资源
+func (m *MenuService) GetWebRouter(user *system.LyadminUsers) (menus []system.LyadminMenu, err error) {
+	var menuData []system.LyadminMenu
+
+	return menus, err
+}
