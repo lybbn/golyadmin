@@ -1,9 +1,12 @@
 package system
 
 import (
+	"fmt"
+
 	"gitee.com/lybbn/golyadmin/global"
 	"gitee.com/lybbn/golyadmin/model/system"
 	systemReq "gitee.com/lybbn/golyadmin/model/system/request"
+	systemResp "gitee.com/lybbn/golyadmin/model/system/response"
 	"gorm.io/gorm"
 )
 
@@ -68,8 +71,29 @@ func (m *MenuService) UpdateMenu(ReqData system.LyadminMenu) (err error) {
 }
 
 // 根据角色获取菜单权限资源
-func (m *MenuService) GetWebRouter(user *system.LyadminUsers) (menus []system.LyadminMenu, err error) {
-	var menuData []system.LyadminMenu
-
-	return menus, err
+func (m *MenuService) GetWebRouter(userid uint, identity int) (menus []systemResp.LyadminWebRouterResponse, err error) {
+	if identity == 1 {
+		return menus, err
+	} else {
+		var roleIds []uint
+		err = global.GL_DB.Model(&system.LyadminUsersRole{}).Where("lyadmin_users_id = ?", userid).Pluck("lyadmin_role_id", &roleIds).Error
+		if err != nil {
+			return menus, err
+		}
+		if len(roleIds) < 1 {
+			return menus, err
+		}
+		var menuIds []uint
+		err = global.GL_DB.Model(&system.LyadminRoleMenu{}).Where("lyadmin_role_id in (?)", roleIds).Distinct("lyadmin_menu_id").Pluck("lyadmin_menu_id", &menuIds).Error
+		if err != nil {
+			return menus, err
+		}
+		var mn system.LyadminMenu
+		err = global.GL_DB.Where("id in (?)", menuIds).Find(&mn).Error
+		if err != nil {
+			return menus, err
+		}
+		fmt.Println(mn)
+		return menus, err
+	}
 }

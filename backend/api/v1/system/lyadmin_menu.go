@@ -140,5 +140,12 @@ func (a *MenuApi) UpdateMenu(c *gin.Context) {
 // @Router    /system/menu/web_router [get]
 func (a *MenuApi) GetWebRouter(c *gin.Context) {
 	uid := utils.GetUserID(c)
-	response.SuccessResponse(uid, "获取成功", c)
+	identity := utils.GetUserIdentity(c)
+	menus, err := menuService.GetWebRouter(uid, identity)
+	if err != nil {
+		global.GL_LOG.Error("获取失败!", zap.Error(err))
+		response.ErrorResponse(err.Error(), c)
+		return
+	}
+	response.SuccessResponse(menus, "获取成功", c)
 }
