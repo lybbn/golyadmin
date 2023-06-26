@@ -5,6 +5,8 @@ import (
 )
 
 type LyadminDeptSearch struct {
-	Name string `json:"name" form:"name"` //名称
+	Search string `json:"search" form:"search"` //搜索关键词
+	Name   string `json:"name" form:"name"`     //名称
+	Status string `json:"status" form:"status"` //状态
 	response.StructPageQueryParams
 }

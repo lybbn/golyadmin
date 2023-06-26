@@ -4,6 +4,7 @@ import (
 	"gitee.com/lybbn/golyadmin/global"
 	"gitee.com/lybbn/golyadmin/model/system"
 	systemReq "gitee.com/lybbn/golyadmin/model/system/request"
+	"gitee.com/lybbn/golyadmin/utils"
 	"gorm.io/gorm"
 )
 
@@ -14,11 +15,17 @@ func (m *DeptService) GetLyadminDeptList(info systemReq.LyadminDeptSearch) *gorm
 	// 创建db
 	db := global.GL_DB.Model(&system.LyadminDept{})
 	// 如果有条件搜索 下方会自动创建搜索语句
+	if info.Status != "" {
+		status, err := utils.FormatString2Bool(info.Status)
+		if err == nil {
+			db = db.Where("status = ?", status)
+		}
+	}
 	if info.Name != "" {
 		db = db.Where("name LIKE ?", "%"+info.Name+"%")
 	}
-	if info.Method != "" {
-		db = db.Where("method LIKE ?", "%"+info.Method+"%")
+	if info.Search != "" {
+		db = db.Where("name LIKE ? or owner LIKE ?", "%"+info.Search+"%", "%"+info.Search+"%")
 	}
 	db = db.Order("id desc")
 	return db
