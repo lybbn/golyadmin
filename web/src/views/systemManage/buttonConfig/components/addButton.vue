@@ -23,7 +23,7 @@
                         </el-option>
                     </el-select>
                 </el-form-item>
-                <el-form-item label="接口地址：" prop="api">
+                <!-- <el-form-item label="接口地址：" prop="api">
                     <el-select  v-model.trim="formData.api" :size="size" filterable clearable  allow-create style="margin-bottom: 5px;width: 100%;" placeholder="请选择或手动输入">
                         <el-option
                             v-for="item in apiList"
@@ -33,11 +33,11 @@
                         </el-option>
                     </el-select>
                     <el-alert title="请正确填写(或选择)，以免请求时被拦截。匹配编辑/单例/删除使用正则,如:/api/xxx/{id}/" type="info" show-icon/>
-                </el-form-item>
-<!--                <el-form-item label="接口地址：" prop="api">-->
-<!--                    <el-input  v-model.trim="formData.api" :size="size" style="margin-bottom: 5px;"></el-input>-->
-<!--                    <el-alert title="请正确填写，以免请求时被拦截。匹配编辑/单例/删除使用正则,如:/api/xxx/{id}/" type="info" show-icon/>-->
-<!--                </el-form-item>-->
+                </el-form-item> -->
+               <el-form-item label="接口地址：" prop="api">
+                    <el-input  v-model.trim="formData.api" :size="size" style="margin-bottom: 5px;"></el-input>
+                    <el-alert title="请正确填写，以免请求时被拦截。匹配编辑/单例/删除使用正则,如:/api/xxx/{id}/" type="info" show-icon/>
+               </el-form-item>
 
             </el-form>
             <template #footer>
@@ -122,7 +122,7 @@
                 }else{
                     this.formData.menu = menu
                 }
-                this.getSystemLyapi()
+                // this.getSystemLyapi()
             },
             getSystemLyapi(){
                 getSystemLyapiList().then(res=>{
@@ -176,7 +176,7 @@
                 }
                 systemButton(params).then(res=>{
                     if(res.code == 2000) {
-                        this.buttonList=res.data.data
+                        this.buttonList=res.data
                     } else {
                         this.$message.warning(res.msg)
                     }

@@ -2,13 +2,13 @@
     <div>
         <ly-dialog v-model="dialogVisible" :title="dialogTitle" width="560px" :before-close="handleClose" :draggable="false">
             <el-form :inline="false" :model="formData" :rules="rules" ref="rulesForm" label-position="right" label-width="auto" class="form-store">
-                <el-form-item label="父级菜单：" prop="parent">
+                <el-form-item label="父级菜单：" prop="parent_id">
                     <el-cascader
                             style="width: 100%"
                             :key="isResourceShow"
                             :show-all-levels="false"
                             :options="options"
-                            v-model="formData.parent"
+                            v-model="formData.parent_id"
                             @change="handleChange"
                             :props="{ checkStrictly: true ,label:'name',value:'id'}"
                             clearable></el-cascader>
@@ -22,12 +22,12 @@
                         <el-radio :label="0">否</el-radio>
                     </el-radio-group>
                 </el-form-item>
-                <el-form-item label="创建按钮权限：" prop="isautopm">
-                    <el-radio-group v-model="formData.isautopm" >
+                <el-form-item label="是否目录：" prop="is_catalog">
+                    <el-radio-group v-model="formData.is_catalog" >
                         <el-radio :label="1">是</el-radio>
                         <el-radio :label="0">否</el-radio>
                     </el-radio-group>
-                    <span style="font-size: 7px;color: red;">*【否】表示创建一个目录</span>
+                    <span style="font-size: 7px;color: red;">*【否】会自动创建crud API按钮，需自行填写API地址</span>
                 </el-form-item>
                 <el-form-item label="图标：" prop="icon">
 <!--                    <el-input v-model.trim="formData.icon" ></el-input>-->
@@ -93,20 +93,20 @@
                 dialogTitle:'',
                 isResourceShow:0,
                 formData:{
-                    parent:'',
+                    parent_id:'',
                     name:'',
                     visible:1,
                     icon:'',
                     status:1,
-                    sort:0,
+                    sort:1,
                     web_path:'',
                     menuPermission:[],
-                    isautopm:1,
+                    is_catalog:0,
                 },
                 inputVisible: false,
                 inputValue: '',
                 rules:{
-                   /* parent: [
+                   /* parent_id: [
                         {required: true, message: '请选择父级菜单',trigger: 'blur'}
                     ],*/
                     name: [
@@ -127,8 +127,8 @@
                     // web_path: [
                     //     {required: true, message: '请输入路由地址',trigger: 'blur'}
                     // ],
-                    isautopm: [
-                        {required: true, message: '请选择是否自动创建按钮权限',trigger: 'blur'}
+                    is_catalog: [
+                        {required: true, message: '请选择是否目录',trigger: 'blur'}
                     ],
                 },
                 options: []
@@ -180,15 +180,15 @@
                 this.dialogVisible=false
                 this.loadingSave=false
                 this.formData = {
-                    parent:'',
+                    parent_id:'',
                     name:'',
                     visible:1,
                     icon:'',
                     status:1,
-                    sort:0,
+                    sort:1,
                     web_path:'',
                     menuPermission:[],
-                    isautopm:1,
+                    is_catalog:0,
                 }
             },
             addMenuFn(item,flag) {
@@ -282,6 +282,9 @@
         width: 90px;
         margin-left: 10px;
         vertical-align: bottom;
+    }
+    .el-alert{
+        padding:3px 16px;
     }
 </style>
 

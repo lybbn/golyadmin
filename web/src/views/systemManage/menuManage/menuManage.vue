@@ -84,10 +84,10 @@
                     </div>
                 </template>
                 <template #default="scope">
-                    <span class="table-operate-btn" @click="handleEdit(scope.row,'edit')" v-show="isShowBtn('menuManage','菜单管理','Update')">编辑</span>
+                    <span class="table-operate-btn" @click="handleEdit(scope.row,'edit')" v-show="hasPermission('menuManage','Update')">编辑</span>
 <!--                    <span class="table-operate-btn" @click="handleEdit(scope.row,'detail')" v-show="isShowBtn('menuManage','菜单管理','Retrieve')">详情</span>-->
-                    <span class="table-operate-btn" @click="handleEdit(scope.row,'delete')" v-show="isShowBtn('menuManage','菜单管理','Delete')">删除</span>
-                    <span class="table-operate-btn" @click="handleEdit(scope.row,'buttonConfig')" v-show="isShowBtn('menuManage','菜单管理','Retrieve') && (scope.row.menuPermission || scope.row.isautopm==1)">按钮配置</span>
+                    <span class="table-operate-btn" @click="handleEdit(scope.row,'delete')" v-show="hasPermission('menuManage','Delete')">删除</span>
+                    <span class="table-operate-btn" @click="handleEdit(scope.row,'buttonConfig')" v-show="(scope.row.menuPermission || !scope.row.is_catalog)">按钮配置</span>
                 </template>
             </el-table-column>
         </el-table>

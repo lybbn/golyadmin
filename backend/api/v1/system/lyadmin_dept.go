@@ -18,18 +18,18 @@ type DeptApi struct{}
 // @Summary   获取部门全部列表
 // @Security  ApiKeyAuth
 // @Produce   application/json
-// @Param     data  query       systemReq.LyadminMenuButtonSearch false "名称、方法"
+// @Param     data  query       systemReq.LyadminDeptSearch false "名称、方法"
 // @Success   200   {object}  response.StructResponse{data=map[string]interface{},msg=string}  "获取部门全部列表"
 // @Router    /system/menu_button/menu_button [get]
 func (a *DeptApi) GetDept(c *gin.Context) {
-	var req systemReq.LyadminMenuButtonSearch
+	var req systemReq.LyadminDeptSearch
 	err := c.ShouldBind(&req)
 	if err != nil {
 		response.ErrorResponse(err.Error(), c)
 		return
 	}
-	query := menuButtonService.GetLyadminMenuButtonList(req)
-	var data []system.LyadminMenuButton
+	query := deptService.GetLyadminDeptList(req)
+	var data []system.LyadminDept
 	err = query.Find(&data).Error
 	if err != nil {
 		response.ErrorResponse(err.Error(), c)

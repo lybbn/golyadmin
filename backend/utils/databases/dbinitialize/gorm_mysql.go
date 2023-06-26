@@ -32,7 +32,8 @@ func GormMysqlByConfig(m Mysql) *gorm.DB {
 		sqlDB, _ := db.DB()
 		sqlDB.SetMaxIdleConns(m.MaxIdleConns)
 		sqlDB.SetMaxOpenConns(m.MaxOpenConns)
-		// sqlDB.SetConnMaxLifetime(time.Hour)   // SetConnMaxLifetime 设置了连接可复用的最大时间。
+		// sqlDB.SetConnMaxLifetime(0)
+		// sqlDB.SetConnMaxLifetime(time.Hour) // SetConnMaxLifetime 设置连接可复用的最大时间。
 		return db
 	}
 }

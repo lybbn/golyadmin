@@ -20,6 +20,9 @@ func (m *MenuButtonService) GetLyadminMenuButtonList(info systemReq.LyadminMenuB
 	if info.Method != "" {
 		db = db.Where("method LIKE ?", "%"+info.Method+"%")
 	}
+	if info.MenuID != 0 {
+		db = db.Where("menu_id = ?", info.MenuID)
+	}
 	db = db.Order("id desc")
 	return db
 }

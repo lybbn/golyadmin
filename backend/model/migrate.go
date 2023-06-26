@@ -7,6 +7,7 @@ var MigrateModelList = []interface{}{
 	system.LyadminDept{},
 	system.LyadminMenu{},
 	system.LyadminMenuButton{},
+	system.LyadminButton{},
 	system.LyadminRole{},
 	system.LyadminPost{},
 	system.LyadminUsers{},

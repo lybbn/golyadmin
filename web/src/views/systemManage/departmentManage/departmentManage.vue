@@ -51,7 +51,7 @@
                     </template>
                 </el-table-column>
                 <el-table-column min-width="80" prop="sort" label="排序"></el-table-column>
-                <el-table-column min-width="150" prop="create_datetime" label="创建时间"></el-table-column>
+                <el-table-column min-width="150" prop="create_at" label="创建时间"></el-table-column>
                 <el-table-column label="操作" fixed="right" width="180">
                     <template #header>
                         <div style="display: flex;justify-content: space-between;align-items: center;">
