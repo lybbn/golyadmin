@@ -1,12 +1,11 @@
 package system
 
 import (
-	"fmt"
-
 	"gitee.com/lybbn/golyadmin/global"
 	"gitee.com/lybbn/golyadmin/model/system"
 	systemReq "gitee.com/lybbn/golyadmin/model/system/request"
 	systemResp "gitee.com/lybbn/golyadmin/model/system/response"
+	"gitee.com/lybbn/golyadmin/utils"
 	"gorm.io/gorm"
 )
 
@@ -29,7 +28,7 @@ func (m *MenuService) GetLyadminMenuList(info systemReq.LyadminMenuSearch) *gorm
 	if info.Name != "" {
 		db = db.Where("name LIKE ?", "%"+info.Name+"%")
 	}
-	db = db.Order("sort aesc")
+	db = db.Order("sort asc")
 	return db
 }
 
@@ -71,8 +70,37 @@ func (m *MenuService) UpdateMenu(ReqData system.LyadminMenu) (err error) {
 }
 
 // 根据角色获取菜单权限资源
-func (m *MenuService) GetWebRouter(userid uint, identity int) (menus []systemResp.LyadminWebRouterResponse, err error) {
+// db.Preload() 该方法请求参数可以添加func方法，在func中传入gorm.DB,可添加其他sql语句，如果多级别预加载，则层级预加载
+func (m *MenuService) GetWebRouter(uinfo *utils.CustomClaims) (menus []systemResp.LyadminWebRouterResponse, err error) {
+	userid := uinfo.BaseClaims.ID
+	identity := uinfo.BaseClaims.Identity
+	var mn []system.LyadminMenu
 	if identity == 1 {
+		err = global.GL_DB.Preload("MenuButtons").Where("status = ?", 1).Find(&mn).Error
+		if err != nil {
+			return menus, err
+		}
+		for _, v := range mn {
+			var btnValue []string
+			for _, vm := range v.MenuButtons {
+				btnValue = append(btnValue, vm.Value)
+			}
+			menus = append(menus, systemResp.LyadminWebRouterResponse{
+				ID:             v.ID,
+				ParentId:       v.ParentId,
+				Name:           v.Name,
+				Icon:           v.Icon,
+				WebPath:        v.WebPath,
+				IsLink:         v.IsLink,
+				Visible:        v.Visible,
+				Component:      v.Component,
+				ComponentName:  v.ComponentName,
+				Sort:           v.Sort,
+				IsCatalog:      v.IsCatalog,
+				KeepAlive:      v.KeepAlive,
+				MenuPermission: btnValue,
+			})
+		}
 		return menus, err
 	} else {
 		var roleIds []uint
@@ -83,17 +111,68 @@ func (m *MenuService) GetWebRouter(userid uint, identity int) (menus []systemRes
 		if len(roleIds) < 1 {
 			return menus, err
 		}
-		var menuIds []uint
-		err = global.GL_DB.Model(&system.LyadminRoleMenu{}).Where("lyadmin_role_id in (?)", roleIds).Distinct("lyadmin_menu_id").Pluck("lyadmin_menu_id", &menuIds).Error
+		var rolelist []system.LyadminRole
+		err = global.GL_DB.Model(&system.LyadminRole{}).Where("status = ? and id in (?)", 1, roleIds).Preload("Menu", func(db *gorm.DB) *gorm.DB {
+			return db.Order("sort asc")
+		}).Preload("Permission").Find(&rolelist).Error
 		if err != nil {
 			return menus, err
 		}
-		var mn system.LyadminMenu
-		err = global.GL_DB.Where("id in (?)", menuIds).Find(&mn).Error
-		if err != nil {
-			return menus, err
+		var menubtnlist []system.LyadminMenuButton
+		for _, rl := range rolelist {
+			for _, vm := range rl.Menu {
+				if isContainMenu(mn, vm) == false {
+					mn = append(mn, vm)
+				}
+			}
+			for _, mt := range rl.Permission {
+				if isContainMenuButton(menubtnlist, mt) == false {
+					menubtnlist = append(menubtnlist, mt)
+				}
+			}
 		}
-		fmt.Println(mn)
+
+		for _, v := range mn {
+			var btnValue []string
+			for _, vm := range menubtnlist {
+				if vm.MenuID == v.ID {
+					btnValue = append(btnValue, vm.Value)
+				}
+			}
+			menus = append(menus, systemResp.LyadminWebRouterResponse{
+				ID:             v.ID,
+				ParentId:       v.ParentId,
+				Name:           v.Name,
+				Icon:           v.Icon,
+				WebPath:        v.WebPath,
+				IsLink:         v.IsLink,
+				Visible:        v.Visible,
+				Component:      v.Component,
+				ComponentName:  v.ComponentName,
+				Sort:           v.Sort,
+				IsCatalog:      v.IsCatalog,
+				KeepAlive:      v.KeepAlive,
+				MenuPermission: btnValue,
+			})
+		}
 		return menus, err
 	}
+}
+
+func isContainMenu(items []system.LyadminMenu, item system.LyadminMenu) bool {
+	for _, eachItem := range items {
+		if eachItem.ID == item.ID {
+			return true
+		}
+	}
+	return false
+}
+
+func isContainMenuButton(items []system.LyadminMenuButton, item system.LyadminMenuButton) bool {
+	for _, eachItem := range items {
+		if eachItem.ID == item.ID {
+			return true
+		}
+	}
+	return false
 }

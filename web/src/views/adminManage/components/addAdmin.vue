@@ -179,7 +179,7 @@
             getapiSystemRole(){
                 apiSystemRole({page:1,limit:999}).then(res=>{
                     if(res.code ==2000) {
-                        this.rolelist = res.data.data
+                        this.rolelist = res.data
                     } else {
                         this.$message.warning(res.msg)
                     }
@@ -197,7 +197,7 @@
                 }
                 apiSystemDept(params).then(async res => {
                      if(res.code == 2000) {
-                         resolve(res.data.data)
+                         resolve(res.data)
                      }else {
                          this.$message.warning(res.msg)
                      }
@@ -206,7 +206,7 @@
             getapiSystemDept(){
                 apiSystemDept({page:1,limit:999}).then(res=>{
                     if(res.code ==2000) {
-                        this.options = XEUtils.toArrayTree(res.data.data, { parentKey: 'parent' })
+                        this.options = XEUtils.toArrayTree(res.data, { parentKey: 'parent' })
                     } else {
                         this.$message.warning(res.msg)
                     }

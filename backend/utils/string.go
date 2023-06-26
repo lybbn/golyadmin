@@ -24,6 +24,11 @@ func FormatInt2String(n int) string {
 	return strconv.Itoa(n)
 }
 
+// 转换uint类型为字符串
+func FormatUint2String(n uint64) string {
+	return strconv.FormatUint(n, 10)
+}
+
 // 转换字符串类型为int
 func FormatString2Int(e string) (int, error) {
 	return strconv.Atoi(e)

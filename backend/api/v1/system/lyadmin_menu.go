@@ -139,9 +139,8 @@ func (a *MenuApi) UpdateMenu(c *gin.Context) {
 // @Success   200   {object}  response.StructResponse{data=map[string]interface{},msg=string}  "获取菜单全部列表"
 // @Router    /system/menu/web_router [get]
 func (a *MenuApi) GetWebRouter(c *gin.Context) {
-	uid := utils.GetUserID(c)
-	identity := utils.GetUserIdentity(c)
-	menus, err := menuService.GetWebRouter(uid, identity)
+	uinfo := utils.GetUserInfo(c)
+	menus, err := menuService.GetWebRouter(uinfo)
 	if err != nil {
 		global.GL_LOG.Error("获取失败!", zap.Error(err))
 		response.ErrorResponse(err.Error(), c)

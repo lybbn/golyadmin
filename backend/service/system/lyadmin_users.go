@@ -10,6 +10,8 @@ import (
 
 type UserService struct{}
 
+var UserServiceApp = new(UserService)
+
 func (s *UserService) FindUserById(id uint) (user *system.LyadminUsers, err error) {
 	var u system.LyadminUsers
 	err = global.GL_DB.Where("`id` = ?", id).First(&u).Error

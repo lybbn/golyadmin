@@ -7,7 +7,7 @@ export const login = params => ajaxPost({url: `base/login`,params})
 // 获取验证码
 export const getCaptcha = params => ajaxGet({url: `base/captcha`,params})
 // 获取菜单
-export const apiSystemWebRouter = params => ajaxGet({url: `system/menu/web_router/`,params})
+export const apiSystemWebRouter = params => ajaxGet({url: `system/menu/web_router`,params})
 // 获取系统所有api列表
 export const getSystemLyapiList = params => ajaxGet({url: `lyapi.json`,params})
 

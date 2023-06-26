@@ -20,7 +20,7 @@ func (r *RoleService) GetLyadminRoleList(info systemReq.LyadminRoleSearch) *gorm
 	if info.Name != "" {
 		db = db.Where("name LIKE ?", "%"+info.Name+"%")
 	}
-	db = db.Order("sort aesc")
+	db = db.Order("sort asc")
 	return db
 }
 

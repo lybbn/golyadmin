@@ -265,7 +265,7 @@ function getTableHeight(tableSelectHeight,allowPage=true){
   //菜单数组转换为树结构
 function transArrayMenuToTree(dataList) {
     //定义父id字段为指定字段名
-    const pid = "parent"
+    const pid = "parent_id"
     // 最终要产出的树状数据的数组
     let treeList = []
     // 所有项都使用对象存储起来

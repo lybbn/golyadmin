@@ -187,10 +187,10 @@
                  apiSystemUser(this.formInline).then(res => {
                      this.loadingPage = false
                      if(res.code ==2000) {
-                         this.tableData = res.data.data
-                         this.pageparm.page = res.data.page;
-                         this.pageparm.limit = res.data.limit;
-                         this.pageparm.total = res.data.total;
+                         this.tableData = res.data
+                         this.pageparm.page = res.page;
+                         this.pageparm.limit = res.limit;
+                         this.pageparm.total = res.total;
                      }
                  })
             },

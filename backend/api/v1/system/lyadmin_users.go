@@ -71,6 +71,8 @@ func (b *BaseApi) IssueJwtToken(c *gin.Context, user system.LyadminUsers) {
 		ID:       uint(user.ID),
 		Nickname: user.Nickname,
 		Username: user.Username,
+		Identity: user.Identity,
+		DeptId:   user.DeptId,
 	})
 	token, err := j.CreateToken(claims)
 	if err != nil {

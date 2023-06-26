@@ -39,6 +39,10 @@ func migrateModel() {
 	}
 
 	tables := mmodel.MigrateModelList
+	// err := db.Debug().Set("gorm:table_options", "ENGINE=InnoDB").AutoMigrate(tables...).Error
+	// if err != nil {
+	// 	panic(err)
+	// }
 	for _, t := range tables {
 		err := db.Debug().Set("gorm:table_options", "ENGINE=InnoDB").AutoMigrate(&t)
 		if err != nil {
