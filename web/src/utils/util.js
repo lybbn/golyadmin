@@ -283,7 +283,7 @@ function transArrayMenuToTree(dataList) {
                 },
                 hasChildren: false,
                 hasParent:false,
-                parent:item[pid],
+                parent_id:item[pid],
                 children:[],
             }
             newDataList.push(newItem)

@@ -3,12 +3,12 @@
 		<el-alert title="无菜单" center type="info" :closable="false"></el-alert>
 	</div>
 	<template v-for="menu in navMenus" :key="menu.id">
-		<el-menu-item v-if="!menu.hasChildren" :index="menu.attributes.url?'/'+menu.attributes.url:menu.id" :key="menu.id">
+		<el-menu-item v-if="!menu.hasChildren" :index="menu.attributes.url?'/'+menu.attributes.url:menu.id.toString()" :key="menu.id">
 			<a v-if="isLink(menu.attributes.url)" :href="menu.attributes.url" target="_blank" @click.stop='()=>{}'></a>
 			<svg-icon :icon-class="menu.attributes.icon?menu.attributes.icon:'Menu'"></svg-icon>
 			<template #title>{{menu.text}}</template>
 		</el-menu-item>
-		<el-sub-menu v-else :index="menu.attributes.url?'/'+menu.attributes.url:menu.id" :key="menu.id">
+		<el-sub-menu v-else :index="menu.attributes.url?'/'+menu.attributes.url:menu.id.toString()" :key="menu.id">
 			<template #title >
                 <svg-icon :icon-class="menu.attributes.icon?menu.attributes.icon:'Menu'"></svg-icon>
                 <span>{{menu.text}}</span>

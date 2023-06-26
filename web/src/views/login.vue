@@ -319,7 +319,6 @@
               // 操作权限管控
               let menuList=[]
               res.data.forEach(item=>{
-                //console.log(item,'item---- 菜单权限---')
                 menuList.push({
                   url:item.web_path,
                   moduleName:item.name,
@@ -328,7 +327,6 @@
               })
               setStorage('menuList', JSON.stringify(menuList))
             }
-            // console.log(menuTree,'menuTree-----')
             this.allmenu =  menuTree
             if(this.allmenu.length >0) {
               this.$nextTick(()=>{
