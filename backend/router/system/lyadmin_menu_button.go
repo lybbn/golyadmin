@@ -8,13 +8,13 @@ import (
 
 type MenuButtonRouter struct{}
 
-func (m *MenuRouter) InitButtonRouter(Router *gin.RouterGroup) {
-	userRouter := Router.Group("button").Use(middleware.OperationLog())
+func (m *MenuButtonRouter) InitMenuButtonRouter(Router *gin.RouterGroup) {
+	menuButtonRouter := Router.Group("menu_button").Use(middleware.OperationLog())
 	menuButtonApi := v1.ApiGroupApp.SystemApiGroup.MenuButtonApi
 	{
-		userRouter.GET("button", menuButtonApi.GetMenuButton)        // 获取菜单全部列表
-		userRouter.POST("button", menuButtonApi.CreateMenuButton)    // 新增菜单
-		userRouter.PUT("button/:id", menuButtonApi.UpdateMenuButton) // 编辑菜单
-		userRouter.DELETE("button", menuButtonApi.DeleteMenuButton)  // 删除菜单
+		menuButtonRouter.GET("menu_button", menuButtonApi.GetMenuButton)        // 获取菜单按钮全部列表
+		menuButtonRouter.POST("menu_button", menuButtonApi.CreateMenuButton)    // 新增菜单按钮
+		menuButtonRouter.PUT("menu_button/:id", menuButtonApi.UpdateMenuButton) // 编辑菜单按钮
+		menuButtonRouter.DELETE("menu_button", menuButtonApi.DeleteMenuButton)  // 删除菜单按钮
 	}
 }

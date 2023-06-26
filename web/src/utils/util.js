@@ -273,7 +273,7 @@ function transArrayMenuToTree(dataList) {
     // 建立一个映射关系：通过id快速找到对应的元素
     let newDataList = []
     dataList.forEach(item => {
-        if(item.visible == 1){
+        if(item.visible){
             let newItem = {
                 text:item.name,
                 id:item.id,
@@ -283,7 +283,7 @@ function transArrayMenuToTree(dataList) {
                 },
                 hasChildren: false,
                 hasParent:false,
-                parent:item.parent,
+                parent:item[pid],
                 children:[],
             }
             newDataList.push(newItem)
@@ -320,76 +320,8 @@ function deepClone(str) {
     return JSON.parse(JSON.stringify(str))
 }
 
-function getDefaultFormConfig() {
-    return {
-        modelName: 'formData',//前端表单名
-        refName: 'lyFormBuilder',
-        rulesName: 'rules',
-        modelDbTable:"",//后端自动生成Model表名（英文名）
-        modelClassName:"",//后端自动生成Model的class名
-        modelVerboseName:"",//后端自动生成Model使用此字段作为表的verbose_name和菜单名称
-        other_config:{
-            create_datetime_filter:false,
-            mutiple_delete:false,
-        },//通用配置
-        labelWidth: 'auto',
-        labelPosition: 'left',
-        size: '',
-        disabled: false,//全局禁用表单
-        cssCode: '',
-        customClass: '',
-        functions: '',  //全局函数
-        jsonVersion: 1,
-        onFormMounted: '',
-    }
-}
-function buildDefaultFormJson() {
-  return {
-    widgetList: [],
-    formConfig: deepClone(getDefaultFormConfig())
-  }
-}
 function isNull(value) {
   return (value === null) || (value === undefined);
-}
-function insertCustomCssToHead (cssCode, formId = '') {
-  let head = document.getElementsByTagName('head')[0]
-  let oldStyle = document.getElementById('lyform-custom-css')
-  if (!!oldStyle) {
-    head.removeChild(oldStyle)  //先清除后插入！！
-  }
-  if (!!formId) {
-    oldStyle = document.getElementById('lyform-custom-css' + '-' + formId)
-    !!oldStyle && head.removeChild(oldStyle)  //先清除后插入！！
-  }
-
-  let newStyle = document.createElement('style')
-  newStyle.type = 'text/css'
-  newStyle.rel = 'stylesheet'
-  newStyle.id = !!formId ? 'lyform-custom-css' + '-' + formId : 'lyform-custom-css'
-  try {
-    newStyle.appendChild(document.createTextNode(cssCode))
-  } catch(ex) {
-    newStyle.styleSheet.cssText = cssCode
-  }
-
-  head.appendChild(newStyle)
-}
-
-function insertGlobalFunctionsToHtml (functionsCode, formId = '') {
-    let bodyElement = document.getElementsByTagName('body')[0]
-    let oldScriptEle = document.getElementById('ly_form_global_functions')
-    !!oldScriptEle && bodyElement.removeChild(oldScriptEle)  //先清除后插入！！
-    if (!!formId) {
-        oldScriptEle = document.getElementById('ly_form_global_functions' + '-' + formId)
-        !!oldScriptEle && bodyElement.removeChild(oldScriptEle)  //先清除后插入！！
-    }
-
-    let newScriptElelement = document.createElement('script')
-    newScriptElelement.id = !!formId ? 'ly_form_global_functions' + '-' + formId : 'ly_form_global_functions'
-    newScriptElelement.type = 'text/javascript'
-    newScriptElelement.innerHTML = functionsCode
-    bodyElement.appendChild(newScriptElelement)
 }
 
 // 图片上传根据名称排序
@@ -467,11 +399,7 @@ export{
     downloadFileURLByIframe,
     randomId,
     deepClone,
-    getDefaultFormConfig,
-    buildDefaultFormJson,
     isNull,
-    insertCustomCssToHead,
-    insertGlobalFunctionsToHtml,
     setStorage,
     getStorage,
     getToken

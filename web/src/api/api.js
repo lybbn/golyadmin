@@ -33,41 +33,41 @@ export const platformsettingsSysconfigGetmodelsInfoList = params => ajaxGet({url
 *系统管理
  * */
 // 部门管理列表
-export const apiSystemDept = params => ajaxGet({url: `system/dept/`,params})
+export const apiSystemDept = params => ajaxGet({url: `system/dept/dept`,params})
 // 部门管理列表 -- 新增部门
-export const apiSystemDeptAdd = params => ajaxPost({url: `system/dept/`,params})
+export const apiSystemDeptAdd = params => ajaxPost({url: `system/dept/dept`,params})
 // 部门管理列表 -- 编辑部门
-export const apiSystemDeptEdit = params => ajaxPut({url: `system/dept/`,params})
+export const apiSystemDeptEdit = params => ajaxPut({url: `system/dept/dept`,params})
 // 部门管理列表 -- 删除部门
-export const apiSystemDeptDelete = params => ajaxDelete({url: `system/dept/`,params})
+export const apiSystemDeptDelete = params => ajaxDelete({url: `system/dept/dept`,params})
 
 
 // 菜单管理列表
-export const apiSystemMenu = params => ajaxGet({url: `system/menu/`,params})
+export const apiSystemMenu = params => ajaxGet({url: `system/menu/menu`,params})
 // 菜单管理列表 -- 新增菜单
-export const apiSystemMenuAdd = params => ajaxPost({url: `system/menu/`,params})
+export const apiSystemMenuAdd = params => ajaxPost({url: `system/menu/menu`,params})
 // 菜单管理列表 -- 编辑菜单
-export const apiSystemMenuEdit = params => ajaxPut({url: `system/menu/`,params})
+export const apiSystemMenuEdit = params => ajaxPut({url: `system/menu/menu`,params})
 // 菜单管理列表 -- 删除菜单
-export const apiSystemMenuDelete = params => ajaxDelete({url: `system/menu/`,params})
+export const apiSystemMenuDelete = params => ajaxDelete({url: `system/menu/menu`,params})
 //获取部门数据,获取菜单树
 export const systemMenuTree = params => ajaxGet({url: `system/menu_tree/`,params})
 // 菜单管理 》 按钮列表(全部)
-export const systemButton = params => ajaxGet({url:`system/button/`,params})
+export const systemButton = params => ajaxGet({url:`system/button/button`,params})
 // 菜单管理 》 按钮 编辑
-export const systemButtonEdit = params => ajaxPut({url:`system/button/`,params})
+export const systemButtonEdit = params => ajaxPut({url:`system/button/button`,params})
 // 菜单管理 》 按钮 新增
-export const systemButtonAdd = params => ajaxPost({url:`system/button/`,params})
+export const systemButtonAdd = params => ajaxPost({url:`system/button/button`,params})
 // 菜单管理 》 按钮 删除
-export const systemButtonDelete = params => ajaxDelete({url:`system/button/`,params})
+export const systemButtonDelete = params => ajaxDelete({url:`system/button/button`,params})
 // 菜单管理 》 按钮配置列表（针对单个菜单）
-export const systemMenuButton = params => ajaxGet({url:`system/menu_button/`,params})
+export const systemMenuButton = params => ajaxGet({url:`system/menu_button/menu_button`,params})
 // 菜单管理 》 按钮配置列表（针对单个菜单） 新增
-export const systemMenuButtonAdd = params => ajaxPost({url:`system/menu_button/`,params})
+export const systemMenuButtonAdd = params => ajaxPost({url:`system/menu_button/menu_button`,params})
 // 菜单管理 》 按钮配置列表（针对单个菜单） 编辑
-export const systemMenuButtonEdit = params => ajaxPut({url:`system/menu_button/`,params})
+export const systemMenuButtonEdit = params => ajaxPut({url:`system/menu_button/menu_button`,params})
 // 菜单管理 》 按钮配置列表（针对单个菜单） 删除
-export const systemMenuButtonDelete = params => ajaxDelete({url:`system/menu_button/`,params})
+export const systemMenuButtonDelete = params => ajaxDelete({url:`system/menu_button/menu_button`,params})
 
 
 

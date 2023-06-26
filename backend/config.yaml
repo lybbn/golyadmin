@@ -19,7 +19,7 @@ jwt:
 
 # 验证码配置
 captcha:
-  captcha-type: string # math 计算、digit 数字、string 英文数字、chinese 中文、audit 音频
+  captcha-type: math # math 计算、digit 数字、string 英文数字、chinese 中文、audit 音频
   key-length: 5 # 字符个数
   img-width: 240
   img-height: 85

@@ -8,6 +8,8 @@ type ApiGroup struct {
 	MenuApi
 	RoleApi
 	MenuButtonApi
+	ButtonApi
+	DeptApi
 }
 
 var (
@@ -18,4 +20,5 @@ var (
 	userService         = service.ServiceGroupApp.SystemServiceGroup.UserService
 	menuButtonService   = service.ServiceGroupApp.SystemServiceGroup.MenuButtonService
 	buttonService       = service.ServiceGroupApp.SystemServiceGroup.ButtonService
+	deptService         = service.ServiceGroupApp.SystemServiceGroup.DeptService
 )

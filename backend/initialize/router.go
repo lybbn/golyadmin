@@ -67,6 +67,7 @@ func Routers() *gin.Engine {
 			systemRouter.InitMenuButtonRouter(SystemPrivateGroup)
 			systemRouter.InitButtonRouter(SystemPrivateGroup)
 			systemRouter.InitRoleRouter(SystemPrivateGroup)
+			systemRouter.InitDeptRouter(SystemPrivateGroup)
 		}
 	}
 

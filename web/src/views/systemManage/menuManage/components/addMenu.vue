@@ -255,7 +255,7 @@
                         let menu = [{
                             label:'-1',
                             name:'根节点',
-                            children:XEUtils.toArrayTree(res.data.data, { parentKey: 'parent' })
+                            children:XEUtils.toArrayTree(res.data, { parentKey: 'parent_id' })
                             }]
                         // 将菜单列表转换为树形列表
                         this.options = menu
@@ -263,19 +263,6 @@
                         this.$message.warning(res.msg)
                     }
                 })
-                // systemMenuTree(params).then(res=>{
-                //     ++this.isResourceShow
-                //     if(res.code == 2000) {
-                //         let menu = [{
-                //             label:'-1',
-                //             name:'根节点',
-                //             children:[...res.data.data]
-                //             }]
-                //         this.options = menu
-                //     } else {
-                //         this.$message.warning(res.msg)
-                //     }
-                // })
             }
         }
     }

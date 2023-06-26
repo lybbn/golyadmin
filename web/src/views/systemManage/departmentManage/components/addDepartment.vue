@@ -110,7 +110,7 @@
                 }
                 apiSystemDept(params).then(async res => {
                      if(res.code == 2000) {
-                         resolve(res.data.data)
+                         resolve(res.data)
                      }else {
                          this.$message.warning(res.msg)
                      }
@@ -163,7 +163,7 @@
                 }
                 apiSystemDept(params).then(res=>{
                     if(res.code == 2000) {
-                        this.options = XEUtils.toArrayTree(res.data.data, { parentKey: 'parent' })
+                        this.options = XEUtils.toArrayTree(res.data, { parentKey: 'parent_id' })
                     } else {
                         this.$message.warning(res.msg)
                     }

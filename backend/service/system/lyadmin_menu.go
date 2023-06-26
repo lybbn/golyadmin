@@ -16,17 +16,26 @@ func (m *MenuService) GetLyadminMenuList(info systemReq.LyadminMenuSearch) *gorm
 	// 创建db
 	db := global.GL_DB.Model(&system.LyadminMenu{})
 	// 如果有条件搜索 下方会自动创建搜索语句
-	if info.Status != nil {
-		db = db.Where("status = ?", info.Status)
+	if info.Status != "" {
+		status, err := utils.FormatString2Bool(info.Status)
+		if err == nil {
+			db = db.Where("status = ?", status)
+		}
 	}
-	if info.Visible != nil {
-		db = db.Where("visible = ?", info.Visible)
+	if info.Visible != "" {
+		visible, err := utils.FormatString2Bool(info.Visible)
+		if err == nil {
+			db = db.Where("visible = ?", visible)
+		}
 	}
 	if info.WebPath != "" {
 		db = db.Where("web_path LIKE ?", "%"+info.WebPath+"%")
 	}
 	if info.Name != "" {
 		db = db.Where("name LIKE ?", "%"+info.Name+"%")
+	}
+	if info.Search != "" {
+		db = db.Where("name LIKE ? or web_path LIKE ?", "%"+info.Search+"%", "%"+info.Search+"%")
 	}
 	db = db.Order("sort asc")
 	return db

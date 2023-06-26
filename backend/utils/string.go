@@ -34,6 +34,11 @@ func FormatString2Int(e string) (int, error) {
 	return strconv.Atoi(e)
 }
 
+// 转换字符串类型为int
+func FormatString2Bool(e string) (bool, error) {
+	return strconv.ParseBool(e)
+}
+
 // 获取配置文件的端口字符串形式 如   :9000
 func GetServerPort() string {
 	if global.GL_CONFIG.System.HttpPort == 80 || global.GL_CONFIG.System.HttpPort == 443 {

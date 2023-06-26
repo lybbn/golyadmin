@@ -43,9 +43,9 @@
                 style="width: 100%;"
                 :tree-props="{children: 'children', hasChildren: 'hasChildren'}">
             <el-table-column type="index" width="70"  label="序号" style="display: unset;">
-                <template #default="scope">
+                <!-- <template #default="scope">
                     <span v-text="getIndex(scope.$index)"></span>
-                </template>
+                </template> -->
             </el-table-column>
             <el-table-column min-width="150" prop="name" label="菜单名称"></el-table-column>
             <el-table-column min-width="80" prop="icon" label="图标">
@@ -115,11 +115,6 @@
                 tableHeight:260,
                 loadingPage:false,
                 formInline:{
-                    search:'',
-                    name:'',
-                    status:'',
-                    cache:'',
-                    visible:'',
                     page:1,
                     limit:9999
                 },
@@ -199,20 +194,10 @@
                 apiSystemMenu(this.formInline).then(res => {
                      this.loadingPage = false
                      if(res.code ==2000) {
-                         // let childrenList = res.data.data.filter(item=> item.parent)
-                         // let parentList = res.data.data.filter(item=> !item.parent)
-                         // if(parentList.length >0) {
-                         //     parentList.forEach(item=>{
-                         //         let children = childrenList.filter(itema=>itema.parent == item.id)
-                         //         item.children=[...children]
-                         //     })
-                         // }
-                         // this.tableData = parentList
-                         // 将列表数据转换为树形数据
-                         this.tableData = XEUtils.toArrayTree(res.data.data, { parentKey: 'parent', strict: false })
-                         this.pageparm.page = res.data.page;
-                         this.pageparm.limit = res.data.limit;
-                         this.pageparm.total = res.data.total;
+                         this.tableData = XEUtils.toArrayTree(res.data, { parentKey: 'parent_id', strict: false })
+                         this.pageparm.page = res.page;
+                         this.pageparm.limit = res.limit;
+                         this.pageparm.total = res.total;
 
                      } else {
                          this.$message.warning(res.msg)

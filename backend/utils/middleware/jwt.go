@@ -57,9 +57,16 @@ func JWTAuthMiddleware() gin.HandlerFunc {
 		}
 
 		// 已登录用户被管理员禁用 需要使该用户的jwt失效 此处比较消耗性能 自行根据项目需要选择是否打开
-		if user, err := userService.FindUserById(claims.BaseClaims.ID); err != nil || user.IsActive == false {
+		user, err := userService.FindUserById(claims.BaseClaims.ID)
+		if err != nil {
 			// _ = jwtService.JoinBlacklist(system.LyadminJwtBlacklist{Jwt: token})
-			response.ErrorResponse("该账号无效或已被禁用，请联系管理员！", c)
+			response.ErrorResponse(err.Error(), c)
+			c.Abort()
+			return
+		}
+		if user.IsActive == false {
+			// _ = jwtService.JoinBlacklist(system.LyadminJwtBlacklist{Jwt: token})
+			response.ErrorResponse("该账号已被禁用，请联系管理员！", c)
 			c.Abort()
 			return
 		}

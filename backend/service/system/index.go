@@ -8,4 +8,5 @@ type ServiceGroup struct {
 	RoleService
 	MenuButtonService
 	ButtonService
+	DeptService
 }
