@@ -1,7 +1,7 @@
 import {ref,reactive,onMounted,onUnmounted,nextTick} from 'vue'
 import {getTableHeight} from "@/utils/util";
-export default function(orderStatic,tableSelect,isFull=false,allowPage=true) {
-
+export default function(orderStatic,tableSelect,isFull=false,allowPage=true,customHeight=0) {
+    //customHeight 自定义调整高度
     let tableHeight = ref(500)
     let orderstaticHeight = ref(0)
     // 计算搜索栏的高度
@@ -18,7 +18,7 @@ export default function(orderStatic,tableSelect,isFull=false,allowPage=true) {
         let tableSelectHeight =  tableSelect.value?tableSelect.value.offsetHeight:0
         let tableSelectTop = tableSelect.value?tableSelect.value.offsetTop:0
         let isTrueFull =  isFull || tableSelectTop == 0?true:false
-        tableHeight.value =  getTableHeight(isTrueFull?tableSelectHeight+orderstaticHeight.value - 110:tableSelectHeight+orderstaticHeight.value,allowPage)
+        tableHeight.value =  getTableHeight(isTrueFull?tableSelectHeight+orderstaticHeight.value - 110:tableSelectHeight+orderstaticHeight.value+customHeight,allowPage)
     }
     onMounted(()=>{
         // 监听页面宽度变化搜索框的高度

@@ -36,8 +36,11 @@
                 </el-form-item> -->
                <el-form-item label="接口地址：" prop="api">
                     <el-input  v-model.trim="formData.api" :size="size" style="margin-bottom: 5px;"></el-input>
-                    <el-alert title="请正确填写，以免请求时被拦截。匹配编辑/单例/删除使用正则,如:/api/xxx/{id}/" type="info" show-icon/>
+                    <el-alert title="请正确填写，以免请求时被拦截。匹配编辑/详情/删除使用正则,如:/api/xxx/:id" type="info" show-icon/>
                </el-form-item>
+               <el-form-item label="所属菜单ID：" prop="menu_id" v-show="false">
+                <el-input-number v-model="formData.menu_id"></el-input-number>
+           </el-form-item>
 
             </el-form>
             <template #footer>
@@ -65,7 +68,7 @@
                 formData:{
                     name: '',
                     api:'',
-                    menu: '',
+                    menu_id: 0,
                     method: '',
                     value: '',
                 },
@@ -83,12 +86,12 @@
 
                 buttonList:[],
                 methodsList:[
-                    {id:0,name:'GET'},
-                    {id:1,name:'POST'},
-                    {id:2,name:'PUT'},
-                    {id:3,name:'DELETE'},
-                    {id:4,name:'OPTIONS'},
-                    {id:5,name:'WS'},
+                    {id:'GET',name:'GET'},
+                    {id:'POST',name:'POST'},
+                    {id:'PUT',name:'PUT'},
+                    {id:'DELETE',name:'DELETE'},
+                    {id:'OPTIONS',name:'OPTIONS'},
+                    // {id:'WS',name:'WS'},
                 ],
                 apiList:[]
             }
@@ -107,7 +110,7 @@
                 this.formData = {
                     name: '',
                     api:'',
-                    menu: '',
+                    menu_id: 0,
                     method: '',
                     value: '',
                 }
@@ -120,7 +123,7 @@
                 if(item){
                     this.formData=deepClone(item)
                 }else{
-                    this.formData.menu = menu
+                    this.formData.menu_id = Number(menu)
                 }
                 // this.getSystemLyapi()
             },

@@ -33,7 +33,7 @@ function ajax(opt,method){
 
   if(method == 'PUT' || method == 'DELETE') {
       var config={
-          url: url + opt.url + params.id+'/',
+          url: url + opt.url +'/'+ params.id,
           method: method,
           headers:{
               Authorization: 'JWT ' + token,
@@ -80,7 +80,7 @@ function ajax(opt,method){
       })
   }else if(method == 'GET2'){
       var config2={
-          url: url + opt.url + params.id+'/',
+          url: url + opt.url+'/' + params.id,
           method: 'GET',
           headers:{
               Authorization: 'JWT ' + token,

@@ -3,10 +3,10 @@
         <div class="tableSelect" ref="tableSelect">
             <el-form :inline="true" :model="formInline" label-position="left">
                 <el-form-item label="关键词：">
-                    <el-input clearable  v-model.trim="formInline.search"  maxlength="60" placeholder="关键词" @change="getData" style="width:200px"></el-input>
+                    <el-input clearable  v-model.trim="formInline.search"  maxlength="60" placeholder="关键词" @change="getData" style="width:180px"></el-input>
                 </el-form-item>
                 <el-form-item label="侧边可见：">
-                    <el-select v-model="formInline.visible" clearable placeholder="请选择" @change="getData">
+                    <el-select v-model="formInline.visible" clearable placeholder="请选择" @change="getData" style="width:100px">
                         <el-option
                             v-for="item in statusList1"
                             :key="item.id"
@@ -16,7 +16,7 @@
                     </el-select>
                 </el-form-item>
                 <el-form-item label="状态：">
-                    <el-select  v-model="formInline.status" clearable placeholder="请选择" @change="getData">
+                    <el-select  v-model="formInline.status" clearable placeholder="请选择" @change="getData" style="width:100px">
                         <el-option
                             v-for="item in statusList"
                             :key="item.id"
@@ -42,11 +42,12 @@
                 v-loading="loadingPage"
                 style="width: 100%;"
                 :tree-props="{children: 'children', hasChildren: 'hasChildren'}">
-            <el-table-column type="index" width="70"  label="序号" style="display: unset;">
-                <!-- <template #default="scope">
+            <!-- <el-table-column type="index" width="70"  label="序号" style="display: unset;">
+                <template #default="scope">
                     <span v-text="getIndex(scope.$index)"></span>
-                </template> -->
-            </el-table-column>
+                </template>
+            </el-table-column> -->
+            <el-table-column  type="" width="70" prop="id" label="ID"></el-table-column>
             <el-table-column min-width="150" prop="name" label="菜单名称"></el-table-column>
             <el-table-column min-width="80" prop="icon" label="图标">
                 <template #default="scope">
@@ -57,7 +58,8 @@
             <el-table-column min-width="160" prop="web_path" label="路由地址" show-overflow-tooltip=""></el-table-column>
             <el-table-column min-width="300" label="权限">
                 <template #default="scope">
-                    <span v-for="(item,index) in scope.row.menuPermission" :key="index">{{item + (index < scope.row.menuPermission.length ? '/' : '')}}</span>
+                    <!-- <span v-for="(item,index) in scope.row.MenuButtons" :key="index" v-if="scope.row.MenuButtons">{{item.name + (index < scope.row.MenuButtons.length ? '/' : '')}}</span> -->
+                    <el-tag v-for="(item,index) in scope.row.MenuButtons" :key="index" v-if="scope.row.MenuButtons">{{item.name}}</el-tag>
                 </template>
             </el-table-column>
             <el-table-column min-width="100" label="侧边可见">
@@ -87,7 +89,7 @@
                     <span class="table-operate-btn" @click="handleEdit(scope.row,'edit')" v-show="hasPermission('menuManage','Update')">编辑</span>
 <!--                    <span class="table-operate-btn" @click="handleEdit(scope.row,'detail')" v-show="isShowBtn('menuManage','菜单管理','Retrieve')">详情</span>-->
                     <span class="table-operate-btn" @click="handleEdit(scope.row,'delete')" v-show="hasPermission('menuManage','Delete')">删除</span>
-                    <span class="table-operate-btn" @click="handleEdit(scope.row,'buttonConfig')" v-show="(scope.row.menuPermission || !scope.row.is_catalog)">按钮配置</span>
+                    <span class="table-operate-btn" @click="handleEdit(scope.row,'buttonConfig')" v-show="(scope.row.MenuButtons || !scope.row.is_catalog)">按钮配置</span>
                 </template>
             </el-table-column>
         </el-table>
@@ -155,7 +157,7 @@
                     this.$refs.addMenuFlag.addMenuFn(row,'详情')
                 }
                 else if(flag == 'buttonConfig') {
-                    this.$router.push({name:'buttonConfig',params:{id:row.id,name:row.name}})
+                    this.$router.push({name:'buttonConfig',query:{id:row.id,name:row.name}})
                 }
                 else if(flag=='delete') {
                     let vm = this
@@ -195,9 +197,6 @@
                      this.loadingPage = false
                      if(res.code ==2000) {
                          this.tableData = XEUtils.toArrayTree(res.data, { parentKey: 'parent_id', strict: false })
-                         this.pageparm.page = res.page;
-                         this.pageparm.limit = res.limit;
-                         this.pageparm.total = res.total;
 
                      } else {
                          this.$message.warning(res.msg)

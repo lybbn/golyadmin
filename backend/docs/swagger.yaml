@@ -71,27 +71,6 @@ definitions:
     - password
     - username
     type: object
-  response.StructPageResponse:
-    properties:
-      code:
-        type: integer
-      data:
-        description: 分页数据
-      limit:
-        description: 每页条数
-        type: integer
-      msg:
-        type: string
-      page:
-        description: 当前页码
-        type: integer
-      pages:
-        description: 总分页数
-        type: integer
-      total:
-        description: 总数据量
-        type: integer
-    type: object
   response.StructResponse:
     properties:
       code:
@@ -176,6 +155,10 @@ definitions:
       keep_alive:
         description: 是否缓存页面
         type: boolean
+      menuButtons:
+        items:
+          $ref: '#/definitions/system.LyadminMenuButton'
+        type: array
       name:
         description: 菜单名称
         type: string
@@ -700,14 +683,18 @@ paths:
         in: query
         name: page
         type: integer
+      - description: 搜索关键词
+        in: query
+        name: search
+        type: string
       - description: 状态
         in: query
         name: status
-        type: boolean
+        type: string
       - description: 是否显示
         in: query
         name: visible
-        type: boolean
+        type: string
       - description: 路径
         in: query
         name: web_path
@@ -802,14 +789,18 @@ paths:
         in: query
         name: page
         type: integer
+      - description: 搜索关键词
+        in: query
+        name: search
+        type: string
       - description: 状态
         in: query
         name: status
-        type: boolean
+        type: string
       - description: 是否显示
         in: query
         name: visible
-        type: boolean
+        type: string
       - description: 路径
         in: query
         name: web_path
@@ -849,14 +840,18 @@ paths:
         in: query
         name: page
         type: integer
+      - description: 搜索关键词
+        in: query
+        name: search
+        type: string
       - description: 状态
         in: query
         name: status
-        type: boolean
+        type: string
       - description: 是否显示
         in: query
         name: visible
-        type: boolean
+        type: string
       - description: 路径
         in: query
         name: web_path
@@ -914,6 +909,10 @@ paths:
       - description: 每页大小
         in: query
         name: limit
+        type: integer
+      - description: 方法
+        in: query
+        name: menu_id
         type: integer
       - description: 方法
         in: query
@@ -1008,6 +1007,10 @@ paths:
       - description: 每页大小
         in: query
         name: limit
+        type: integer
+      - description: 方法
+        in: query
+        name: menu_id
         type: integer
       - description: 方法
         in: query
@@ -1208,7 +1211,7 @@ paths:
           description: 分页获取LyadminOperationLog列表,返回包括列表,总数,页码,每页数量
           schema:
             allOf:
-            - $ref: '#/definitions/response.StructPageResponse'
+            - $ref: '#/definitions/response.StructResponse'
             - properties:
                 data:
                   additionalProperties: true

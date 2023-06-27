@@ -1,6 +1,8 @@
 package dbinitialize
 
 import (
+	"time"
+
 	. "gitee.com/lybbn/golyadmin/config"
 	"gitee.com/lybbn/golyadmin/utils/databases/internal"
 	"gorm.io/driver/mysql"
@@ -32,8 +34,7 @@ func GormMysqlByConfig(m Mysql) *gorm.DB {
 		sqlDB, _ := db.DB()
 		sqlDB.SetMaxIdleConns(m.MaxIdleConns)
 		sqlDB.SetMaxOpenConns(m.MaxOpenConns)
-		// sqlDB.SetConnMaxLifetime(0)
-		// sqlDB.SetConnMaxLifetime(time.Hour) // SetConnMaxLifetime 设置连接可复用的最大时间。
+		sqlDB.SetConnMaxLifetime(60 * time.Second) // SetConnMaxLifetime 设置连接可复用的最大时间。根据mysql的wait_timeout时间设置
 		return db
 	}
 }

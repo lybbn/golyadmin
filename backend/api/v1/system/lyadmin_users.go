@@ -198,7 +198,7 @@ func (b *BaseApi) ChangePassword(c *gin.Context) {
 // @accept    application/json
 // @Produce   application/json
 // @Param     data  query     ExampleQueryParmas                                        true  "页码, 每页大小"
-// @Success 200 {object} response.StructPageResponse{data=ExampleService}
+// @Success 200 {object} response.StructResponse{data=ExampleService}
 // @Router    /example/exampleList [get]
 // func (e *ExampleApi) GetExaExampleList(c *gin.Context) {
 // 	//单独获取请求参数

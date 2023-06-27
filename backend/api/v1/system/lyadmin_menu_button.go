@@ -124,9 +124,9 @@ func (a *MenuButtonApi) UpdateMenuButton(c *gin.Context) {
 	req.UpdateBy = utils.GetUserID(c)
 	err = menuButtonService.UpdateMenuButton(req)
 	if err != nil {
-		global.GL_LOG.Error("添加失败!", zap.Error(err))
+		global.GL_LOG.Error("修改失败!", zap.Error(err))
 		response.ErrorResponse(err.Error(), c)
 		return
 	}
-	response.SuccessResponse(nil, "添加成功", c)
+	response.SuccessResponse(nil, "修改成功", c)
 }

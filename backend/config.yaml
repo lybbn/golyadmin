@@ -1,6 +1,6 @@
 #服务端配置
 system:
-  run-mode: release # debug、release、test
+  run-mode: debug # debug、release
   host: 0.0.0.0
   http-port: 9000
   is-cors: true #是否启用跨域(启用跨域需要配置cors)
@@ -30,7 +30,7 @@ databases:
     alias-name: "default" # 数据库的别名，default为默认数据库连接,注意: alias-name 需要在db-list中唯一
     path: "127.0.0.1"
     port: "3306"
-    config: "charset=utf8mb4&parseTime=True&loc=Local&timeout=0s"
+    config: "charset=utf8mb4&parseTime=True&loc=Local&timeout=1s"
     db-name: "lyadmin_go" #数据库名
     username: "root"
     password: "root"

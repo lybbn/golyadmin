@@ -2,6 +2,7 @@ package system
 
 import (
 	"gitee.com/lybbn/golyadmin/global"
+	"gorm.io/gorm"
 )
 
 type LyadminMenu struct {
@@ -24,4 +25,26 @@ type LyadminMenu struct {
 
 func (LyadminMenu) TableName() string {
 	return "lyadmin_menu"
+}
+
+// 批量新增菜单按钮
+func createMutiMenuButton(ReqData []LyadminMenuButton) error {
+	return global.GL_DB.Create(&ReqData).Error
+}
+
+func (m *LyadminMenu) AfterCreate(tx *gorm.DB) (err error) {
+	if !m.IsCatalog {
+		mbs := []LyadminMenuButton{
+			{MenuID: m.ID, Name: "新增", Value: "Create", Api: "", Method: "POST", GL_CONTROL_MODEL: global.GL_CONTROL_MODEL{CreateBy: m.CreateBy, BelongDept: m.BelongDept}},
+			{MenuID: m.ID, Name: "删除", Value: "Delete", Api: "", Method: "DELETE", GL_CONTROL_MODEL: global.GL_CONTROL_MODEL{CreateBy: m.CreateBy, BelongDept: m.BelongDept}},
+			{MenuID: m.ID, Name: "编辑", Value: "Update", Api: "", Method: "PUT", GL_CONTROL_MODEL: global.GL_CONTROL_MODEL{CreateBy: m.CreateBy, BelongDept: m.BelongDept}},
+			{MenuID: m.ID, Name: "查询", Value: "Search", Api: "", Method: "GET", GL_CONTROL_MODEL: global.GL_CONTROL_MODEL{CreateBy: m.CreateBy, BelongDept: m.BelongDept}},
+			{MenuID: m.ID, Name: "详情", Value: "Detail", Api: "", Method: "GET", GL_CONTROL_MODEL: global.GL_CONTROL_MODEL{CreateBy: m.CreateBy, BelongDept: m.BelongDept}},
+		}
+		err := createMutiMenuButton(mbs)
+		if err != nil {
+			global.GL_LOG.Error("自动创建菜单按钮失败:" + err.Error())
+		}
+	}
+	return
 }

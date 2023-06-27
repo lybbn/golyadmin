@@ -9,6 +9,8 @@ import (
 
 type MenuButtonService struct{}
 
+var MenuButtonServiceApp = new(MenuButtonService)
+
 // 分页获取菜单按钮列表
 func (m *MenuButtonService) GetLyadminMenuButtonList(info systemReq.LyadminMenuButtonSearch) *gorm.DB {
 	// 创建db

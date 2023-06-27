@@ -18,14 +18,14 @@
                 </el-form-item>
                 <el-form-item label="侧边栏可见：" prop="visible">
                     <el-radio-group v-model="formData.visible" >
-                        <el-radio :label="1">是</el-radio>
-                        <el-radio :label="0">否</el-radio>
+                        <el-radio :label="true">是</el-radio>
+                        <el-radio :label="false">否</el-radio>
                     </el-radio-group>
                 </el-form-item>
                 <el-form-item label="是否目录：" prop="is_catalog">
                     <el-radio-group v-model="formData.is_catalog" >
-                        <el-radio :label="1">是</el-radio>
-                        <el-radio :label="0">否</el-radio>
+                        <el-radio :label="true">是</el-radio>
+                        <el-radio :label="false">否</el-radio>
                     </el-radio-group>
                     <span style="font-size: 7px;color: red;">*【否】会自动创建crud API按钮，需自行填写API地址</span>
                 </el-form-item>
@@ -60,8 +60,8 @@
                 </el-form-item>
                 <el-form-item label="状态：" prop="status">
                     <el-radio-group v-model="formData.status" style="width: 300px">
-                        <el-radio :label="1">启用</el-radio>
-                        <el-radio :label="0">禁用</el-radio>
+                        <el-radio :label="true">启用</el-radio>
+                        <el-radio :label="false">禁用</el-radio>
                     </el-radio-group>
                 </el-form-item>
 
@@ -93,15 +93,14 @@
                 dialogTitle:'',
                 isResourceShow:0,
                 formData:{
-                    parent_id:'',
+                    parent_id:0,
                     name:'',
-                    visible:1,
+                    visible:true,
                     icon:'',
-                    status:1,
+                    status:true,
                     sort:1,
                     web_path:'',
-                    menuPermission:[],
-                    is_catalog:0,
+                    is_catalog:false,
                 },
                 inputVisible: false,
                 inputValue: '',
@@ -138,10 +137,6 @@
             this.menuicons = menuicons
         },
         methods:{
-            handleCloseTag(tag) {
-                this.formData.menuPermission.splice(this.formData.menuPermission.indexOf(tag), 1);
-            },
-
             showInput() {
                 this.inputVisible = true;
                 this.$nextTick(_ => {
@@ -180,15 +175,14 @@
                 this.dialogVisible=false
                 this.loadingSave=false
                 this.formData = {
-                    parent_id:'',
+                    parent_id:0,
                     name:'',
-                    visible:1,
+                    visible:true,
                     icon:'',
-                    status:1,
+                    status:true,
                     sort:1,
                     web_path:'',
-                    menuPermission:[],
-                    is_catalog:0,
+                    is_catalog:false,
                 }
             },
             addMenuFn(item,flag) {
@@ -203,18 +197,15 @@
                     this.formData = deepClone(item)
                 }
 
-                this.formData.menuPermission=item ? item.menuPermission : []
-
             },
             submitData() {
-                //console.log(this.formData,'this.formData')
                 this.$refs['rulesForm'].validate(obj=>{
                     if(obj) {
                         let param = {
                             ...this.formData
                         }
-                        if( typeof this.formData.parent== 'object') {
-                            param.parent = (this.formData.parent==null || (this.formData.parent.length==1 && this.formData.parent[0] == undefined) || this.formData.parent.length==0) ?  '' : this.formData.parent[this.formData.parent.length-1]
+                        if( typeof this.formData.parent_id== 'object') {
+                            param.parent_id = (this.formData.parent_id==null || (this.formData.parent_id.length==1 && this.formData.parent_id[0] == undefined) || this.formData.parent_id.length==0) ?  0 : this.formData.parent_id[this.formData.parent_id.length-1]
                         }
                         this.loadingSave=true
                         if(this.dialogTitle=="新增"){

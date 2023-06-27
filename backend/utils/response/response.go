@@ -22,8 +22,8 @@ type StructResponse struct {
 
 // 分页响应结构数据
 type StructPageResponse struct {
-	Code        int         `json:"code"`
-	Msg         string      `json:"msg"`
+	// Code        int         `json:"code"`
+	// Msg         string      `json:"msg"`
 	CurrentPage int64       `json:"page"`  // 当前页码
 	PageSize    int64       `json:"limit"` // 每页条数
 	Total       int64       `json:"total"` // 总数据量
@@ -52,14 +52,16 @@ func PaginateResponse[T any](data interface{}, page pagination.Page[T], message 
 		message = MSGSUCCESS
 	}
 	var p StructPageResponse
-	p.Code = SUCCESS
-	p.Msg = message
+	var rp StructResponse
+	rp.Code = SUCCESS
+	rp.Msg = message
 	p.Data = data
 	p.CurrentPage = page.CurrentPage
 	p.PageSize = page.PageSize
 	p.Total = page.Total
 	p.Pages = page.Pages
-	c.JSON(http.StatusOK, p)
+	rp.Data = p
+	c.JSON(http.StatusOK, rp)
 }
 
 // 正常返回

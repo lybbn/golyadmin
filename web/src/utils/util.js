@@ -52,6 +52,14 @@ const dateFormats = (dateObj, format) => {
   }
   return format
 }
+function formatDateTime(time) {
+  if (time !== null && time !== '') {
+    var date = new Date(time)
+    return dateFormats(date, 'yyyy-MM-dd hh:mm:ss')
+  } else {
+    return ''
+  }
+}
 
 /**
  * 存储localStorage
@@ -378,6 +386,7 @@ const  sortName = (v1, v2) => {
 export{
     timestampToTime,
     dateFormats,
+    formatDateTime,
     setStore,
     getStore,
     removeStore,

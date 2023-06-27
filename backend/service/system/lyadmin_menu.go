@@ -14,7 +14,7 @@ type MenuService struct{}
 // 分页获取菜单列表
 func (m *MenuService) GetLyadminMenuList(info systemReq.LyadminMenuSearch) *gorm.DB {
 	// 创建db
-	db := global.GL_DB.Model(&system.LyadminMenu{})
+	db := global.GL_DB.Model(&system.LyadminMenu{}).Preload("MenuButtons")
 	// 如果有条件搜索 下方会自动创建搜索语句
 	if info.Status != "" {
 		status, err := utils.FormatString2Bool(info.Status)
@@ -85,7 +85,7 @@ func (m *MenuService) GetWebRouter(uinfo *utils.CustomClaims) (menus []systemRes
 	identity := uinfo.BaseClaims.Identity
 	var mn []system.LyadminMenu
 	if identity == 1 {
-		err = global.GL_DB.Preload("MenuButtons").Where("status = ?", 1).Find(&mn).Error
+		err = global.GL_DB.Preload("MenuButtons").Where("status = ?", 1).Order("sort asc").Find(&mn).Error
 		if err != nil {
 			return menus, err
 		}

@@ -254,12 +254,12 @@ export const useMutitabsStore = defineStore('mutitabs', {
             apiSystemWebRouter().then(res=>{
                 if(res.code == 2000) {
                     let menuTree = []
-                    if(res.data.data.length > 0) {
+                    if(res.data.length > 0) {
                         //转换菜单为结构树
-                        menuTree = transArrayMenuToTree(res.data.data)
+                        menuTree = transArrayMenuToTree(res.data)
                         // 操作权限管控
                         let menuList=[]
-                        res.data.data.forEach(item=>{
+                        res.data.forEach(item=>{
                             //console.log(item,'item---- 菜单权限---')
                             menuList.push({
                                 url:item.web_path,

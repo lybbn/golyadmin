@@ -72,13 +72,13 @@ export const systemMenuButtonDelete = params => ajaxDelete({url:`system/menu_but
 
 
 // 角色管理列表
-export const apiSystemRole = params => ajaxGet({url: `system/role/`,params})
+export const apiSystemRole = params => ajaxGet({url: `system/role/role`,params})
 // 角色管理列表-修改
-export const apiSystemRoleEdit = params => ajaxPut({url: `system/role/`,params})
+export const apiSystemRoleEdit = params => ajaxPut({url: `system/role/role`,params})
 // 角色管理列表 -- 新增角色
-export const apiSystemRoleAdd = params => ajaxPost({url: `system/role/`,params})
+export const apiSystemRoleAdd = params => ajaxPost({url: `system/role/role`,params})
 // 角色管理列表 -- 新增角色
-export const apiSystemRoleDelete = params => ajaxDelete({url: `system/role/`,params})
+export const apiSystemRoleDelete = params => ajaxDelete({url: `system/role/role`,params})
 //获取部门数据,用于角色授权
 export const apiSystemDeptTree = params => ajaxGet({url: `system/dept_tree/`,params})
 //通过角色id,获取菜单数据
@@ -90,23 +90,23 @@ export const apiSystemRoleIdToMenuid = (id) => ajaxGet({url: `system/role_id_to_
 export const apiPermissionSave = params => ajaxPut({url: `system/permission/`,params})
 
 //管理员管理
-export const apiSystemUser = params => ajaxGet({url: `system/user/`,params})
+export const apiSystemUser = params => ajaxGet({url: `system/user/user`,params})
 //管理员管理-新增
-export const apiSystemUserAdd = params => ajaxPost({url: `system/user/`,params})
+export const apiSystemUserAdd = params => ajaxPost({url: `system/user/user`,params})
 //管理员管理-修改
-export const apiSystemUserEdit = params => ajaxPut({url: `system/user/`,params})
+export const apiSystemUserEdit = params => ajaxPut({url: `system/user/user`,params})
 //管理员管理-删除
-export const apiSystemUserDelte = params => ajaxDelete({url: `system/user/`,params})
+export const apiSystemUserDelte = params => ajaxDelete({url: `system/user/user`,params})
 
 /**
  *日志管理
  * */
 // 日志管理 查询
-export const systemOperationlog= params => ajaxGet({url: `system/operation_log/`,params})
+export const systemOperationlog= params => ajaxGet({url: `system/operation_log/loglist`,params})
 // 日志管理 删除
-export const systemOperationlogDelete= params => ajaxDelete({url: `system/operation_log/`,params})
+export const systemOperationlogDelete= params => ajaxDelete({url: `system/operation_log/log`,params})
 // 日志管理 清空全部日志
-export const systemOperationlogDeletealllogsDelete= params => ajaxDelete({url: `system/operation_log/deletealllogs/`,params})
+export const systemOperationlogDeletealllogsDelete= params => ajaxDelete({url: `system/operation_log/deletealllogs`,params})
 
 /**
  *个人中心

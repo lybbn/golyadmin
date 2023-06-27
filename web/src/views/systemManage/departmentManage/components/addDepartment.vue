@@ -2,8 +2,8 @@
     <div>
         <ly-dialog v-model="dialogVisible" :title="dialogTitle" width="640px" :before-close="handleClose">
             <el-form :inline="false" :model="formData" :rules="rules" ref="rulesForm" label-position="right" label-width="auto" class="form-store">
-                <el-form-item label="父级部门：" prop="parent">
-                    <el-tree-select v-model="formData.parent" node-key="id" :data="options"
+                <el-form-item label="父级部门：" prop="parent_id">
+                    <el-tree-select v-model="formData.parent_id" node-key="id" :data="options"
                             check-strictly filterable clearable :render-after-expand="false"
                             :props="{label:'name',value: 'id'}"
                             style="width: 100%" placeholder="请选择/为空则为顶级" />
@@ -22,8 +22,8 @@
                 </el-form-item>
                 <el-form-item label="状态：" prop="status">
                     <el-radio-group v-model="formData.status">
-                        <el-radio :label="1">启用</el-radio>
-                        <el-radio :label="0">禁用</el-radio>
+                        <el-radio :label="true">启用</el-radio>
+                        <el-radio :label="false">禁用</el-radio>
                     </el-radio-group>
                 </el-form-item>
                 <el-form-item label="排序：" prop="sort">
@@ -54,15 +54,15 @@
                 loadingSave:false,
                 dialogTitle:'',
                 formData:{
-                    parent:'',
+                    parent_id:'',
                     name:'',
                     phone:'',
                     owner:'',
-                    status:1,
-                    sort:0,
+                    status:true,
+                    sort:1,
                 },
                 rules:{
-                    // parent: [
+                    // parent_id: [
                     //     {required: true, message: '请选择父级菜单',trigger: 'blur'}
                     // ],
                     name: [
@@ -88,6 +88,14 @@
             handleClose() {
                 this.dialogVisible=false
                 this.loadingSave=false
+                this.formData = {
+                    parent_id:'',
+                    name:'',
+                    phone:'',
+                    owner:'',
+                    status:true,
+                    sort:1,
+                }
             },
             addDepartmentFn(item,flag) {
                 this.dialogVisible=true
@@ -104,7 +112,7 @@
                 }
                 var params = {
                     lazy:true,
-                    parent:treeNode.data.id,
+                    parent_id:treeNode.data.id,
                     page:1,
                     limit:999
                 }

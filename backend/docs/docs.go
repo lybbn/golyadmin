@@ -417,13 +417,19 @@ const docTemplate = `{
                         "in": "query"
                     },
                     {
-                        "type": "boolean",
+                        "type": "string",
+                        "description": "搜索关键词",
+                        "name": "search",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
                         "description": "状态",
                         "name": "status",
                         "in": "query"
                     },
                     {
-                        "type": "boolean",
+                        "type": "string",
                         "description": "是否显示",
                         "name": "visible",
                         "in": "query"
@@ -641,13 +647,19 @@ const docTemplate = `{
                         "in": "query"
                     },
                     {
-                        "type": "boolean",
+                        "type": "string",
+                        "description": "搜索关键词",
+                        "name": "search",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
                         "description": "状态",
                         "name": "status",
                         "in": "query"
                     },
                     {
-                        "type": "boolean",
+                        "type": "string",
                         "description": "是否显示",
                         "name": "visible",
                         "in": "query"
@@ -719,13 +731,19 @@ const docTemplate = `{
                         "in": "query"
                     },
                     {
-                        "type": "boolean",
+                        "type": "string",
+                        "description": "搜索关键词",
+                        "name": "search",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
                         "description": "状态",
                         "name": "status",
                         "in": "query"
                     },
                     {
-                        "type": "boolean",
+                        "type": "string",
                         "description": "是否显示",
                         "name": "visible",
                         "in": "query"
@@ -782,6 +800,12 @@ const docTemplate = `{
                         "type": "integer",
                         "description": "每页大小",
                         "name": "limit",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "方法",
+                        "name": "menu_id",
                         "in": "query"
                     },
                     {
@@ -994,6 +1018,12 @@ const docTemplate = `{
                         "type": "integer",
                         "description": "每页大小",
                         "name": "limit",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "方法",
+                        "name": "menu_id",
                         "in": "query"
                     },
                     {
@@ -1322,7 +1352,7 @@ const docTemplate = `{
                         "schema": {
                             "allOf": [
                                 {
-                                    "$ref": "#/definitions/response.StructPageResponse"
+                                    "$ref": "#/definitions/response.StructResponse"
                                 },
                                 {
                                     "type": "object",
@@ -1818,36 +1848,6 @@ const docTemplate = `{
                 }
             }
         },
-        "response.StructPageResponse": {
-            "type": "object",
-            "properties": {
-                "code": {
-                    "type": "integer"
-                },
-                "data": {
-                    "description": "分页数据"
-                },
-                "limit": {
-                    "description": "每页条数",
-                    "type": "integer"
-                },
-                "msg": {
-                    "type": "string"
-                },
-                "page": {
-                    "description": "当前页码",
-                    "type": "integer"
-                },
-                "pages": {
-                    "description": "总分页数",
-                    "type": "integer"
-                },
-                "total": {
-                    "description": "总数据量",
-                    "type": "integer"
-                }
-            }
-        },
         "response.StructResponse": {
             "type": "object",
             "properties": {
@@ -1966,6 +1966,12 @@ const docTemplate = `{
                 "keep_alive": {
                     "description": "是否缓存页面",
                     "type": "boolean"
+                },
+                "menuButtons": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/system.LyadminMenuButton"
+                    }
                 },
                 "name": {
                     "description": "菜单名称",
