@@ -50,10 +50,10 @@
                 </template>
             </el-table-column>
             <el-table-column min-width="150" prop="path" label="请求地址" show-overflow-tooltip></el-table-column>
-            <el-table-column min-width="90" prop="method" label="请求方法" show-overflow-tooltip></el-table-column>
-            <el-table-column min-width="90" prop="ip" label="IP地址" show-overflow-tooltip></el-table-column>
-            <el-table-column min-width="120" prop="agent" label="请求浏览器" show-overflow-tooltip></el-table-column>
-            <el-table-column min-width="90" prop="body" label="请求数据">
+            <el-table-column width="90" prop="method" label="请求方法" show-overflow-tooltip></el-table-column>
+            <el-table-column width="160" prop="ip" label="IP地址" show-overflow-tooltip></el-table-column>
+            <el-table-column min-width="160" prop="agent" label="请求浏览器" show-overflow-tooltip></el-table-column>
+            <el-table-column width="90" prop="body" label="请求数据">
                 <template #default="scope">
                     <div>
                       <el-popover v-if="scope.row.body" placement="left-start" trigger="click" width="450px">
@@ -68,12 +68,12 @@
                     </div>
                 </template>
             </el-table-column>
-            <el-table-column min-width="70" label="状态码">
+            <el-table-column width="70" label="状态码">
                 <template #default="scope">
                     <el-tag :type="scope.row.code === 200?'success':'warning'">{{ scope.row.code }}</el-tag>
                 </template>
             </el-table-column>
-            <el-table-column min-width="90" prop="resp" label="返回信息">
+            <el-table-column width="90" prop="resp" label="返回信息">
                 <template #default="scope">
                     <div>
                       <el-popover v-if="scope.row.resp" placement="left-start" trigger="click" width="450px">
@@ -93,8 +93,8 @@
                     <div>{{ scope.row.user.username }}({{ scope.row.user.name }})</div>
                 </template>
             </el-table-column>
-            <el-table-column min-width="160" prop="create_at" label="创建时间" show-overflow-tooltip>
-                <template #default="scope">{{ formatDateTime(scope.row.create_at) }}</template>
+            <el-table-column width="180" prop="created_at" label="创建时间" show-overflow-tooltip>
+                <template #default="scope">{{ formatDateTime(scope.row.created_at) }}</template>
             </el-table-column>
             <el-table-column label="操作" fixed="right" width="120">
                 <template #header>

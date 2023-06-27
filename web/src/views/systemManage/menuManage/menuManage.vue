@@ -49,12 +49,12 @@
             </el-table-column> -->
             <el-table-column  type="" width="70" prop="id" label="ID"></el-table-column>
             <el-table-column min-width="150" prop="name" label="菜单名称"></el-table-column>
-            <el-table-column min-width="80" prop="icon" label="图标">
+            <el-table-column width="80" prop="icon" label="图标">
                 <template #default="scope">
                     <svg-icon :icon-class="scope.row.icon" style="font-size: 18px;" v-if="scope.row.icon"></svg-icon>
                 </template>
             </el-table-column>
-            <el-table-column min-width="70" prop="sort" label="排序"></el-table-column>
+            <el-table-column width="70" prop="sort" label="排序"></el-table-column>
             <el-table-column min-width="160" prop="web_path" label="路由地址" show-overflow-tooltip=""></el-table-column>
             <el-table-column min-width="300" label="权限">
                 <template #default="scope">
@@ -62,13 +62,13 @@
                     <el-tag v-for="(item,index) in scope.row.MenuButtons" :key="index" v-if="scope.row.MenuButtons">{{item.name}}</el-tag>
                 </template>
             </el-table-column>
-            <el-table-column min-width="100" label="侧边可见">
+            <el-table-column width="100" label="侧边可见">
                 <template #default="scope">
                     <el-tag v-if="scope.row.visible==1">是</el-tag>
                     <el-tag v-else type="danger">否</el-tag>
                 </template>
             </el-table-column>
-            <el-table-column min-width="90" label="状态">
+            <el-table-column width="90" label="状态">
                 <template #default="scope">
                     <el-tag v-if="scope.row.status==1" type="">启用</el-tag>
                     <el-tag v-else type="danger">禁用</el-tag>

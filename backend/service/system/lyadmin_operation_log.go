@@ -43,7 +43,7 @@ func (o *OperationLogService) GetLyadminOperationLogDetail(id uint) (lyadminOper
 // 分页获取操作记录列表
 func (o *OperationLogService) GetLyadminOperationLogList(info systemReq.LyadminOperationLogSearch) *gorm.DB {
 	// 创建db
-	db := global.GL_DB.Model(&system.LyadminOperationLog{}).Preload("User")
+	db := global.GL_DB.Model(&system.LyadminOperationLog{})
 	// 如果有条件搜索 下方会自动创建搜索语句
 	if info.Method != "" {
 		db = db.Where("method = ?", info.Method)
@@ -51,8 +51,17 @@ func (o *OperationLogService) GetLyadminOperationLogList(info systemReq.LyadminO
 	if info.Path != "" {
 		db = db.Where("path LIKE ?", "%"+info.Path+"%")
 	}
+	if info.Ip != "" {
+		db = db.Where("ip LIKE ?", "%"+info.Ip+"%")
+	}
 	if info.Code != 0 {
 		db = db.Where("code = ?", info.Code)
+	}
+	if info.Search != "" {
+		db = db.Where("method LIKE ? or path LIKE ? or ip LIKE ?", "%"+info.Search+"%", "%"+info.Search+"%", "%"+info.Search+"%")
+	}
+	if info.BeginAt != "" {
+		db = db.Where("created_at between ? and ?", info.BeginAt, info.EndAt)
 	}
 	db = db.Order("id desc").Preload("User")
 	return db

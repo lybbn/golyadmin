@@ -6,8 +6,8 @@ import (
 
 type GL_BASE_MODEL struct {
 	ID        uint      `json:"id" form:"id" gorm:"column:id;type:bigint;primaryKey;autoIncrement;comment:主键"` //主键
-	CreatedAt time.Time `json:"create_at" form:"create_at" gorm:"comment:创建时间"`                                //创建时间
-	UpdatedAt time.Time `json:"update_at" form:"update_at" gorm:"comment:更新时间"`                                //更新时间
+	CreatedAt time.Time `json:"created_at" form:"created_at" gorm:"comment:创建时间"`                              //创建时间
+	UpdatedAt time.Time `json:"updated_at" form:"updated_at" gorm:"comment:更新时间"`                              //更新时间
 }
 
 type GL_CONTROL_MODEL struct {

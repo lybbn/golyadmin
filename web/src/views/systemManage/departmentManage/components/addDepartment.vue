@@ -81,7 +81,12 @@
                     //     {required: true, message: '请输入排序',trigger: 'blur'}
                     // ],
                 },
-                options: []
+                options: [
+                    {
+                        id: 0,
+                        name: '根部门'
+                    }
+                ]
             }
         },
         methods:{

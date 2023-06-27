@@ -17,7 +17,7 @@
             <el-table-column min-width="150" prop="name" label="名称"></el-table-column>
             <el-table-column min-width="150" prop="value" label="key值"></el-table-column>
             <el-table-column min-width="150" prop="update_at" label="更新时间"></el-table-column>
-            <el-table-column min-width="150" prop="create_at" label="创建时间"></el-table-column>
+            <el-table-column min-width="150" prop="created_at" label="创建时间"></el-table-column>
             <el-table-column label="操作" fixed="right" width="140">
                 <template #header>
                     <el-button type="primary" size="default" @click="handleEdit(null,'新增')" >新增</el-button>
