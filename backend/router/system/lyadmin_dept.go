@@ -12,9 +12,9 @@ func (m *MenuRouter) InitDeptRouter(Router *gin.RouterGroup) {
 	deptRouter := Router.Group("dept").Use(middleware.OperationLog())
 	deptApi := v1.ApiGroupApp.SystemApiGroup.DeptApi
 	{
-		deptRouter.GET("dept", deptApi.GetDept)        // 获取部门全部列表
-		deptRouter.POST("dept", deptApi.CreateDept)    // 新增部门
-		deptRouter.PUT("dept/:id", deptApi.UpdateDept) // 编辑部门
-		deptRouter.DELETE("dept", deptApi.DeleteDept)  // 删除部门
+		deptRouter.GET("dept", deptApi.GetDept)           // 获取部门全部列表
+		deptRouter.POST("dept", deptApi.CreateDept)       // 新增部门
+		deptRouter.PUT("dept/:id", deptApi.UpdateDept)    // 编辑部门
+		deptRouter.DELETE("dept/:id", deptApi.DeleteDept) // 删除部门
 	}
 }

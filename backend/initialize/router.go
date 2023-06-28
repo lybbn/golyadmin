@@ -57,7 +57,7 @@ func Routers() *gin.Engine {
 
 	//需要认证
 	PrivateGroup := Router.Group(global.GL_CONFIG.System.RouterPrefix)
-	PrivateGroup.Use(middleware.JWTAuthMiddleware())
+	PrivateGroup.Use(middleware.JWTAuthMiddleware()).Use(middleware.PermissionMiddleware())
 	{
 		SystemPrivateGroup := PrivateGroup.Group("system")
 		{

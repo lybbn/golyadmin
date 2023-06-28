@@ -60,6 +60,7 @@ func JWTAuthMiddleware() gin.HandlerFunc {
 		user, err := userService.FindUserById(claims.BaseClaims.ID)
 		if err != nil {
 			// _ = jwtService.JoinBlacklist(system.LyadminJwtBlacklist{Jwt: token})
+			global.GL_LOG.Error("jwt查询用户信息失败：" + err.Error())
 			response.ErrorResponse(err.Error(), c)
 			c.Abort()
 			return
