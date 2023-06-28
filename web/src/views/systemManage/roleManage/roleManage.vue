@@ -81,6 +81,7 @@
     import useTableHight from '@/mixins/useTableHight';
     import { useRouter,useRoute } from 'vue-router'
     const route = useRoute()
+    const router = useRouter()
 
     let isFull = ref(false)
     let orderStatic = ref(null)
@@ -123,9 +124,9 @@
             addRoleFlag.value.addRoleFn(row,'详情')
         }
         else if(flag == 'authority') {
-            // this.$router.push({name:'authorityManage',params:{id:row.id}})//已失效
-            this.$router.push({name:'authorityManage',state:{id:row.id}})
-            // this.$router.push({name:'authorityManage',query:{id:row.id}})
+            // router.push({name:'authorityManage',params:{id:row.id}})//已失效
+            router.push({name:'authorityManage',state:{id:row.id}})
+            // router.push({name:'authorityManage',query:{id:row.id}})
         }
         else if(flag=='delete') {
             ElMessageBox.confirm('您确定要删除选中的角色？',{

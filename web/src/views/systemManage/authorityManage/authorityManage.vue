@@ -99,7 +99,7 @@
                                           <div :style="{width:((4-node.level)*18+118)+'px'}">{{ data.name }}</div>
                                           <div>
                                             <el-checkbox
-                                                v-for="(item, index) in data.menuPermission"
+                                                v-for="(item, index) in data.menuButtons"
                                                 :key="index"
                                                 v-model="item.checked">{{ item.name }}</el-checkbox>
                                           </div>
@@ -117,7 +117,7 @@
 </template>
 
 <script>
-    import {apiSystemRole,apiSystemRoleAdd,apiSystemDeptTree,apiSystemRoleIdToMenuid, apiSystemDept,apiSystemRoleEdit,apiPermissionSave} from '@/api/api'
+    import {apiSystemRole,apiSystemRoleIdToMenuid, apiSystemDept,apiPermissionSave} from '@/api/api'
     import XEUtils from 'xe-utils'
     export default {
         name: "authorityManage",
@@ -174,6 +174,33 @@
                     // })
                     this.data = res.data.data
                     this.data.map((value, index) => {
+                            if(value.dept.length>0){
+                                let tempdept = []
+                                value.dept.forEach(item=>{
+                                    tempdept.push(item.id)
+                                })
+                                value.dept = tempdept
+                            }else{
+                                value.dept = []
+                            }
+                            if(value.menu.length>0){
+                                let tempmenu = []
+                                value.menu.forEach(item=>{
+                                    tempmenu.push(item.id)
+                                })
+                                value.menu = tempmenu
+                            }else{
+                                value.menu = []
+                            }
+                            if(value.permission.length>0){
+                                let temppermission = []
+                                value.permission.forEach(item=>{
+                                    temppermission.push(item.id)
+                                })
+                                value.permission = temppermission
+                            }else{
+                                value.permission = []
+                            }
                             value.node_id = index
                         })
                     this.$nextTick().then(() => {
@@ -197,17 +224,16 @@
             getapiSystemDept(){
                 apiSystemDept().then(res=>{
                     if(res.code ==2000) {
-                        this.optionsDataAll = res.data.data.length > 0 ? res.data.data : []
-                        let childrenList = res.data.data.filter(item=> item.parent)
-                        let parentList = res.data.data.filter(item=> !item.parent)
+                        this.optionsDataAll = res.data.length > 0 ? res.data : []
+                        let childrenList = res.data.filter(item=> item.parent_id)
+                        let parentList = res.data.filter(item=> !item.parent_id)
                         if(parentList.length >0) {
                             parentList.forEach(item=>{
-                                let children = childrenList.filter(itema=>itema.parent == item.id)
+                                let children = childrenList.filter(itema=>itema.parent_id == item.id)
                                 item.children=[...children]
                             })
                         }
                         this.optionsData = parentList
-                        //console.log(this.optionsData,'this.optionsData----')
                     } else {
                         this.$message.warning(res.msg)
                     }
@@ -221,7 +247,7 @@
                 const menuData = XEUtils.toTreeArray(this.menuOptions)
                 const permissionData = []
                 menuData.forEach((x) => {
-                    const checkedPermission = x.menuPermission.filter((f) => {
+                    const checkedPermission = x.menuButtons.filter((f) => {
                         return f.checked
                     })
 
@@ -248,9 +274,9 @@
             // 获取菜单数据
             getMenuData (data) {
                 apiSystemRoleIdToMenuid(data.id).then((res) => {
-                    res.data.data.forEach((x) => {
-                        // 根据当前角色的permission,对menuPermisson进行勾选处理
-                        x.menuPermission.forEach((a) => {
+                    res.data.forEach((x) => {
+                        // 根据当前角色的permission,对menuButtons进行勾选处理
+                        x.menuButtons.forEach((a) => {
                             if (data.permission.indexOf(a.id) > -1) {
                                 // this.$set(a, 'checked', true)
                                 // a.checked = true
@@ -262,8 +288,7 @@
                         })
                     })
                     // 将菜单列表转换为树形列表
-                    this.menuOptions = XEUtils.toArrayTree(res.data.data, { parentKey: 'parent' })
-                    // console.log(this.menuOptions,"menuOptions---"	)
+                    this.menuOptions = XEUtils.toArrayTree(res.data, { parentKey: 'parent_id' })
                 })
             },
 
@@ -292,12 +317,11 @@
             // 获取部门数据
             getDeptData () {
                 apiSystemDept({page:1,limit:9999}).then((res) => {
-                     res.data.data.forEach(item=>{
+                     res.data.forEach(item=>{
                          item.disabled=false
                      })
-                    // this.deptOptions = ret.data.data
                     // 将列表数据转换为树形数据
-                    this.deptOptions = XEUtils.toArrayTree(res.data.data, { parentKey: 'parent', strict: false })
+                    this.deptOptions = XEUtils.toArrayTree(res.data, { parentKey: 'parent_id', strict: false })
                 })
             },
             // 角色树被点击
@@ -322,10 +346,10 @@
                 // console.log(data)
                 // console.log(checked)
               const {
-                menuPermission,
+                menuButtons,
                 children
               } = data
-              for (let item of menuPermission) {
+              for (let item of menuButtons) {
                 // this.$set(item, 'checked', checked)
                   item.checked=checked
               }

@@ -1,7 +1,7 @@
 package middleware
 
 import (
-	"fmt"
+	"strings"
 
 	"gitee.com/lybbn/golyadmin/global"
 	"gitee.com/lybbn/golyadmin/model/system"
@@ -17,13 +17,12 @@ func hasPermission(method string, path string, btnlist []system.LyadminMenuButto
 	newapi := path + ":" + method
 	var new_api_list []string
 	for _, vm := range btnlist {
-
-		new_api_list = append(new_api_list, vm.Api+":"+vm.Method)
+		new_api_list = append(new_api_list, strings.Replace(vm.Api, ":id", "([a-zA-Z0-9-]+)", 1)+":"+vm.Method+"$")
 	}
-	fmt.Println(newapi)
-	fmt.Println(new_api_list)
-	if utils.IsContainStr(new_api_list, newapi) {
-		return true
+	for _, item := range new_api_list {
+		if utils.RegexpMatch(item, newapi) {
+			return true
+		}
 	}
 	return false
 }

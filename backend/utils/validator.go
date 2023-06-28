@@ -2,6 +2,7 @@ package utils
 
 import (
 	"reflect"
+	"regexp"
 
 	"github.com/go-playground/validator/v10"
 )
@@ -17,4 +18,9 @@ func GetValidMsg(err error, obj interface{}) string {
 		}
 	}
 	return err.Error()
+}
+
+// 正则校验
+func RegexpMatch(rule, matchStr string) bool {
+	return regexp.MustCompile(rule).MatchString(matchStr)
 }

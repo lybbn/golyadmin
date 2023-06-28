@@ -19,7 +19,7 @@ type LyadminMenu struct {
 	IsCatalog     bool                `json:"is_catalog" gorm:"default:false;comment:是否目录"`   //是否目录
 	KeepAlive     bool                `json:"keep_alive" gorm:"default:false;comment:是否缓存页面"` //是否缓存页面
 	Status        bool                `json:"status" gorm:"default:true;comment:状态"`          //状态
-	MenuButtons   []LyadminMenuButton `gorm:"foreignKey:MenuID;"`
+	MenuButtons   []LyadminMenuButton `json:"menuButtons" gorm:"foreignKey:MenuID;"`
 	global.GL_CONTROL_MODEL
 }
 

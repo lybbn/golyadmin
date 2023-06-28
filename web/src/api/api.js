@@ -79,15 +79,13 @@ export const apiSystemRoleEdit = params => ajaxPut({url: `system/role/role`,para
 export const apiSystemRoleAdd = params => ajaxPost({url: `system/role/role`,params})
 // 角色管理列表 -- 新增角色
 export const apiSystemRoleDelete = params => ajaxDelete({url: `system/role/role`,params})
-//获取部门数据,用于角色授权
-export const apiSystemDeptTree = params => ajaxGet({url: `system/dept_tree/`,params})
 //通过角色id,获取菜单数据
-export const apiSystemRoleIdToMenu = params => ajaxGet({url: `system/role_id_to_menu/`,params})
-export const apiSystemRoleIdToMenuid = (id) => ajaxGet({url: `system/role_id_to_menu/`+id+'/'})
+export const apiSystemRoleIdToMenu = params => ajaxGet({url: `system/role/role_id_to_menu`,params})
+export const apiSystemRoleIdToMenuid = (id) => ajaxGet({url: `system/role/role_id_to_menu/`+id})
 
 //权限管理
 // 权限管理 -- 保存
-export const apiPermissionSave = params => ajaxPut({url: `system/permission/`,params})
+export const apiPermissionSave = params => ajaxPut({url: `system/role/permission`,params})
 
 //管理员管理
 export const apiSystemUser = params => ajaxGet({url: `system/user/user`,params})

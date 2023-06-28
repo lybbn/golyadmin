@@ -20,8 +20,17 @@ func (r *RoleService) GetLyadminRoleList(info systemReq.LyadminRoleSearch) *gorm
 	if info.Name != "" {
 		db = db.Where("name LIKE ?", "%"+info.Name+"%")
 	}
-	db = db.Order("sort asc")
+	db = db.Order("sort asc").Preload("Dept").Preload("Menu").Preload("Permission")
 	return db
+}
+
+// 获取所有菜单按钮
+func (r *RoleService) GetRoleMenuById() (menus []system.LyadminMenu, err error) {
+	err = global.GL_DB.Preload("MenuButtons").Order("sort asc").Find(&menus).Error
+	if err != nil {
+		return menus, err
+	}
+	return menus, err
 }
 
 // 新增角色
@@ -50,5 +59,22 @@ func (r *RoleService) UpdateRole(ReqData system.LyadminRole) (err error) {
 
 	db := global.GL_DB.Where("id = ?", ReqData.ID).Find(&oldData)
 	err = db.Updates(upDateMap).Error
+	return err
+}
+
+// 更新角色权限
+func (r *RoleService) UpdateRolePremission(ReqData system.LyadminRole) error {
+	var s system.LyadminRole
+	global.GL_DB.Preload("Menu").Preload("Dept").Preload("Permission").First(&s, "id = ?", ReqData.ID)
+	global.GL_DB.Model(&s).Update("data_range", ReqData.DataRange)
+	err := global.GL_DB.Model(&s).Association("Menu").Replace(&ReqData.Menu)
+	if err != nil {
+		return err
+	}
+	err = global.GL_DB.Model(&s).Association("Dept").Replace(&ReqData.Dept)
+	if err != nil {
+		return err
+	}
+	err = global.GL_DB.Model(&s).Association("Permission").Replace(&ReqData.Permission)
 	return err
 }

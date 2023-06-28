@@ -7,7 +7,7 @@ type Ids struct {
 }
 
 type Id struct {
-	Id int `json:"id" form:"id" binding:"required" msg:"id不能为空"` //id
+	Id int `json:"id" form:"id" binding:"required" msg:"不能为空"` //id
 }
 
 type Search struct {

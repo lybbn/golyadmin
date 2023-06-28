@@ -61,6 +61,21 @@ func (r *RoleApi) GetRoleList(c *gin.Context) {
 }
 
 // @Tags      Role
+// @Summary   通过角色id获取该角色所有的菜单
+// @Security  ApiKeyAuth
+// @Produce   application/json
+// @Success   200   {object}  response.StructResponse{data=map[string]interface{},msg=string}  "通过角色id获取该角色所有的菜单"
+// @Router    /system/role/role_id_to_menu/:id [get]
+func (r *RoleApi) GetRoleMenuById(c *gin.Context) {
+	data, err := roleService.GetRoleMenuById()
+	if err != nil {
+		response.ErrorResponse(err.Error(), c)
+		return
+	}
+	response.SuccessResponse(data, "获取成功", c)
+}
+
+// @Tags      Role
 // @Summary   新增角色
 // @Security  ApiKeyAuth
 // @Produce   application/json
@@ -129,6 +144,29 @@ func (r *RoleApi) UpdateRole(c *gin.Context) {
 	}
 	req.UpdateBy = utils.GetUserID(c)
 	err = roleService.UpdateRole(req)
+	if err != nil {
+		global.GL_LOG.Error("修改失败!", zap.Error(err))
+		response.ErrorResponse(err.Error(), c)
+		return
+	}
+	response.SuccessResponse(nil, "修改成功", c)
+}
+
+// @Tags      Role
+// @Summary   更新角色权限
+// @Security  ApiKeyAuth
+// @Produce   application/json
+// @Param     data  body       system.LyadminRole true "原LyadminRole参数"
+// @Success   200   {object}  response.StructResponse{data=string,msg=string}  "更新角色权限"
+// @Router    /system/role/permission/:id [put]
+func (r *RoleApi) UpdateRolePremission(c *gin.Context) {
+	var req system.LyadminRole
+	err := c.ShouldBind(&req)
+	if err != nil {
+		response.ErrorResponse(utils.GetValidMsg(err, &req), c)
+		return
+	}
+	err = roleService.UpdateRolePremission(req)
 	if err != nil {
 		global.GL_LOG.Error("修改失败!", zap.Error(err))
 		response.ErrorResponse(err.Error(), c)
