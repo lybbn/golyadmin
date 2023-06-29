@@ -20,7 +20,7 @@ func (s *UserService) FindUserById(id uint) (user *system.LyadminUsers, err erro
 
 func (s *UserService) GetUserInfoById(id uint) (user system.LyadminUsers, err error) {
 	var u system.LyadminUsers
-	err = global.GL_DB.Preload("Role").Preload("Dept").First(&u, "id = ?", id).Error
+	err = global.GL_DB.Preload("Role").Preload("Role.Dept").First(&u, "id = ?", id).Error
 	if err != nil {
 		return u, err
 	}

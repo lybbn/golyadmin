@@ -121,7 +121,7 @@ func (s *OperationLogApi) GetLyadminOperationLogList(c *gin.Context) {
 	var pageInfo systemReq.LyadminOperationLogSearch
 	err := c.ShouldBind(&pageInfo)
 	if err != nil {
-		response.ErrorResponse(err.Error(), c)
+		response.ErrorResponse(utils.GetValidMsg(err, &pageInfo), c)
 		return
 	}
 	query := operationLogService.GetLyadminOperationLogList(pageInfo)

@@ -65,7 +65,7 @@ func JWTAuthMiddleware() gin.HandlerFunc {
 			c.Abort()
 			return
 		}
-		if user.IsActive == false {
+		if !user.IsActive {
 			// _ = jwtService.JoinBlacklist(system.LyadminJwtBlacklist{Jwt: token})
 			response.ErrorResponse("该账号已被禁用，请联系管理员！", c)
 			c.Abort()

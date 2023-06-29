@@ -33,7 +33,13 @@ func OperationLog() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		var body []byte
 		var userId int
-		if c.Request.Method != http.MethodGet {
+		reMethod := c.Request.Method
+		//不记录GET请求，需要记录请注释以下4行代码
+		if reMethod == "GET" {
+			c.Next()
+			return
+		}
+		if reMethod != http.MethodGet {
 			var err error
 			body, err = io.ReadAll(c.Request.Body)
 			if err != nil {
@@ -66,7 +72,7 @@ func OperationLog() gin.HandlerFunc {
 		}
 		record := system.LyadminOperationLog{
 			Ip:     utils.GetRealClientIP(c),
-			Method: c.Request.Method,
+			Method: reMethod,
 			Path:   c.Request.URL.Path,
 			Agent:  c.Request.UserAgent(),
 			Body:   string(body),

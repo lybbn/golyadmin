@@ -17,7 +17,9 @@ func hasPermission(method string, path string, btnlist []system.LyadminMenuButto
 	newapi := path + ":" + method
 	var new_api_list []string
 	for _, vm := range btnlist {
-		new_api_list = append(new_api_list, strings.Replace(vm.Api, ":id", "([a-zA-Z0-9-]+)", 1)+":"+vm.Method+"$")
+		if vm.Api != "" {
+			new_api_list = append(new_api_list, strings.Replace(vm.Api, ":id", "([a-zA-Z0-9-]+)", 1)+":"+vm.Method+"$")
+		}
 	}
 	for _, item := range new_api_list {
 		if utils.RegexpMatch(item, newapi) {
@@ -55,14 +57,10 @@ func PermissionMiddleware() gin.HandlerFunc {
 			if isApiWhiteList(method, path) {
 				c.Next()
 			} else {
-				userid := uinfo.BaseClaims.ID
-				var roleIds []uint
-				err := global.GL_DB.Model(&system.LyadminUsersRole{}).Where("lyadmin_users_id = ?", userid).Pluck("lyadmin_role_id", &roleIds).Error
-				if err != nil {
-					global.GL_LOG.Error("查询数据库失败：" + err.Error())
-					response.ErrorResponse("系统繁忙，请稍后再试", c)
-					c.Abort()
-					return
+				userinfo := utils.GetUserInfoDB(c)
+				var roleIds []int
+				for _, v := range userinfo.Role {
+					roleIds = append(roleIds, int(v.ID))
 				}
 				if len(roleIds) < 1 {
 					response.ErrorResponse("暂无访问该接口权限:无角色", c)
@@ -70,7 +68,7 @@ func PermissionMiddleware() gin.HandlerFunc {
 					return
 				}
 				var rolelist []system.LyadminRole
-				err = global.GL_DB.Model(&system.LyadminRole{}).Where("status = ? and id in (?)", 1, roleIds).Preload("Permission").Find(&rolelist).Error
+				err := global.GL_DB.Model(&system.LyadminRole{}).Where("status = ? and id in (?)", 1, roleIds).Preload("Permission").Find(&rolelist).Error
 				if err != nil {
 					global.GL_LOG.Error("查询数据库失败：" + err.Error())
 					response.ErrorResponse("系统繁忙，请稍后再试", c)

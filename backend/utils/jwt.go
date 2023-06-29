@@ -161,11 +161,12 @@ func GetUserInfo(c *gin.Context) *CustomClaims {
 }
 
 // GetUserInfoDB 从Gin的Context中获取从数据库查询的用户信息
-func GetUserInfoDB(c *gin.Context) *system.LyadminUsers {
+func GetUserInfoDB(c *gin.Context) system.LyadminUsers {
 	if userinfo, exists := c.Get("golyadmin_userinfo"); !exists {
-		return nil
+		var uinfo = system.LyadminUsers{}
+		return uinfo
 	} else {
-		waitUser := userinfo.(*system.LyadminUsers)
+		waitUser := userinfo.(system.LyadminUsers)
 		return waitUser
 	}
 }

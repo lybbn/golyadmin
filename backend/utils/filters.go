@@ -1,7 +1,6 @@
 package utils
 
 import (
-	"fmt"
 	"strings"
 
 	"gitee.com/lybbn/golyadmin/global"
@@ -27,8 +26,8 @@ func isApiWhiteList(method string, path string) bool {
 }
 
 type lyadminDeptSelect struct {
-	ID       uint `json:"id" form:"id" gorm:"column:id;type:bigint;primaryKey;autoIncrement;comment:主键"` //主键
-	ParentId uint `json:"parent_id" gorm:"comment:上级部门"`
+	ID       uint `json:"id" form:"id"` //主键
+	ParentId uint `json:"parent_id"`    //上级部门
 }
 
 // 递归获取部门的所有下级部门
@@ -37,7 +36,7 @@ func getDept(deptId int, tempDeptList []lyadminDeptSelect) []int {
 	for _, v := range tempDeptList {
 		if v.ParentId == uint(deptId) {
 			dept_list = append(dept_list, int(v.ID))
-			getDept(int(v.ID), tempDeptList)
+			dept_list = append(dept_list, getDept(int(v.ID), tempDeptList)...)
 		}
 
 	}
@@ -45,90 +44,80 @@ func getDept(deptId int, tempDeptList []lyadminDeptSelect) []int {
 }
 
 /*
-		数据 级权限过滤器(白名单和超级管理员直接返回全部)
-	    0. 获取用户的部门id，没有部门则返回空
-	    1. 判断过滤的数据是否有创建人所在部门 "belong_dept" 字段,没有则返回全部
-	    2. 如果用户没有关联角色则返回本部门数据
-	    3. 根据角色的最大权限进行数据过滤(会有多个角色，进行去重取最大权限)
-	    4. 只为仅本人数据权限时只返回过滤本人数据，并且部门为自己本部门(考虑到用户会变部门，只能看当前用户所在的部门数据)
-	    5. 自定数据权限 获取部门，根据部门过滤
+数据 级权限过滤器(白名单和超级管理员直接返回全部)
+0. 获取用户的部门id，没有部门则返回空
+1. 判断过滤的数据是否有创建人所在部门 "belong_dept" 字段,没有则返回全部
+2. 如果用户没有关联角色则返回本部门数据
+3. 根据角色的最大权限进行数据过滤(会有多个角色，进行去重取最大权限)
+4. 只为仅本人数据权限时只返回过滤本人数据，并且部门为自己本部门(考虑到用户会变部门，只能看当前用户所在的部门数据)
+5. 自定数据权限 获取部门，根据部门过滤
 */
-func DataLevelPermissionsFilter(c *gin.Context) func(db *gorm.DB) *gorm.DB {
-	//白名单
-	method := c.Request.Method
-	path := c.Request.URL.Path
-	if isApiWhiteList(method, path) {
-		return func(db *gorm.DB) *gorm.DB {
+func DataLevelPermissionsFilter(c *gin.Context, model interface{}) func(db *gorm.DB) *gorm.DB {
+	return func(db *gorm.DB) *gorm.DB {
+		//白名单
+		method := c.Request.Method
+		path := c.Request.URL.Path
+		if isApiWhiteList(method, path) {
 			return db
 		}
-	}
-	uinfo := GetUserInfo(c)
-	identity := uinfo.BaseClaims.Identity
-	//超级管理员跳过
-	if identity == 1 {
-		return func(db *gorm.DB) *gorm.DB {
+		uinfo := GetUserInfo(c)
+		identity := uinfo.BaseClaims.Identity
+		//超级管理员跳过
+		if identity == 1 {
 			return db
-		}
-	} else {
-		userinfo := GetUserInfoDB(c)
-		var roleIds []int
-		var roleDataScopes []int
-		var roleDeptIds []int
-		for i, v := range userinfo.Role {
-			roleIds = append(roleIds, int(v.ID))
-			roleDataScopes = append(roleDataScopes, v.DataRange)
-			for _, vm := range userinfo.Role[i].Dept {
-				roleDeptIds = append(roleDeptIds, int(vm.ID))
+		} else {
+			userinfo := GetUserInfoDB(c)
+			var roleIds []int
+			var roleDataScopes []int
+			var roleDeptIds []int
+			for i, v := range userinfo.Role {
+				roleIds = append(roleIds, int(v.ID))
+				roleDataScopes = append(roleDataScopes, v.DataRange)
+				for _, vm := range userinfo.Role[i].Dept {
+					roleDeptIds = append(roleDeptIds, int(vm.ID))
+				}
 			}
-		}
-		// 0. 获取用户的部门id，没有部门则返回空
-		dept_id := userinfo.DeptId
-		if dept_id < 1 {
-			return func(db *gorm.DB) *gorm.DB {
+			// 0. 获取用户的部门id，没有部门则返回空
+			dept_id := userinfo.DeptId
+			if dept_id < 1 {
 				return db.Where("id < ?", 0)
 			}
-		}
-		// 1. 判断过滤的数据是否有创建人所在部门 "belong_dept" 字段
-		// 2. 如果用户没有关联角色则返回本部门数据
-		role_list := roleIds
-		if len(role_list) < 1 {
-			return func(db *gorm.DB) *gorm.DB {
-				return db.Where("belong_dept = ?", dept_id)
-			}
-		}
-		// 3. 根据所有角色 获取所有权限范围
-		dataScope_list := roleDataScopes
-		if IsContainInt(dataScope_list, 3) {
-			return func(db *gorm.DB) *gorm.DB {
+			// 1. 判断过滤的数据是否有创建人所在部门 "belong_dept" 字段，没有返回全部
+			if !db.Migrator().HasColumn(model, "belong_dept") {
 				return db
 			}
-		}
-		// 4. 只为仅本人数据权限时只返回过滤本人数据，并且部门为自己本部门(考虑到用户会变部门，只能看当前用户所在的部门数据)
-		if IsContainInt(dataScope_list, 0) {
-			return func(db *gorm.DB) *gorm.DB {
+			// 2. 如果用户没有关联角色则返回本部门数据
+			role_list := roleIds
+			if len(role_list) < 1 {
+				return db.Where("belong_dept = ?", dept_id)
+			}
+			// 3. 根据所有角色 获取所有权限范围
+			dataScope_list := roleDataScopes
+			if IsContainInt(dataScope_list, 3) {
+				return db
+			}
+			// 4. 只为仅本人数据权限时只返回过滤本人数据，并且部门为自己本部门(考虑到用户会变部门，只能看当前用户所在的部门数据)
+			if IsContainInt(dataScope_list, 0) {
 				return db.Where("create_by = ? and belong_dept = ?", uinfo.BaseClaims.ID, dept_id)
 			}
-		}
-		// 5. 自定数据权限 获取部门，根据部门过滤
-		var dept_list []int
-		for _, v := range dataScope_list {
-			//自定义数据权限
-			if v == 4 {
-				dept_list = append(dept_list, roleDeptIds...)
-			} else if v == 2 {
-				//本部门及以下数据权限
-				dept_list = append(dept_list, int(dept_id))
-				var tempDeptList []lyadminDeptSelect
-				global.GL_DB.Model(&system.LyadminDept{}).Select("id", "parent_id").Find(&tempDeptList)
-				dept_list = append(dept_list, getDept(int(dept_id), tempDeptList)...)
-				fmt.Println(dept_list)
-			} else if v == 1 {
-				//本部门数据权限
-				dept_list = append(dept_list, int(dept_id))
+			// 5. 自定数据权限 获取部门，根据部门过滤
+			var dept_list []int
+			for _, v := range dataScope_list {
+				//自定义数据权限
+				if v == 4 {
+					dept_list = append(dept_list, roleDeptIds...)
+				} else if v == 2 {
+					//本部门及以下数据权限
+					dept_list = append(dept_list, int(dept_id))
+					var tempDeptList []lyadminDeptSelect
+					global.GL_DB.Model(&system.LyadminDept{}).Select("id", "parent_id").Find(&tempDeptList)
+					dept_list = append(dept_list, getDept(int(dept_id), tempDeptList)...)
+				} else if v == 1 {
+					//本部门数据权限
+					dept_list = append(dept_list, int(dept_id))
+				}
 			}
-		}
-		dept_list = RemoveDuplicatesArrInt(dept_list)
-		return func(db *gorm.DB) *gorm.DB {
+			dept_list = RemoveDuplicatesArrInt(dept_list)
 			return db.Where("belong_dept in (?)", dept_list)
 		}
 	}

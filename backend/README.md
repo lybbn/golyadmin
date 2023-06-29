@@ -114,6 +114,7 @@ swag init
 ```
 - 默认集成mysql和sqlite驱动，如需sqlserver、oracle、postgresql需要到utils/databases/dbinitialize放开相应的驱动和方法注释
 - 验证码captcha默认为mem内存模式(180s过期时间)，需要redis存储可修改api/v1/system/lyadmin_captcha.go
+- 默认【操作日志】不记录GET请求，如需记录请修改utils/middleware/operation_log.go中注释掉说明方法
 ```
 
 ## 商用注意事项
