@@ -102,3 +102,34 @@ func generateRandString(length int, s string) string {
 func GenerateRandomKey6() string {
 	return generateRandString(6, letter)
 }
+
+// 字符型数组去重
+func RemoveDuplicatesArrStr(arr []string) []string {
+	uniqueMap := make(map[string]bool)
+
+	for _, v := range arr {
+		if _, ok := uniqueMap[v]; !ok {
+			uniqueMap[v] = true
+		}
+	}
+
+	var uniqueArr []string
+	for k := range uniqueMap {
+		uniqueArr = append(uniqueArr, k)
+	}
+	return uniqueArr
+}
+
+// 数字型数组去重
+func RemoveDuplicatesArrInt(arr []int) []int {
+	result := []int{}
+	tempMap := map[int]byte{}
+	for _, e := range arr {
+		l := len(tempMap)
+		tempMap[e] = 0
+		if len(tempMap) != l {
+			result = append(result, e)
+		}
+	}
+	return result
+}

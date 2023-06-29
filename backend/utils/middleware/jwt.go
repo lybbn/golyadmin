@@ -57,7 +57,7 @@ func JWTAuthMiddleware() gin.HandlerFunc {
 		}
 
 		// 已登录用户被管理员禁用 需要使该用户的jwt失效 此处比较消耗性能 自行根据项目需要选择是否打开
-		user, err := userService.FindUserById(claims.BaseClaims.ID)
+		user, err := userService.GetUserInfoById(claims.BaseClaims.ID)
 		if err != nil {
 			// _ = jwtService.JoinBlacklist(system.LyadminJwtBlacklist{Jwt: token})
 			global.GL_LOG.Error("jwt查询用户信息失败：" + err.Error())
@@ -92,6 +92,7 @@ func JWTAuthMiddleware() gin.HandlerFunc {
 			}
 		}
 		c.Set("claims", claims)
+		c.Set("golyadmin_userinfo", user)
 		c.Next() // 后续的处理函数可以用c.Get("claims")来获取当前请求的用户信息
 	}
 }

@@ -28,7 +28,7 @@ func (a *DeptApi) GetDept(c *gin.Context) {
 		response.ErrorResponse(err.Error(), c)
 		return
 	}
-	query := deptService.GetLyadminDeptList(req)
+	query := deptService.GetLyadminDeptList(req).Scopes(utils.DataLevelPermissionsFilter(c))
 	var data []system.LyadminDept
 	err = query.Find(&data).Error
 	if err != nil {
@@ -52,7 +52,7 @@ func (a *DeptApi) GetDeptList(c *gin.Context) {
 		response.ErrorResponse(err.Error(), c)
 		return
 	}
-	query := deptService.GetLyadminDeptList(pageInfo)
+	query := deptService.GetLyadminDeptList(pageInfo).Scopes(utils.DataLevelPermissionsFilter(c))
 	p := pagination.Page[system.LyadminDept]{}
 	p.PaginateQuery(query, c)
 	response.PaginateResponse(p.Data, p, "获取成功", c)

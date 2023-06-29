@@ -95,7 +95,7 @@
     let tableHeight = useTableHight(orderStatic,tableSelect,isFull.value,true,-50)
     let loadingPage = ref(false)
     let formInline = ref({
-        lazy:true,
+        // lazy:true,
         page: 1,
         limit: 10,
     })

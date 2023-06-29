@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"gitee.com/lybbn/golyadmin/global"
+	"gitee.com/lybbn/golyadmin/model/system"
 	"github.com/gin-gonic/gin"
 	jwt "github.com/golang-jwt/jwt/v5"
 )
@@ -20,12 +21,15 @@ type CustomClaims struct {
 }
 
 type BaseClaims struct {
-	UUID     string
-	ID       uint
-	Username string
-	Nickname string
-	Identity int
-	DeptId   uint
+	UUID           string
+	ID             uint
+	Username       string
+	Nickname       string
+	Identity       int
+	DeptId         uint
+	RoleIds        []int //角色数组
+	RoleDeptIds    []int //角色关联部门数组
+	RoleDataScopes []int //数据权限类型数组
 }
 
 type JWT struct {
@@ -152,6 +156,16 @@ func GetUserInfo(c *gin.Context) *CustomClaims {
 		}
 	} else {
 		waitUser := claims.(*CustomClaims)
+		return waitUser
+	}
+}
+
+// GetUserInfoDB 从Gin的Context中获取从数据库查询的用户信息
+func GetUserInfoDB(c *gin.Context) *system.LyadminUsers {
+	if userinfo, exists := c.Get("golyadmin_userinfo"); !exists {
+		return nil
+	} else {
+		waitUser := userinfo.(*system.LyadminUsers)
 		return waitUser
 	}
 }

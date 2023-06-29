@@ -29,9 +29,14 @@ func hasPermission(method string, path string, btnlist []system.LyadminMenuButto
 
 func isApiWhiteList(method string, path string) bool {
 	newapi := path + ":" + method
-	var api_white_list = []string{"/api/system/menu/web_router:GET"}
-	if utils.IsContainStr(api_white_list, newapi) {
-		return true
+	var api_white_list []string
+	for _, vm := range global.GL_API_WHILTELIST {
+		api_white_list = append(api_white_list, strings.Replace(vm.Api, ":id", "([a-zA-Z0-9-]+)", 1)+":"+vm.Method+"$")
+	}
+	for _, item := range api_white_list {
+		if utils.RegexpMatch(item, newapi) {
+			return true
+		}
 	}
 	return false
 }

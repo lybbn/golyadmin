@@ -16,8 +16,8 @@
 <!--                </el-form-item>-->
                 <el-form-item label="状态：" prop="status">
                     <el-radio-group v-model="formData.status" style="width: 300px">
-                        <el-radio :label="1">启用</el-radio>
-                        <el-radio :label="0">禁用</el-radio>
+                        <el-radio :label="true">启用</el-radio>
+                        <el-radio :label="false">禁用</el-radio>
                     </el-radio-group>
                 </el-form-item>
                 <el-form-item label="排序：" prop="sort">
@@ -45,10 +45,10 @@
                 loadingSave:false,
                 dialogTitle:'',
                 formData:{
-                    admin:1,
+                    // admin:1,
                     key:'',
                     name:'',
-                    status:1,
+                    status:true,
                     sort:0,
                 },
                 rules:{
@@ -76,10 +76,10 @@
                 this.dialogVisible=false
                 this.loadingSave=false
                 this.formData={
-                    admin:1,
+                    // admin:1,
                     key:'',
                     name:'',
-                    status:1,
+                    status:true,
                     sort:0,
                 }
             },

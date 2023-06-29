@@ -39,7 +39,7 @@ func (b *BaseApi) Login(c *gin.Context) {
 	}
 	if capchaStore.Verify(req.CaptchaKey, req.Captcha, true) {
 		var user system.LyadminUsers
-		err = global.GL_DB.Where("username = ?", req.Username).First(&user).Error
+		err = global.GL_DB.Where("username = ?", req.Username).Preload("Role").Preload("Role.Dept").First(&user).Error
 		if err == nil {
 			if ok := utils.CheckPassword(req.Password, user.Password); !ok {
 				response.ErrorResponse("账号密码错误", c)
@@ -66,13 +66,26 @@ func (b *BaseApi) Login(c *gin.Context) {
 // IssueJwtToken 登录以后签发jwt
 func (b *BaseApi) IssueJwtToken(c *gin.Context, user system.LyadminUsers) {
 	j := &utils.JWT{SecretKey: []byte(global.GL_CONFIG.JWT.SecretKey)} // 唯一签名
+	var roleIds []int
+	var roleDataScopes []int
+	var roleDeptIds []int
+	for i, v := range user.Role {
+		roleIds = append(roleIds, int(v.ID))
+		roleDataScopes = append(roleDataScopes, v.DataRange)
+		for _, vm := range user.Role[i].Dept {
+			roleDeptIds = append(roleDeptIds, int(vm.ID))
+		}
+	}
 	claims := j.CreateClaims(utils.BaseClaims{
-		UUID:     user.UUID,
-		ID:       uint(user.ID),
-		Nickname: user.Nickname,
-		Username: user.Username,
-		Identity: user.Identity,
-		DeptId:   user.DeptId,
+		UUID:           user.UUID,
+		ID:             uint(user.ID),
+		Nickname:       user.Nickname,
+		Username:       user.Username,
+		Identity:       user.Identity,
+		DeptId:         user.DeptId,
+		RoleIds:        roleIds,
+		RoleDeptIds:    utils.RemoveDuplicatesArrInt(roleDeptIds),
+		RoleDataScopes: utils.RemoveDuplicatesArrInt(roleDataScopes),
 	})
 	token, err := j.CreateToken(claims)
 	if err != nil {

@@ -156,11 +156,11 @@ func (r *RoleApi) UpdateRole(c *gin.Context) {
 // @Summary   更新角色权限
 // @Security  ApiKeyAuth
 // @Produce   application/json
-// @Param     data  body       system.LyadminRole true "原LyadminRole参数"
+// @Param     data  body      systemReq.LyadminRoleParams true "原LyadminRoleParams参数"
 // @Success   200   {object}  response.StructResponse{data=string,msg=string}  "更新角色权限"
 // @Router    /system/role/permission/:id [put]
 func (r *RoleApi) UpdateRolePremission(c *gin.Context) {
-	var req system.LyadminRole
+	var req systemReq.LyadminRoleParams
 	err := c.ShouldBind(&req)
 	if err != nil {
 		response.ErrorResponse(utils.GetValidMsg(err, &req), c)
