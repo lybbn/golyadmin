@@ -4,9 +4,12 @@
       <el-tabs v-model="activeName" @tab-click="handleClick" tab-position="left">
         <el-tab-pane label="用户设置" name="userInfo" >
             <el-alert title="修改用户信息，无特殊需求可以不修改。" type="info" show-icon style="margin-bottom: 15px;"/>
-            <el-form ref="userInfoForm" :model="userInfo" :disabled="!isShowBtn('personalCenter','个人中心','Update')"  required-asterisk :rules="userInforules" :label-position="position" center label-width="120px" style="margin-top: 20px;">
+            <el-form ref="userInfoForm" :model="userInfo" :disabled="!hasPermission(this.$route.name,'Update')"  required-asterisk :rules="userInforules" :label-position="position" center label-width="120px" style="margin-top: 20px;">
               <el-form-item prop="name" required label="姓名:">
                 <el-input v-model="userInfo.name" clearable></el-input>
+              </el-form-item>
+              <el-form-item prop="nickname" label="昵称:">
+                <el-input v-model="userInfo.nickname" clearable></el-input>
               </el-form-item>
               <el-form-item label="电话号码:" prop="mobile">
                 <el-input v-model="userInfo.mobile" clearable></el-input>
@@ -16,16 +19,16 @@
               </el-form-item>
               <el-form-item label="性別:" prop="gender">
                 <el-radio-group v-model="userInfo.gender">
-                  <el-radio :label="1">男</el-radio>
-                  <el-radio :label="0">女</el-radio>
-                  <el-radio :label="-1">未知</el-radio>
+                  <el-radio label="男">男</el-radio>
+                  <el-radio label="女">女</el-radio>
+                  <el-radio label="未知">未知</el-radio>
                 </el-radio-group>
               </el-form-item>
               <el-form-item>
-                <el-button @click="updateInfo" icon="Check" type="primary" v-show="isShowBtn('personalCenter','个人中心','Update')">
+                <el-button @click="updateInfo" icon="Check" type="primary" v-show="hasPermission(this.$route.name,'Update')">
                   更新
                 </el-button>
-                <el-button icon="Refresh" @click="resetForm('info')" type="info" v-show="isShowBtn('personalCenter','个人中心','Update')">
+                <el-button icon="Refresh" @click="resetForm('info')" type="info" v-show="hasPermission(this.$route.name,'Update')">
                   重置
                 </el-button>
               </el-form-item>
@@ -47,10 +50,10 @@
                 <el-input v-model="userPasswordInfo.newPassword2" type="password" show-password placeholder="请再次输入新密码"></el-input>
               </el-form-item>
               <el-form-item>
-                <el-button  type="primary" icon="Check" @click="settingPassword" v-show="isShowBtn('personalCenter','个人中心','Changepassword')">
+                <el-button  type="primary" icon="Check" @click="settingPassword" v-show="hasPermission(this.$route.name,'Changepassword')">
                   提交
                 </el-button>
-                <el-button icon="Refresh" @click="resetForm('passwordForm')" type="info" v-show="isShowBtn('personalCenter','个人中心','Changepassword')">
+                <el-button icon="Refresh" @click="resetForm('passwordForm')" type="info" v-show="hasPermission(this.$route.name,'Changepassword')">
                   重置
                 </el-button>
               </el-form-item>
@@ -96,7 +99,7 @@
                   email: ''
                 },
                 userInforules: {
-                  name: [{ required: true, message: '请输入昵称', trigger: 'blur' }],
+                  name: [{ required: true, message: '请输入姓名', trigger: 'blur' }],
                   mobile: [
                     { pattern: /^1[3|4|5|7|8|9|6]\d{9}$/, message: '请输入正确手机号' }
                   ]
@@ -136,7 +139,7 @@
             getCurrentUserInfo () {
                 systemUserUserInfo().then(res=>{
                     if(res.code == 2000) {
-                        this.userInfo=res.data.data
+                        this.userInfo=res.data
                     }
 
                 })

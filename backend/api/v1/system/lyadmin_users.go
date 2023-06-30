@@ -174,6 +174,48 @@ func (b *BaseApi) CreateUser(c *gin.Context) {
 }
 
 // @Tags      User
+// @Summary   获取用户信息
+// @Security  ApiKeyAuth
+// @accept    application/json
+// @Produce   application/json
+// @Success   200  {object}  response.StructResponse{data=[...],msg=string}  "获取用户信息"
+// @Router    /system/user/getuserinfo [get]
+func (b *BaseApi) GetUserInfo(c *gin.Context) {
+	uinfo := utils.GetUserInfoDB(c)
+	var userinfo = systemReq.ChangeUserInfo{
+		Name:     uinfo.Name,
+		Nickname: uinfo.Nickname,
+		Mobile:   uinfo.Mobile,
+		Email:    uinfo.Email,
+		Gender:   uinfo.Gender,
+	}
+	response.SuccessResponse(userinfo, "获取成功", c)
+}
+
+// @Tags      User
+// @Summary   设置用户信息
+// @Security  ApiKeyAuth
+// @accept    application/json
+// @Produce   application/json
+// @Success   200  {object}  response.StructResponse{data=[...],msg=string}  "获取用户信息"
+// @Router    /system/user/setuserinfo [post]
+func (b *BaseApi) SetUserInfo(c *gin.Context) {
+	var req systemReq.ChangeUserInfo
+	err := c.ShouldBind(&req)
+	if err != nil {
+		response.ErrorResponse(utils.GetValidMsg(err, &req), c)
+		return
+	}
+	err = userService.SetUserInfo(req, utils.GetUserID(c))
+	if err != nil {
+		global.GL_LOG.Error("修改失败!", zap.Error(err))
+		response.ErrorResponse("修改失败!", c)
+		return
+	}
+	response.SuccessResponse(nil, "设置成功", c)
+}
+
+// @Tags      User
 // @Summary   用户修改密码
 // @Security  ApiKeyAuth
 // @Produce  application/json
@@ -188,7 +230,7 @@ func (b *BaseApi) ChangePassword(c *gin.Context) {
 		return
 	}
 	uid := utils.GetUserID(c)
-	u := &system.LyadminUsers{GL_BASE_MODEL: global.GL_BASE_MODEL{ID: uid}, Password: req.Password}
+	u := &system.LyadminUsers{GL_BASE_MODEL: global.GL_BASE_MODEL{ID: uid}, Password: req.OldPassword}
 	_, err = userService.ChangePassword(u, req.NewPassword)
 	if err != nil {
 		global.GL_LOG.Error("修改失败!", zap.Error(err))
@@ -197,42 +239,3 @@ func (b *BaseApi) ChangePassword(c *gin.Context) {
 	}
 	response.SuccessResponse(nil, "修改成功", c)
 }
-
-// 请求参数结构（分页）
-// type ExampleQueryParmas struct {
-// 	response.StructPageQueryParams
-// 	Name string `json:"name" form:"name"` //查询参数
-// }
-
-// GetExaExampleList
-// @Tags      Example
-// @Summary   分页获取信息列表
-// @Security  ApiKeyAuth
-// @accept    application/json
-// @Produce   application/json
-// @Param     data  query     ExampleQueryParmas                                        true  "页码, 每页大小"
-// @Success 200 {object} response.StructResponse{data=ExampleService}
-// @Router    /example/exampleList [get]
-// func (e *ExampleApi) GetExaExampleList(c *gin.Context) {
-// 	//单独获取请求参数
-// 	name := c.Query("name")
-// 	fmt.Println("====== single By Query String ======")
-// 	fmt.Println(name)
-
-// 	//按结构体接收请求参数
-// 	var pageParams ExampleQueryParmas
-// 	err := c.ShouldBindQuery(&pageParams)
-// 	fmt.Println("====== Only Bind By Query String ======")
-// 	fmt.Println(pageParams)
-// 	fmt.Println(pageParams.Name)
-// 	if err != nil {
-// 		response.ErrorResponse(err.Error(), c)
-// 		return
-// 	}
-
-// 	//分页方法
-// 	query := global.GL_DB.Table("lyadmin_users").Select("id", "name", "username")
-// 	p := pagination.Page[ExampleService]{}
-// 	p.PaginateQuery(query, c)
-// 	response.PaginateResponse(p.Data, p, "获取成功", c)
-// }

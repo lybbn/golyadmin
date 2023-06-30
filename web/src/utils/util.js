@@ -229,6 +229,9 @@ function getToken() {
     return getStorage('logintoken')
 }
 function isShowBtn(url,moduleName, btnName) {
+  if(getStorage('identity') == 1){
+    return true
+  }
   let btnArr = getStorage('menuList')?JSON.parse(getStorage('menuList')):[];
   let isshow = false;
   for (var i = 0; i < btnArr.length; i++) {
@@ -242,6 +245,9 @@ function isShowBtn(url,moduleName, btnName) {
 }
 
 function hasPermission(url,btnName) {
+  if(getStorage('identity') == 1){
+    return true
+  }
   let btnArr = getStorage('menuList')?JSON.parse(getStorage('menuList')):[];
   let isshow = false;
   for (var i = 0; i < btnArr.length; i++) {

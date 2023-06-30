@@ -405,6 +405,7 @@
                 this.mutitabsstore.setLogintoken(res.data.access)
                 this.mutitabsstore.setUserName(res.data.user.name)
                 this.mutitabsstore.setUserId(res.data.user.id)
+                this.mutitabsstore.setIdentity(res.data.user.identity)
                 this.getMenu()
               } else {
                 this.getCaptchas()

@@ -12,6 +12,7 @@ export const useMutitabsStore = defineStore('mutitabs', {
             userId: getStorage('userId') || '' ,
             logintoken:getStorage('logintoken')|| '',
             userName:getStorage('userName')|| '',
+            identity:getStorage('identity')|| 0,
             refresh:getStorage('refresh')|| '',
             //mutitabs
             // tabsPage: sessionStorage.getItem('tabsPage')||[{"title":"管理员管理","name":"adminManage"}],//默认显示的页
@@ -30,6 +31,12 @@ export const useMutitabsStore = defineStore('mutitabs', {
                   state.userId = getStorage('userId')
               }
               return state.userId
+        },
+        getIdentity(state) {
+            if(state.identity<1){
+                state.identity = getStorage('identity')
+            }
+            return state.identity
         },
         getLogintoken(state) {
               if(!state.logintoken){
@@ -55,6 +62,10 @@ export const useMutitabsStore = defineStore('mutitabs', {
         setUserId(val) {
             this.userId = val;
             setStorage('userId',val)
+        },
+        setIdentity(val) {
+            this.identity = val;
+            setStorage('identity',val)
         },
         setLogintoken(val) {
             this.logintoken = val;

@@ -5,6 +5,7 @@ import (
 
 	"gitee.com/lybbn/golyadmin/global"
 	"gitee.com/lybbn/golyadmin/model/system"
+	systemReq "gitee.com/lybbn/golyadmin/model/system/request"
 	"gitee.com/lybbn/golyadmin/utils"
 )
 
@@ -25,6 +26,11 @@ func (s *UserService) GetUserInfoById(id uint) (user system.LyadminUsers, err er
 		return u, err
 	}
 	return u, err
+}
+
+// 设置用户信息
+func (s *UserService) SetUserInfo(req systemReq.ChangeUserInfo, id uint) error {
+	return global.GL_DB.Model(&system.LyadminUsers{}).Where("id=?", id).Updates(req).Error
 }
 
 func (s *UserService) ChangePassword(u *system.LyadminUsers, newPassword string) (userInter *system.LyadminUsers, err error) {

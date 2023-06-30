@@ -59,7 +59,7 @@
             <el-table-column min-width="300" label="权限">
                 <template #default="scope">
                     <!-- <span v-for="(item,index) in scope.row.MenuButtons" :key="index" v-if="scope.row.MenuButtons">{{item.name + (index < scope.row.MenuButtons.length ? '/' : '')}}</span> -->
-                    <el-tag v-for="(item,index) in scope.row.MenuButtons" :key="index" v-if="scope.row.MenuButtons">{{item.name}}</el-tag>
+                    <el-tag v-for="(item,index) in scope.row.menuButtons" :key="index" v-if="scope.row.menuButtons">{{item.name}}</el-tag>
                 </template>
             </el-table-column>
             <el-table-column width="100" label="侧边可见">
@@ -89,7 +89,7 @@
                     <span class="table-operate-btn" @click="handleEdit(scope.row,'edit')" v-show="hasPermission('menuManage','Update')">编辑</span>
 <!--                    <span class="table-operate-btn" @click="handleEdit(scope.row,'detail')" v-show="isShowBtn('menuManage','菜单管理','Retrieve')">详情</span>-->
                     <span class="table-operate-btn" @click="handleEdit(scope.row,'delete')" v-show="hasPermission('menuManage','Delete')">删除</span>
-                    <span class="table-operate-btn" @click="handleEdit(scope.row,'buttonConfig')" v-show="(scope.row.MenuButtons || !scope.row.is_catalog)">按钮配置</span>
+                    <span class="table-operate-btn" @click="handleEdit(scope.row,'buttonConfig')" v-show="(scope.row.menuButtons || !scope.row.is_catalog)">按钮配置</span>
                 </template>
             </el-table-column>
         </el-table>

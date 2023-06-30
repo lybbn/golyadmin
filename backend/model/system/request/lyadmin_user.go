@@ -8,9 +8,9 @@ type LoginRequestParams struct {
 }
 
 type ChangePasswordReq struct {
-	ID          uint   `json:"-" form:"-"`                       // ID
-	Password    string `json:"password" form:"password" bind:""` // 密码
-	NewPassword string `json:"newPassword" form:"newPassword"`   // 新密码
+	ID          uint   `json:"-" form:"-"`                             // ID
+	OldPassword string `json:"oldPassword" form:"oldPassword" bind:""` // 密码
+	NewPassword string `json:"newPassword" form:"newPassword"`         // 新密码
 }
 
 type CreateUserRequestParams struct {
@@ -21,4 +21,13 @@ type CreateUserRequestParams struct {
 	Email    string `form:"email" json:"email"  example:"电子邮箱"`
 	Avatar   string `form:"avatar" json:"avatar" example:"头像"`
 	Gender   string `form:"gender" json:"gender" example:"性别"`
+}
+
+type ChangeUserInfo struct {
+	Name     string `json:"name" form:"name"`         //姓名
+	Nickname string `json:"nickname" form:"nickname"` //昵称
+	Mobile   string `json:"mobile" form:"mobile"`     //手机号
+	Email    string `json:"email" form:"email"`       //邮箱
+	Avatar   string `json:"avatar" form:"avatar"`     //头像
+	Gender   string `json:"gender" form:"gender"`     //性别（男、女）
 }
