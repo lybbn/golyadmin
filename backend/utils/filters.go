@@ -52,7 +52,7 @@ func getDept(deptId int, tempDeptList []lyadminDeptSelect) []int {
 4. 只为仅本人数据权限时只返回过滤本人数据，并且部门为自己本部门(考虑到用户会变部门，只能看当前用户所在的部门数据)
 5. 自定数据权限 获取部门，根据部门过滤
 */
-func DataLevelPermissionsFilter(c *gin.Context, model interface{}) func(db *gorm.DB) *gorm.DB {
+func DataLevelPermissionsFilter(model interface{}, c *gin.Context) func(db *gorm.DB) *gorm.DB {
 	return func(db *gorm.DB) *gorm.DB {
 		//白名单
 		method := c.Request.Method

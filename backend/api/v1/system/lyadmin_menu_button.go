@@ -73,7 +73,7 @@ func (a *MenuButtonApi) CreateMenuButton(c *gin.Context) {
 		return
 	}
 	req.CreateBy = utils.GetUserID(c)
-	req.BelongDept = utils.GetDeptID(c)
+	req.BelongDept = utils.GetDeptIdDB(c)
 	err = menuButtonService.CreateMenuButton(req)
 	if err != nil {
 		global.GL_LOG.Error("添加失败!", zap.Error(err))

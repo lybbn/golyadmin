@@ -170,3 +170,8 @@ func GetUserInfoDB(c *gin.Context) system.LyadminUsers {
 		return waitUser
 	}
 }
+
+// GetDeptIdDB 从Gin的Context中获取从数据库查询的用户部门ID
+func GetDeptIdDB(c *gin.Context) uint {
+	return GetUserInfoDB(c).DeptId
+}

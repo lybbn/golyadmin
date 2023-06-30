@@ -29,7 +29,7 @@ func (a *DeptApi) GetDept(c *gin.Context) {
 		return
 	}
 	var data []system.LyadminDept
-	query := deptService.GetLyadminDeptList(req).Scopes(utils.DataLevelPermissionsFilter(c, data))
+	query := deptService.GetLyadminDeptList(req).Scopes(utils.DataLevelPermissionsFilter(system.LyadminDept{}, c))
 	err = query.Find(&data).Error
 	if err != nil {
 		response.ErrorResponse(err.Error(), c)
@@ -52,7 +52,7 @@ func (a *DeptApi) GetDeptList(c *gin.Context) {
 		response.ErrorResponse(err.Error(), c)
 		return
 	}
-	query := deptService.GetLyadminDeptList(pageInfo).Scopes(utils.DataLevelPermissionsFilter(c, system.LyadminDept{}))
+	query := deptService.GetLyadminDeptList(pageInfo).Scopes(utils.DataLevelPermissionsFilter(system.LyadminDept{}, c))
 	p := pagination.Page[system.LyadminDept]{}
 	p.PaginateQuery(query, c)
 	response.PaginateResponse(p.Data, p, "获取成功", c)
@@ -73,7 +73,7 @@ func (a *DeptApi) CreateDept(c *gin.Context) {
 		return
 	}
 	req.CreateBy = utils.GetUserID(c)
-	req.BelongDept = utils.GetDeptID(c)
+	req.BelongDept = utils.GetDeptIdDB(c)
 	err = deptService.CreateDept(req)
 	if err != nil {
 		global.GL_LOG.Error("添加失败!", zap.Error(err))

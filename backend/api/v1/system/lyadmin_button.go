@@ -73,7 +73,7 @@ func (a *ButtonApi) CreateButton(c *gin.Context) {
 		return
 	}
 	req.CreateBy = utils.GetUserID(c)
-	req.BelongDept = utils.GetDeptID(c)
+	req.BelongDept = utils.GetDeptIdDB(c)
 	err = buttonService.CreateButton(req)
 	if err != nil {
 		global.GL_LOG.Error("添加失败!", zap.Error(err))
