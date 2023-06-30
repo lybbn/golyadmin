@@ -30,7 +30,7 @@ func (r *RoleApi) GetRole(c *gin.Context) {
 		response.ErrorResponse(err.Error(), c)
 		return
 	}
-	query := roleService.GetLyadminRoleList(req)
+	query := roleService.GetLyadminRoleList(req).Scopes(utils.DataLevelPermissionsFilter(system.LyadminRole{}, c))
 	var data []system.LyadminRole
 	err = query.Find(&data).Error
 	if err != nil {
@@ -54,7 +54,7 @@ func (r *RoleApi) GetRoleList(c *gin.Context) {
 		response.ErrorResponse(err.Error(), c)
 		return
 	}
-	query := roleService.GetLyadminRoleList(pageInfo)
+	query := roleService.GetLyadminRoleList(pageInfo).Scopes(utils.DataLevelPermissionsFilter(system.LyadminRole{}, c))
 	p := pagination.Page[system.LyadminRole]{}
 	p.PaginateQuery(query, c)
 	response.PaginateResponse(p.Data, p, "获取成功", c)

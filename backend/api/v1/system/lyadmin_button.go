@@ -28,7 +28,7 @@ func (a *ButtonApi) GetButton(c *gin.Context) {
 		response.ErrorResponse(err.Error(), c)
 		return
 	}
-	query := buttonService.GetLyadminButtonList(req)
+	query := buttonService.GetLyadminButtonList(req).Scopes(utils.DataLevelPermissionsFilter(system.LyadminButton{}, c))
 	var data []system.LyadminButton
 	err = query.Find(&data).Error
 	if err != nil {
@@ -52,7 +52,7 @@ func (a *ButtonApi) GetButtonList(c *gin.Context) {
 		response.ErrorResponse(err.Error(), c)
 		return
 	}
-	query := buttonService.GetLyadminButtonList(pageInfo)
+	query := buttonService.GetLyadminButtonList(pageInfo).Scopes(utils.DataLevelPermissionsFilter(system.LyadminButton{}, c))
 	p := pagination.Page[system.LyadminButton]{}
 	p.PaginateQuery(query, c)
 	response.PaginateResponse(p.Data, p, "获取成功", c)

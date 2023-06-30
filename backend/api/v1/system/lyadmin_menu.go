@@ -28,7 +28,7 @@ func (a *MenuApi) GetMenu(c *gin.Context) {
 		response.ErrorResponse(err.Error(), c)
 		return
 	}
-	query := menuService.GetLyadminMenuList(req)
+	query := menuService.GetLyadminMenuList(req).Scopes(utils.DataLevelPermissionsFilter(system.LyadminMenu{}, c))
 	var data []system.LyadminMenu
 	err = query.Find(&data).Error
 	if err != nil {
@@ -52,7 +52,7 @@ func (a *MenuApi) GetMenuList(c *gin.Context) {
 		response.ErrorResponse(err.Error(), c)
 		return
 	}
-	query := menuService.GetLyadminMenuList(pageInfo)
+	query := menuService.GetLyadminMenuList(pageInfo).Scopes(utils.DataLevelPermissionsFilter(system.LyadminMenu{}, c))
 	p := pagination.Page[system.LyadminMenu]{}
 	p.PaginateQuery(query, c)
 	response.PaginateResponse(p.Data, p, "获取成功", c)
