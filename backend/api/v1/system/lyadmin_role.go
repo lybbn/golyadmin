@@ -30,7 +30,7 @@ func (r *RoleApi) GetRole(c *gin.Context) {
 		response.ErrorResponse(err.Error(), c)
 		return
 	}
-	query := roleService.GetLyadminRoleList(req).Scopes(utils.DataLevelPermissionsFilter(system.LyadminRole{}, c))
+	query := roleService.GetLyadminRole(req).Scopes(utils.DataLevelPermissionsFilter(system.LyadminRole{}, c))
 	var data []system.LyadminRole
 	err = query.Find(&data).Error
 	if err != nil {

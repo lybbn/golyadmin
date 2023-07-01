@@ -47,9 +47,9 @@
                     </template>
                 </el-table-column> -->
                 <el-table-column width="70" prop="id" label="ID"></el-table-column>
-                <el-table-column min-width="120" prop="name" label="管理员名称"></el-table-column>
                 <el-table-column min-width="150" prop="username" label="管理员账号"></el-table-column>
-                <el-table-column width="150" prop="dept" label="部门">
+                <el-table-column width="180" prop="name" label="姓名"></el-table-column>
+                <el-table-column width="160" prop="dept" label="部门">
                     <template #default="scope">
                         <el-tag v-if="scope.row.dept">{{scope.row.dept.name}}</el-tag>
                     </template>
@@ -59,6 +59,7 @@
                         <el-tag v-for="(item,index) in scope.row.role" :key="index" v-if="scope.row.role">{{item.name}}</el-tag>
                     </template>
                 </el-table-column>
+                <el-table-column width="160" prop="mobile" label="手机号"></el-table-column>
                 <el-table-column width="100" prop="gender" label="性别"></el-table-column>
                 <el-table-column width="100" label="状态">
                     <template #default="scope">

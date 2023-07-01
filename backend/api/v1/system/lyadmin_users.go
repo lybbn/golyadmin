@@ -23,11 +23,11 @@ type LoginResponse struct {
 
 // Login
 // @Tags      Base
-// @Summary   用户登录
+// @Summary   用户后台登录
 // @accept    application/json
 // @Produce   application/json
 // @Param    data  body      systemReq.LoginRequestParams 			true  "用户名, 密码, 验证码"
-// @Success 2000 {object} response.StructResponse{data=LoginResponse,msg=string} "返回包括用户信息,token,过期时间"
+// @Success 2000 {object} response.StructResponse{data=LoginResponse,msg=string} "用户后台登录，返回包括用户信息,token,过期时间"
 // @Router    /base/login [post]
 func (b *BaseApi) Login(c *gin.Context) {
 	var req systemReq.LoginRequestParams
@@ -49,6 +49,11 @@ func (b *BaseApi) Login(c *gin.Context) {
 			if !user.IsActive {
 				global.GL_LOG.Error("该用户被禁用，请联系管理员:" + req.Username)
 				response.ErrorResponse("该用户被禁用，请联系管理员!", c)
+				return
+			}
+			if !user.IsStaff {
+				global.GL_LOG.Error("非后台用户，禁止登录:" + req.Username)
+				response.ErrorResponse("非后台用户，禁止登录!", c)
 				return
 			}
 			b.IssueJwtToken(c, user)

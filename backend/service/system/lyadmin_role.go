@@ -10,6 +10,21 @@ import (
 
 type RoleService struct{}
 
+// 获取全部角色列表（包括外键信息）
+func (r *RoleService) GetLyadminRole(info systemReq.LyadminRoleSearch) *gorm.DB {
+	// 创建db
+	db := global.GL_DB.Model(&system.LyadminRole{})
+	// 如果有条件搜索 下方会自动创建搜索语句
+	if info.Status != nil {
+		db = db.Where("status = ?", info.Status)
+	}
+	if info.Name != "" {
+		db = db.Where("name LIKE ?", "%"+info.Name+"%")
+	}
+	db = db.Order("sort asc").Preload("Dept").Preload("Menu").Preload("Permission")
+	return db
+}
+
 // 分页获取角色列表
 func (r *RoleService) GetLyadminRoleList(info systemReq.LyadminRoleSearch) *gorm.DB {
 	// 创建db
@@ -21,7 +36,7 @@ func (r *RoleService) GetLyadminRoleList(info systemReq.LyadminRoleSearch) *gorm
 	if info.Name != "" {
 		db = db.Where("name LIKE ?", "%"+info.Name+"%")
 	}
-	db = db.Order("sort asc").Preload("Dept").Preload("Menu").Preload("Permission")
+	db = db.Order("sort asc")
 	return db
 }
 

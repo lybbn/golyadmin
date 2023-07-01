@@ -12,7 +12,8 @@ func (m *MenuRouter) InitRoleRouter(Router *gin.RouterGroup) {
 	roleRouter := Router.Group("role").Use(middleware.OperationLog())
 	roleApi := v1.ApiGroupApp.SystemApiGroup.RoleApi
 	{
-		roleRouter.GET("role", roleApi.GetRoleList)                    // 获取角色分页列表
+		roleRouter.GET("role", roleApi.GetRole)                        // 获取全部角色
+		roleRouter.GET("roleList", roleApi.GetRoleList)                // 获取角色分页列表
 		roleRouter.POST("role", roleApi.CreateRole)                    // 新增角色
 		roleRouter.PUT("role/:id", roleApi.UpdateRole)                 // 编辑角色
 		roleRouter.DELETE("role/:id", roleApi.DeleteRole)              // 删除角色

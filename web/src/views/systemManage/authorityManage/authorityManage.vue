@@ -117,7 +117,7 @@
 </template>
 
 <script>
-    import {apiSystemRole,apiSystemRoleIdToMenuid, apiSystemDept,apiPermissionSave} from '@/api/api'
+    import {apiSystemRoleAll,apiSystemRoleIdToMenuid, apiSystemDept,apiPermissionSave} from '@/api/api'
     import XEUtils from 'xe-utils'
     export default {
         name: "authorityManage",
@@ -167,12 +167,12 @@
         methods:{
             // 获取角色
             pageRequest (query) {
-                return apiSystemRole(query).then((res) => {
+                return apiSystemRoleAll(query).then((res) => {
 
                     // res.map((value, index) => {
                     //     value.node_id = index
                     // })
-                    this.data = res.data.data
+                    this.data = res.data
                     this.data.map((value, index) => {
                             if(value.dept.length>0){
                                 let tempdept = []

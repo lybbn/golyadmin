@@ -72,7 +72,9 @@ export const systemMenuButtonDelete = params => ajaxDelete({url:`system/menu_but
 
 
 // 角色管理列表
-export const apiSystemRole = params => ajaxGet({url: `system/role/role`,params})
+export const apiSystemRole = params => ajaxGet({url: `system/role/roleList`,params})
+// 获取全部角色管理
+export const apiSystemRoleAll = params => ajaxGet({url: `system/role/role`,params})
 // 角色管理列表-修改
 export const apiSystemRoleEdit = params => ajaxPut({url: `system/role/role`,params})
 // 角色管理列表 -- 新增角色

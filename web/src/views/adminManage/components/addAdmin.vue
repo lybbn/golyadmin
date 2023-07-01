@@ -32,8 +32,8 @@
                         />
                     </el-select>
                 </el-form-item>
-                <el-form-item label="部门：" prop="dept">
-                    <el-tree-select v-model="formData.dept" node-key="id" :data="options"
+                <el-form-item label="部门：" prop="dept_id">
+                    <el-tree-select v-model="formData.dept_id" node-key="id" :data="options"
                             check-strictly filterable clearable :render-after-expand="false"
                             :props="{label:'name',value: 'id'}"
                             style="width: 100%" placeholder="请选择" />
@@ -179,7 +179,7 @@
             getapiSystemRole(){
                 apiSystemRole({page:1,limit:999}).then(res=>{
                     if(res.code ==2000) {
-                        this.rolelist = res.data
+                        this.rolelist = res.data.data
                     } else {
                         this.$message.warning(res.msg)
                     }
@@ -206,7 +206,7 @@
             getapiSystemDept(){
                 apiSystemDept({page:1,limit:999}).then(res=>{
                     if(res.code ==2000) {
-                        this.options = XEUtils.toArrayTree(res.data, { parentKey: 'parent' })
+                        this.options = XEUtils.toArrayTree(res.data, { parentKey: 'parent_id' })
                     } else {
                         this.$message.warning(res.msg)
                     }

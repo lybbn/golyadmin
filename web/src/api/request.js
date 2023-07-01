@@ -3,10 +3,35 @@ import { ElMessage,ElMessageBox } from 'element-plus'
 import { url } from '@/api/url';
 import {setStorage,getStorage,getToken} from '@/utils/util'
 import sysConfig from "@/config"
+import {useMutitabsStore} from "@/store/mutitabs";
 
 var request = axios.create({
     timeout: sysConfig.TIMEOUT,
 });
+
+// http response 拦截器
+request.interceptors.response.use(
+    response => {
+        const mutitabsStore = useMutitabsStore()
+        if (response.headers['new-token']) {
+            mutitabsStore.setLogintoken(response.headers['new-token'])
+        }
+        if (response.data.code === 4001) {
+            ElMessageBox.alert('登录信息失效,请重新登录！','登录失效',{
+                confirmButtonText:'确定',
+                type: 'warning',
+                callback: action => {
+                    //跳转登录页   callback点击确定按钮后的回调函数
+                    localStorage.clear();
+                    sessionStorage.clear();
+                    window.location.href="/"
+                }
+            })
+            return response
+        }
+        return response
+    }
+)
 
 function ajax(opt,method){
   var token= getToken()
@@ -51,32 +76,19 @@ function ajax(opt,method){
 
       method==="PUT"&&(config.params=params);
       return new Promise((resolve,reject)=>{
-          request({
-                url: config.url,
-                method: method,
-                headers:{
-                    Authorization: 'JWT ' + token,
-                },
-                data: params
-              }).then(res=>{
-              if(res.data.code==4001){
-                  ElMessageBox.alert('登录信息失效,请重新登录！','登录失效',{
-                      confirmButtonText:'确定',
-                      type: 'warning',
-                      callback: action => {
-                          //跳转登录页   callback点击确定按钮后的回调函数
-                          localStorage.clear();
-                          sessionStorage.clear();
-                          window.location.href="/"
-                      }
-                  })
-              }else{
-                  resolve(res.data)
-              }
-          }).catch(res=>{
-              ElMessage.error("请求失败");
-              reject(res)
-          })
+        request({
+            url: config.url,
+            method: method,
+            headers:{
+                Authorization: 'JWT ' + token,
+            },
+            data: params
+        }).then(res=>{
+            resolve(res.data)
+        }).catch(res=>{
+            ElMessage.error("请求失败");
+            reject(res)
+        })
       })
   }else if(method == 'GET2'){
       var config2={
@@ -105,20 +117,7 @@ function ajax(opt,method){
               },
               data: params
           }).then(res=>{
-              if(res.data.code==4001){
-                  ElMessageBox.alert('登录信息失效,请重新登录！','登录失效',{
-                      confirmButtonText:'确定',
-                      type: 'warning',
-                      callback: action => {
-                          //跳转登录页   callback点击确定按钮后的回调函数
-                          localStorage.clear();
-                          sessionStorage.clear();
-                          window.location.href="/"
-                      }
-                  })
-              }else{
-                  resolve(res.data)
-              }
+                resolve(res.data)
           }).catch(res=>{
               ElMessage.error("请求失败");
               reject(res)
@@ -157,20 +156,7 @@ function ajax(opt,method){
       method==="PATCH"&&(config1.data=params);
       return new Promise((resolve,reject)=>{
           request(config1).then(res=>{
-              if(res.data.code==4001){
-                  ElMessageBox.alert('登录信息失效,请重新登录！','登录失效',{
-                      confirmButtonText:'确定',
-                      type: 'warning',
-                      callback: action => {
-                          //跳转登录页   callback点击确定按钮后的回调函数
-                          localStorage.clear();
-                          sessionStorage.clear();
-                          window.location.href="/"
-                      }
-                  })
-              }else{
-                  resolve(res.data)
-              }
+                resolve(res.data)
           }).catch(res=>{
               ElMessage.error("请求失败");
               reject(res)
