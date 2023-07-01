@@ -5,6 +5,7 @@ import (
 	"gitee.com/lybbn/golyadmin/model/system"
 	systemReq "gitee.com/lybbn/golyadmin/model/system/request"
 	"gitee.com/lybbn/golyadmin/utils"
+	"gitee.com/lybbn/golyadmin/utils/pagination"
 	"gitee.com/lybbn/golyadmin/utils/response"
 	"github.com/gin-gonic/gin"
 	"github.com/redis/go-redis/v9"
@@ -134,6 +135,32 @@ func (b *BaseApi) IssueJwtToken(c *gin.Context, user system.LyadminUsers) {
 			ExpiresAt: claims.RegisteredClaims.ExpiresAt.Unix() * 1000,
 		}, "登录成功", c)
 	}
+}
+
+// @Tags      User
+// @Summary   分页获取管理员用户列表
+// @Security  ApiKeyAuth
+// @accept    application/json
+// @Produce   application/json
+// @Param     data  body      systemReq.LyadminUserSearch                                        true  "页码, 每页大小等"
+// @Success   200   {object}  response.Response{data=response.PageResult,msg=string}  "分页获取管理员用户列表"
+// @Router    /system/user/getAdminUserList [get]
+func (b *BaseApi) GetAdminUserList(c *gin.Context) {
+	var pageInfo systemReq.LyadminUserSearch
+	err := c.ShouldBind(&pageInfo)
+	if err != nil {
+		response.ErrorResponse(err.Error(), c)
+		return
+	}
+	query := userService.GetAdminUserInfoList(pageInfo).Scopes(utils.DataLevelPermissionsFilter(system.LyadminUsers{}, c))
+	p := pagination.Page[system.LyadminUsers]{}
+	err = p.PaginateQuery(query, c)
+	if err != nil {
+		global.GL_LOG.Error("获取管理员用户列表失败!", zap.Error(err))
+		response.ErrorResponse(err.Error(), c)
+		return
+	}
+	response.PaginateResponse(p.Data, p, "获取成功", c)
 }
 
 // @Tags     User

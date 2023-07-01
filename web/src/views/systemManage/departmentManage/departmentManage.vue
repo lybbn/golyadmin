@@ -176,11 +176,11 @@
             }).then(()=>{
                 apiSystemDeptDelete({id:row.id}).then(res=>{
                     if(res.code == 2000) {
-                        ElMessage.message.success(res.msg)
+                        ElMessage.success(res.msg)
                         getData()
                         refreshTree(row.parent_id)
                     } else {
-                        ElMessage.message.warning(res.msg)
+                        ElMessage.warning(res.msg)
                     }
                 })
             }).catch(()=>{

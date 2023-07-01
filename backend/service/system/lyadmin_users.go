@@ -7,6 +7,7 @@ import (
 	"gitee.com/lybbn/golyadmin/model/system"
 	systemReq "gitee.com/lybbn/golyadmin/model/system/request"
 	"gitee.com/lybbn/golyadmin/utils"
+	"gorm.io/gorm"
 )
 
 type UserService struct{}
@@ -31,6 +32,36 @@ func (s *UserService) GetUserInfoById(id uint) (user system.LyadminUsers, err er
 // 设置用户信息
 func (s *UserService) SetUserInfo(req systemReq.ChangeUserInfo, id uint) error {
 	return global.GL_DB.Model(&system.LyadminUsers{}).Where("id=?", id).Updates(req).Error
+}
+
+// 获取管理员用户信息列表
+func (userService *UserService) GetAdminUserInfoList(info systemReq.LyadminUserSearch) *gorm.DB {
+	// 创建db
+	db := global.GL_DB.Model(&system.LyadminUsers{})
+	// 如果有条件搜索 下方会自动创建搜索语句
+	if info.IsActive != "" {
+		is_active, err := utils.FormatString2Bool(info.IsActive)
+		if err == nil {
+			db = db.Where("is_active = ?", is_active)
+		}
+	}
+	if info.Name != "" {
+		db = db.Where("name LIKE ?", "%"+info.Name+"%")
+	}
+	if info.Mobile != "" {
+		db = db.Where("name LIKE ?", "%"+info.Mobile+"%")
+	}
+	if info.Username != "" {
+		db = db.Where("name LIKE ?", "%"+info.Username+"%")
+	}
+	if info.Search != "" {
+		db = db.Where("name LIKE ? or mobile LIKE ?", "%"+info.Search+"%", "%"+info.Search+"%")
+	}
+	if info.BeginAt != "" {
+		db = db.Where("created_at between ? and ?", info.BeginAt, info.EndAt)
+	}
+	db = db.Where("Identity = ?", 2).Preload("Role").Preload("Dept").Order("id desc")
+	return db
 }
 
 func (s *UserService) ChangePassword(u *system.LyadminUsers, newPassword string) (userInter *system.LyadminUsers, err error) {

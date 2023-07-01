@@ -1,5 +1,7 @@
 package request
 
+import "gitee.com/lybbn/golyadmin/utils/response"
+
 type LoginRequestParams struct {
 	Username   string `form:"username" json:"username" binding:"required" msg:"用户名不能为空"` // 用户名
 	Password   string `form:"password" json:"password" binding:"required" msg:"密码不能为空"`  // 密码
@@ -30,4 +32,15 @@ type ChangeUserInfo struct {
 	Email    string `json:"email" form:"email"`       //邮箱
 	Avatar   string `json:"avatar" form:"avatar"`     //头像
 	Gender   string `json:"gender" form:"gender"`     //性别（男、女）
+}
+
+type LyadminUserSearch struct {
+	Search   string `json:"search" form:"search"`       //搜索关键词
+	BeginAt  string `json:"beginAt" form:"beginAt"`     //搜索开始时间
+	EndAt    string `json:"endAt" form:"endAt"`         //搜索结束时间
+	Name     string `json:"name" form:"name"`           //名称
+	Mobile   string `json:"mobile" form:"mobile"`       //电话
+	Username string `json:"username" form:"username"`   //账号
+	IsActive string `json:"is_active" form:"is_active"` //状态
+	response.StructPageQueryParams
 }

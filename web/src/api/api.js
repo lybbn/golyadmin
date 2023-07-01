@@ -88,7 +88,7 @@ export const apiSystemRoleIdToMenuid = (id) => ajaxGet({url: `system/role/role_i
 export const apiPermissionSave = params => ajaxPut({url: `system/role/permission`,params})
 
 //管理员管理
-export const apiSystemUser = params => ajaxGet({url: `system/user/user`,params})
+export const apiSystemUser = params => ajaxGet({url: `system/user/getAdminUserList`,params})
 //管理员管理-新增
 export const apiSystemUserAdd = params => ajaxPost({url: `system/user/user`,params})
 //管理员管理-修改
