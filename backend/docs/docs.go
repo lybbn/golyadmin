@@ -68,7 +68,7 @@ const docTemplate = `{
                 "tags": [
                     "Base"
                 ],
-                "summary": "用户登录",
+                "summary": "用户后台登录",
                 "parameters": [
                     {
                         "description": "用户名, 密码, 验证码",
@@ -82,7 +82,7 @@ const docTemplate = `{
                 ],
                 "responses": {
                     "2000": {
-                        "description": "返回包括用户信息,token,过期时间",
+                        "description": "用户后台登录，返回包括用户信息,token,过期时间",
                         "schema": {
                             "allOf": [
                                 {
@@ -1244,9 +1244,9 @@ const docTemplate = `{
                         "in": "query"
                     },
                     {
-                        "type": "integer",
-                        "description": "数据归属部门",
-                        "name": "belong_dept",
+                        "type": "string",
+                        "description": "搜索开始时间",
+                        "name": "beginAt",
                         "in": "query"
                     },
                     {
@@ -1263,32 +1263,14 @@ const docTemplate = `{
                     },
                     {
                         "type": "string",
-                        "description": "创建时间",
-                        "name": "create_at",
-                        "in": "query"
-                    },
-                    {
-                        "type": "integer",
-                        "description": "创建者",
-                        "name": "create_by",
-                        "in": "query"
-                    },
-                    {
-                        "type": "integer",
-                        "description": "主键",
-                        "name": "id",
+                        "description": "搜索结束时间",
+                        "name": "endAt",
                         "in": "query"
                     },
                     {
                         "type": "string",
                         "description": "请求ip",
                         "name": "ip",
-                        "in": "query"
-                    },
-                    {
-                        "type": "string",
-                        "description": "延迟",
-                        "name": "latency",
                         "in": "query"
                     },
                     {
@@ -1329,20 +1311,8 @@ const docTemplate = `{
                     },
                     {
                         "type": "string",
-                        "description": "更新时间",
-                        "name": "update_at",
-                        "in": "query"
-                    },
-                    {
-                        "type": "integer",
-                        "description": "更新着",
-                        "name": "update_by",
-                        "in": "query"
-                    },
-                    {
-                        "type": "integer",
-                        "description": "用户id Belongs To",
-                        "name": "user_id",
+                        "description": "搜索关键词",
+                        "name": "search",
                         "in": "query"
                     }
                 ],
@@ -1504,6 +1474,56 @@ const docTemplate = `{
                 }
             }
         },
+        "/system/role/permission/:id": {
+            "put": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Role"
+                ],
+                "summary": "更新角色权限",
+                "parameters": [
+                    {
+                        "description": "原LyadminRoleParams参数",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.LyadminRoleParams"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "更新角色权限",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.StructResponse"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "string"
+                                        },
+                                        "msg": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
         "/system/role/role": {
             "post": {
                 "security": [
@@ -1652,6 +1672,46 @@ const docTemplate = `{
                 }
             }
         },
+        "/system/role/role_id_to_menu/:id": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Role"
+                ],
+                "summary": "通过角色id获取该角色所有的菜单",
+                "responses": {
+                    "200": {
+                        "description": "通过角色id获取该角色所有的菜单",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.StructResponse"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "object",
+                                            "additionalProperties": true
+                                        },
+                                        "msg": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
         "/system/user/change_password": {
             "post": {
                 "security": [
@@ -1688,6 +1748,146 @@ const docTemplate = `{
                                 {
                                     "type": "object",
                                     "properties": {
+                                        "msg": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/system/user/getAdminUserList": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "User"
+                ],
+                "summary": "分页获取管理员用户列表",
+                "parameters": [
+                    {
+                        "description": "页码, 每页大小等",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.LyadminUserSearch"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "分页获取管理员用户列表",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.StructResponse"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "object",
+                                            "additionalProperties": true
+                                        },
+                                        "msg": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/system/user/getUserInfo": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "User"
+                ],
+                "summary": "获取用户信息",
+                "responses": {
+                    "200": {
+                        "description": "获取用户信息",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.StructResponse"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "object",
+                                            "additionalProperties": true
+                                        },
+                                        "msg": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/system/user/setUserInfo": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "User"
+                ],
+                "summary": "设置用户信息",
+                "responses": {
+                    "200": {
+                        "description": "获取用户信息",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.StructResponse"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "object",
+                                            "additionalProperties": true
+                                        },
                                         "msg": {
                                             "type": "string"
                                         }
@@ -1753,7 +1953,7 @@ const docTemplate = `{
                     "description": "新密码",
                     "type": "string"
                 },
-                "password": {
+                "oldPassword": {
                     "description": "密码",
                     "type": "string"
                 }
@@ -1848,6 +2048,112 @@ const docTemplate = `{
                 }
             }
         },
+        "request.LyadminRoleParams": {
+            "type": "object",
+            "properties": {
+                "belong_dept": {
+                    "description": "数据归属部门",
+                    "type": "integer"
+                },
+                "create_by": {
+                    "description": "创建者",
+                    "type": "integer"
+                },
+                "created_at": {
+                    "description": "创建时间",
+                    "type": "string"
+                },
+                "data_range": {
+                    "description": "数据权限范围(0, \"仅本人数据权限\"),(1, \"本部门及以下数据权限\"),(2, \"本部门数据权限\"),(3, \"全部数据权限\"),(4, \"自定数据权限\"),",
+                    "type": "integer"
+                },
+                "dept": {
+                    "description": "manytomany",
+                    "type": "array",
+                    "items": {
+                        "type": "integer"
+                    }
+                },
+                "id": {
+                    "description": "主键",
+                    "type": "integer"
+                },
+                "key": {
+                    "type": "string"
+                },
+                "menu": {
+                    "type": "array",
+                    "items": {
+                        "type": "integer"
+                    }
+                },
+                "name": {
+                    "type": "string"
+                },
+                "permission": {
+                    "description": "manytomany",
+                    "type": "array",
+                    "items": {
+                        "type": "integer"
+                    }
+                },
+                "sort": {
+                    "type": "integer"
+                },
+                "status": {
+                    "type": "boolean"
+                },
+                "update_by": {
+                    "description": "更新着",
+                    "type": "integer"
+                },
+                "updated_at": {
+                    "description": "更新时间",
+                    "type": "string"
+                }
+            }
+        },
+        "request.LyadminUserSearch": {
+            "type": "object",
+            "properties": {
+                "beginAt": {
+                    "description": "搜索开始时间",
+                    "type": "string"
+                },
+                "endAt": {
+                    "description": "搜索结束时间",
+                    "type": "string"
+                },
+                "is_active": {
+                    "description": "状态",
+                    "type": "string"
+                },
+                "limit": {
+                    "description": "每页大小",
+                    "type": "integer"
+                },
+                "mobile": {
+                    "description": "电话",
+                    "type": "string"
+                },
+                "name": {
+                    "description": "名称",
+                    "type": "string"
+                },
+                "page": {
+                    "description": "当前页码",
+                    "type": "integer"
+                },
+                "search": {
+                    "description": "搜索关键词",
+                    "type": "string"
+                },
+                "username": {
+                    "description": "账号",
+                    "type": "string"
+                }
+            }
+        },
         "response.StructResponse": {
             "type": "object",
             "properties": {
@@ -1876,18 +2182,22 @@ const docTemplate = `{
         },
         "system.LyadminDept": {
             "type": "object",
+            "required": [
+                "name",
+                "status"
+            ],
             "properties": {
                 "belong_dept": {
                     "description": "数据归属部门",
                     "type": "integer"
                 },
-                "create_at": {
-                    "description": "创建时间",
-                    "type": "string"
-                },
                 "create_by": {
                     "description": "创建者",
                     "type": "integer"
+                },
+                "created_at": {
+                    "description": "创建时间",
+                    "type": "string"
                 },
                 "email": {
                     "type": "string"
@@ -1914,13 +2224,13 @@ const docTemplate = `{
                 "status": {
                     "type": "boolean"
                 },
-                "update_at": {
-                    "description": "更新时间",
-                    "type": "string"
-                },
                 "update_by": {
                     "description": "更新着",
                     "type": "integer"
+                },
+                "updated_at": {
+                    "description": "更新时间",
+                    "type": "string"
                 }
             }
         },
@@ -1939,13 +2249,13 @@ const docTemplate = `{
                     "description": "对应前端文件名称",
                     "type": "string"
                 },
-                "create_at": {
-                    "description": "创建时间",
-                    "type": "string"
-                },
                 "create_by": {
                     "description": "创建者",
                     "type": "integer"
+                },
+                "created_at": {
+                    "description": "创建时间",
+                    "type": "string"
                 },
                 "icon": {
                     "description": "菜单图标",
@@ -1989,13 +2299,13 @@ const docTemplate = `{
                     "description": "状态",
                     "type": "boolean"
                 },
-                "update_at": {
-                    "description": "更新时间",
-                    "type": "string"
-                },
                 "update_by": {
                     "description": "更新着",
                     "type": "integer"
+                },
+                "updated_at": {
+                    "description": "更新时间",
+                    "type": "string"
                 },
                 "visible": {
                     "description": "是否显示菜单",
@@ -2017,13 +2327,13 @@ const docTemplate = `{
                     "description": "数据归属部门",
                     "type": "integer"
                 },
-                "create_at": {
-                    "description": "创建时间",
-                    "type": "string"
-                },
                 "create_by": {
                     "description": "创建者",
                     "type": "integer"
+                },
+                "created_at": {
+                    "description": "创建时间",
+                    "type": "string"
                 },
                 "id": {
                     "description": "主键",
@@ -2038,13 +2348,13 @@ const docTemplate = `{
                 "name": {
                     "type": "string"
                 },
-                "update_at": {
-                    "description": "更新时间",
-                    "type": "string"
-                },
                 "update_by": {
                     "description": "更新着",
                     "type": "integer"
+                },
+                "updated_at": {
+                    "description": "更新时间",
+                    "type": "string"
                 },
                 "value": {
                     "type": "string"
@@ -2070,13 +2380,13 @@ const docTemplate = `{
                     "description": "请求状态",
                     "type": "integer"
                 },
-                "create_at": {
-                    "description": "创建时间",
-                    "type": "string"
-                },
                 "create_by": {
                     "description": "创建者",
                     "type": "integer"
+                },
+                "created_at": {
+                    "description": "创建时间",
+                    "type": "string"
                 },
                 "id": {
                     "description": "主键",
@@ -2106,13 +2416,13 @@ const docTemplate = `{
                     "description": "响应Body",
                     "type": "string"
                 },
-                "update_at": {
-                    "description": "更新时间",
-                    "type": "string"
-                },
                 "update_by": {
                     "description": "更新着",
                     "type": "integer"
+                },
+                "updated_at": {
+                    "description": "更新时间",
+                    "type": "string"
                 },
                 "user": {
                     "$ref": "#/definitions/system.LyadminUsers"
@@ -2133,13 +2443,13 @@ const docTemplate = `{
                 "code": {
                     "type": "string"
                 },
-                "create_at": {
-                    "description": "创建时间",
-                    "type": "string"
-                },
                 "create_by": {
                     "description": "创建者",
                     "type": "integer"
+                },
+                "created_at": {
+                    "description": "创建时间",
+                    "type": "string"
                 },
                 "id": {
                     "description": "主键",
@@ -2154,29 +2464,37 @@ const docTemplate = `{
                 "status": {
                     "type": "boolean"
                 },
-                "update_at": {
-                    "description": "更新时间",
-                    "type": "string"
-                },
                 "update_by": {
                     "description": "更新着",
                     "type": "integer"
+                },
+                "updated_at": {
+                    "description": "更新时间",
+                    "type": "string"
                 }
             }
         },
         "system.LyadminRole": {
             "type": "object",
+            "required": [
+                "key",
+                "name"
+            ],
             "properties": {
                 "belong_dept": {
                     "description": "数据归属部门",
                     "type": "integer"
                 },
-                "create_at": {
+                "create_by": {
+                    "description": "创建者",
+                    "type": "integer"
+                },
+                "created_at": {
                     "description": "创建时间",
                     "type": "string"
                 },
-                "create_by": {
-                    "description": "创建者",
+                "data_range": {
+                    "description": "数据权限范围(0, \"仅本人数据权限\"),(1, \"本部门及以下数据权限\"),(2, \"本部门数据权限\"),(3, \"全部数据权限\"),(4, \"自定数据权限\"),",
                     "type": "integer"
                 },
                 "dept": {
@@ -2216,13 +2534,13 @@ const docTemplate = `{
                 "status": {
                     "type": "boolean"
                 },
-                "update_at": {
-                    "description": "更新时间",
-                    "type": "string"
-                },
                 "update_by": {
                     "description": "更新着",
                     "type": "integer"
+                },
+                "updated_at": {
+                    "description": "更新时间",
+                    "type": "string"
                 }
             }
         },
@@ -2237,13 +2555,13 @@ const docTemplate = `{
                     "description": "数据归属部门",
                     "type": "integer"
                 },
-                "create_at": {
-                    "description": "创建时间",
-                    "type": "string"
-                },
                 "create_by": {
                     "description": "创建者",
                     "type": "integer"
+                },
+                "created_at": {
+                    "description": "创建时间",
+                    "type": "string"
                 },
                 "dept": {
                     "description": "部门外键",
@@ -2311,13 +2629,13 @@ const docTemplate = `{
                         "$ref": "#/definitions/system.LyadminRole"
                     }
                 },
-                "update_at": {
-                    "description": "更新时间",
-                    "type": "string"
-                },
                 "update_by": {
                     "description": "更新着",
                     "type": "integer"
+                },
+                "updated_at": {
+                    "description": "更新时间",
+                    "type": "string"
                 },
                 "username": {
                     "description": "用户名",

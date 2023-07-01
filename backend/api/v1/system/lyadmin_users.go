@@ -148,7 +148,7 @@ func (b *BaseApi) IssueJwtToken(c *gin.Context, user system.LyadminUsers) {
 // @accept    application/json
 // @Produce   application/json
 // @Param     data  body      systemReq.LyadminUserSearch                                        true  "页码, 每页大小等"
-// @Success   200   {object}  response.Response{data=response.PageResult,msg=string}  "分页获取管理员用户列表"
+// @Success   200   {object}  response.StructResponse{data=map[string]interface{},msg=string}  "分页获取管理员用户列表"
 // @Router    /system/user/getAdminUserList [get]
 func (b *BaseApi) GetAdminUserList(c *gin.Context) {
 	var pageInfo systemReq.LyadminUserSearch
@@ -210,8 +210,8 @@ func (b *BaseApi) CreateUser(c *gin.Context) {
 // @Security  ApiKeyAuth
 // @accept    application/json
 // @Produce   application/json
-// @Success   200  {object}  response.StructResponse{data=[...],msg=string}  "获取用户信息"
-// @Router    /system/user/getuserinfo [get]
+// @Success   200  {object}  response.StructResponse{data=map[string]interface{},msg=string}  "获取用户信息"
+// @Router    /system/user/getUserInfo [get]
 func (b *BaseApi) GetUserInfo(c *gin.Context) {
 	uinfo := utils.GetUserInfoDB(c)
 	var userinfo = systemReq.ChangeUserInfo{
@@ -229,8 +229,8 @@ func (b *BaseApi) GetUserInfo(c *gin.Context) {
 // @Security  ApiKeyAuth
 // @accept    application/json
 // @Produce   application/json
-// @Success   200  {object}  response.StructResponse{data=[...],msg=string}  "获取用户信息"
-// @Router    /system/user/setuserinfo [post]
+// @Success   200  {object}  response.StructResponse{data=map[string]interface{},msg=string}  "获取用户信息"
+// @Router    /system/user/setUserInfo [post]
 func (b *BaseApi) SetUserInfo(c *gin.Context) {
 	var req systemReq.ChangeUserInfo
 	err := c.ShouldBind(&req)

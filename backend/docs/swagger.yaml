@@ -4,7 +4,7 @@ definitions:
       newPassword:
         description: 新密码
         type: string
-      password:
+      oldPassword:
         description: 密码
         type: string
     type: object
@@ -71,6 +71,83 @@ definitions:
     - password
     - username
     type: object
+  request.LyadminRoleParams:
+    properties:
+      belong_dept:
+        description: 数据归属部门
+        type: integer
+      create_by:
+        description: 创建者
+        type: integer
+      created_at:
+        description: 创建时间
+        type: string
+      data_range:
+        description: 数据权限范围(0, "仅本人数据权限"),(1, "本部门及以下数据权限"),(2, "本部门数据权限"),(3, "全部数据权限"),(4,
+          "自定数据权限"),
+        type: integer
+      dept:
+        description: manytomany
+        items:
+          type: integer
+        type: array
+      id:
+        description: 主键
+        type: integer
+      key:
+        type: string
+      menu:
+        items:
+          type: integer
+        type: array
+      name:
+        type: string
+      permission:
+        description: manytomany
+        items:
+          type: integer
+        type: array
+      sort:
+        type: integer
+      status:
+        type: boolean
+      update_by:
+        description: 更新着
+        type: integer
+      updated_at:
+        description: 更新时间
+        type: string
+    type: object
+  request.LyadminUserSearch:
+    properties:
+      beginAt:
+        description: 搜索开始时间
+        type: string
+      endAt:
+        description: 搜索结束时间
+        type: string
+      is_active:
+        description: 状态
+        type: string
+      limit:
+        description: 每页大小
+        type: integer
+      mobile:
+        description: 电话
+        type: string
+      name:
+        description: 名称
+        type: string
+      page:
+        description: 当前页码
+        type: integer
+      search:
+        description: 搜索关键词
+        type: string
+      username:
+        description: 账号
+        type: string
+    type: object
   response.StructResponse:
     properties:
       code:
@@ -93,12 +170,12 @@ definitions:
       belong_dept:
         description: 数据归属部门
         type: integer
-      create_at:
-        description: 创建时间
-        type: string
       create_by:
         description: 创建者
         type: integer
+      created_at:
+        description: 创建时间
+        type: string
       email:
         type: string
       id:
@@ -116,12 +193,15 @@ definitions:
         type: integer
       status:
         type: boolean
-      update_at:
-        description: 更新时间
-        type: string
       update_by:
         description: 更新着
         type: integer
+      updated_at:
+        description: 更新时间
+        type: string
+    required:
+    - name
+    - status
     type: object
   system.LyadminMenu:
     properties:
@@ -134,12 +214,12 @@ definitions:
       component_name:
         description: 对应前端文件名称
         type: string
-      create_at:
-        description: 创建时间
-        type: string
       create_by:
         description: 创建者
         type: integer
+      created_at:
+        description: 创建时间
+        type: string
       icon:
         description: 菜单图标
         type: string
@@ -171,12 +251,12 @@ definitions:
       status:
         description: 状态
         type: boolean
-      update_at:
-        description: 更新时间
-        type: string
       update_by:
         description: 更新着
         type: integer
+      updated_at:
+        description: 更新时间
+        type: string
       visible:
         description: 是否显示菜单
         type: boolean
@@ -191,12 +271,12 @@ definitions:
       belong_dept:
         description: 数据归属部门
         type: integer
-      create_at:
-        description: 创建时间
-        type: string
       create_by:
         description: 创建者
         type: integer
+      created_at:
+        description: 创建时间
+        type: string
       id:
         description: 主键
         type: integer
@@ -206,12 +286,12 @@ definitions:
         type: string
       name:
         type: string
-      update_at:
-        description: 更新时间
-        type: string
       update_by:
         description: 更新着
         type: integer
+      updated_at:
+        description: 更新时间
+        type: string
       value:
         type: string
     type: object
@@ -229,12 +309,12 @@ definitions:
       code:
         description: 请求状态
         type: integer
-      create_at:
-        description: 创建时间
-        type: string
       create_by:
         description: 创建者
         type: integer
+      created_at:
+        description: 创建时间
+        type: string
       id:
         description: 主键
         type: integer
@@ -256,12 +336,12 @@ definitions:
       resp:
         description: 响应Body
         type: string
-      update_at:
-        description: 更新时间
-        type: string
       update_by:
         description: 更新着
         type: integer
+      updated_at:
+        description: 更新时间
+        type: string
       user:
         $ref: '#/definitions/system.LyadminUsers'
       user_id:
@@ -275,12 +355,12 @@ definitions:
         type: integer
       code:
         type: string
-      create_at:
-        description: 创建时间
-        type: string
       create_by:
         description: 创建者
         type: integer
+      created_at:
+        description: 创建时间
+        type: string
       id:
         description: 主键
         type: integer
@@ -290,23 +370,27 @@ definitions:
         type: integer
       status:
         type: boolean
-      update_at:
-        description: 更新时间
-        type: string
       update_by:
         description: 更新着
         type: integer
+      updated_at:
+        description: 更新时间
+        type: string
     type: object
   system.LyadminRole:
     properties:
       belong_dept:
         description: 数据归属部门
         type: integer
-      create_at:
-        description: 创建时间
-        type: string
       create_by:
         description: 创建者
+        type: integer
+      created_at:
+        description: 创建时间
+        type: string
+      data_range:
+        description: 数据权限范围(0, "仅本人数据权限"),(1, "本部门及以下数据权限"),(2, "本部门数据权限"),(3, "全部数据权限"),(4,
+          "自定数据权限"),
         type: integer
       dept:
         description: manytomany
@@ -334,12 +418,15 @@ definitions:
         type: integer
       status:
         type: boolean
-      update_at:
-        description: 更新时间
-        type: string
       update_by:
         description: 更新着
         type: integer
+      updated_at:
+        description: 更新时间
+        type: string
+    required:
+    - key
+    - name
     type: object
   system.LyadminUsers:
     properties:
@@ -349,12 +436,12 @@ definitions:
       belong_dept:
         description: 数据归属部门
         type: integer
-      create_at:
-        description: 创建时间
-        type: string
       create_by:
         description: 创建者
         type: integer
+      created_at:
+        description: 创建时间
+        type: string
       dept:
         allOf:
         - $ref: '#/definitions/system.LyadminDept'
@@ -402,12 +489,12 @@ definitions:
         items:
           $ref: '#/definitions/system.LyadminRole'
         type: array
-      update_at:
-        description: 更新时间
-        type: string
       update_by:
         description: 更新着
         type: integer
+      updated_at:
+        description: 更新时间
+        type: string
       username:
         description: 用户名
         type: string
@@ -468,7 +555,7 @@ paths:
       - application/json
       responses:
         "2000":
-          description: 返回包括用户信息,token,过期时间
+          description: 用户后台登录，返回包括用户信息,token,过期时间
           schema:
             allOf:
             - $ref: '#/definitions/response.StructResponse'
@@ -478,7 +565,7 @@ paths:
                 msg:
                   type: string
               type: object
-      summary: 用户登录
+      summary: 用户后台登录
       tags:
       - Base
   /system/button/button:
@@ -1136,10 +1223,10 @@ paths:
         in: query
         name: agent
         type: string
-      - description: 数据归属部门
+      - description: 搜索开始时间
         in: query
-        name: belong_dept
-        type: integer
+        name: beginAt
+        type: string
       - description: 请求Body
         in: query
         name: body
@@ -1148,25 +1235,13 @@ paths:
         in: query
         name: code
         type: integer
-      - description: 创建时间
+      - description: 搜索结束时间
         in: query
-        name: create_at
+        name: endAt
         type: string
-      - description: 创建者
-        in: query
-        name: create_by
-        type: integer
-      - description: 主键
-        in: query
-        name: id
-        type: integer
       - description: 请求ip
         in: query
         name: ip
-        type: string
-      - description: 延迟
-        in: query
-        name: latency
         type: string
       - description: 每页大小
         in: query
@@ -1192,18 +1267,10 @@ paths:
         in: query
         name: resp
         type: string
-      - description: 更新时间
+      - description: 搜索关键词
         in: query
-        name: update_at
+        name: search
         type: string
-      - description: 更新着
-        in: query
-        name: update_by
-        type: integer
-      - description: 用户id Belongs To
-        in: query
-        name: user_id
-        type: integer
       produces:
       - application/json
       responses:
@@ -1302,6 +1369,34 @@ paths:
       summary: 分页获取角色列表
       tags:
       - Role
+  /system/role/permission/:id:
+    put:
+      parameters:
+      - description: 原LyadminRoleParams参数
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/request.LyadminRoleParams'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 更新角色权限
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.StructResponse'
+            - properties:
+                data:
+                  type: string
+                msg:
+                  type: string
+              type: object
+      security:
+      - ApiKeyAuth: []
+      summary: 更新角色权限
+      tags:
+      - Role
   /system/role/role:
     delete:
       consumes:
@@ -1385,6 +1480,28 @@ paths:
       summary: 编辑角色
       tags:
       - Role
+  /system/role/role_id_to_menu/:id:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 通过角色id获取该角色所有的菜单
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.StructResponse'
+            - properties:
+                data:
+                  additionalProperties: true
+                  type: object
+                msg:
+                  type: string
+              type: object
+      security:
+      - ApiKeyAuth: []
+      summary: 通过角色id获取该角色所有的菜单
+      tags:
+      - Role
   /system/user/change_password:
     post:
       parameters:
@@ -1409,6 +1526,85 @@ paths:
       security:
       - ApiKeyAuth: []
       summary: 用户修改密码
+      tags:
+      - User
+  /system/user/getAdminUserList:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: 页码, 每页大小等
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/request.LyadminUserSearch'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 分页获取管理员用户列表
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.StructResponse'
+            - properties:
+                data:
+                  additionalProperties: true
+                  type: object
+                msg:
+                  type: string
+              type: object
+      security:
+      - ApiKeyAuth: []
+      summary: 分页获取管理员用户列表
+      tags:
+      - User
+  /system/user/getUserInfo:
+    get:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 获取用户信息
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.StructResponse'
+            - properties:
+                data:
+                  additionalProperties: true
+                  type: object
+                msg:
+                  type: string
+              type: object
+      security:
+      - ApiKeyAuth: []
+      summary: 获取用户信息
+      tags:
+      - User
+  /system/user/setUserInfo:
+    post:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 获取用户信息
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.StructResponse'
+            - properties:
+                data:
+                  additionalProperties: true
+                  type: object
+                msg:
+                  type: string
+              type: object
+      security:
+      - ApiKeyAuth: []
+      summary: 设置用户信息
       tags:
       - User
   /system/user/user:

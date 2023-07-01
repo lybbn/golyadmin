@@ -36,7 +36,7 @@
                 </el-form-item> -->
                <el-form-item label="接口地址：" prop="api">
                     <el-input  v-model.trim="formData.api" :size="size" style="margin-bottom: 5px;"></el-input>
-                    <el-alert title="请正确填写，以免请求时被拦截。匹配编辑/详情/删除使用正则,如:/api/xxx/:id" type="info" show-icon/>
+                    <el-alert title="请正确填写，以免请求时被拦截。填写时与后台保持一直即可,如:/api/xxx/test/:id" type="info" show-icon/>
                </el-form-item>
                <el-form-item label="所属菜单ID：" prop="menu_id" v-show="false">
                 <el-input-number v-model="formData.menu_id"></el-input-number>

@@ -112,11 +112,11 @@ export const systemOperationlogDeletealllogsDelete= params => ajaxDelete({url: `
  *个人中心
  * */
 // 获取当前个人用户信息
-export const systemUserUserInfo= params => ajaxGet({url: `system/user/getuserinfo`,params})
+export const systemUserUserInfo= params => ajaxGet({url: `system/user/getUserInfo`,params})
 // 更新修改当前个人用户信息
-export const systemUserUserInfoEdit= params => ajaxPost({url: `system/user/setuserinfo`,params})
+export const systemUserUserInfoEdit= params => ajaxPost({url: `system/user/setUserInfo`,params})
 // 用户重置个人密码
-export const systemUserChangePassword= params => ajaxPost({url: `system/user/change_password`,params})
+export const systemUserChangePassword= params => ajaxPost({url: `system/user/changePassword`,params})
 
 
 /**
