@@ -28,6 +28,7 @@ type LyadminUsers struct {
 	Dept        LyadminDept   `json:"dept" gorm:"foreignKey:DeptId"`                                      //部门外键
 	Post        []LyadminPost `json:"post" gorm:"many2many:lyadmin_users_post;"`                          //岗位
 	Role        []LyadminRole `json:"role" gorm:"many2many:lyadmin_users_role;"`                          //角色
+	RoleIds     []uint        `json:"roleIds" form:"roleIds" gorm:"-"`                                    //角色id数组
 	IsStaff     bool          `json:"is_staff" gorm:"default:true;comment:是否可登录后台"`                       //是否可登录后台
 	IsSuperuser bool          `json:"is_superuser" gorm:"default:false;comment:是否超管"`                     //是否超管
 	IsActive    bool          `json:"is_active" gorm:"default:true;comment:状态(1正常、0冻结)"`                  //状态(1正常、0冻结)

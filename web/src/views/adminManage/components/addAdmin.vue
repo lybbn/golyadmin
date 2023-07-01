@@ -22,8 +22,8 @@
 <!--                        <el-checkbox :label="item.id" v-for="(item,index) in rolelist" :key="index">{{item.name}}</el-checkbox>-->
 <!--                    </el-checkbox-group>-->
 <!--                </el-form-item>-->
-                <el-form-item label="角色：" prop="role">
-                    <el-select v-model="formData.role" multiple filterable clearable placeholder="请选择" style="width:100%">
+                <el-form-item label="角色：" prop="roleIds">
+                    <el-select v-model="formData.roleIds" multiple filterable clearable placeholder="请选择" style="width:100%">
                         <el-option
                             v-for="item in rolelist"
                             :key="item.id"
@@ -71,7 +71,8 @@
                     name:'',
                     username:'',
                     password:'123456',
-                    dept:'',
+                    dept_id:'',
+                    roleIds:[],
                     role:[],
                     is_active:true
                 },
@@ -100,8 +101,18 @@
             handleClose() {
                 this.dialogVisible=false
                 this.loadingSave=false
+                this.formData = {
+                    name:'',
+                    username:'',
+                    password:'123456',
+                    dept_id:'',
+                    roleIds:[],
+                    role:[],
+                    is_active:true
+                }
                 this.$emit('refreshData')
             },
+            getNewArray(arr,){},
             addAdminFn(item,flag) {
                 this.getapiSystemRole()
                 this.getapiSystemDept()
@@ -115,12 +126,11 @@
                     name:'',
                     username:'',
                     password:'123456',
-                    dept:'',
+                    dept_id:'',
+                    roleIds:[],
                     role:[],
                     is_active:true
                 }
-
-                this.formData.role = item?item.role:[]
             },
             submitData() {
                 this.$refs['rulesForm'].validate(obj=>{

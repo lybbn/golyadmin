@@ -19,6 +19,11 @@ func GetNowTimeFormatStr() string {
 	return time.Now().Format("2006-01-02 15:04:05")
 }
 
+// 把数据库日期时间格式为 2006-01-02 15:04:05
+func DateTimeFormat(datetime time.Time) string {
+	return datetime.Format("2006-01-02 15:04:05")
+}
+
 // 转换int类型为字符串
 func FormatInt2String(n int) string {
 	return strconv.Itoa(n)

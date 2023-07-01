@@ -1,6 +1,8 @@
 package system
 
 import (
+	"encoding/json"
+
 	"gitee.com/lybbn/golyadmin/global"
 	"gitee.com/lybbn/golyadmin/model/system"
 	systemReq "gitee.com/lybbn/golyadmin/model/system/request"
@@ -165,7 +167,21 @@ func (b *BaseApi) GetAdminUserList(c *gin.Context) {
 		response.ErrorResponse(err.Error(), c)
 		return
 	}
-	response.PaginateResponse(p.Data, p, "获取成功", c)
+	data := []interface{}{}
+	for _, v := range p.Data {
+		d1, _ := json.Marshal(v)
+		m := make(map[string]interface{})
+		json.Unmarshal(d1, &m)
+		var roleIds []uint
+		for _, v1 := range v.Role {
+			roleIds = append(roleIds, v1.ID)
+		}
+		m["roleIds"] = roleIds
+		// m["created_at"] = utils.DateTimeFormat(v.CreatedAt)
+		// m["updated_at"] = utils.DateTimeFormat(v.UpdatedAt)
+		data = append(data, m)
+	}
+	response.PaginateResponse(data, p, "获取成功", c)
 }
 
 // @Tags     User

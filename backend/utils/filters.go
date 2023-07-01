@@ -44,6 +44,7 @@ func getDept(deptId int, tempDeptList []lyadminDeptSelect) []int {
 }
 
 /*
+author：lybbn
 数据 级权限过滤器(白名单和超级管理员直接返回全部)
 0. 获取用户的部门id，没有部门则返回空
 1. 判断过滤的数据是否有创建人所在部门 "belong_dept" 字段,没有则返回全部
