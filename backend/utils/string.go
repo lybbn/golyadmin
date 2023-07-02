@@ -10,18 +10,19 @@ import (
 )
 
 const (
-	symbol = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()-_=+,.?/:;{}[]`~"
-	letter = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+	symbol         = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()-_=+,.?/:;{}[]`~"
+	letter         = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+	formatDateTime = "2006-01-02 15:04:05"
 )
 
 // 获取当前日期时间格式为 2006-01-02 15:04:05
 func GetNowTimeFormatStr() string {
-	return time.Now().Format("2006-01-02 15:04:05")
+	return time.Now().Format(formatDateTime)
 }
 
 // 把数据库日期时间格式为 2006-01-02 15:04:05
 func DateTimeFormat(datetime time.Time) string {
-	return datetime.Format("2006-01-02 15:04:05")
+	return datetime.Format(formatDateTime)
 }
 
 // 转换int类型为字符串
@@ -35,13 +36,19 @@ func FormatUint2String(n uint64) string {
 }
 
 // 转换字符串类型为int
-func FormatString2Int(e string) (int, error) {
-	return strconv.Atoi(e)
+func FormatString2Int(v string) (int, error) {
+	return strconv.Atoi(v)
 }
 
-// 转换字符串类型为int
-func FormatString2Bool(e string) (bool, error) {
-	return strconv.ParseBool(e)
+// 转换字符串类型为bool
+func FormatString2Bool(v string) (bool, error) {
+	if strings.ToLower(v) == "on" || strings.ToLower(v) == "1" || strings.ToLower(v) == "yes" {
+		return true, nil
+	}
+	if strings.ToLower(v) == "off" || strings.ToLower(v) == "0" || strings.ToLower(v) == "no" {
+		return false, nil
+	}
+	return strconv.ParseBool(v)
 }
 
 // 获取配置文件的端口字符串形式 如   :9000

@@ -10,6 +10,17 @@ import (
 	"go.uber.org/zap"
 )
 
+const version = global.GL_VERSION
+
+const shortVersionBanner = `
+██████   ██████   ██   ██    ██  █████  ██████  ███    ███ ██ ███    ██ 
+██       ██    ██ ██    ██  ██  ██   ██ ██   ██ ████  ████ ██ ████   ██ 
+██   ███ ██    ██ ██     ████   ███████ ██   ██ ██ ████ ██ ██ ██ ██  ██ 
+██    ██ ██    ██ ██      ██    ██   ██ ██   ██ ██  ██  ██ ██ ██  ██ ██ 
+ ██████   ██████  ███████ ██    ██   ██ ██████  ██      ██ ██ ██   ████  v%s
+                                                                        
+`
+
 var (
 	StartCmd = &cobra.Command{
 		Use:     "start",
@@ -38,7 +49,8 @@ func run() {
 	// }
 	global.GL_LOG.Info("server run success on ", zap.String("address", address))
 	fmt.Println("\r\n欢迎使用 golyadmin")
-	fmt.Printf("当前版本:v%s\r\n", global.GL_VERSION)
+	fmt.Printf(utils.Red(shortVersionBanner)+"\r\n", version)
+	fmt.Printf("当前版本:v%s\r\n", version)
 	tip()
 	fmt.Println(utils.Green("Server run at:"))
 	fmt.Printf("-  Local:   http://127.0.0.1%s \r\n", utils.GetServerPort())

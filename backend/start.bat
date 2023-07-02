@@ -1,4 +1,5 @@
 @ECHO OFF
-E:
-cd E:\golyadmin\backend
+::盘符根据实际环境进行替换
+D:
+cd D:\golyadmin\backend
 golyadmin start
