@@ -4,7 +4,9 @@ package utils
 
 import (
 	"encoding/json"
+	"fmt"
 	"reflect"
+	"strings"
 )
 
 // 通过json来转换struct结构体到map json
@@ -35,4 +37,9 @@ func ConvertStruct2MapJsonReflect(obj any) map[string]interface{} {
 		}
 	}
 	return data
+}
+
+// 数组转换为逗号分割的字符串
+func ConvertArray2String(array []interface{}) string {
+	return strings.Replace(strings.Trim(fmt.Sprint(array), "[]"), " ", ",", -1)
 }
