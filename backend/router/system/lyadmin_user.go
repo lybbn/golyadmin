@@ -18,6 +18,6 @@ func (s *UserRouter) InitUserRouter(Router *gin.RouterGroup) {
 		userRouter.GET("getUserInfo", baseApi.GetUserInfo)           // 获取用户信息
 		userRouter.POST("setUserInfo", baseApi.SetUserInfo)          // 设置用户信息
 		userRouter.GET("getAdminUserList", baseApi.GetAdminUserList) // 获取管理员用户列表（分页）
-
+		userRouter.PUT("adminUser/:id", baseApi.UpdateAdminUser)     // 编辑管理员
 	}
 }

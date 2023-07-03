@@ -94,7 +94,7 @@ export const apiSystemUser = params => ajaxGet({url: `system/user/getAdminUserLi
 //管理员管理-新增
 export const apiSystemUserAdd = params => ajaxPost({url: `system/user/user`,params})
 //管理员管理-修改
-export const apiSystemUserEdit = params => ajaxPut({url: `system/user/user`,params})
+export const apiSystemUserEdit = params => ajaxPut({url: `system/user/adminUser`,params})
 //管理员管理-删除
 export const apiSystemUserDelte = params => ajaxDelete({url: `system/user/user`,params})
 

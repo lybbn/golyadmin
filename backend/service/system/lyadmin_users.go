@@ -7,6 +7,8 @@ import (
 	"gitee.com/lybbn/golyadmin/model/system"
 	systemReq "gitee.com/lybbn/golyadmin/model/system/request"
 	"gitee.com/lybbn/golyadmin/utils"
+	"github.com/gin-gonic/gin"
+	"go.uber.org/zap"
 	"gorm.io/gorm"
 )
 
@@ -62,6 +64,35 @@ func (userService *UserService) GetAdminUserInfoList(info systemReq.LyadminUserS
 	}
 	db = db.Where("Identity = ?", 2).Preload("Role").Preload("Dept").Order("id desc")
 	return db
+}
+
+// 编辑管理员
+func (s *UserService) UpdateAdminUser(reqData system.LyadminUsers, c *gin.Context) (err error) {
+	var model system.LyadminUsers
+	db := global.GL_DB.Scopes(utils.DataLevelPermissionsFilter(system.LyadminUsers{}, c)).First(&model, reqData.ID)
+	if err = db.Error; err != nil {
+		global.GL_LOG.Error("Service UpdateAdminUser error", zap.Error(err))
+		return err
+	}
+	if db.RowsAffected == 0 {
+		err = errors.New("无该数据权限")
+		return err
+	}
+	model.Username = reqData.Username
+	model.Name = reqData.Name
+	model.DeptId = reqData.DeptId
+	model.IsActive = reqData.IsActive
+	model.UpdateBy = reqData.UpdateBy
+	db.Save(&model)
+	if err = db.Error; err != nil {
+		global.GL_LOG.Error("db error", zap.Error(err))
+		return err
+	}
+	if db.RowsAffected == 0 {
+		err = errors.New("update UpdateAdminUser error")
+		return err
+	}
+	return nil
 }
 
 func (s *UserService) ChangePassword(u *system.LyadminUsers, newPassword string) (userInter *system.LyadminUsers, err error) {

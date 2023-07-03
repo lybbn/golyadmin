@@ -5,7 +5,7 @@
                 <!--<el-form-item label="管理员编号：" prop="id">-->
                     <!--<el-input v-model.trim="formData.id" style="width: 300px"></el-input>-->
                 <!--</el-form-item>-->
-                <el-form-item label="管理员名称：" prop="name">
+                <el-form-item label="管理员姓名：" prop="name">
                     <el-input v-model="formData.name"></el-input>
                 </el-form-item>
                 <el-form-item label="登陆账号：" prop="username">

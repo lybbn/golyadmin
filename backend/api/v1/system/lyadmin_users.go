@@ -218,6 +218,30 @@ func (b *BaseApi) CreateUser(c *gin.Context) {
 }
 
 // @Tags      User
+// @Summary   编辑管理员
+// @Security  ApiKeyAuth
+// @Produce   application/json
+// @Param     data  body       system.LyadminUsers true "model LyadminUsers"
+// @Success   200   {object}  response.StructResponse{data=string,msg=string}  "编辑管理员"
+// @Router    /system/user/adminUser/:id [put]
+func (b *BaseApi) UpdateAdminUser(c *gin.Context) {
+	var req system.LyadminUsers
+	err := c.ShouldBind(&req)
+	if err != nil {
+		response.ErrorResponse(utils.GetValidMsg(err, &req), c)
+		return
+	}
+	req.UpdateBy = utils.GetUserID(c)
+	err = userService.UpdateAdminUser(req, c)
+	if err != nil {
+		global.GL_LOG.Error("修改失败!", zap.Error(err))
+		response.ErrorResponse(err.Error(), c)
+		return
+	}
+	response.SuccessResponse(nil, "修改成功", c)
+}
+
+// @Tags      User
 // @Summary   获取用户信息
 // @Security  ApiKeyAuth
 // @accept    application/json
