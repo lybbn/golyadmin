@@ -11,6 +11,7 @@ import (
 gorm 指定类型
 json 表示json接收时候的名称
 binding required 表示必须传入
+自定义结构体采用*指针的形式，避免无值时也返回默认结构体
 */
 
 type LyadminUsers struct {
@@ -25,7 +26,7 @@ type LyadminUsers struct {
 	Avatar      string        `json:"avatar" form:"avatar" gorm:"type:varchar(255);comment:头像"`                           //头像
 	Gender      string        `json:"gender" form:"gender" gorm:"type:varchar(10);default:男;comment:性别"`                  //性别（男、女）
 	DeptId      uint          `json:"dept_id" form:"dept_id" gorm:"comment:部门"`                                           //部门ID
-	Dept        LyadminDept   `json:"dept" gorm:"foreignKey:DeptId"`                                                      //部门外键
+	Dept        *LyadminDept  `json:"dept" gorm:"foreignKey:DeptId"`                                                      //部门外键
 	Post        []LyadminPost `json:"post" gorm:"many2many:lyadmin_users_post;"`                                          //岗位
 	Role        []LyadminRole `json:"role" gorm:"many2many:lyadmin_users_role;"`                                          //角色
 	RoleIds     []uint        `json:"roleIds" form:"roleIds" gorm:"-"`                                                    //角色id数组

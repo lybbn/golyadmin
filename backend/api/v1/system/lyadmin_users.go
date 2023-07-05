@@ -72,9 +72,9 @@ func (b *BaseApi) Login(c *gin.Context) {
 // IssueJwtToken 登录以后签发jwt
 func (b *BaseApi) IssueJwtToken(c *gin.Context, user system.LyadminUsers) {
 	j := &utils.JWT{SecretKey: []byte(global.GL_CONFIG.JWT.SecretKey)} // 唯一签名
-	var roleIds []int
-	var roleDataScopes []int
-	var roleDeptIds []int
+	roleIds := []int{}
+	roleDataScopes := []int{}
+	roleDeptIds := []int{}
 	for i, v := range user.Role {
 		roleIds = append(roleIds, int(v.ID))
 		roleDataScopes = append(roleDataScopes, v.DataRange)
@@ -100,7 +100,7 @@ func (b *BaseApi) IssueJwtToken(c *gin.Context, user system.LyadminUsers) {
 		return
 	}
 
-	if !global.GL_CONFIG.System.UseMultipoint {
+	if global.GL_CONFIG.System.UseMultipoint {
 		response.SuccessResponse(LoginResponse{
 			User:      user,
 			Access:    token,

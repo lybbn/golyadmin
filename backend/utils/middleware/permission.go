@@ -58,7 +58,7 @@ func PermissionMiddleware() gin.HandlerFunc {
 				c.Next()
 			} else {
 				userinfo := utils.GetUserInfoDB(c)
-				var roleIds []int
+				roleIds := []int{}
 				for _, v := range userinfo.Role {
 					roleIds = append(roleIds, int(v.ID))
 				}
@@ -67,7 +67,7 @@ func PermissionMiddleware() gin.HandlerFunc {
 					c.Abort()
 					return
 				}
-				var rolelist []system.LyadminRole
+				rolelist := []system.LyadminRole{}
 				err := global.GL_DB.Model(&system.LyadminRole{}).Where("status = ? and id in (?)", 1, roleIds).Preload("Permission").Find(&rolelist).Error
 				if err != nil {
 					global.GL_LOG.Error("查询数据库失败：" + err.Error())
@@ -75,7 +75,7 @@ func PermissionMiddleware() gin.HandlerFunc {
 					c.Abort()
 					return
 				}
-				var menubtnlist []system.LyadminMenuButton
+				menubtnlist := []system.LyadminMenuButton{}
 				for _, rl := range rolelist {
 					for _, mt := range rl.Permission {
 						menubtnlist = append(menubtnlist, mt)

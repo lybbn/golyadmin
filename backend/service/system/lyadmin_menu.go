@@ -83,7 +83,7 @@ func (m *MenuService) UpdateMenu(ReqData system.LyadminMenu) (err error) {
 func (m *MenuService) GetWebRouter(uinfo *utils.CustomClaims) (menus []systemResp.LyadminWebRouterResponse, err error) {
 	userid := uinfo.BaseClaims.ID
 	identity := uinfo.BaseClaims.Identity
-	var mn []system.LyadminMenu
+	mn := []system.LyadminMenu{}
 	if identity == 1 {
 		err = global.GL_DB.Where("status = ?", 1).Preload("MenuButtons").Order("sort asc").Find(&mn).Error
 		if err != nil {
@@ -112,7 +112,7 @@ func (m *MenuService) GetWebRouter(uinfo *utils.CustomClaims) (menus []systemRes
 		}
 		return menus, err
 	} else {
-		var roleIds []uint
+		roleIds := []uint{}
 		err = global.GL_DB.Model(&system.LyadminUsersRole{}).Where("lyadmin_users_id = ?", userid).Pluck("lyadmin_role_id", &roleIds).Error
 		if err != nil {
 			return menus, err
@@ -120,14 +120,14 @@ func (m *MenuService) GetWebRouter(uinfo *utils.CustomClaims) (menus []systemRes
 		if len(roleIds) < 1 {
 			return menus, err
 		}
-		var rolelist []system.LyadminRole
+		rolelist := []system.LyadminRole{}
 		err = global.GL_DB.Model(&system.LyadminRole{}).Where("status = ? and id in (?)", 1, roleIds).Preload("Menu", func(db *gorm.DB) *gorm.DB {
 			return db.Order("sort asc")
 		}).Preload("Permission").Find(&rolelist).Error
 		if err != nil {
 			return menus, err
 		}
-		var menubtnlist []system.LyadminMenuButton
+		menubtnlist := []system.LyadminMenuButton{}
 		for _, rl := range rolelist {
 			for _, vm := range rl.Menu {
 				if isContainMenu(mn, vm) == false {
@@ -142,7 +142,7 @@ func (m *MenuService) GetWebRouter(uinfo *utils.CustomClaims) (menus []systemRes
 		}
 
 		for _, v := range mn {
-			var btnValue []string
+			btnValue := []string{}
 			for _, vm := range menubtnlist {
 				if vm.MenuID == v.ID {
 					btnValue = append(btnValue, vm.Value)
