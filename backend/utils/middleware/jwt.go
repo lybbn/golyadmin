@@ -46,7 +46,7 @@ func JWTAuthMiddleware() gin.HandlerFunc {
 		// VerifyToken 解析token包含的信息
 		claims, err := j.VerifyToken(token)
 		if err != nil {
-			if err == jwt.ErrTokenExpired {
+			if strings.Contains(err.Error(), jwt.ErrTokenExpired.Error()) {
 				response.ErrorCodeResponse(4001, "登录授权已过期", c)
 				c.Abort()
 				return
