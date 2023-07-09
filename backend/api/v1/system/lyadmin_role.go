@@ -119,7 +119,7 @@ func (r *RoleApi) DeleteRole(c *gin.Context) {
 		response.ErrorResponse(utils.GetValidMsg(err, &req), c)
 		return
 	}
-	err = roleService.DeleteRole(uint(req.Id))
+	err = roleService.DeleteRole(uint(req.Id), c)
 	if err != nil {
 		global.GL_LOG.Error("删除失败!", zap.Error(err))
 		response.ErrorResponse("删除失败", c)
@@ -143,7 +143,7 @@ func (r *RoleApi) UpdateRole(c *gin.Context) {
 		return
 	}
 	req.UpdateBy = utils.GetUserID(c)
-	err = roleService.UpdateRole(req)
+	err = roleService.UpdateRole(req, c)
 	if err != nil {
 		global.GL_LOG.Error("修改失败!", zap.Error(err))
 		response.ErrorResponse(err.Error(), c)
@@ -166,7 +166,7 @@ func (r *RoleApi) UpdateRolePremission(c *gin.Context) {
 		response.ErrorResponse(utils.GetValidMsg(err, &req), c)
 		return
 	}
-	err = roleService.UpdateRolePremission(req)
+	err = roleService.UpdateRolePremission(req, c)
 	if err != nil {
 		global.GL_LOG.Error("修改失败!", zap.Error(err))
 		response.ErrorResponse(err.Error(), c)

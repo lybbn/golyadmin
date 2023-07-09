@@ -1,9 +1,13 @@
 package system
 
 import (
+	"errors"
+
 	"gitee.com/lybbn/golyadmin/global"
 	"gitee.com/lybbn/golyadmin/model/system"
 	systemReq "gitee.com/lybbn/golyadmin/model/system/request"
+	"gitee.com/lybbn/golyadmin/utils"
+	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
 	"gorm.io/gorm/clause"
 )
@@ -58,12 +62,15 @@ func (r *RoleService) CreateRole(ReqData system.LyadminRole) error {
 }
 
 // 删除角色
-func (r *RoleService) DeleteRole(id uint) (err error) {
+func (r *RoleService) DeleteRole(id uint, c *gin.Context) (err error) {
 	// err = global.GL_DB.Where("id = ?", id).Delete(&system.LyadminRole{}).Error
 	// return err
 	return global.GL_DB.Transaction(func(tx *gorm.DB) error {
 		var model = system.LyadminRole{}
-		tx.Preload("Menu").Preload("Dept").Preload("Permission").First(&model, id)
+		res := tx.Scopes(utils.DataLevelPermissionsFilter(system.LyadminRole{}, c)).Preload("Menu").Preload("Dept").Preload("Permission").First(&model, id)
+		if res.RowsAffected == 0 {
+			return errors.New("无该数据权限")
+		}
 		//删除 LyadminRole 时，同时删除角色所有 关联其它表 记录 (Menu\Dept\Permission)
 		db := tx.Select(clause.Associations).Delete(&model)
 		if err = db.Error; err != nil {
@@ -74,7 +81,7 @@ func (r *RoleService) DeleteRole(id uint) (err error) {
 }
 
 // 编辑角色
-func (r *RoleService) UpdateRole(ReqData system.LyadminRole) (err error) {
+func (r *RoleService) UpdateRole(ReqData system.LyadminRole, c *gin.Context) (err error) {
 	var oldData system.LyadminRole
 	upDateMap := make(map[string]interface{})
 	upDateMap["name"] = ReqData.Name
@@ -83,24 +90,30 @@ func (r *RoleService) UpdateRole(ReqData system.LyadminRole) (err error) {
 	upDateMap["status"] = ReqData.Status
 	upDateMap["update_by"] = ReqData.UpdateBy
 
-	db := global.GL_DB.Where("id = ?", ReqData.ID).Find(&oldData)
+	db := global.GL_DB.Where("id = ?", ReqData.ID).Scopes(utils.DataLevelPermissionsFilter(system.LyadminRole{}, c)).Find(&oldData)
 	err = db.Updates(upDateMap).Error
+	if db.RowsAffected == 0 {
+		return errors.New("无该数据权限")
+	}
 	return err
 }
 
 // 更新角色权限
-func (r *RoleService) UpdateRolePremission(ReqData systemReq.LyadminRoleParams) (err error) {
+func (r *RoleService) UpdateRolePremission(reqData systemReq.LyadminRoleParams, c *gin.Context) (err error) {
 	return global.GL_DB.Transaction(func(tx *gorm.DB) error {
-		tx.Model(&system.LyadminRole{}).Where("id = ?", ReqData.ID).Update("data_range", ReqData.DataRange)
+		res := tx.Model(&system.LyadminRole{}).Where("id = ?", reqData.ID).Scopes(utils.DataLevelPermissionsFilter(system.LyadminRole{}, c)).Update("data_range", reqData.DataRange)
+		if res.RowsAffected == 0 {
+			return errors.New("无该数据权限")
+		}
 		//many2many中间表更新方式一
-		err = tx.Delete(&[]system.LyadminRoleMenu{}, "lyadmin_role_id = ?", ReqData.ID).Error
+		err = tx.Delete(&[]system.LyadminRoleMenu{}, "lyadmin_role_id = ?", reqData.ID).Error
 		if err != nil {
 			return err
 		}
 		var roleMenu []system.LyadminRoleMenu
-		for _, v := range ReqData.Menu {
+		for _, v := range reqData.Menu {
 			roleMenu = append(roleMenu, system.LyadminRoleMenu{
-				LyadminRoleId: ReqData.ID,
+				LyadminRoleId: reqData.ID,
 				LyadminMenuId: uint(v),
 			})
 		}
@@ -114,9 +127,9 @@ func (r *RoleService) UpdateRolePremission(ReqData systemReq.LyadminRoleParams) 
 		var model = system.LyadminRole{}
 		var roleDept []system.LyadminDept
 		var rolePermission []system.LyadminMenuButton
-		tx.Preload("Dept").Preload("Permission").First(&model, ReqData.ID)
-		tx.Where("id in ?", ReqData.Dept).Find(&roleDept)
-		tx.Where("id in ?", ReqData.Permission).Find(&rolePermission)
+		tx.Preload("Dept").Preload("Permission").First(&model, reqData.ID)
+		tx.Where("id in ?", reqData.Dept).Find(&roleDept)
+		tx.Where("id in ?", reqData.Permission).Find(&rolePermission)
 		// 删除LyadminRole 和 Dept 和 Permission 的关联关系
 		err = tx.Model(&model).Association("Dept").Delete(model.Dept)
 		if err != nil {

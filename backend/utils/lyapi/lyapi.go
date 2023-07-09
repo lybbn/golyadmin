@@ -1,5 +1,5 @@
 // 数据库操作工具类
-package api
+package lyapi
 
 import (
 	"gitee.com/lybbn/golyadmin/global"

@@ -10,7 +10,6 @@ type UserRouter struct{}
 
 func (s *UserRouter) InitAdminUserRouter(Router *gin.RouterGroup) {
 	userRouter := Router.Group("user").Use(middleware.OperationLog())
-	// userRouterWithoutRecord := Router.Group("user")
 	userApi := v1.ApiGroupApp.SystemApiGroup.UserApi
 	{
 		userRouter.POST("adminUser", userApi.CreateAdminUser)        // 创建管理员用户

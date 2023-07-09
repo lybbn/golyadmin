@@ -1,5 +1,5 @@
 ﻿# Host: localhost  (Version: 5.7.26)
-# Date: 2023-07-09 20:32:40
+# Date: 2023-07-09 22:34:21
 # Generator: MySQL-Front 5.3  (Build 4.234)
 
 /*!40101 SET NAMES utf8 */;
@@ -110,7 +110,7 @@ CREATE TABLE `lyadmin_menu` (
 # Data for table "lyadmin_menu"
 #
 
-REPLACE INTO `lyadmin_menu` VALUES (2,'2023-06-26 15:57:36.000','2023-07-09 16:36:27.176',0,'管理员管理','avatar','adminManage',0,1,'','',20,0,0,1,NULL,1,NULL),(3,'2023-06-26 15:57:40.000','2023-07-09 16:37:04.440',0,'用户管理CRUD','UserFilled','userManageCrud',0,1,'','',30,0,0,1,NULL,1,NULL),(4,'2023-06-26 15:57:40.000','2023-06-29 23:53:56.118',0,'系统管理','tools','',0,1,'','',990,1,0,1,NULL,1,NULL),(5,'2023-06-26 15:57:40.000','2023-06-26 15:57:39.000',4,'菜单管理','','menuManage',0,1,NULL,NULL,2,0,0,1,NULL,NULL,NULL),(6,'2023-06-26 15:57:40.000','2023-06-26 15:57:39.000',4,'部门管理','','departmentManage',0,1,NULL,NULL,1,0,0,1,NULL,NULL,NULL),(7,'2023-06-27 12:09:22.049','2023-06-27 12:09:22.049',4,'操作日志','InfoFilled','journalManage',0,1,'','',99,0,0,1,1,0,0),(8,'2023-06-27 12:12:34.511','2023-06-27 12:12:34.511',4,'角色管理','','roleManage',0,1,'','',5,0,0,1,1,0,0),(9,'2023-06-28 21:53:41.125','2023-06-28 21:53:41.125',4,'权限管理','','authorityManage',0,1,'','',7,0,0,1,1,0,0),(10,'2023-06-29 21:47:17.157','2023-07-09 16:38:50.064',0,'个人中心','Place','personalCenter',0,1,'','',866,0,0,1,2,1,1),(11,'2023-07-09 16:35:41.147','2023-07-09 16:36:15.662',0,'DashBoard','DataLine','analysis',0,1,'','',1,0,0,1,1,1,0);
+REPLACE INTO `lyadmin_menu` VALUES (2,'2023-06-26 15:57:36.000','2023-07-09 16:36:27.176',0,'管理员管理','avatar','adminManage',0,1,'','',20,0,0,1,NULL,1,NULL),(3,'2023-06-26 15:57:40.000','2023-07-09 16:37:04.440',0,'用户管理CRUD','UserFilled','userManageCrud',0,1,'','',30,0,0,1,NULL,1,NULL),(4,'2023-06-26 15:57:40.000','2023-06-29 23:53:56.118',0,'系统管理','tools','',0,1,'','',990,1,0,1,NULL,1,NULL),(5,'2023-06-26 15:57:40.000','2023-07-09 22:16:40.987',4,'菜单管理','Menu','menuManage',0,1,'','',2,0,0,1,NULL,1,NULL),(6,'2023-06-26 15:57:40.000','2023-07-09 22:18:34.306',4,'部门管理','Collection','departmentManage',0,1,'','',1,0,0,1,NULL,1,NULL),(7,'2023-06-27 12:09:22.049','2023-06-27 12:09:22.049',4,'操作日志','InfoFilled','journalManage',0,1,'','',99,0,0,1,1,0,0),(8,'2023-06-27 12:12:34.511','2023-07-09 22:16:17.860',4,'角色管理','Key','roleManage',0,1,'','',5,0,0,1,1,1,0),(9,'2023-06-28 21:53:41.125','2023-07-09 22:19:11.712',4,'权限管理','Lock','authorityManage',0,1,'','',7,0,0,1,1,1,0),(10,'2023-06-29 21:47:17.157','2023-07-09 16:38:50.064',0,'个人中心','Place','personalCenter',0,1,'','',866,0,0,1,2,1,1),(11,'2023-07-09 16:35:41.147','2023-07-09 16:36:15.662',0,'DashBoard','DataLine','analysis',0,1,'','',1,0,0,1,1,1,0);
 
 #
 # Structure for table "lyadmin_menu_button"
@@ -165,13 +165,13 @@ CREATE TABLE `lyadmin_operation_log` (
   KEY `idx_lyadmin_operation_log_create_by` (`create_by`),
   KEY `idx_lyadmin_operation_log_update_by` (`update_by`),
   KEY `idx_lyadmin_operation_log_belong_dept` (`belong_dept`)
-) ENGINE=InnoDB AUTO_INCREMENT=1263 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=1269 DEFAULT CHARSET=utf8mb4;
 
 #
 # Data for table "lyadmin_operation_log"
 #
 
-REPLACE INTO `lyadmin_operation_log` VALUES (1262,'2023-07-09 20:31:59.764','2023-07-09 20:31:59.764','127.0.0.1','DELETE','/api/system/operation_log/deletealllogs','200',6312000,'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36','','{}','{\"code\":2000,\"data\":null,\"msg\":\"清空成功\"}',1,0,0,0);
+REPLACE INTO `lyadmin_operation_log` VALUES (1268,'2023-07-09 22:19:18.859','2023-07-09 22:19:18.859','127.0.0.1','DELETE','/api/system/operation_log/deletealllogs','200',9977100,'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36','','{}','{\"code\":2000,\"data\":null,\"msg\":\"清空成功\"}',1,0,0,0);
 
 #
 # Structure for table "lyadmin_post"
@@ -228,7 +228,7 @@ CREATE TABLE `lyadmin_role` (
 # Data for table "lyadmin_role"
 #
 
-REPLACE INTO `lyadmin_role` VALUES (1,'2023-06-26 10:51:03.000','2023-07-09 20:31:55.275','管理员','admin',1,1,0,1,0,3),(2,'2023-07-01 19:58:19.324','2023-07-01 19:58:19.324','test2','test',1,1,1,0,0,0);
+REPLACE INTO `lyadmin_role` VALUES (1,'2023-06-26 10:51:03.000','2023-07-09 20:31:55.275','管理员','admin',1,1,0,1,0,3);
 
 #
 # Structure for table "lyadmin_role_dept"
