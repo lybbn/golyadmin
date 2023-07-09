@@ -60,15 +60,6 @@ const routes = [
           index: '/adminManage',
         }
       },
-      {
-        path: '/userManage',
-        name: 'userManage',
-        component: () => import('../views/userManage/userManage.vue'),
-        meta: {
-          requireAuth: true,
-          index: '/userManage',
-        }
-      },
         {
         path: '/userManageCrud',
         name: 'userManageCrud',

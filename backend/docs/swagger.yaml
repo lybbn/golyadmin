@@ -13,14 +13,32 @@ definitions:
       avatar:
         example: 头像
         type: string
+      belong_dept:
+        description: 数据归属部门
+        type: integer
+      create_by:
+        description: 创建者
+        type: integer
+      dept_id:
+        description: 部门ID
+        type: integer
       email:
         example: 电子邮箱
         type: string
       gender:
         example: 性别
         type: string
+      identity:
+        description: 身份（1 超级管理员,2后台用户、3前台用户）
+        type: integer
+      is_active:
+        description: 状态(1正常、0冻结)
+        type: boolean
       mobile:
         example: 电话号码
+        type: string
+      name:
+        description: 姓名
         type: string
       nickname:
         example: 昵称
@@ -28,11 +46,32 @@ definitions:
       password:
         example: 密码
         type: string
+      roleIds:
+        description: 角色id数组
+        items:
+          type: integer
+        type: array
+      update_by:
+        description: 更新着
+        type: integer
       username:
         type: string
     required:
+    - dept_id
     - password
     - username
+    type: object
+  request.DisableUserReq:
+    properties:
+      id:
+        description: ID
+        type: integer
+      is_active:
+        description: 状态(1正常、0冻结)
+        type: boolean
+    required:
+    - id
+    - is_active
     type: object
   request.Empty:
     type: object
@@ -146,6 +185,62 @@ definitions:
         type: string
       username:
         description: 账号
+        type: string
+    type: object
+  request.UpdateUsersRequestParams:
+    properties:
+      avatar:
+        description: 头像
+        type: string
+      belong_dept:
+        description: 数据归属部门
+        type: integer
+      create_by:
+        description: 创建者
+        type: integer
+      dept_id:
+        description: 部门ID
+        type: integer
+      email:
+        description: 邮箱
+        type: string
+      gender:
+        description: 性别（男、女）
+        type: string
+      id:
+        description: ID
+        type: integer
+      identity:
+        description: 身份（1 超级管理员,2后台用户、3前台用户）
+        type: integer
+      is_active:
+        description: 状态(1正常、0冻结)
+        type: boolean
+      mobile:
+        description: 手机号
+        type: string
+      name:
+        description: 姓名
+        type: string
+      nickname:
+        description: 昵称
+        type: string
+      password:
+        description: 密码
+        type: string
+      roleIds:
+        description: 角色id数组
+        items:
+          type: integer
+        type: array
+      update_by:
+        description: 更新着
+        type: integer
+      username:
+        description: 用户名
+        type: string
+      uuid:
+        description: 允许读和创建
         type: string
     type: object
   response.StructResponse:
@@ -459,10 +554,13 @@ definitions:
         description: 主键
         type: integer
       identity:
-        description: 身份（1 超级管理员,2后台用户、3前台用户）
+        description: 身份（1超级管理员,2后台用户、3前台用户）
         type: integer
       is_active:
         description: 状态(1正常、0冻结)
+        type: boolean
+      is_delete:
+        description: 是否删除(1删除、0正常)
         type: boolean
       is_staff:
         description: 是否可登录后台
@@ -488,6 +586,11 @@ definitions:
         description: 角色
         items:
           $ref: '#/definitions/system.LyadminRole'
+        type: array
+      roleIds:
+        description: 角色id数组
+        items:
+          type: integer
         type: array
       update_by:
         description: 更新着
@@ -1502,7 +1605,88 @@ paths:
       summary: 通过角色id获取该角色所有的菜单
       tags:
       - Role
-  /system/user/change_password:
+  /system/user/adminUser:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: ID
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/request.Id'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 删除管理员
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.StructResponse'
+            - properties:
+                msg:
+                  type: string
+              type: object
+      security:
+      - ApiKeyAuth: []
+      summary: 根据ID删除管理员
+      tags:
+      - AdminUser
+    post:
+      parameters:
+      - description: 用户名, 密码,部门,姓名
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/request.CreateUserRequestParams'
+      produces:
+      - application/json
+      responses:
+        "2000":
+          description: 创建管理员用户,返回包括用户信息
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.StructResponse'
+            - properties:
+                data:
+                  $ref: '#/definitions/system.LyadminUsers'
+                msg:
+                  type: string
+              type: object
+      summary: 创建管理员用户
+      tags:
+      - AdminUser
+  /system/user/adminUser/:id:
+    put:
+      parameters:
+      - description: model UpdateUsersRequestParams
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/request.UpdateUsersRequestParams'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 编辑管理员
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.StructResponse'
+            - properties:
+                data:
+                  type: string
+                msg:
+                  type: string
+              type: object
+      security:
+      - ApiKeyAuth: []
+      summary: 编辑管理员
+      tags:
+      - AdminUser
+  /system/user/changePassword:
     post:
       parameters:
       - description: 用户名, 原密码, 新密码
@@ -1527,7 +1711,7 @@ paths:
       - ApiKeyAuth: []
       summary: 用户修改密码
       tags:
-      - User
+      - AdminUser
   /system/user/getAdminUserList:
     get:
       consumes:
@@ -1558,7 +1742,7 @@ paths:
       - ApiKeyAuth: []
       summary: 分页获取管理员用户列表
       tags:
-      - User
+      - AdminUser
   /system/user/getUserInfo:
     get:
       consumes:
@@ -1582,7 +1766,7 @@ paths:
       - ApiKeyAuth: []
       summary: 获取用户信息
       tags:
-      - User
+      - AdminUser
   /system/user/setUserInfo:
     post:
       consumes:
@@ -1606,31 +1790,90 @@ paths:
       - ApiKeyAuth: []
       summary: 设置用户信息
       tags:
-      - User
-  /system/user/user:
+      - AdminUser
+  /user/user/disableuser:
     post:
       parameters:
-      - description: 用户名, 密码
+      - description: ID,状态
         in: body
         name: data
         required: true
         schema:
-          $ref: '#/definitions/request.CreateUserRequestParams'
+          $ref: '#/definitions/request.DisableUserReq'
       produces:
       - application/json
       responses:
-        "2000":
-          description: 创建用户,返回包括用户信息
+        "200":
+          description: 修改用户状态
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.StructResponse'
+            - properties:
+                msg:
+                  type: string
+              type: object
+      security:
+      - ApiKeyAuth: []
+      summary: 修改用户状态
+      tags:
+      - User
+  /user/user/getUserList:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: 页码, 每页大小等
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/request.LyadminUserSearch'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 分页获取用户列表
           schema:
             allOf:
             - $ref: '#/definitions/response.StructResponse'
             - properties:
                 data:
-                  $ref: '#/definitions/request.CreateUserRequestParams'
+                  additionalProperties: true
+                  type: object
                 msg:
                   type: string
               type: object
-      summary: 创建用户
+      security:
+      - ApiKeyAuth: []
+      summary: 分页获取用户列表
+      tags:
+      - User
+  /user/user/users:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: ID
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/request.Id'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 删除用户
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.StructResponse'
+            - properties:
+                msg:
+                  type: string
+              type: object
+      security:
+      - ApiKeyAuth: []
+      summary: 根据ID删除用户
       tags:
       - User
 securityDefinitions:

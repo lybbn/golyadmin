@@ -3,6 +3,7 @@ package system
 import "gitee.com/lybbn/golyadmin/service"
 
 type ApiGroup struct {
+	UserApi
 	BaseApi
 	OperationLogApi
 	MenuApi

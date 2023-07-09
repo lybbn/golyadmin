@@ -15,6 +15,7 @@
     import {UsersUsers,UsersUsersAdd,UsersUsersDelete,UsersUsersEdit,UsersUsersdisableEdit,UsersUsersExportexecl} from '@/api/api'
     import LyCrud from "@/components/lycrud";
     import templateData from "@/components/dict/crudTemplateData"
+    import {formatDateTime,hasPermission} from "@/utils/util";
     import { h,resolveComponent } from 'vue';
     export default {
         // name: "userManageCrud",
@@ -164,7 +165,9 @@
                                  // },
                              }
                          },
-                         {label:'创建时间',prop:'create_datetime',minWidth:'150',sortable: false,hidden:false},
+                         {label:'创建时间',prop:'created_at',minWidth:'150',sortable: false,hidden:false,render:(row)=>{
+                            return this.convertDate(row.created_at)
+                         }},
                     ],
                 },
 
@@ -178,7 +181,7 @@
             handleClick(row,flag){
                 let vm = this
                 if(flag=='disable'){
-                    UsersUsersdisableEdit({id:row.id}).then(res=>{
+                    UsersUsersdisableEdit({id:row.id,is_active:!row.is_active}).then(res=>{
                         if(res.code == 2000) {
                             vm.$message.success(res.msg)
                             vm.$refs.lycrud.handleRefresh()//刷新表格数据
@@ -188,6 +191,9 @@
                     })
                 }
             },
+            convertDate(time){
+                return formatDateTime(time)
+            }
         },
     }
 </script>

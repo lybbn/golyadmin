@@ -156,7 +156,8 @@
         }
         else if(flag=='delete') {
             ElMessageBox.confirm('您确定要删除选中的管理员？',{
-                closeOnClickModal:false
+                closeOnClickModal:false,
+                type: 'warning',
             }).then(res=>{
                 apiSystemUserDelte({id:row.id}).then(res=>{
                     if(res.code == 2000) {

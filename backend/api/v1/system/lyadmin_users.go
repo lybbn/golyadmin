@@ -1,7 +1,10 @@
 package system
 
 import (
+	"fmt"
+
 	"gitee.com/lybbn/golyadmin/global"
+	"gitee.com/lybbn/golyadmin/model/common/request"
 	"gitee.com/lybbn/golyadmin/model/system"
 	systemReq "gitee.com/lybbn/golyadmin/model/system/request"
 	"gitee.com/lybbn/golyadmin/utils"
@@ -13,6 +16,9 @@ import (
 )
 
 type BaseApi struct {
+}
+
+type UserApi struct {
 }
 
 type LoginResponse struct {
@@ -142,7 +148,7 @@ func (b *BaseApi) IssueJwtToken(c *gin.Context, user system.LyadminUsers) {
 	}
 }
 
-// @Tags      User
+// @Tags      AdminUser
 // @Summary   分页获取管理员用户列表
 // @Security  ApiKeyAuth
 // @accept    application/json
@@ -150,7 +156,7 @@ func (b *BaseApi) IssueJwtToken(c *gin.Context, user system.LyadminUsers) {
 // @Param     data  body      systemReq.LyadminUserSearch                                        true  "页码, 每页大小等"
 // @Success   200   {object}  response.StructResponse{data=map[string]interface{},msg=string}  "分页获取管理员用户列表"
 // @Router    /system/user/getAdminUserList [get]
-func (b *BaseApi) GetAdminUserList(c *gin.Context) {
+func (u *UserApi) GetAdminUserList(c *gin.Context) {
 	var pageInfo systemReq.LyadminUserSearch
 	err := c.ShouldBind(&pageInfo)
 	if err != nil {
@@ -180,52 +186,40 @@ func (b *BaseApi) GetAdminUserList(c *gin.Context) {
 	response.PaginateResponse(data, p, "获取成功", c)
 }
 
-// @Tags     User
-// @Summary  创建用户
+// @Tags     AdminUser
+// @Summary  创建管理员用户
 // @Produce   application/json
-// @Param    data  body      systemReq.CreateUserRequestParams                                            true  "用户名, 密码"
-// @Success  2000   {object}  response.StructResponse{data=systemReq.CreateUserRequestParams,msg=string}  "创建用户,返回包括用户信息"
-// @Router   /system/user/user [post]
-func (b *BaseApi) CreateUser(c *gin.Context) {
+// @Param    data  body      systemReq.CreateUserRequestParams                                            true  "用户名, 密码,部门,姓名"
+// @Success  2000   {object}  response.StructResponse{data=system.LyadminUsers,msg=string}  "创建管理员用户,返回包括用户信息"
+// @Router   /system/user/adminUser [post]
+func (u *UserApi) CreateAdminUser(c *gin.Context) {
 	var req systemReq.CreateUserRequestParams
 	err := c.ShouldBind(&req)
 	if err != nil {
 		response.ErrorResponse(utils.GetValidMsg(err, &req), c)
 		return
 	}
-	var i int64
-	err = global.GL_DB.Model(&system.LyadminUsers{}).Where("username = ?", req.Username).Count(&i).Error
+	req.CreateBy = utils.GetUserID(c)
+	req.BelongDept = utils.GetDeptIdDB(c)
+	err = userService.CreateAdminUser(req)
 	if err != nil {
-		global.GL_LOG.Error("创建用户失败!", zap.Error(err))
-		response.ErrorResponse("创建用户失败", c)
+		global.GL_LOG.Error("添加失败!", zap.Error(err))
+		msg := err.Error()
+		response.ErrorResponse(msg, c)
 		return
 	}
-	if i > 0 {
-		response.ErrorResponse("用户名已存在！", c)
-		return
-	}
-	user := &system.LyadminUsers{Username: req.Username, Nickname: req.Nickname, Password: req.Password, Avatar: req.Avatar, Mobile: req.Mobile, Gender: req.Gender, Email: req.Email}
-	// 加密密码
-	user.Password = utils.MakePassowrd(req.Password)
-	err = global.GL_DB.Create(&user).Error
-
-	if err != nil {
-		global.GL_LOG.Error("创建用户失败!", zap.Error(err))
-		response.ErrorResponse("创建用户失败!", c)
-		return
-	}
-	response.SuccessResponse(user, "创建成功", c)
+	response.SuccessResponse(nil, "添加成功", c)
 }
 
-// @Tags      User
+// @Tags      AdminUser
 // @Summary   编辑管理员
 // @Security  ApiKeyAuth
 // @Produce   application/json
-// @Param     data  body       system.LyadminUsers true "model LyadminUsers"
+// @Param     data  body       systemReq.UpdateUsersRequestParams true "model UpdateUsersRequestParams"
 // @Success   200   {object}  response.StructResponse{data=string,msg=string}  "编辑管理员"
 // @Router    /system/user/adminUser/:id [put]
-func (b *BaseApi) UpdateAdminUser(c *gin.Context) {
-	var req system.LyadminUsers
+func (u *UserApi) UpdateAdminUser(c *gin.Context) {
+	var req systemReq.UpdateUsersRequestParams
 	err := c.ShouldBind(&req)
 	if err != nil {
 		response.ErrorResponse(utils.GetValidMsg(err, &req), c)
@@ -241,14 +235,38 @@ func (b *BaseApi) UpdateAdminUser(c *gin.Context) {
 	response.SuccessResponse(nil, "修改成功", c)
 }
 
-// @Tags      User
+// @Tags      AdminUser
+// @Summary   根据ID删除管理员
+// @Security  ApiKeyAuth
+// @accept    application/json
+// @Produce   application/json
+// @Param     data  body      request.Id      true  "ID"
+// @Success   200   {object}  response.StructResponse{msg=string}  "删除管理员"
+// @Router    /system/user/adminUser [delete]
+func (u *UserApi) DeleteAdminUser(c *gin.Context) {
+	var req request.Id
+	err := c.ShouldBind(&req)
+	if err != nil {
+		response.ErrorResponse(utils.GetValidMsg(err, &req), c)
+		return
+	}
+	err = userService.DeleteAdminUser(uint(req.Id), c)
+	if err != nil {
+		global.GL_LOG.Error("删除失败!", zap.Error(err))
+		response.ErrorResponse("删除失败", c)
+		return
+	}
+	response.SuccessResponse(nil, "删除成功", c)
+}
+
+// @Tags      AdminUser
 // @Summary   获取用户信息
 // @Security  ApiKeyAuth
 // @accept    application/json
 // @Produce   application/json
 // @Success   200  {object}  response.StructResponse{data=map[string]interface{},msg=string}  "获取用户信息"
 // @Router    /system/user/getUserInfo [get]
-func (b *BaseApi) GetUserInfo(c *gin.Context) {
+func (u *UserApi) GetUserInfo(c *gin.Context) {
 	uinfo := utils.GetUserInfoDB(c)
 	var userinfo = systemReq.ChangeUserInfo{
 		Name:     uinfo.Name,
@@ -260,14 +278,14 @@ func (b *BaseApi) GetUserInfo(c *gin.Context) {
 	response.SuccessResponse(userinfo, "获取成功", c)
 }
 
-// @Tags      User
+// @Tags      AdminUser
 // @Summary   设置用户信息
 // @Security  ApiKeyAuth
 // @accept    application/json
 // @Produce   application/json
 // @Success   200  {object}  response.StructResponse{data=map[string]interface{},msg=string}  "获取用户信息"
 // @Router    /system/user/setUserInfo [post]
-func (b *BaseApi) SetUserInfo(c *gin.Context) {
+func (u *UserApi) SetUserInfo(c *gin.Context) {
 	var req systemReq.ChangeUserInfo
 	err := c.ShouldBind(&req)
 	if err != nil {
@@ -283,14 +301,14 @@ func (b *BaseApi) SetUserInfo(c *gin.Context) {
 	response.SuccessResponse(nil, "设置成功", c)
 }
 
-// @Tags      User
+// @Tags      AdminUser
 // @Summary   用户修改密码
 // @Security  ApiKeyAuth
 // @Produce  application/json
 // @Param     data  body      systemReq.ChangePasswordReq    true  "用户名, 原密码, 新密码"
 // @Success   200   {object}  response.StructResponse{msg=string}  "用户修改密码"
-// @Router    /system/user/change_password [post]
-func (b *BaseApi) ChangePassword(c *gin.Context) {
+// @Router    /system/user/changePassword [post]
+func (u *UserApi) ChangePassword(c *gin.Context) {
 	var req systemReq.ChangePasswordReq
 	err := c.ShouldBind(&req)
 	if err != nil {
@@ -298,11 +316,134 @@ func (b *BaseApi) ChangePassword(c *gin.Context) {
 		return
 	}
 	uid := utils.GetUserID(c)
-	u := &system.LyadminUsers{GL_BASE_MODEL: global.GL_BASE_MODEL{ID: uid}, Password: req.OldPassword}
-	_, err = userService.ChangePassword(u, req.NewPassword)
+	user := &system.LyadminUsers{GL_BASE_MODEL: global.GL_BASE_MODEL{ID: uid}, Password: req.OldPassword}
+	_, err = userService.ChangePassword(user, req.NewPassword, c)
 	if err != nil {
 		global.GL_LOG.Error("修改失败!", zap.Error(err))
 		response.ErrorResponse("修改失败，原密码错误！", c)
+		return
+	}
+	response.SuccessResponse(nil, "修改成功", c)
+}
+
+// @Tags      User
+// @Summary   分页获取用户列表
+// @Security  ApiKeyAuth
+// @accept    application/json
+// @Produce   application/json
+// @Param     data  body      systemReq.LyadminUserSearch                                        true  "页码, 每页大小等"
+// @Success   200   {object}  response.StructResponse{data=map[string]interface{},msg=string}  "分页获取用户列表"
+// @Router    /user/user/getUserList [get]
+func (u *UserApi) GetUserList(c *gin.Context) {
+	var pageInfo systemReq.LyadminUserSearch
+	err := c.ShouldBind(&pageInfo)
+	if err != nil {
+		response.ErrorResponse(err.Error(), c)
+		return
+	}
+	query := userService.GetUserInfoList(pageInfo).Scopes(utils.DataLevelPermissionsFilter(system.LyadminUsers{}, c))
+	p := pagination.Page[system.LyadminUsers]{}
+	err = p.PaginateQuery(query, c)
+	if err != nil {
+		global.GL_LOG.Error("获取用户列表失败!", zap.Error(err))
+		response.ErrorResponse(err.Error(), c)
+		return
+	}
+	response.PaginateResponse(p.Data, p, "获取成功", c)
+}
+
+// @Tags      User
+// @Summary   根据ID删除用户
+// @Security  ApiKeyAuth
+// @accept    application/json
+// @Produce   application/json
+// @Param     data  body      request.Id      true  "ID"
+// @Success   200   {object}  response.StructResponse{msg=string}  "删除用户"
+// @Router    /user/user/users [delete]
+func (u *UserApi) DeleteUser(c *gin.Context) {
+	var req request.Id
+	err := c.ShouldBind(&req)
+	if err != nil {
+		response.ErrorResponse(utils.GetValidMsg(err, &req), c)
+		return
+	}
+	err = userService.DeleteUser(uint(req.Id), c)
+	if err != nil {
+		global.GL_LOG.Error("删除失败!", zap.Error(err))
+		response.ErrorResponse("删除失败", c)
+		return
+	}
+	response.SuccessResponse(nil, "删除成功", c)
+}
+
+// @Tags      User
+// @Summary   修改用户状态
+// @Security  ApiKeyAuth
+// @Produce  application/json
+// @Param     data  body      systemReq.DisableUserReq    true  "ID,状态"
+// @Success   200   {object}  response.StructResponse{msg=string}  "修改用户状态"
+// @Router    /user/user/disableuser [post]
+func (u *UserApi) DisableUser(c *gin.Context) {
+	var req systemReq.DisableUserReq
+	err := c.ShouldBind(&req)
+	if err != nil {
+		fmt.Println(err.Error())
+		response.ErrorResponse(utils.GetValidMsg(err, &req), c)
+		return
+	}
+	err = userService.DisableUser(req, c)
+	if err != nil {
+		global.GL_LOG.Error("修改失败!", zap.Error(err))
+		response.ErrorResponse("修改失败", c)
+		return
+	}
+	response.SuccessResponse(nil, "修改成功", c)
+}
+
+// @Tags     User
+// @Summary  创建用户
+// @Produce   application/json
+// @Param    data  body      systemReq.CreateUserRequestParams                                            true  "用户名, 密码,部门,姓名"
+// @Success  2000   {object}  response.StructResponse{data=system.LyadminUsers,msg=string}  "创建用户,返回包括用户信息"
+// @Router   /system/user/adminUser [post]
+func (u *UserApi) CreateUser(c *gin.Context) {
+	var req systemReq.CreateUserRequestParams
+	err := c.ShouldBind(&req)
+	if err != nil {
+		response.ErrorResponse(utils.GetValidMsg(err, &req), c)
+		return
+	}
+	req.CreateBy = utils.GetUserID(c)
+	req.BelongDept = utils.GetDeptIdDB(c)
+	err = userService.CreateUser(req)
+	if err != nil {
+		global.GL_LOG.Error("添加失败!", zap.Error(err))
+		msg := err.Error()
+		response.ErrorResponse(msg, c)
+		return
+	}
+	response.SuccessResponse(nil, "添加成功", c)
+}
+
+// @Tags      User
+// @Summary   编辑用户
+// @Security  ApiKeyAuth
+// @Produce   application/json
+// @Param     data  body       systemReq.UpdateUsersRequestParams true "model UpdateUsersRequestParams"
+// @Success   200   {object}  response.StructResponse{data=string,msg=string}  "编辑用户"
+// @Router    /system/user/adminUser/:id [put]
+func (u *UserApi) UpdateUser(c *gin.Context) {
+	var req systemReq.UpdateUsersRequestParams
+	err := c.ShouldBind(&req)
+	if err != nil {
+		response.ErrorResponse(utils.GetValidMsg(err, &req), c)
+		return
+	}
+	req.UpdateBy = utils.GetUserID(c)
+	err = userService.UpdateUser(req, c)
+	if err != nil {
+		global.GL_LOG.Error("修改失败!", zap.Error(err))
+		response.ErrorResponse(err.Error(), c)
 		return
 	}
 	response.SuccessResponse(nil, "修改成功", c)

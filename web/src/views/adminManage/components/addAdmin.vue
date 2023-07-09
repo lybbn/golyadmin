@@ -13,6 +13,10 @@
                 </el-form-item>
                 <el-form-item label="登录密码：" prop="password">
                     <el-input v-model.trim="formData.password" clearable show-password></el-input>
+                    <el-alert title="编辑模式时密码为空，表示不修改密码" type="info" show-icon/>
+                </el-form-item>
+                <el-form-item label="手机号：" prop="mobile">
+                    <el-input v-model.trim="formData.mobile"></el-input>
                 </el-form-item>
                 <!--<el-form-item label="排序：" prop="sort">-->
                     <!--<el-input-number v-model="formData.sort" :min="1" :max="999999"></el-input-number>-->
@@ -57,6 +61,7 @@
 <script>
     import {apiSystemUserAdd,apiSystemUserEdit,apiSystemRole,apiSystemDept} from "@/api/api";
     import LyDialog from "@/components/dialog/dialog";
+    import { deepClone } from "@/utils/util";
     import XEUtils from "xe-utils";
     export default {
         components: {LyDialog},
@@ -83,9 +88,9 @@
                     role: [
                         {required: true, message: '请选择角色',trigger: 'blur'}
                     ],
-                    // dept: [
-                    //     {required: true, message: '请选择部门',trigger: 'blur'}
-                    // ],
+                    dept_id: [
+                        {required: true, message: '请选择部门',trigger: 'blur'}
+                    ],
                     username: [
                         {required: true, message: '请输入管理员用户名',trigger: 'blur'}
                     ],
@@ -110,26 +115,15 @@
                     role:[],
                     is_active:true
                 }
-                this.$emit('refreshData')
+                // this.$emit('refreshData')
             },
-            getNewArray(arr,){},
             addAdminFn(item,flag) {
                 this.getapiSystemRole()
                 this.getapiSystemDept()
                 this.loadingTitle=flag
                 this.dialogVisible=true
-                // console.log(item,'item----')
-                // if(item && item.dept) {
-                //     item.dept = item.dept.split(" ")
-                // }
-                this.formData=item ? item : {
-                    name:'',
-                    username:'',
-                    password:'123456',
-                    dept_id:'',
-                    roleIds:[],
-                    role:[],
-                    is_active:true
+                if(item){
+                    this.formData=deepClone(item)
                 }
             },
             submitData() {
@@ -227,4 +221,9 @@
         }
     }
 </script>
+<style scoped>
+.el-alert{
+    padding:3px 16px;
+}
+</style>
 

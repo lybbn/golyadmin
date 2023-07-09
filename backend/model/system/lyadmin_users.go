@@ -7,9 +7,11 @@ import (
 )
 
 /* 注意点 :
-1. 	结构体里面的变量 (Name) 必须是首字符大写
+1. 	结构体里面的变量 (Name) 必须是首字符大写（大写表示可导出）
 gorm 指定类型
-json 表示json接收时候的名称
+json 表示json接收/序列化时候的名称
+json:"-" 表示序列化或者接收请求绑定时忽略该字段
+json:"username"表示序列化时的字段名，可以省略，省略默认采用结构体的字段名，也可以写成json:"username,string"的形式指定序列化时该字段的类型
 binding required 表示必须传入
 自定义结构体采用*指针的形式，避免无值时也返回默认结构体
 */
@@ -33,7 +35,8 @@ type LyadminUsers struct {
 	IsStaff     bool          `json:"is_staff" gorm:"default:true;comment:是否可登录后台"`                                       //是否可登录后台
 	IsSuperuser bool          `json:"is_superuser" gorm:"default:false;comment:是否超管"`                                     //是否超管
 	IsActive    bool          `json:"is_active" gorm:"default:true;comment:状态(1正常、0冻结)"`                                  //状态(1正常、0冻结)
-	Identity    int           `json:"identity" gorm:"size:4;default:2;comment:身份(1 超级管理员 、2后台、3前台)"`                      //身份（1 超级管理员,2后台用户、3前台用户）
+	IsDelete    bool          `json:"is_delete" form:"is_delete" gorm:"default:false;comment:是否删除(1删除、0正常)"`              //是否删除(1删除、0正常)
+	Identity    int           `json:"identity" gorm:"size:4;default:2;comment:身份(1超级管理员 、2后台、3前台)"`                       //身份（1超级管理员,2后台用户、3前台用户）
 	global.GL_CONTROL_MODEL
 }
 

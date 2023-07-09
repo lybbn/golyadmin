@@ -7,6 +7,10 @@ import (
 	"gorm.io/gorm"
 )
 
+var (
+	DefaultPrimaryKeyName = "id"
+)
+
 type LyApi struct {
 	Context *gin.Context
 	Orm     *gorm.DB

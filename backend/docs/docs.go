@@ -1712,7 +1712,150 @@ const docTemplate = `{
                 }
             }
         },
-        "/system/user/change_password": {
+        "/system/user/adminUser": {
+            "post": {
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "AdminUser"
+                ],
+                "summary": "创建管理员用户",
+                "parameters": [
+                    {
+                        "description": "用户名, 密码,部门,姓名",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.CreateUserRequestParams"
+                        }
+                    }
+                ],
+                "responses": {
+                    "2000": {
+                        "description": "创建管理员用户,返回包括用户信息",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.StructResponse"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/system.LyadminUsers"
+                                        },
+                                        "msg": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "AdminUser"
+                ],
+                "summary": "根据ID删除管理员",
+                "parameters": [
+                    {
+                        "description": "ID",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.Id"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "删除管理员",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.StructResponse"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "msg": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/system/user/adminUser/:id": {
+            "put": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "AdminUser"
+                ],
+                "summary": "编辑管理员",
+                "parameters": [
+                    {
+                        "description": "model UpdateUsersRequestParams",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.UpdateUsersRequestParams"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "编辑管理员",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.StructResponse"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "string"
+                                        },
+                                        "msg": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/system/user/changePassword": {
             "post": {
                 "security": [
                     {
@@ -1723,7 +1866,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "User"
+                    "AdminUser"
                 ],
                 "summary": "用户修改密码",
                 "parameters": [
@@ -1773,7 +1916,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "User"
+                    "AdminUser"
                 ],
                 "summary": "分页获取管理员用户列表",
                 "parameters": [
@@ -1827,7 +1970,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "User"
+                    "AdminUser"
                 ],
                 "summary": "获取用户信息",
                 "responses": {
@@ -1870,7 +2013,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "User"
+                    "AdminUser"
                 ],
                 "summary": "设置用户信息",
                 "responses": {
@@ -1899,29 +2042,84 @@ const docTemplate = `{
                 }
             }
         },
-        "/system/user/user": {
+        "/user/user/disableuser": {
             "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
                 "produces": [
                     "application/json"
                 ],
                 "tags": [
                     "User"
                 ],
-                "summary": "创建用户",
+                "summary": "修改用户状态",
                 "parameters": [
                     {
-                        "description": "用户名, 密码",
+                        "description": "ID,状态",
                         "name": "data",
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/request.CreateUserRequestParams"
+                            "$ref": "#/definitions/request.DisableUserReq"
                         }
                     }
                 ],
                 "responses": {
-                    "2000": {
-                        "description": "创建用户,返回包括用户信息",
+                    "200": {
+                        "description": "修改用户状态",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.StructResponse"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "msg": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/user/user/getUserList": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "User"
+                ],
+                "summary": "分页获取用户列表",
+                "parameters": [
+                    {
+                        "description": "页码, 每页大小等",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.LyadminUserSearch"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "分页获取用户列表",
                         "schema": {
                             "allOf": [
                                 {
@@ -1931,8 +2129,59 @@ const docTemplate = `{
                                     "type": "object",
                                     "properties": {
                                         "data": {
-                                            "$ref": "#/definitions/request.CreateUserRequestParams"
+                                            "type": "object",
+                                            "additionalProperties": true
                                         },
+                                        "msg": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/user/user/users": {
+            "delete": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "User"
+                ],
+                "summary": "根据ID删除用户",
+                "parameters": [
+                    {
+                        "description": "ID",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.Id"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "删除用户",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.StructResponse"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
                                         "msg": {
                                             "type": "string"
                                         }
@@ -1962,6 +2211,7 @@ const docTemplate = `{
         "request.CreateUserRequestParams": {
             "type": "object",
             "required": [
+                "dept_id",
                 "password",
                 "username"
             ],
@@ -1969,6 +2219,18 @@ const docTemplate = `{
                 "avatar": {
                     "type": "string",
                     "example": "头像"
+                },
+                "belong_dept": {
+                    "description": "数据归属部门",
+                    "type": "integer"
+                },
+                "create_by": {
+                    "description": "创建者",
+                    "type": "integer"
+                },
+                "dept_id": {
+                    "description": "部门ID",
+                    "type": "integer"
                 },
                 "email": {
                     "type": "string",
@@ -1978,9 +2240,21 @@ const docTemplate = `{
                     "type": "string",
                     "example": "性别"
                 },
+                "identity": {
+                    "description": "身份（1 超级管理员,2后台用户、3前台用户）",
+                    "type": "integer"
+                },
+                "is_active": {
+                    "description": "状态(1正常、0冻结)",
+                    "type": "boolean"
+                },
                 "mobile": {
                     "type": "string",
                     "example": "电话号码"
+                },
+                "name": {
+                    "description": "姓名",
+                    "type": "string"
                 },
                 "nickname": {
                     "type": "string",
@@ -1990,8 +2264,36 @@ const docTemplate = `{
                     "type": "string",
                     "example": "密码"
                 },
+                "roleIds": {
+                    "description": "角色id数组",
+                    "type": "array",
+                    "items": {
+                        "type": "integer"
+                    }
+                },
+                "update_by": {
+                    "description": "更新着",
+                    "type": "integer"
+                },
                 "username": {
                     "type": "string"
+                }
+            }
+        },
+        "request.DisableUserReq": {
+            "type": "object",
+            "required": [
+                "id",
+                "is_active"
+            ],
+            "properties": {
+                "id": {
+                    "description": "ID",
+                    "type": "integer"
+                },
+                "is_active": {
+                    "description": "状态(1正常、0冻结)",
+                    "type": "boolean"
                 }
             }
         },
@@ -2150,6 +2452,82 @@ const docTemplate = `{
                 },
                 "username": {
                     "description": "账号",
+                    "type": "string"
+                }
+            }
+        },
+        "request.UpdateUsersRequestParams": {
+            "type": "object",
+            "properties": {
+                "avatar": {
+                    "description": "头像",
+                    "type": "string"
+                },
+                "belong_dept": {
+                    "description": "数据归属部门",
+                    "type": "integer"
+                },
+                "create_by": {
+                    "description": "创建者",
+                    "type": "integer"
+                },
+                "dept_id": {
+                    "description": "部门ID",
+                    "type": "integer"
+                },
+                "email": {
+                    "description": "邮箱",
+                    "type": "string"
+                },
+                "gender": {
+                    "description": "性别（男、女）",
+                    "type": "string"
+                },
+                "id": {
+                    "description": "ID",
+                    "type": "integer"
+                },
+                "identity": {
+                    "description": "身份（1 超级管理员,2后台用户、3前台用户）",
+                    "type": "integer"
+                },
+                "is_active": {
+                    "description": "状态(1正常、0冻结)",
+                    "type": "boolean"
+                },
+                "mobile": {
+                    "description": "手机号",
+                    "type": "string"
+                },
+                "name": {
+                    "description": "姓名",
+                    "type": "string"
+                },
+                "nickname": {
+                    "description": "昵称",
+                    "type": "string"
+                },
+                "password": {
+                    "description": "密码",
+                    "type": "string"
+                },
+                "roleIds": {
+                    "description": "角色id数组",
+                    "type": "array",
+                    "items": {
+                        "type": "integer"
+                    }
+                },
+                "update_by": {
+                    "description": "更新着",
+                    "type": "integer"
+                },
+                "username": {
+                    "description": "用户名",
+                    "type": "string"
+                },
+                "uuid": {
+                    "description": "允许读和创建",
                     "type": "string"
                 }
             }
@@ -2588,11 +2966,15 @@ const docTemplate = `{
                     "type": "integer"
                 },
                 "identity": {
-                    "description": "身份（1 超级管理员,2后台用户、3前台用户）",
+                    "description": "身份（1超级管理员,2后台用户、3前台用户）",
                     "type": "integer"
                 },
                 "is_active": {
                     "description": "状态(1正常、0冻结)",
+                    "type": "boolean"
+                },
+                "is_delete": {
+                    "description": "是否删除(1删除、0正常)",
                     "type": "boolean"
                 },
                 "is_staff": {
@@ -2627,6 +3009,13 @@ const docTemplate = `{
                     "type": "array",
                     "items": {
                         "$ref": "#/definitions/system.LyadminRole"
+                    }
+                },
+                "roleIds": {
+                    "description": "角色id数组",
+                    "type": "array",
+                    "items": {
+                        "type": "integer"
                     }
                 },
                 "update_by": {

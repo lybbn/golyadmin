@@ -61,13 +61,17 @@ func Routers() *gin.Engine {
 	{
 		SystemPrivateGroup := PrivateGroup.Group("system")
 		{
-			systemRouter.InitUserRouter(SystemPrivateGroup)
+			systemRouter.InitAdminUserRouter(SystemPrivateGroup)
 			systemRouter.InitOperationLogRouter(SystemPrivateGroup)
 			systemRouter.InitMenuRouter(SystemPrivateGroup)
 			systemRouter.InitMenuButtonRouter(SystemPrivateGroup)
 			systemRouter.InitButtonRouter(SystemPrivateGroup)
 			systemRouter.InitRoleRouter(SystemPrivateGroup)
 			systemRouter.InitDeptRouter(SystemPrivateGroup)
+		}
+		UserPrivateGroup := PrivateGroup.Group("user")
+		{
+			systemRouter.InitUserRouter(UserPrivateGroup)
 		}
 	}
 

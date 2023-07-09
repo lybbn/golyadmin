@@ -92,11 +92,11 @@ export const apiPermissionSave = params => ajaxPut({url: `system/role/permission
 //管理员管理
 export const apiSystemUser = params => ajaxGet({url: `system/user/getAdminUserList`,params})
 //管理员管理-新增
-export const apiSystemUserAdd = params => ajaxPost({url: `system/user/user`,params})
+export const apiSystemUserAdd = params => ajaxPost({url: `system/user/adminUser`,params})
 //管理员管理-修改
 export const apiSystemUserEdit = params => ajaxPut({url: `system/user/adminUser`,params})
 //管理员管理-删除
-export const apiSystemUserDelte = params => ajaxDelete({url: `system/user/user`,params})
+export const apiSystemUserDelte = params => ajaxDelete({url: `system/user/adminUser`,params})
 
 /**
  *日志管理
@@ -169,17 +169,17 @@ export const addressAreaDelete = params => ajaxDelete({url: `address/area/`,para
  * */
 
 // 用户管理 列表
-export const UsersUsers= params => ajaxGet({url: `users/users/`,params})
+export const UsersUsers= params => ajaxGet({url: `user/user/getUserList`,params})
 // 用户管理 新增
-export const UsersUsersAdd= params => ajaxPost({url: `users/users/`,params})
+export const UsersUsersAdd= params => ajaxPost({url: `user/user/users`,params})
 // 用户管理 编辑
-export const UsersUsersEdit= params => ajaxPut({url: `users/users/`,params})
+export const UsersUsersEdit= params => ajaxPut({url: `user/user/users`,params})
 // 用户管理 删除
-export const UsersUsersDelete= params => ajaxDelete({url: `users/users/`,params})
+export const UsersUsersDelete= params => ajaxDelete({url: `user/user/users`,params})
 // 用户管理 禁用用户
-export const UsersUsersdisableEdit= params => ajaxPut({url: `users/users/disableuser/`,params})
+export const UsersUsersdisableEdit= params => ajaxPost({url: `user/user/disableuser`,params})
 // 用户管理 导出
-export const UsersUsersExportexecl= params => ajaxGet({url: `users/users/exportexecl/`,params})
+export const UsersUsersExportexecl= params => ajaxGet({url: `user/user/exportexecl/`,params})
 
 /**
 *平台设置

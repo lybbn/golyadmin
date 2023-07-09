@@ -567,7 +567,7 @@
                                 if(res.code ==2000) {
                                     this.$message.success(res.msg)
                                     this.handleDialogClose()
-                                    this.search()
+                                    this.handleRefresh()
                                 } else {
                                     this.$message.warning(res.msg)
                                 }
@@ -622,7 +622,9 @@
                          this.pageparm.page = res.data.page;
                          this.pageparm.limit = res.data.limit;
                          this.pageparm.total = res.data.total;
-                     }
+                    }else{
+                        this.$message.warning(res.msg)
+                    }
                  })
             },
 

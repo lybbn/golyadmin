@@ -61,6 +61,7 @@ function ajax(opt,method){
           url: url + opt.url +'/'+ params.id,
           method: method,
           headers:{
+              'Content-Type': 'application/json',
               Authorization: 'JWT ' + token,
           }
       }
@@ -69,6 +70,7 @@ function ajax(opt,method){
           url: url + opt.url,
           method: method,
           headers:{
+              'Content-Type': 'application/json',
               Authorization: 'JWT ' + token,
           }
         }
@@ -80,6 +82,7 @@ function ajax(opt,method){
             url: config.url,
             method: method,
             headers:{
+                'Content-Type': 'application/json',
                 Authorization: 'JWT ' + token,
             },
             data: params
@@ -95,6 +98,7 @@ function ajax(opt,method){
           url: url + opt.url+'/' + params.id,
           method: 'GET',
           headers:{
+             'Content-Type': 'application/json',
               Authorization: 'JWT ' + token,
           }
       }
@@ -103,6 +107,7 @@ function ajax(opt,method){
               url: url + opt.url,
               method: 'GET',
               headers:{
+                  'Content-Type': 'application/json',
                   Authorization: 'JWT ' + token,
               }
           }
@@ -113,6 +118,7 @@ function ajax(opt,method){
               url: config2.url,
               method: 'GET',
               headers:{
+                 'Content-Type': 'application/json',
                   Authorization: 'JWT ' + token,
               },
               data: params
@@ -148,6 +154,7 @@ function ajax(opt,method){
           url: url + opt.url,
           method: method,
           headers:{
+              'Content-Type': 'application/json',
               Authorization: 'JWT ' + token,
           }
       }

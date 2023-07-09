@@ -1,5 +1,5 @@
 ﻿# Host: localhost  (Version: 5.7.26)
-# Date: 2023-07-02 22:19:17
+# Date: 2023-07-09 20:32:40
 # Generator: MySQL-Front 5.3  (Build 4.234)
 
 /*!40101 SET NAMES utf8 */;
@@ -51,7 +51,7 @@ CREATE TABLE `lyadmin_dept` (
   KEY `idx_lyadmin_dept_create_by` (`create_by`),
   KEY `idx_lyadmin_dept_update_by` (`update_by`),
   KEY `idx_lyadmin_dept_belong_dept` (`belong_dept`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
 
 #
 # Data for table "lyadmin_dept"
@@ -104,13 +104,13 @@ CREATE TABLE `lyadmin_menu` (
   KEY `idx_lyadmin_menu_create_by` (`create_by`),
   KEY `idx_lyadmin_menu_update_by` (`update_by`),
   KEY `idx_lyadmin_menu_belong_dept` (`belong_dept`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4;
 
 #
 # Data for table "lyadmin_menu"
 #
 
-REPLACE INTO `lyadmin_menu` VALUES (2,'2023-06-26 15:57:36.000','2023-06-26 15:57:38.000',NULL,'管理员管理','avatar','adminManage',0,1,NULL,NULL,1,0,0,1,NULL,NULL,NULL),(3,'2023-06-26 15:57:40.000','2023-06-27 13:30:18.082',0,'用户管理CRUD','avatar','userManageCrud',0,1,'','',3,0,0,1,NULL,1,NULL),(4,'2023-06-26 15:57:40.000','2023-06-29 23:53:56.118',0,'系统管理','tools','',0,1,'','',990,1,0,1,NULL,1,NULL),(5,'2023-06-26 15:57:40.000','2023-06-26 15:57:39.000',4,'菜单管理','','menuManage',0,1,NULL,NULL,2,0,0,1,NULL,NULL,NULL),(6,'2023-06-26 15:57:40.000','2023-06-26 15:57:39.000',4,'部门管理','','departmentManage',0,1,NULL,NULL,1,0,0,1,NULL,NULL,NULL),(7,'2023-06-27 12:09:22.049','2023-06-27 12:09:22.049',4,'操作日志','InfoFilled','journalManage',0,1,'','',99,0,0,1,1,0,0),(8,'2023-06-27 12:12:34.511','2023-06-27 12:12:34.511',4,'角色管理','','roleManage',0,1,'','',5,0,0,1,1,0,0),(9,'2023-06-28 21:53:41.125','2023-06-28 21:53:41.125',4,'权限管理','','authorityManage',0,1,'','',7,0,0,1,1,0,0),(10,'2023-06-29 21:47:17.157','2023-06-29 23:46:02.081',0,'个人中心','User','personalCenter',0,1,'','',866,0,0,1,2,2,1);
+REPLACE INTO `lyadmin_menu` VALUES (2,'2023-06-26 15:57:36.000','2023-07-09 16:36:27.176',0,'管理员管理','avatar','adminManage',0,1,'','',20,0,0,1,NULL,1,NULL),(3,'2023-06-26 15:57:40.000','2023-07-09 16:37:04.440',0,'用户管理CRUD','UserFilled','userManageCrud',0,1,'','',30,0,0,1,NULL,1,NULL),(4,'2023-06-26 15:57:40.000','2023-06-29 23:53:56.118',0,'系统管理','tools','',0,1,'','',990,1,0,1,NULL,1,NULL),(5,'2023-06-26 15:57:40.000','2023-06-26 15:57:39.000',4,'菜单管理','','menuManage',0,1,NULL,NULL,2,0,0,1,NULL,NULL,NULL),(6,'2023-06-26 15:57:40.000','2023-06-26 15:57:39.000',4,'部门管理','','departmentManage',0,1,NULL,NULL,1,0,0,1,NULL,NULL,NULL),(7,'2023-06-27 12:09:22.049','2023-06-27 12:09:22.049',4,'操作日志','InfoFilled','journalManage',0,1,'','',99,0,0,1,1,0,0),(8,'2023-06-27 12:12:34.511','2023-06-27 12:12:34.511',4,'角色管理','','roleManage',0,1,'','',5,0,0,1,1,0,0),(9,'2023-06-28 21:53:41.125','2023-06-28 21:53:41.125',4,'权限管理','','authorityManage',0,1,'','',7,0,0,1,1,0,0),(10,'2023-06-29 21:47:17.157','2023-07-09 16:38:50.064',0,'个人中心','Place','personalCenter',0,1,'','',866,0,0,1,2,1,1),(11,'2023-07-09 16:35:41.147','2023-07-09 16:36:15.662',0,'DashBoard','DataLine','analysis',0,1,'','',1,0,0,1,1,1,0);
 
 #
 # Structure for table "lyadmin_menu_button"
@@ -132,13 +132,13 @@ CREATE TABLE `lyadmin_menu_button` (
   KEY `idx_lyadmin_menu_button_create_by` (`create_by`),
   KEY `idx_lyadmin_menu_button_update_by` (`update_by`),
   KEY `idx_lyadmin_menu_button_belong_dept` (`belong_dept`)
-) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=45 DEFAULT CHARSET=utf8mb4;
 
 #
 # Data for table "lyadmin_menu_button"
 #
 
-REPLACE INTO `lyadmin_menu_button` VALUES (1,'2023-06-26 10:00:38.000','2023-06-26 10:00:38.000',1,'查询','Search','/api/system/user','GET',NULL,NULL,NULL),(2,'2023-06-26 10:00:38.000','2023-07-01 20:02:22.020',2,'查询','Search','/api/system/user/getAdminUserList','GET',0,1,0),(3,'2023-06-26 10:00:38.000','2023-07-01 12:53:10.393',5,'查询','Search','/api/system/menu/menu','GET',0,0,0),(4,'2023-06-26 10:00:38.000','2023-07-01 12:53:10.393',5,'新增','Create','/api/system/menu/menu','POST',0,0,0),(5,'2023-06-26 10:00:38.000','2023-07-01 12:53:10.393',5,'编辑','Update','/api/system/menu/menu/:id','PUT',0,0,0),(6,'2023-06-26 10:00:38.000','2023-07-01 12:53:10.393',5,'删除','Delete','/api/system/menu/menu/:id','DELETE',0,0,0),(7,'2023-06-27 09:56:05.167','2023-07-01 12:53:10.393',6,'查询','Search','/api/system/dept/dept','GET',1,1,0),(8,'2023-06-27 10:37:32.191','2023-07-01 12:53:10.393',6,'删除','Delete','/api/system/dept/dept/:id','DELETE',1,0,0),(9,'2023-06-27 10:37:51.367','2023-07-01 12:53:10.393',6,'编辑','Update','/api/system/dept/dept/:id','PUT',1,0,0),(10,'2023-06-27 10:37:59.918','2023-07-01 12:53:10.393',6,'新增','Create','/api/system/dept/dept','POST',1,0,0),(12,'2023-06-27 12:09:22.058','2023-07-01 13:43:09.951',7,'删除','Delete','/api/system/operation_log/log/:id','DELETE',1,1,0),(14,'2023-06-27 12:09:22.058','2023-07-01 13:42:36.348',7,'查询','Search','/api/system/operation_log/loglist','GET',1,1,0),(16,'2023-06-27 12:12:34.514','2023-07-01 13:45:10.074',8,'新增','Create','/api/system/role/role','POST',1,1,0),(17,'2023-06-27 12:12:34.514','2023-07-01 13:44:55.888',8,'删除','Delete','/api/system/role/role/:id','DELETE',1,1,0),(18,'2023-06-27 12:12:34.514','2023-07-01 13:44:42.535',8,'编辑','Update','/api/system/role/role/:id','PUT',1,1,0),(19,'2023-06-27 12:12:34.514','2023-07-01 13:44:24.587',8,'查询','Search','/api/system/role/roleList','GET',1,1,0),(21,'2023-06-28 21:53:41.138','2023-07-01 13:38:54.094',9,'保存','Save','/api/system/role/permission','PUT',1,1,0),(24,'2023-06-28 21:53:41.138','2023-07-01 13:41:32.666',9,'查询','Search','/api/system/role/role','GET',1,1,0),(25,'2023-06-28 21:53:41.138','2023-07-01 13:40:24.489',9,'详情','Detail','/api/system/role/role_id_to_menu/:id','GET',1,1,0),(28,'2023-06-29 21:47:17.160','2023-07-01 13:08:11.931',10,'编辑','Update','/api/system/user/setUserInfo','POST',2,1,1),(29,'2023-06-29 21:47:17.160','2023-07-01 13:08:30.574',10,'查询','Search','/api/system/user/getUserInfo','GET',2,1,1),(31,'2023-07-01 00:07:57.490','2023-07-01 13:07:51.096',10,'修改密码','Changepassword','/api/system/user/changePassword','POST',1,1,0);
+REPLACE INTO `lyadmin_menu_button` VALUES (1,'2023-06-26 10:00:38.000','2023-06-26 10:00:38.000',1,'查询','Search','/api/system/user','GET',NULL,NULL,NULL),(2,'2023-06-26 10:00:38.000','2023-07-09 20:31:55.276',2,'查询','Search','/api/system/user/getAdminUserList','GET',0,1,0),(3,'2023-06-26 10:00:38.000','2023-07-09 20:31:55.276',5,'查询','Search','/api/system/menu/menu','GET',0,0,0),(4,'2023-06-26 10:00:38.000','2023-07-09 20:31:55.276',5,'新增','Create','/api/system/menu/menu','POST',0,0,0),(5,'2023-06-26 10:00:38.000','2023-07-09 20:31:55.276',5,'编辑','Update','/api/system/menu/menu/:id','PUT',0,0,0),(6,'2023-06-26 10:00:38.000','2023-07-09 20:31:55.276',5,'删除','Delete','/api/system/menu/menu/:id','DELETE',0,0,0),(7,'2023-06-27 09:56:05.167','2023-07-09 20:31:55.276',6,'查询','Search','/api/system/dept/dept','GET',1,1,0),(8,'2023-06-27 10:37:32.191','2023-07-09 20:31:55.276',6,'删除','Delete','/api/system/dept/dept/:id','DELETE',1,0,0),(9,'2023-06-27 10:37:51.367','2023-07-09 20:31:55.276',6,'编辑','Update','/api/system/dept/dept/:id','PUT',1,0,0),(10,'2023-06-27 10:37:59.918','2023-07-09 20:31:55.276',6,'新增','Create','/api/system/dept/dept','POST',1,0,0),(12,'2023-06-27 12:09:22.058','2023-07-09 20:31:55.276',7,'删除','Delete','/api/system/operation_log/log/:id','DELETE',1,1,0),(14,'2023-06-27 12:09:22.058','2023-07-09 20:31:55.276',7,'查询','Search','/api/system/operation_log/loglist','GET',1,1,0),(16,'2023-06-27 12:12:34.514','2023-07-09 20:31:55.276',8,'新增','Create','/api/system/role/role','POST',1,1,0),(17,'2023-06-27 12:12:34.514','2023-07-09 20:31:55.276',8,'删除','Delete','/api/system/role/role/:id','DELETE',1,1,0),(18,'2023-06-27 12:12:34.514','2023-07-09 20:31:55.276',8,'编辑','Update','/api/system/role/role/:id','PUT',1,1,0),(19,'2023-06-27 12:12:34.514','2023-07-09 20:31:55.276',8,'查询','Search','/api/system/role/roleList','GET',1,1,0),(21,'2023-06-28 21:53:41.138','2023-07-09 20:31:55.276',9,'保存','Save','/api/system/role/permission','PUT',1,1,0),(24,'2023-06-28 21:53:41.138','2023-07-09 20:31:55.276',9,'查询','Search','/api/system/role/role','GET',1,1,0),(25,'2023-06-28 21:53:41.138','2023-07-09 20:31:55.276',9,'详情','Detail','/api/system/role/role_id_to_menu/:id','GET',1,1,0),(28,'2023-06-29 21:47:17.160','2023-07-09 20:31:55.276',10,'编辑','Update','/api/system/user/setUserInfo','POST',2,1,1),(29,'2023-06-29 21:47:17.160','2023-07-09 20:31:55.276',10,'查询','Search','/api/system/user/getUserInfo','GET',2,1,1),(31,'2023-07-01 00:07:57.490','2023-07-09 20:31:55.276',10,'修改密码','Changepassword','/api/system/user/changePassword','POST',1,1,0),(35,'2023-07-09 16:35:41.155','2023-07-09 20:31:55.276',11,'查询','Search','','GET',1,0,0),(36,'2023-07-09 16:35:41.155','2023-07-09 20:31:55.276',11,'详情','Detail','','GET',1,0,0),(37,'2023-07-09 16:43:49.010','2023-07-09 20:31:55.276',2,'新增','Create','/api/system/user/adminUser','POST',1,0,0),(38,'2023-07-09 16:44:36.787','2023-07-09 20:31:55.276',2,'编辑','Update','/api/system/user/adminUser/:id','PUT',1,0,0),(39,'2023-07-09 16:44:47.303','2023-07-09 20:31:55.276',2,'删除','Delete','/api/system/user/adminUser/:id','DELETE',1,0,0),(40,'2023-07-09 20:30:20.229','2023-07-09 20:31:55.276',3,'新增','Create','/api/user/user/users','POST',1,0,0),(41,'2023-07-09 20:30:37.089','2023-07-09 20:31:55.276',3,'编辑','Update','/api/user/user/users/:id','PUT',1,0,0),(42,'2023-07-09 20:30:44.485','2023-07-09 20:31:55.276',3,'删除','Delete','/api/user/user/users/:id','DELETE',1,0,0),(43,'2023-07-09 20:31:02.410','2023-07-09 20:31:55.276',3,'查询','Search','/api/user/user/getUserList','GET',1,0,0),(44,'2023-07-09 20:31:35.822','2023-07-09 20:31:55.276',3,'详情','Detail','/api/user/user/users/:id','GET',1,0,0);
 
 #
 # Structure for table "lyadmin_operation_log"
@@ -165,13 +165,13 @@ CREATE TABLE `lyadmin_operation_log` (
   KEY `idx_lyadmin_operation_log_create_by` (`create_by`),
   KEY `idx_lyadmin_operation_log_update_by` (`update_by`),
   KEY `idx_lyadmin_operation_log_belong_dept` (`belong_dept`)
-) ENGINE=InnoDB AUTO_INCREMENT=1178 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=1263 DEFAULT CHARSET=utf8mb4;
 
 #
 # Data for table "lyadmin_operation_log"
 #
 
-REPLACE INTO `lyadmin_operation_log` VALUES (1175,'2023-07-01 13:46:44.051','2023-07-01 13:46:44.051','127.0.0.1','DELETE','/api/system/operation_log/deletealllogs','200',7327400,'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36 Edg/114.0.1823.58','','{}','{\"code\":2000,\"data\":null,\"msg\":\"清空成功\"}',1,0,0,0),(1176,'2023-07-01 19:58:19.337','2023-07-01 19:58:19.337','127.0.0.1','POST','/api/system/role/role','200',12472100,'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36 Edg/114.0.1823.58','','{\"key\":\"test\",\"name\":\"test2\",\"status\":true,\"sort\":1}','{\"code\":2000,\"data\":null,\"msg\":\"添加成功\"}',1,0,0,0),(1177,'2023-07-01 20:02:22.026','2023-07-01 20:02:22.026','127.0.0.1','PUT','/api/system/menu_button/menu_button/2','200',8168200,'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36 Edg/114.0.1823.58','','{\"id\":2,\"created_at\":\"2023-06-26T10:00:38+08:00\",\"updated_at\":\"2023-07-01T12:53:10.393+08:00\",\"menu_id\":2,\"name\":\"查询\",\"value\":\"Search\",\"api\":\"/api/system/user/getAdminUserList\",\"method\":\"GET\",\"create_by\":0,\"update_by\":0,\"belong_dept\":0}','{\"code\":2000,\"data\":null,\"msg\":\"修改成功\"}',1,0,0,0);
+REPLACE INTO `lyadmin_operation_log` VALUES (1262,'2023-07-09 20:31:59.764','2023-07-09 20:31:59.764','127.0.0.1','DELETE','/api/system/operation_log/deletealllogs','200',6312000,'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36','','{}','{\"code\":2000,\"data\":null,\"msg\":\"清空成功\"}',1,0,0,0);
 
 #
 # Structure for table "lyadmin_post"
@@ -228,7 +228,7 @@ CREATE TABLE `lyadmin_role` (
 # Data for table "lyadmin_role"
 #
 
-REPLACE INTO `lyadmin_role` VALUES (1,'2023-06-26 10:51:03.000','2023-07-01 12:53:10.392','管理员','admin',1,1,0,1,0,3),(2,'2023-07-01 19:58:19.324','2023-07-01 19:58:19.324','test2','test',1,1,1,0,0,0);
+REPLACE INTO `lyadmin_role` VALUES (1,'2023-06-26 10:51:03.000','2023-07-09 20:31:55.275','管理员','admin',1,1,0,1,0,3),(2,'2023-07-01 19:58:19.324','2023-07-01 19:58:19.324','test2','test',1,1,1,0,0,0);
 
 #
 # Structure for table "lyadmin_role_dept"
@@ -259,7 +259,7 @@ CREATE TABLE `lyadmin_role_menu` (
 # Data for table "lyadmin_role_menu"
 #
 
-REPLACE INTO `lyadmin_role_menu` VALUES (1,2),(1,3),(1,4),(1,5),(1,6),(1,7),(1,8),(1,9),(1,10);
+REPLACE INTO `lyadmin_role_menu` VALUES (1,2),(1,3),(1,4),(1,5),(1,6),(1,7),(1,8),(1,9),(1,10),(1,11);
 
 #
 # Structure for table "lyadmin_role_menubutton"
@@ -275,7 +275,7 @@ CREATE TABLE `lyadmin_role_menubutton` (
 # Data for table "lyadmin_role_menubutton"
 #
 
-REPLACE INTO `lyadmin_role_menubutton` VALUES (1,2),(1,3),(1,4),(1,5),(1,6),(1,7),(1,8),(1,9),(1,10),(1,11),(1,12),(1,13),(1,14),(1,15),(1,16),(1,17),(1,18),(1,19),(1,20),(1,21),(1,22),(1,23),(1,24),(1,25),(1,26),(1,27),(1,28),(1,29),(1,30),(1,31);
+REPLACE INTO `lyadmin_role_menubutton` VALUES (1,2),(1,3),(1,4),(1,5),(1,6),(1,7),(1,8),(1,9),(1,10),(1,11),(1,12),(1,13),(1,14),(1,15),(1,16),(1,17),(1,18),(1,19),(1,20),(1,21),(1,22),(1,23),(1,24),(1,25),(1,26),(1,27),(1,28),(1,29),(1,30),(1,31),(1,35),(1,36),(1,37),(1,38),(1,39),(1,40),(1,41),(1,42),(1,43),(1,44);
 
 #
 # Structure for table "lyadmin_users"
@@ -302,19 +302,20 @@ CREATE TABLE `lyadmin_users` (
   `create_by` bigint(20) unsigned DEFAULT NULL COMMENT '创建者',
   `update_by` bigint(20) unsigned DEFAULT NULL COMMENT '更新者',
   `belong_dept` bigint(20) unsigned DEFAULT NULL COMMENT '数据归属部门',
+  `is_delete` tinyint(1) DEFAULT '0' COMMENT '是否删除(1删除、0正常)',
   PRIMARY KEY (`id`),
   UNIQUE KEY `username` (`username`),
   KEY `idx_lyadmin_users_username` (`username`),
   KEY `idx_lyadmin_users_create_by` (`create_by`),
   KEY `idx_lyadmin_users_update_by` (`update_by`),
   KEY `idx_lyadmin_users_belong_dept` (`belong_dept`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
 
 #
 # Data for table "lyadmin_users"
 #
 
-REPLACE INTO `lyadmin_users` VALUES (1,'2023-06-26 08:37:21.068','2023-07-01 00:25:47.008','10ac6b3495304b4c9ad01ec1a437c22d','superadmin','$2a$10$8bFSiG0THdgR2al7yfQBu.kPhS5NGKfZo/C5J2DId8KY5CmpPzjga','超级管理员','超级管理员','','','','未知',0,1,1,1,1,0,0,0),(2,'2023-06-26 10:44:48.690','2023-06-26 10:44:48.690','1401c17e70184764b327be8942a1ac80','admin','$2a$10$aWM7YczX8hq5htpe1yh2v.6TxIGbZhTsPOg1h4U4qS9.XJBiiPyU.','管理员','管理员','','','','男',1,1,0,1,2,0,0,0);
+REPLACE INTO `lyadmin_users` VALUES (1,'2023-06-26 08:37:21.068','2023-07-01 00:25:47.008','10ac6b3495304b4c9ad01ec1a437c22d','superadmin','$2a$10$8bFSiG0THdgR2al7yfQBu.kPhS5NGKfZo/C5J2DId8KY5CmpPzjga','超级管理员','超级管理员','18000000000','','','男',0,1,1,1,1,0,0,0,0),(2,'2023-06-26 10:44:48.690','2023-07-09 16:14:08.828','1401c17e70184764b327be8942a1ac80','admin','$2a$10$aWM7YczX8hq5htpe1yh2v.6TxIGbZhTsPOg1h4U4qS9.XJBiiPyU.','管理员','管理员','18000000000','','','男',1,1,0,1,2,0,1,0,0),(3,'2023-07-09 19:56:41.488','2023-07-09 20:29:43.863','653505e254fe4a2eaf9179a82d80a695','test','$2a$10$HGpnhxNuLBwqt1HJ5gbWnOVof4b6tVIFRDN3/VSQw43hwnwmnIer2','','测试前端用户','18000000000','','','男',0,1,0,1,3,1,1,0,0);
 
 #
 # Structure for table "lyadmin_users_post"
