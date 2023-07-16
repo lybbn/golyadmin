@@ -27,6 +27,9 @@ func Routers() *gin.Engine {
 	// Router.Static("/static", "./dist/static")   // dist里面的静态资源
 	// Router.StaticFile("/", "./dist/index.html") // 前端网页入口页面
 
+	// 配置静态目录,用于访问文件上传等静态文件
+	Router.Static("/media", "./media")
+
 	// 采用https访问，使用SSL证书
 	if global.GL_CONFIG.Ssl.Enable {
 		Router.Use(middleware.LoadSSL())
@@ -68,6 +71,7 @@ func Routers() *gin.Engine {
 			systemRouter.InitButtonRouter(SystemPrivateGroup)
 			systemRouter.InitRoleRouter(SystemPrivateGroup)
 			systemRouter.InitDeptRouter(SystemPrivateGroup)
+			systemRouter.InitFileRouter(SystemPrivateGroup)
 		}
 		UserPrivateGroup := PrivateGroup.Group("user")
 		{

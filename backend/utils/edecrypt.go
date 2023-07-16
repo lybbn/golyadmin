@@ -8,11 +8,7 @@ import (
 	"golang.org/x/crypto/scrypt"
 )
 
-//@function: MD5
-//@description: md5加密
-//@param: str []byte
-//@return: md5 string
-
+// md5加密
 func MD5(str []byte, b ...byte) string {
 	h := md5.New()
 	h.Write(str)

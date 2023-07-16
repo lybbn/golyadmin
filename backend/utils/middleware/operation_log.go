@@ -33,6 +33,7 @@ func OperationLog() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		var body []byte
 		var userId int
+		apiPath := c.Request.URL.Path
 		reMethod := c.Request.Method
 		//不记录GET请求，需要记录请注释以下4行代码
 		if reMethod == "GET" {
@@ -40,13 +41,17 @@ func OperationLog() gin.HandlerFunc {
 			return
 		}
 		if reMethod != http.MethodGet {
-			var err error
-			body, err = io.ReadAll(c.Request.Body)
-			if err != nil {
-				global.GL_LOG.Error("read body from request error:", zap.Error(err))
-			} else {
-				c.Request.Body = io.NopCloser(bytes.NewBuffer(body))
+			//文件上传不记录内容
+			if !strings.Contains(apiPath, "/api/system/file/uploadFile") {
+				var err error
+				body, err = io.ReadAll(c.Request.Body)
+				if err != nil {
+					global.GL_LOG.Error("read body from request error:", zap.Error(err))
+				} else {
+					c.Request.Body = io.NopCloser(bytes.NewBuffer(body))
+				}
 			}
+
 		} else {
 			query := c.Request.URL.RawQuery
 			query, _ = url.QueryUnescape(query)
@@ -73,22 +78,22 @@ func OperationLog() gin.HandlerFunc {
 		record := system.LyadminOperationLog{
 			Ip:     utils.GetRealClientIP(c),
 			Method: reMethod,
-			Path:   c.Request.URL.Path,
+			Path:   apiPath,
 			Agent:  c.Request.UserAgent(),
 			Body:   string(body),
 			UserID: userId,
 		}
 
 		// 上传文件时候 中间件日志进行裁断操作
-		if strings.Contains(c.GetHeader("Content-Type"), "multipart/form-data") {
-			if len(record.Body) > 1024 {
-				// 截断
-				newBody := respPool.Get().([]byte)
-				copy(newBody, record.Body)
-				record.Body = string(newBody)
-				defer respPool.Put(newBody[:0])
-			}
-		}
+		// if strings.Contains(c.GetHeader("Content-Type"), "multipart/form-data") {
+		// 	if len(record.Body) > 1024 {
+		// 		// 截断
+		// 		newBody := respPool.Get().([]byte)
+		// 		copy(newBody, record.Body)
+		// 		record.Body = string(newBody)
+		// 		defer respPool.Put(newBody[:0])
+		// 	}
+		// }
 
 		writer := responseBodyWriter{
 			ResponseWriter: c.Writer,

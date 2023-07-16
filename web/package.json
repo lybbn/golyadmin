@@ -21,7 +21,7 @@
     "cropper": "^4.1.0",
     "crypto-js": "^4.1.1",
     "echarts": "^5.4.2",
-    "element-plus": "^2.3.6",
+    "element-plus": "^2.3.8",
     "file-saver": "^2.0.5",
     "js-base64": "^3.7.5",
     "js-md5": "^0.7.3",

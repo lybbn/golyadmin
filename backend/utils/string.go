@@ -2,6 +2,7 @@ package utils
 
 import (
 	"crypto/rand"
+	mrand "math/rand"
 	"strconv"
 	"strings"
 	"time"
@@ -14,6 +15,23 @@ const (
 	letter         = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
 	formatDateTime = "2006-01-02 15:04:05"
 )
+
+// 获取时间戳
+func GetTimestamp() int64 {
+	return time.Now().Unix()
+}
+
+// GetNowDayStr 获取年月日20060102
+func GetNowDayStr() string {
+	t := "20060102"
+	return time.Now().Format(t)
+}
+
+// 获取年月日2006-01-02
+func GetNowDayStr2() string {
+	t := "2006-01-02"
+	return time.Now().Format(t)
+}
 
 // 获取当前日期时间格式为 2006-01-02 15:04:05
 func GetNowTimeFormatStr() string {
@@ -28,6 +46,11 @@ func DateTimeFormat(datetime time.Time) string {
 // 转换int类型为字符串
 func FormatInt2String(n int) string {
 	return strconv.Itoa(n)
+}
+
+// 转换int64类型为字符串
+func FormatInt642String(n int64) string {
+	return strconv.FormatInt(n, 10)
 }
 
 // 转换uint类型为字符串
@@ -110,9 +133,14 @@ func generateRandString(length int, s string) string {
 	}
 }
 
-// GenerateRandomKey6 生成6为随机字符串
+// GenerateRandomKey6 生成6位随机字符串
 func GenerateRandomKey6() string {
 	return generateRandString(6, letter)
+}
+
+func GenerateRandomNumsInt(min, max int) int {
+	mrand.Seed(time.Now().Unix()) //Seed生成的随机数
+	return mrand.Intn(max-min) + min
 }
 
 // 字符型数组去重

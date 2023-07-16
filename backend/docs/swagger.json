@@ -375,6 +375,39 @@
                 }
             }
         },
+        "/system/file/uploadFile": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "multipart/form-data"
+                ],
+                "tags": [
+                    "Menu"
+                ],
+                "summary": "文件上传",
+                "parameters": [
+                    {
+                        "type": "file",
+                        "description": "file",
+                        "name": "file",
+                        "in": "formData",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "2000": {
+                        "description": "{\"code\": 4000, \"msg\": \"上传失败\"}",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
         "/system/menu/menu": {
             "get": {
                 "security": [
@@ -1710,9 +1743,9 @@
                     "application/json"
                 ],
                 "tags": [
-                    "AdminUser"
+                    "User"
                 ],
-                "summary": "创建管理员用户",
+                "summary": "创建用户",
                 "parameters": [
                     {
                         "description": "用户名, 密码,部门,姓名",
@@ -1726,7 +1759,7 @@
                 ],
                 "responses": {
                     "2000": {
-                        "description": "创建管理员用户,返回包括用户信息",
+                        "description": "创建用户,返回包括用户信息",
                         "schema": {
                             "allOf": [
                                 {
@@ -1808,9 +1841,9 @@
                     "application/json"
                 ],
                 "tags": [
-                    "AdminUser"
+                    "User"
                 ],
-                "summary": "编辑管理员",
+                "summary": "编辑用户",
                 "parameters": [
                     {
                         "description": "model UpdateUsersRequestParams",
@@ -1824,7 +1857,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "编辑管理员",
+                        "description": "编辑用户",
                         "schema": {
                             "allOf": [
                                 {
@@ -2203,7 +2236,6 @@
         "request.CreateUserRequestParams": {
             "type": "object",
             "required": [
-                "dept_id",
                 "password",
                 "username"
             ],
@@ -2275,8 +2307,7 @@
         "request.DisableUserReq": {
             "type": "object",
             "required": [
-                "id",
-                "is_active"
+                "id"
             ],
             "properties": {
                 "id": {

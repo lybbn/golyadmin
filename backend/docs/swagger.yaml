@@ -57,7 +57,6 @@ definitions:
       username:
         type: string
     required:
-    - dept_id
     - password
     - username
     type: object
@@ -71,7 +70,6 @@ definitions:
         type: boolean
     required:
     - id
-    - is_active
     type: object
   request.Empty:
     type: object
@@ -831,6 +829,26 @@ paths:
       summary: 分页获取按钮列表
       tags:
       - Button
+  /system/file/uploadFile:
+    post:
+      consumes:
+      - multipart/form-data
+      parameters:
+      - description: file
+        in: formData
+        name: file
+        required: true
+        type: file
+      responses:
+        "2000":
+          description: '{"code": 4000, "msg": "上传失败"}'
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: 文件上传
+      tags:
+      - Menu
   /system/menu/menu:
     delete:
       consumes:
@@ -1645,7 +1663,7 @@ paths:
       - application/json
       responses:
         "2000":
-          description: 创建管理员用户,返回包括用户信息
+          description: 创建用户,返回包括用户信息
           schema:
             allOf:
             - $ref: '#/definitions/response.StructResponse'
@@ -1655,9 +1673,9 @@ paths:
                 msg:
                   type: string
               type: object
-      summary: 创建管理员用户
+      summary: 创建用户
       tags:
-      - AdminUser
+      - User
   /system/user/adminUser/:id:
     put:
       parameters:
@@ -1671,7 +1689,7 @@ paths:
       - application/json
       responses:
         "200":
-          description: 编辑管理员
+          description: 编辑用户
           schema:
             allOf:
             - $ref: '#/definitions/response.StructResponse'
@@ -1683,9 +1701,9 @@ paths:
               type: object
       security:
       - ApiKeyAuth: []
-      summary: 编辑管理员
+      summary: 编辑用户
       tags:
-      - AdminUser
+      - User
   /system/user/changePassword:
     post:
       parameters:

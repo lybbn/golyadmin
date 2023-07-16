@@ -11,6 +11,7 @@ type ApiGroup struct {
 	MenuButtonApi
 	ButtonApi
 	DeptApi
+	FileApi
 }
 
 var (

@@ -65,11 +65,11 @@
                 let obj= await platformsettingsUploadPlatformImg(param)
                 if(obj.code == 2000) {
                     let res=''
-                    if (obj.data.data[0].indexOf("://")>=0){
-                        res = obj.data.data[0]
+                    if (obj.data.indexOf("://")>=0){
+                        res = obj.data
 
                     }else{
-                        res = url.split('/api')[0]+obj.data.data[0]
+                        res = url.split('/api')[0]+obj.data
                     }
                     vm.imageurl = res
                 } else {

@@ -383,6 +383,39 @@ const docTemplate = `{
                 }
             }
         },
+        "/system/file/uploadFile": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "multipart/form-data"
+                ],
+                "tags": [
+                    "Menu"
+                ],
+                "summary": "文件上传",
+                "parameters": [
+                    {
+                        "type": "file",
+                        "description": "file",
+                        "name": "file",
+                        "in": "formData",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "2000": {
+                        "description": "{\"code\": 4000, \"msg\": \"上传失败\"}",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
         "/system/menu/menu": {
             "get": {
                 "security": [
@@ -1718,9 +1751,9 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "AdminUser"
+                    "User"
                 ],
-                "summary": "创建管理员用户",
+                "summary": "创建用户",
                 "parameters": [
                     {
                         "description": "用户名, 密码,部门,姓名",
@@ -1734,7 +1767,7 @@ const docTemplate = `{
                 ],
                 "responses": {
                     "2000": {
-                        "description": "创建管理员用户,返回包括用户信息",
+                        "description": "创建用户,返回包括用户信息",
                         "schema": {
                             "allOf": [
                                 {
@@ -1816,9 +1849,9 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "AdminUser"
+                    "User"
                 ],
-                "summary": "编辑管理员",
+                "summary": "编辑用户",
                 "parameters": [
                     {
                         "description": "model UpdateUsersRequestParams",
@@ -1832,7 +1865,7 @@ const docTemplate = `{
                 ],
                 "responses": {
                     "200": {
-                        "description": "编辑管理员",
+                        "description": "编辑用户",
                         "schema": {
                             "allOf": [
                                 {
@@ -2211,7 +2244,6 @@ const docTemplate = `{
         "request.CreateUserRequestParams": {
             "type": "object",
             "required": [
-                "dept_id",
                 "password",
                 "username"
             ],
@@ -2283,8 +2315,7 @@ const docTemplate = `{
         "request.DisableUserReq": {
             "type": "object",
             "required": [
-                "id",
-                "is_active"
+                "id"
             ],
             "properties": {
                 "id": {
