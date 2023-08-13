@@ -52,14 +52,14 @@ module.exports = {
 	//菜单默认是否折叠
 	MENU_IS_COLLAPSE: false,
 
-	//左侧菜单默认宽度 默认 190
-	MENU_WIDTH: 190,
+	//左侧菜单默认宽度 默认 200
+	MENU_WIDTH: 200,
 
 	// 左侧菜单和顶部导航颜色 默认 #272E39
 	MENU_HEADER_COLOR:'#272E39',
 
 	//主题颜色
-	COLOR: '#409EFF',
+	COLOR: '#1966ff',
 
     //默认主题 'dark' 暗黑、'light' 正常
 	THEME: 'light',

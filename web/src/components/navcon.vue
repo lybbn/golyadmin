@@ -103,8 +103,8 @@
     let userNameF = ref("")
     let mobileWidth = ref(992)
     let isFullscreen = ref(mutitabsStore.isFullscreen)
-    let colorList = ref(['#409EFF', '#536dfe','#722ed1','#009688','#52c41a','#faad14','#ff5c93', '#c62f2f', '#fd726d'])
-    let colorPrimary = ref(siteThemeStore.colorPrimary || '#409EFF')
+    let colorList = ref(['#1966ff','#409EFF', '#536dfe','#722ed1','#009688','#52c41a','#faad14','#ff5c93', '#c62f2f', '#fd726d'])
+    let colorPrimary = ref(siteThemeStore.colorPrimary || '#1966ff')
 
     function setColorPrimary() {
         siteThemeStore.setColorPrimary(colorPrimary.value)
