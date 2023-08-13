@@ -12,6 +12,7 @@ type ApiGroup struct {
 	ButtonApi
 	DeptApi
 	FileApi
+	SystemApi
 }
 
 var (
@@ -23,4 +24,5 @@ var (
 	menuButtonService   = service.ServiceGroupApp.SystemServiceGroup.MenuButtonService
 	buttonService       = service.ServiceGroupApp.SystemServiceGroup.ButtonService
 	deptService         = service.ServiceGroupApp.SystemServiceGroup.DeptService
+	systemConfigService = service.ServiceGroupApp.SystemServiceGroup.SystemConfigService
 )

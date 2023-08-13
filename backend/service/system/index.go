@@ -9,4 +9,5 @@ type ServiceGroup struct {
 	MenuButtonService
 	ButtonService
 	DeptService
+	SystemConfigService
 }

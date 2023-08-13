@@ -72,6 +72,7 @@ func Routers() *gin.Engine {
 			systemRouter.InitRoleRouter(SystemPrivateGroup)
 			systemRouter.InitDeptRouter(SystemPrivateGroup)
 			systemRouter.InitFileRouter(SystemPrivateGroup)
+			systemRouter.InitSystemRouter(SystemPrivateGroup)
 		}
 		UserPrivateGroup := PrivateGroup.Group("user")
 		{

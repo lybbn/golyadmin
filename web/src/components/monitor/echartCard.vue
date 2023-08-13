@@ -22,7 +22,7 @@
                                 </div>
                                 <LyLineEchart ref="lyecharts1" v-model="network"></LyLineEchart>
                             </el-tab-pane>
-                            <el-tab-pane label="磁盘IO" name="tab2">
+                            <!-- <el-tab-pane label="磁盘IO" name="tab2">
                                 <div class="lymonitor-info-disk">
                                     <div class="lymonitor-info-disk-item"><p><span class="lyico-read"></span>读取</p><a>{{formatUnitSize(iostat.read_bytes)}}</a></div>
                                     <div class="lymonitor-info-disk-item"><p><span class="lyico-write"></span>写入</p><a>{{formatUnitSize(iostat.write_bytes)}}</a></div>
@@ -38,7 +38,7 @@
                                     </el-select>
                                 </div>
                                 <lyLineEchartIostat ref="lyecharts2" v-if="activeName == 'tab2'" v-model="iostat" :is_windows="dataList.is_windows"></lyLineEchartIostat>
-                            </el-tab-pane>
+                            </el-tab-pane> -->
                         </template>
                     </el-skeleton>
                 </el-tabs>

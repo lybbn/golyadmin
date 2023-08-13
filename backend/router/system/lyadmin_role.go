@@ -8,7 +8,7 @@ import (
 
 type RoleRouter struct{}
 
-func (m *MenuRouter) InitRoleRouter(Router *gin.RouterGroup) {
+func (m *RoleRouter) InitRoleRouter(Router *gin.RouterGroup) {
 	roleRouter := Router.Group("role").Use(middleware.OperationLog())
 	roleApi := v1.ApiGroupApp.SystemApiGroup.RoleApi
 	{

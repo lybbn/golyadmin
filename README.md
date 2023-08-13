@@ -2,7 +2,9 @@
 
 ### 项目介绍
 
-> golyadmin是一个基于 golang、 [vue](https://vuejs.org) 和 [gin](https://gin-gonic.com) 开发的全栈前后端分离的开发基础平台，集成jwt鉴权，动态路由，动态菜单，RBAC鉴权等功能，提供多种示例文件，让您的开发效率更高。
+> golyadmin是一个基于 golang、 [vue](https://vuejs.org) 和 [gin](https://gin-gonic.com) 开发的全栈前后端分离的开发基础平台，集成jwt鉴权，动态路由，动态菜单，RBAC鉴权等功能，提供多种示例文件，让您的开发效率更高。前端admin部分依旧采用django-vue-lyadmin的前端，熟悉的权限设计和前端页面以及熟悉的代码。大大节省您多个不同语言项目切换时所花费的学习成本。
+
+[ 官方文档 ](https://doc.lybbn.cn/) | [django-vue-lyadmin](https://gitee.com/lybbn/django-vue-lyadmin)
 
 ## 使用说明
 
@@ -93,9 +95,36 @@ swag init
 
 > 执行上面的命令后，server目录下会出现docs文件夹里的 `docs.go`, `swagger.json`, `swagger.yaml` 三个文件更新，启动go服务之后, 在浏览器输入 [http://localhost:9000/api/v1/swagger/index.html](http://localhost:9000/api/v1/swagger/index.html) 即可查看swagger文档
 
+## lyadmin前端
+
+#### 安装教程
+
+```
+cd frontend
+npm install --registry=https://registry.npm.taobao.org
+```
+
+#### 使用说明
+
+调试开发直接运行： 
+
+```
+npm start
+```
+
+#### 打包
+
+
+```
+npm run build
+```
+
+打包后静态文件在 dist 目录中
+
 ## 技术选型
 
 - 后端：用 [Gin](https://gin-gonic.com/) 快速搭建基础restful风格API，[Gin](https://gin-gonic.com/) 是一个go语言编写的Web框架。
+- 前端：用 [Vue3](https://vuejs.org) 和[ElementPlus](https://element-plus.org/zh-CN/) ，框架部分依然采用[django-vue-lyadmin](https://gitee.com/lybbn/django-vue-lyadmin)的前端部分。
 - 数据库：采用`MySql` >= (5.7) 版本 数据库引擎 InnoDB，使用 [gorm](http://gorm.cn) 实现对数据库的基本操作。
 - 缓存：使用`Redis`实现记录当前活跃用户的`jwt`令牌并实现多点登录限制。
 - API文档：使用`Swagger`构建自动化文档。
@@ -119,4 +148,4 @@ swag init
 
 ## 商用注意事项
 
-如果您将此项目用于商业用途，请遵守Apache2.0协议并保留作者技术支持声明。
+如果您将此项目用于商业用途，请遵守Apache2.0协议并保留作者文件头部等信息声明。

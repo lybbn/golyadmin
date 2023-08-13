@@ -11,5 +11,7 @@ type RouterGroup struct {
 	MenuButtonRouter
 	ButtonRouter
 	DeptRouter
+	RoleRouter
 	FileRouter
+	SystemRouter
 }
