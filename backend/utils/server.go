@@ -30,18 +30,19 @@ const (
 )
 
 type LySystemMonitorInfo struct {
-	IsWindows bool    `json:"is_windows"`
-	Time      string  `json:"time"`
-	System    string  `json:"system"`
-	Mem       memInfo `json:"mem"`
+	IsWindows bool       `json:"is_windows"`
+	Time      string     `json:"time"`
+	System    string     `json:"system"`
+	Mem       memInfo    `json:"mem"`
+	Disk      []diskInfo `json:"disk"`
 }
 
 type diskInfo struct {
-	UsedMB      int `json:"usedMb"`
-	UsedGB      int `json:"usedGb"`
-	TotalMB     int `json:"totalMb"`
-	TotalGB     int `json:"totalGb"`
-	UsedPercent int `json:"usedPercent"`
+	Path       string   `json:"path"`
+	Filesystem string   `json:"filesystem"`
+	Type       string   `json:"type"`
+	Size       []string `json:"size"`
+	Inodes     []string `json:"inodes"`
 }
 
 type memInfo struct {
@@ -54,18 +55,18 @@ type memInfo struct {
 // 获取系统信息
 func LyGetSystemAllInfo() LySystemMonitorInfo {
 	var data LySystemMonitorInfo
-	data.Mem = getMemInfo()
+	data.Mem = GetMemInfo()
 	// data['load_average'] = self.GetLoadAverage()
 	// data['network'] = self.GetNetWork()
 	// data['cpu'] = self.GetCpuInfo(1)
-	// data['disk'] = self.GetDiskInfo()
-	data.Time = getBootTime()
-	data.System = getSystemVersion()
-	data.IsWindows = isWindows()
+	data.Disk = GetDiskInfo()
+	data.Time = GetBootTime()
+	data.System = GetSystemVersion()
+	data.IsWindows = IsWindows()
 	return data
 }
 
-func isWindows() bool {
+func IsWindows() bool {
 	plat := strings.ToLower(runtime.GOOS)
 	if plat == "windows" {
 		return true
@@ -73,7 +74,7 @@ func isWindows() bool {
 	return false
 }
 
-func getBootTime() string {
+func GetBootTime() string {
 	boottime, _ := host.BootTime()
 	nowtime := time.Now().Unix()
 	boottimeUnix := time.Unix(int64(boottime), 0).Unix()
@@ -82,11 +83,11 @@ func getBootTime() string {
 	return result
 }
 
-func getSystemVersion() string {
+func GetSystemVersion() string {
 	n, _ := host.Info()
 	plat := n.Platform
 	platV := n.PlatformVersion
-	if isWindows() {
+	if IsWindows() {
 		platArr := strings.Fields(plat)
 		plat = platArr[1] + " " + platArr[2]
 		platVArr := strings.Split(platV, "Build")
@@ -98,7 +99,7 @@ func getSystemVersion() string {
 	return sysversion
 }
 
-func getMemInfo() (m memInfo) {
+func GetMemInfo() (m memInfo) {
 	if u, err := mem.VirtualMemory(); err != nil {
 		return m
 	} else {
@@ -110,15 +111,27 @@ func getMemInfo() (m memInfo) {
 	return m
 }
 
-func getDiskInfo() (d diskInfo) {
-	if u, err := disk.Usage("/"); err != nil {
+func GetDiskInfo() (d []diskInfo) {
+	if IsWindows() {
+		diskParts, _ := disk.Partitions(true)
+		for _, value := range diskParts {
+			var dInfo diskInfo
+			dInfo.Path = value.Mountpoint + "/"
+			dInfo.Filesystem = value.Fstype
+			diskInfoms, _ := disk.Usage(value.Mountpoint)
+			dInfo.Size = append(dInfo.Size, FormatInt2String(int(diskInfoms.Total)/GB))
+			dInfo.Size = append(dInfo.Size, FormatInt2String(int(diskInfoms.Used)/GB))
+			dInfo.Size = append(dInfo.Size, FormatInt2String(int(diskInfoms.Free)/GB))
+			dInfo.Size = append(dInfo.Size, FormatFloat2String(float64(diskInfoms.UsedPercent), 1))
+			d = append(d, dInfo)
+		}
 		return d
 	} else {
-		d.UsedMB = int(u.Used) / MB
-		d.UsedGB = int(u.Used) / GB
-		d.TotalMB = int(u.Total) / MB
-		d.TotalGB = int(u.Total) / GB
-		d.UsedPercent = int(u.UsedPercent)
+		return d
 	}
-	return d
+
+}
+
+func GetLoadAverage() {
+
 }

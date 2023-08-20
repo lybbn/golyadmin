@@ -10,7 +10,7 @@ system:
   upload-dir: "media/uploadfile/" # 文件上传目录
   url-prefix: http://127.0.0.1:9000 # 文件上传等使用的地址前缀
   is-swagger: true #是否路由注册swagger文档访问
-  gorm-log-mode: "" #开启Gorm全局日志等级 "silent"、"error"、"warn"、"info" 不填默认info 填入silent可以关闭控制台日志
+  gorm-log-mode: "" #开启Gorm全局日志等级 "silent"、"error"、"warn"、"info" 不填默认info 填入silent可以关闭控制台GORM日志
   gorm-log-zap: false #是否写入zap
 
 # jwt 认证

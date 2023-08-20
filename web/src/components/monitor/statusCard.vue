@@ -49,9 +49,9 @@
                             <div class="space-main-up">
                                 <el-progress type="circle" :percentage="dataList.mem.percent" :stroke-width="8" :color="colors"/>
                                 <div class="space-main-up-cpu">
-                                    <span>总共内存：{{dataList.mem.total}}GB</span>
-                                    <span>已用内存：{{dataList.mem.used}}GB</span>
-                                    <span>剩余内存：{{dataList.mem.free}}GB</span>
+                                    <span>总共内存：{{(dataList.mem.total/1024).toFixed(2)}}GB</span>
+                                    <span>已用内存：{{(dataList.mem.used/1024).toFixed(2)}}GB</span>
+                                    <span>剩余内存：{{(dataList.mem.free/1024).toFixed(2)}}GB</span>
                                 </div>
                             </div>
                         </div>

@@ -58,6 +58,11 @@ func FormatUint2String(n uint64) string {
 	return strconv.FormatUint(n, 10)
 }
 
+// 转换float类型为字符串 s为要保留的位数
+func FormatFloat2String(n float64, s int) string {
+	return strconv.FormatFloat(n, 'f', s, 64)
+}
+
 // 转换字符串类型为int
 func FormatString2Int(v string) (int, error) {
 	return strconv.Atoi(v)
