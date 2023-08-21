@@ -22,23 +22,6 @@
                                 </div>
                                 <LyLineEchart ref="lyecharts1" v-model="network"></LyLineEchart>
                             </el-tab-pane>
-                            <!-- <el-tab-pane label="磁盘IO" name="tab2">
-                                <div class="lymonitor-info-disk">
-                                    <div class="lymonitor-info-disk-item"><p><span class="lyico-read"></span>读取</p><a>{{formatUnitSize(iostat.read_bytes)}}</a></div>
-                                    <div class="lymonitor-info-disk-item"><p><span class="lyico-write"></span>写入</p><a>{{formatUnitSize(iostat.write_bytes)}}</a></div>
-                                    <div class="lymonitor-info-disk-item"><p>读写/秒</p><a>{{iostat.read_count + iostat.write_count + '次'}}</a></div>
-                                    <div class="lymonitor-info-disk-item"><p>IO延迟</p><a :style="{'color': ioYCTime > 100 && ioYCTime < 1000 ? '#e6a23c' : ioYCTime >= 1000 ? 'red' : '#67c23a'}">{{ ioYCTime + 'ms'}}</a></div>
-                                    <el-select v-model="iostatValue"  placeholder="Select" size="large" @change="iostatSelectChange" style="width: 160px;">
-                                        <el-option
-                                          v-for="item in iostatOptions"
-                                          :key="item.value"
-                                          :label="item.label"
-                                          :value="item.value"
-                                        />
-                                    </el-select>
-                                </div>
-                                <lyLineEchartIostat ref="lyecharts2" v-if="activeName == 'tab2'" v-model="iostat" :is_windows="dataList.is_windows"></lyLineEchartIostat>
-                            </el-tab-pane> -->
                         </template>
                     </el-skeleton>
                 </el-tabs>
@@ -49,10 +32,9 @@
 
 <script>
     import LyLineEchart from "./lyLineEchart";
-    import lyLineEchartIostat from "./lyLineEchartIostat"
     export default {
         name: "LyMonitorEchartcard",
-        components: {LyLineEchart,lyLineEchartIostat},
+        components: {LyLineEchart},
         data(){
             return{
                 activeName:"tab1",
@@ -157,32 +139,6 @@
                 }else{
                     this.network = Object.values(this.dataList.network.network)[this.networkValue]
                 }
-                var tempiostat = this.dataList.network.iostat
-                var tempIostatOptions = [
-                    {
-                    value: 'ALL',
-                    label: '全部',
-                    },
-                ]
-                if(Object.keys(tempiostat).length>1){
-                    for (let i = 0; i<Object.keys(tempiostat).length;i++) {
-                        if(i == 0){
-
-                        }else{
-                            tempIostatOptions.push({
-                                value:i,
-                                label:Object.keys(tempiostat)[i],
-                            })
-                        }
-                    }
-                }
-
-                this.iostatOptions = tempIostatOptions
-                if(this.iostatValue == 'ALL'){
-                    this.iostat = this.dataList.network.iostat['ALL']
-                }else{
-                    this.iostat = Object.values(this.dataList.network.iostat)[this.iostatValue]
-                }
             },
             dataList: function(nval) {
                 this.$emit('update:modelValue', nval);
@@ -202,13 +158,6 @@
                     this.network = this.dataList.network
                 }else{
                     this.network = Object.values(this.dataList.network.network)[this.networkValue]
-                }
-            },
-            iostatSelectChange(){
-                if(this.iostatValue == 'ALL'){
-                    this.iostat = this.dataList.network.iostat['ALL']
-                }else{
-                    this.iostat = Object.values(this.dataList.network.iostat)[this.iostatValue]
                 }
             },
             handleResize() {

@@ -63,9 +63,33 @@ func FormatFloat2String(n float64, s int) string {
 	return strconv.FormatFloat(n, 'f', s, 64)
 }
 
+// 保留float64类型小数点位数 s为要保留的位数
+func FormatFloat64ToFloat64(n float64, s int) float64 {
+	value, _ := strconv.ParseFloat(strconv.FormatFloat(n, 'f', s, 64), 64)
+	return value
+}
+
 // 转换字符串类型为int
 func FormatString2Int(v string) (int, error) {
 	return strconv.Atoi(v)
+}
+
+// 转换字符串类型为int64
+func FormatString2Int64(v string) int64 {
+	value, _ := strconv.ParseInt(v, 10, 64)
+	return value
+}
+
+// 转换字符串类型为uint64
+func FormatString2Uint64(v string) uint64 {
+	value, _ := strconv.ParseUint(v, 0, 64)
+	return value
+}
+
+// 转换字符串类型为float64
+func FormatString2Float64(v string) float64 {
+	value, _ := strconv.ParseFloat(v, 64)
+	return value
 }
 
 // 转换字符串类型为bool
