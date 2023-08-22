@@ -28,7 +28,7 @@ gitee地址(主推)：https://gitee.com/lybbn/golyadmin
 *  个人中心：主要设置登录系统的个人昵称、密码等账号信息。
 *  操作日志：系统正常操作日志记录和查询；系统异常信息日志记录和查询。
 
-特别鸣谢：本平台的一部分设计模式，部分参考[gin-vue-admin](https://gitee.com/dvadmin/django-vue-admin-pro)
+特别鸣谢：本平台的一部分设计模式，部分参考[gin-vue-admin](https://github.com/flipped-aurora/gin-vue-admin)
 
 ## 交流
 - 开发者WX号：laoyanyj
@@ -40,6 +40,7 @@ gitee地址(主推)：https://gitee.com/lybbn/golyadmin
 ## 使用说明
 
 ```
+- node版本 > v16.8.3
 - golang版本 >= v1.20
 - IDE推荐：vscode
 ```
