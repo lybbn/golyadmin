@@ -199,7 +199,11 @@ func GetDiskInfo() (d []diskInfo) {
 		return d
 	} else {
 		diskParts, _ := disk.Partitions(true)
+		cuts := []string{"/mnt/cdrom", "/boot", "/boot/efi", "/dev", "/dev/shm", "/run/lock", "/run", "/run/shm", "/run/user", "/sys"}
 		for _, value := range diskParts {
+			if IsContainStr(cuts, value.Mountpoint) {
+				continue
+			}
 			if value.Mountpoint == "/" {
 				var dInfo diskInfo
 				dInfo.Path = value.Mountpoint
