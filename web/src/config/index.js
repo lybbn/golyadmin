@@ -1,7 +1,7 @@
 //API DOMAIN
-const API_DOMAIN = process.env.NODE_ENV === 'development' ? "127.0.0.1:9000" : "127.0.0.1:9000"
+const API_DOMAIN = process.env.NODE_ENV === 'development' ? "127.0.0.1:9000" : "golyadmin.lybbn.cn"
 // 接口地址
-const API_BASEURL = process.env.NODE_ENV === 'development' ? "http://"+ API_DOMAIN +"/api/" : "http://"+ API_DOMAIN +"/api/"
+const API_BASEURL = process.env.NODE_ENV === 'development' ? "http://"+ API_DOMAIN +"/api/" : "https://"+ API_DOMAIN +"/api/"
 //版本号
 const APP_VER = require('../../package.json').version
 //是否开启代理
