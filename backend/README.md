@@ -95,32 +95,6 @@ swag init
 
 > 执行上面的命令后，server目录下会出现docs文件夹里的 `docs.go`, `swagger.json`, `swagger.yaml` 三个文件更新，启动go服务之后, 在浏览器输入 [http://localhost:9000/api/v1/swagger/index.html](http://localhost:9000/api/v1/swagger/index.html) 即可查看swagger文档
 
-## lyadmin前端
-
-#### 安装教程
-
-```
-cd frontend
-npm install --registry=https://registry.npm.taobao.org
-```
-
-#### 使用说明
-
-调试开发直接运行： 
-
-```
-npm start
-```
-
-#### 打包
-
-
-```
-npm run build
-```
-
-打包后静态文件在 dist 目录中
-
 ## 技术选型
 
 - 后端：用 [Gin](https://gin-gonic.com/) 快速搭建基础restful风格API，[Gin](https://gin-gonic.com/) 是一个go语言编写的Web框架。

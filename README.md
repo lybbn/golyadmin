@@ -6,6 +6,37 @@
 
 [ 官方文档 ](https://doc.lybbn.cn/) | [django-vue-lyadmin](https://gitee.com/lybbn/django-vue-lyadmin)
 
+## 在线体验
+
+* 演示地址：[https://golyadmin.lybbn.cn](http://golyadmin.lybbn.cn) 账号：admin 密码：123456
+
+## 源码地址
+
+gitee地址(主推)：https://gitee.com/lybbn/golyadmin
+
+## 内置功能
+
+*  DashBoard： 数据分析查看
+*  CRUD： 面向配置的crud功能
+*  服务器监控面板（运维能力），支持windows和linux服务器的实时服务器资源状态监控
+*  部门管理：配置系统组织机构（公司、部门、角色），树结构展现支持数据权限。
+*  菜单管理：配置系统菜单，操作权限，按钮权限标识、后端接口权限等。
+*  角色管理：角色菜单权限、数据权限、设置角色按部门进行数据范围权限划分。
+*  权限管理：授权角色的权限范围。
+*  管理员管理：主要管理系统管理员账号。
+*  用户管理：主要管理前端用户。
+*  个人中心：主要设置登录系统的个人昵称、密码等账号信息。
+*  操作日志：系统正常操作日志记录和查询；系统异常信息日志记录和查询。
+
+特别鸣谢：本平台的一部分设计模式，部分参考[gin-vue-admin](https://gitee.com/dvadmin/django-vue-admin-pro)
+
+## 交流
+- 开发者WX号：laoyanyj
+
+- QQ群号：
+
+* golyadmin交流01群：810799958 <a target="_blank" href="http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=ciRlLqTydhPej_GH_VQKgqyvWpvPftZo&authKey=JFbkoTwhq74OKbixC71VnxnIBqYY1WNce0bRI3954bl7YPPSzjBlRMsy0LH9Hm2k&noverify=0&group_code=810799958"><img border="0" src="//pub.idqqimg.com/wpa/images/group.png" alt="点击链接加入群聊" title="golyadmin交流01群"></a>
+
 ## 使用说明
 
 ```
@@ -149,3 +180,14 @@ npm run build
 ## 商用注意事项
 
 如果您将此项目用于商业用途，请遵守Apache2.0协议并保留作者文件头部等信息声明。
+
+## 捐赠该项目
+
+开源不易，可使用支付宝、微信扫下面二维码打赏支持。您的支持是我不断创作的动力！！！
+
+<table>
+    <tr>
+        <td><img src="https://gitee.com/lybbn/django-vue-lyadmin/raw/master/frontend/src/assets/img/alipay.jpg" height="300" width="400"/></td>
+        <td><img src="https://gitee.com/lybbn/django-vue-lyadmin/raw/master/frontend/src/assets/img/wechat.jpg" height="300" width="400"/></td>
+    </tr>
+</table>
