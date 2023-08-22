@@ -149,7 +149,7 @@ func GetMemInfo() (m memInfo) {
 		m.Free = float64(u.Free / MB)
 		m.Used = float64(u.Used / MB)
 		m.Total = float64(u.Total / MB)
-		m.Percent = u.UsedPercent
+		m.Percent = FormatFloat64ToFloat64(u.UsedPercent, 1)
 	}
 	return m
 }
@@ -200,15 +200,17 @@ func GetDiskInfo() (d []diskInfo) {
 	} else {
 		diskParts, _ := disk.Partitions(true)
 		for _, value := range diskParts {
-			var dInfo diskInfo
-			dInfo.Path = value.Mountpoint
-			dInfo.Type = value.Fstype
-			diskInfoms, _ := disk.Usage(value.Mountpoint)
-			dInfo.Size = append(dInfo.Size, FormatFloat2String(float64(diskInfoms.Total)/float64(GB), 1)+"G")
-			dInfo.Size = append(dInfo.Size, FormatFloat2String(float64(diskInfoms.Used)/float64(GB), 1)+"G")
-			dInfo.Size = append(dInfo.Size, FormatFloat2String(float64(diskInfoms.Free)/float64(GB), 1)+"G")
-			dInfo.Size = append(dInfo.Size, FormatFloat2String(diskInfoms.UsedPercent, 1))
-			d = append(d, dInfo)
+			if value.Mountpoint == "/" {
+				var dInfo diskInfo
+				dInfo.Path = value.Mountpoint
+				dInfo.Type = value.Fstype
+				diskInfoms, _ := disk.Usage(value.Mountpoint)
+				dInfo.Size = append(dInfo.Size, FormatFloat2String(float64(diskInfoms.Total)/float64(GB), 1)+"G")
+				dInfo.Size = append(dInfo.Size, FormatFloat2String(float64(diskInfoms.Used)/float64(GB), 1)+"G")
+				dInfo.Size = append(dInfo.Size, FormatFloat2String(float64(diskInfoms.Free)/float64(GB), 1)+"G")
+				dInfo.Size = append(dInfo.Size, FormatFloat2String(diskInfoms.UsedPercent, 1))
+				d = append(d, dInfo)
+			}
 		}
 		return d
 	}
