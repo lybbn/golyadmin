@@ -48,6 +48,13 @@ func PermissionMiddleware() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		uinfo := utils.GetUserInfo(c)
 		identity := uinfo.BaseClaims.Identity
+		// 演示模式判断
+		allow_methodname_list := []string{"GET", "OPTIONS"}
+		if global.GL_CONFIG.System.IsDemo && !utils.IsContainStr(allow_methodname_list, c.Request.Method) {
+			response.ErrorResponse("演示模式，不允许操作!", c)
+			c.Abort()
+			return
+		}
 		//超级管理员跳过
 		if identity == 1 {
 			c.Next()
