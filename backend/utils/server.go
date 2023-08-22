@@ -187,7 +187,7 @@ func GetDiskInfo() (d []diskInfo) {
 		diskParts, _ := disk.Partitions(true)
 		for _, value := range diskParts {
 			var dInfo diskInfo
-			dInfo.Path = value.Mountpoint + "/"
+			dInfo.Path = value.Mountpoint + "\\"
 			dInfo.Type = value.Fstype
 			diskInfoms, _ := disk.Usage(value.Mountpoint)
 			dInfo.Size = append(dInfo.Size, FormatFloat2String(float64(diskInfoms.Total)/float64(GB), 1)+"G")

@@ -261,7 +261,7 @@ function hasPermission(url,btnName) {
 }
 
 function getTableHeight(tableSelectHeight,allowPage=true){
-    var pagination_height = allowPage?176:0;
+    var pagination_height = allowPage?178:0;
     let height = (window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight) - tableSelectHeight;
     var ua = navigator.userAgent;
     //获取当前设备类型（安卓或苹果）

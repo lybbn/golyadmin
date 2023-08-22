@@ -4,15 +4,17 @@
 
 > golyadmin是一个基于 golang、 [vue](https://vuejs.org) 和 [gin](https://gin-gonic.com) 开发的全栈前后端分离的开发基础平台，集成jwt鉴权，动态路由，动态菜单，RBAC鉴权等功能，提供多种示例文件，让您的开发效率更高。前端admin部分依旧采用django-vue-lyadmin的前端，熟悉的权限设计和前端页面以及熟悉的代码。大大节省您多个不同语言项目切换时所花费的学习成本。
 
-[ 官方文档 ](https://doc.lybbn.cn/) | [django-vue-lyadmin](https://gitee.com/lybbn/django-vue-lyadmin)
+[ 预览 ](https://golyadmin.lybbn.cn) |[ 官方文档 ](https://doc.lybbn.cn/) | [django-vue-lyadmin](https://gitee.com/lybbn/django-vue-lyadmin)
 
 ## 在线体验
 
-* 演示地址：[https://golyadmin.lybbn.cn](http://golyadmin.lybbn.cn) 账号：admin 密码：123456
+* 演示地址：[https://golyadmin.lybbn.cn](https://golyadmin.lybbn.cn) 账号：admin 密码：123456
+
+![image-shouquan](https://gitee.com/lybbn/golyadmin/raw/master/web/src/assets/img/shouquan.png)
 
 ## 源码地址
 
-gitee地址(主推)：https://gitee.com/lybbn/golyadmin
+* gitee地址(主推)：https://gitee.com/lybbn/golyadmin
 
 ## 内置功能
 
@@ -31,16 +33,15 @@ gitee地址(主推)：https://gitee.com/lybbn/golyadmin
 特别鸣谢：本平台的一部分设计模式，部分参考[gin-vue-admin](https://github.com/flipped-aurora/gin-vue-admin)
 
 ## 交流
+
 - 开发者WX号：laoyanyj
-
 - QQ群号：
-
 * golyadmin交流01群：810799958 <a target="_blank" href="http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=ciRlLqTydhPej_GH_VQKgqyvWpvPftZo&authKey=JFbkoTwhq74OKbixC71VnxnIBqYY1WNce0bRI3954bl7YPPSzjBlRMsy0LH9Hm2k&noverify=0&group_code=810799958"><img border="0" src="//pub.idqqimg.com/wpa/images/group.png" alt="点击链接加入群聊" title="golyadmin交流01群"></a>
 
 ## 使用说明
 
 ```
-- node版本 > v16.8.3
+- node版本 >= v16.19.1
 - golang版本 >= v1.20
 - IDE推荐：vscode
 ```
@@ -143,6 +144,8 @@ npm install --registry=https://registry.npm.taobao.org
 ```
 npm start
 ```
+
+默认监听端口：8090
 
 #### 打包
 

@@ -2,6 +2,12 @@
     <el-config-provider :locale="locale" :size="siteThemeStore.elementSize" :zIndex="siteThemeStore.elementzIndex">
         <router-view></router-view>
     </el-config-provider>
+    <!-- 授权后可以删除-->
+    <div class="golyadmin-auth">
+        <span>Powered by golyadmin</span>
+        <el-divider direction="vertical"></el-divider>
+        <span>Copyright golyadmin团队</span>
+    </div>
 </template>
 <script setup>
     import {ref, onMounted,watch,computed } from 'vue'
@@ -38,25 +44,25 @@
 
 </script>
 <style lang="scss">
-  #app {
-    /*font-family: Avenir, Helvetica, Arial, sans-serif;*/
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    /*text-align: center;*/
-    /*color: #2c3e50;*/
-    height: 100%;
-  }
-  /*页面最大化*/
-  .lyadmin.lymain-maximize {
-      .lymain-maximize-exit {display: block;}
-      .myeltas1{position: fixed !important;left: 0;top: 0;width: 100vw;height: 100vh;padding: 0;}
-      .myeltas2,.lyadmin-header,.lyadmin-side {display: none;}
-   }
-  .lymain-maximize-exit {display: none;position: fixed;z-index: 3000;top:-20px;left:50%;margin-left: -20px;border-radius: 50%;width: 40px;height: 40px;cursor: pointer;background: rgba(0,0,0,0.2);text-align: center;}
-  .lymain-maximize-exit i {font-size: 14px;margin-top: 22px;color: #fff;}
-  .lymain-maximize-exit:hover {background: rgba(0,0,0,0.4);}
-  // 移动端样式覆盖
-  @media (max-width: 992px){
+    #app {
+        /*font-family: Avenir, Helvetica, Arial, sans-serif;*/
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        /*text-align: center;*/
+        /*color: #2c3e50;*/
+        height: 100%;
+    }
+    /*页面最大化*/
+    .lyadmin.lymain-maximize {
+        .lymain-maximize-exit {display: block;}
+        .myeltas1{position: fixed !important;left: 0;top: 0;width: 100vw;height: 100vh;padding: 0;}
+        .myeltas2,.lyadmin-header,.lyadmin-side {display: none;}
+    }
+    .lymain-maximize-exit {display: none;position: fixed;z-index: 3000;top:-20px;left:50%;margin-left: -20px;border-radius: 50%;width: 40px;height: 40px;cursor: pointer;background: rgba(0,0,0,0.2);text-align: center;}
+    .lymain-maximize-exit i {font-size: 14px;margin-top: 22px;color: #fff;}
+    .lymain-maximize-exit:hover {background: rgba(0,0,0,0.4);}
+    // 移动端样式覆盖
+    @media (max-width: 992px){
     .el-form-item {display: block;}
     .el-form-item__label {display: block;text-align: left;padding: 0 0 10px;}
     .el-dialog {width: 90%!important;}
@@ -69,5 +75,21 @@
         .el-pagination__jump,
         .el-pagination__sizes {display: none!important;}
     }
-  }
+    }
+    // 授权样式
+    .golyadmin-auth {
+        font-size: 0.6em;
+        position: fixed;
+        left:150px;
+        right:0;
+        bottom: -1px;
+        text-align: center;
+        color: #757171;
+        background-image: linear-gradient(to left, #e4e2e2, #b6b5b5, #9c9b9b, #aaa9a9, #888585, #acaaaa, #e4e2e2);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        -webkit-background-size: 200% 100%;
+        z-index: 99999;
+        line-height:1.5;
+    }
 </style>

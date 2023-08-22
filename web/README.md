@@ -36,6 +36,7 @@ npm install --registry=https://registry.npm.taobao.org
 npm start
 ```
 
+默认监听端口：8090
 
 ## 打包
 
