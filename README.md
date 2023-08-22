@@ -45,7 +45,7 @@
 - IDE推荐：vscode
 ```
 
-### 项目
+## 项目
 
 使用 `vscode` 等编辑工具，打开项目目录
 
@@ -86,7 +86,7 @@ go run main.go createsuperuser -u superadmin -p 123456
 go run main.go changepassword -u superadmin -p 123456
 ```
 
-### swagger自动化API文档
+## swagger自动化API文档
 
 #### 安装 swagger
 
