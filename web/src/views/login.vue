@@ -158,9 +158,17 @@
         this.getuserpassword()
         this.getCaptchas()
       },
+      mounted(){
+        if(document.getElementsByClassName("golyadmin-auth")){
+          document.getElementsByClassName("golyadmin-auth")[0].style.display='none'
+        }
+      },
       beforeRouteLeave(to, form, next){
           //离开页面去除动态添加该页面meta viewport 手机适配
           document.querySelector("meta[name='viewport']")["content"] = this.getCurrentWith()
+          if(document.getElementsByClassName("golyadmin-auth")){
+            document.getElementsByClassName("golyadmin-auth")[0].style.display='unset'
+          }
           next()
       },
       methods: {

@@ -110,6 +110,15 @@ swag init
 ```
 方法一、前后端分离部署：按正常分离模式部署即可
 方法二、集成部署（不使用nginx）：前端执行打包命令 npm run build。把打包后的dist目录放入backend，然后在打开initialize/router.go下面相关集成部署注释即可
+1、linux 运行golyadmin
+  1.1 、 cd backend
+  1.2 、 分离或集成模式部署前端（后端默认端口为：9000）
+  1.3 、 sh restart.sh
+2、windows 运行golyadmin
+  2.1 、 cd backend
+  2.2 、 go build -o golyadmin.exe main.go
+  2.3 、 分离或集成模式部署前端（后端默认端口为：9000）
+  2.4 、 start.bat
 ```
 
 ## 项目二开

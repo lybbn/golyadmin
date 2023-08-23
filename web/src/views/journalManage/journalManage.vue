@@ -90,7 +90,7 @@
             </el-table-column>
             <el-table-column min-width="160" label="操作人" show-overflow-tooltip>
                 <template #default="scope">
-                    <div>{{ scope.row.user.username }}({{ scope.row.user.name }})</div>
+                    <div v-if="scope.row.user_id !=0">{{ scope.row.user.username }}({{ scope.row.user.name }})</div>
                 </template>
             </el-table-column>
             <el-table-column width="180" prop="created_at" label="创建时间" show-overflow-tooltip>

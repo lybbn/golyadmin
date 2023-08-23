@@ -1,6 +1,6 @@
 #!/bin/bash
 echo "go build"
-go mod tidy
+go generate
 go build -o golyadmin main.go
 chmod +x ./golyadmin
 echo "kill golyadmin service"

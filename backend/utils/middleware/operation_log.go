@@ -14,6 +14,7 @@ import (
 
 	"gitee.com/lybbn/golyadmin/global"
 	"gitee.com/lybbn/golyadmin/model/system"
+	systemReq "gitee.com/lybbn/golyadmin/model/system/request"
 	"gitee.com/lybbn/golyadmin/service"
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
@@ -22,6 +23,9 @@ import (
 var operationLogService = service.ServiceGroupApp.SystemServiceGroup.OperationLogService
 
 var respPool sync.Pool
+
+var noRecordPath = []string{"/api/system/file/uploadFile"}
+var minGanPath = []string{"/api/base/login", "/api/system/user/changePassword"}
 
 func init() {
 	respPool.New = func() interface{} {
@@ -41,15 +45,12 @@ func OperationLog() gin.HandlerFunc {
 			return
 		}
 		if reMethod != http.MethodGet {
-			//文件上传不记录内容
-			if !strings.Contains(apiPath, "/api/system/file/uploadFile") {
-				var err error
-				body, err = io.ReadAll(c.Request.Body)
-				if err != nil {
-					global.GL_LOG.Error("read body from request error:", zap.Error(err))
-				} else {
-					c.Request.Body = io.NopCloser(bytes.NewBuffer(body))
-				}
+			var err error
+			body, err = io.ReadAll(c.Request.Body)
+			if err != nil {
+				global.GL_LOG.Error("read body from request error:", zap.Error(err))
+			} else {
+				c.Request.Body = io.NopCloser(bytes.NewBuffer(body))
 			}
 
 		} else {
@@ -82,6 +83,35 @@ func OperationLog() gin.HandlerFunc {
 			Agent:  c.Request.UserAgent(),
 			Body:   string(body),
 			UserID: userId,
+		}
+
+		// 不需要记录请求body的处理
+		if utils.IsContainStr(noRecordPath, apiPath) {
+			record.Body = ""
+		}
+
+		// 敏感信息脱敏：如密码等
+		if utils.IsContainStr(minGanPath, apiPath) {
+			if apiPath == "/api/base/login" {
+				var req systemReq.LoginRequestParams
+				err := c.ShouldBind(&req)
+				if err == nil {
+					req.Password = req.Password[0:2] + "****"
+					bReq, _ := json.Marshal(req)
+					record.Body = string(bReq)
+				}
+			} else if apiPath == "/api/system/user/changePassword" {
+				var req systemReq.ChangePasswordReq
+				err := c.ShouldBind(&req)
+				if err == nil {
+					req.NewPassword = req.NewPassword[0:2] + "****"
+					req.OldPassword = req.OldPassword[0:2] + "****"
+					bReq, _ := json.Marshal(req)
+					record.Body = string(bReq)
+				}
+			}
+			// gin可以多次进行bind(body只能读取一次)的处理
+			c.Request.Body = io.NopCloser(bytes.NewBuffer(body))
 		}
 
 		// 上传文件时候 中间件日志进行裁断操作
