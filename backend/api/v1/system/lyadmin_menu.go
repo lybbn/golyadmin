@@ -90,7 +90,7 @@ func (a *MenuApi) CreateMenu(c *gin.Context) {
 // @Produce   application/json
 // @Param     data  body      request.Id      true  "LyadminMenu模型"
 // @Success   200   {object}  response.StructResponse{msg=string}  "删除LyadminMenu"
-// @Router    /system/menu/menu [delete]
+// @Router    /system/menu/menu/:id [delete]
 func (a *MenuApi) DeleteMenu(c *gin.Context) {
 	var req request.Id
 	err := c.ShouldBind(&req)
