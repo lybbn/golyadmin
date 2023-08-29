@@ -59,6 +59,7 @@ func run() {
 		fmt.Printf("默认接口文档地址:http://%s/swagger/index.html \r\n", newaddress+global.GL_CONFIG.System.RouterPrefix)
 	}
 	fmt.Printf("默认接口基础地址:http://%s \r\n", newaddress+global.GL_CONFIG.System.RouterPrefix)
+	fmt.Printf("Quit the server with CTRL-BREAK. \r\n")
 	// 启动服务（使用优雅重启停止服务需要注释掉以下9行）
 	if global.GL_CONFIG.Ssl.Enable {
 		if err := r.RunTLS(address, global.GL_CONFIG.Ssl.CertFile, global.GL_CONFIG.Ssl.KeyFile); err != nil {
