@@ -14,8 +14,7 @@
                             :type="scope.row.form_item_type_label"
                             v-model="form[scope.row.key]" :placeholder="scope.row.placeholder" clearable></el-input>
 
-                    <el-input-number :key="scope.row.id" v-else-if="scope.row.form_item_type_label === 'number'" v-model="form[scope.row.key]"
-                                   :min="0"></el-input-number>
+                    <el-input-number :key="scope.row.id" v-else-if="scope.row.form_item_type_label === 'number'" v-model="form[scope.row.key]" style="width:100%;" :controls="false"></el-input-number>
                     <!--     datetime、date、time     -->
                     <el-date-picker
                         v-else-if="['datetime','date','time'].indexOf(scope.row.form_item_type_label) >-1"
@@ -205,6 +204,8 @@
                             const $table = this.$refs[tableName][0]
                             $table.loadData(item.children)
                         })
+                    }else if (item.form_item_type_label === 'number') {
+                        form[key] = item.value == "" ?0:Number(item.value)
                     }
                 }
                 this.form = JSON.parse(JSON.stringify(form))
