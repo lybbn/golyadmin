@@ -33,9 +33,9 @@
 <!--                            end-placeholder="结束日期">-->
 <!--                    </el-date-picker>-->
 <!--                </el-form-item>-->
-                <el-form-item label=""><el-button  @click="search" type="primary" icon="Search" v-show="hasPermission(route,'Search')">查询</el-button></el-form-item>
+                <el-form-item label=""><el-button  @click="search" type="primary" icon="Search" v-show="hasPermission(route.name,'Search')">查询</el-button></el-form-item>
                 <el-form-item label=""><el-button  @click="handleEdit('','reset')" icon="Refresh">重置</el-button></el-form-item>
-                <el-form-item label=""><el-button  icon="Plus" @click="handelAddAdmin" type="primary" v-show="hasPermission(route,'Create')">新增</el-button></el-form-item>
+                <el-form-item label=""><el-button  icon="Plus" @click="handelAddAdmin" type="primary" v-show="hasPermission(route.name,'Create')">新增</el-button></el-form-item>
             </el-form>
         </div>
 
