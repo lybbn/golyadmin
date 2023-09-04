@@ -12,6 +12,6 @@ type GL_BASE_MODEL struct {
 
 type GL_CONTROL_MODEL struct {
 	CreateBy   uint `json:"create_by" form:"create_by" gorm:"index;comment:创建者"`        //创建者
-	UpdateBy   uint `json:"update_by" form:"update_by" gorm:"index;comment:更新者"`        //更新着
+	UpdateBy   uint `json:"update_by" form:"update_by" gorm:"index;comment:更新者"`        //更新者
 	BelongDept uint `json:"belong_dept" form:"belong_dept" gorm:"index;comment:数据归属部门"` //数据归属部门
 }
