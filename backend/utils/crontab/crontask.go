@@ -12,6 +12,7 @@ type CronTasker interface {
 	AddTaskJob(taskName string, spec string, job interface{ Run() }, option ...cron.Option) (cron.EntryID, error)
 	StartTask(taskName string)
 	StopTask(taskName string)
+	StopAllTask()
 	RemoveTask(taskName string, id int)
 }
 
@@ -71,12 +72,22 @@ func (c *cronTasker) StopTask(taskName string) {
 	}
 }
 
-// RemoveTask 从taskName 删除指定任务
+// StopAllTask 停止所有任务
+func (c *cronTasker) StopAllTask() {
+	c.Lock()
+	defer c.Unlock()
+	for _, v := range c.taskList {
+		v.Stop()
+	}
+}
+
+// RemoveTask 删除指定任务
 func (c *cronTasker) RemoveTask(taskName string, id int) {
 	c.Lock()
 	defer c.Unlock()
 	if value, ok := c.taskList[taskName]; ok {
 		value.Remove(cron.EntryID(id))
+		delete(c.taskList, taskName)
 	}
 }
 

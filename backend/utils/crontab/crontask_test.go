@@ -14,7 +14,7 @@ func testFunc() {
 func TestNewCronTasker(t *testing.T) {
 	ct := NewCronTasker()
 	_ct := ct.(*cronTasker)
-	taskid, _ := ct.AddTaskFunc("task1", "@every 1s", testFunc)
+	taskid, _ := ct.AddTaskFunc("task1", "@every 2s", testFunc)
 	fmt.Printf("task1定时任务ID：%d \n", taskid)
 	_, ok := _ct.taskList["task1"]
 	if !ok {
