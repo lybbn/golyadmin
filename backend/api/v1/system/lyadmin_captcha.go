@@ -142,7 +142,7 @@ func (b *BaseApi) GetCaptcha(c *gin.Context) {
 
 	cp := base64Captcha.NewCaptcha(driver, capchaStore)
 
-	id, b64s, err := cp.Generate()
+	id, b64s, _, err := cp.Generate()
 
 	if err != nil {
 		global.GL_LOG.Error("验证码获取失败!", zap.Error(err))
