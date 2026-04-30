@@ -1,10 +1,10 @@
-const modules = require.context('./svg', false, /\.svg$/);
+const svgModules = import.meta.glob('./svg/*.svg', { eager: true, query: '?url', import: 'default' })
 
 function getIconList() {
     let iconList = []
-    modules.keys().forEach(e => {
-        const cname = e.split('/').pop()?.split('.')[0]//根据路径截取name文件名（去除后缀和前面目录）
-        iconList.push("lyicon-"+cname)
+    Object.keys(svgModules).forEach(e => {
+        const cname = e.split('/').pop()?.split('.')[0]
+        iconList.push("lyicon-" + cname)
     })
     return iconList
 }

@@ -40,7 +40,7 @@
 
 <script>
     import {platformsettingsSysconfig,platformsettingsSysconfigAdd,platformsettingsSysconfigEdit} from "@/api/api";
-    import LyDialog from "@/components/dialog/dialog";
+    import LyDialog from "@/components/dialog/dialog.vue";
     export default {
         name: "addModuleContent",
         components: {LyDialog},

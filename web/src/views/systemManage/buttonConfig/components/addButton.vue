@@ -53,7 +53,7 @@
 
 <script>
     import {systemMenuButtonAdd,systemMenuButtonEdit,systemButton,getSystemLyapiList} from '@/api/api'
-    import LyDialog from "@/components/dialog/dialog";
+    import LyDialog from "@/components/dialog/dialog.vue";
     import {deepClone} from "@/utils/util";
     export default {
         components: {LyDialog},

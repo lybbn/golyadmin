@@ -21,7 +21,7 @@
 
     import {systemButtonAdd,systemButtonEdit} from '@/api/api'
     import {deepClone} from "@/utils/util";
-    import LyDialog from "@/components/dialog/dialog";
+    import LyDialog from "@/components/dialog/dialog.vue";
     export default {
         components: {LyDialog},
         emits: ['refreshData'],

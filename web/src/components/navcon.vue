@@ -83,7 +83,10 @@
     import {useSiteThemeStore} from "@/store/siteTheme";
     import {useRouter} from 'vue-router'
     import config from "@/config"
-    import lysettings from "@/components/layout/lysettings";
+    import lysettings from "@/components/layout/lysettings.vue";
+
+    import imgshowUrl from '../assets/img/show.png'
+    import imgsqUrl from '../assets/img/sq.png'
 
     let settingDialog = ref(false)
 
@@ -97,8 +100,8 @@
     })
 
     let collapsed = ref(siteThemeStore.collapsed)
-    let imgshow = require('../assets/img/show.png')
-    let imgsq = require('../assets/img/sq.png')
+    let imgshow = imgshowUrl
+    let imgsq = imgsqUrl
     let userName = ref("")
     let userNameF = ref("")
     let mobileWidth = ref(992)

@@ -34,7 +34,7 @@
     import {useSiteThemeStore} from "@/store/siteTheme";
     import { useRouter,useRoute,onBeforeRouteUpdate } from 'vue-router';
     import {setStorage, getStorage, deepClone} from '@/utils/util'
-    import lyLeftMenu from '@/components/layout/lyLeftMenu'
+    import lyLeftMenu from '@/components/layout/lyLeftMenu.vue'
 
     const route = useRoute()
 

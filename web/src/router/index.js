@@ -1,10 +1,8 @@
 import { createRouter, createWebHistory ,createWebHashHistory } from 'vue-router'
 import {useMutitabsStore} from "@/store/mutitabs";
-// 进度条
 import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
-import '../assets/css/nprogress.scss'//自定义样式
-// 简单配置
+import '../assets/css/nprogress.scss'
 NProgress.inc(0.4)
 NProgress.configure({ easing: 'ease', speed: 500, showSpinner: true })
 import {setStorage,getStorage} from '@/utils/util'
@@ -50,7 +48,6 @@ const routes = [
       index: '/index',
     },
     children: [
-      // 超管
       {
         path: '/adminManage',
         name: 'adminManage',
@@ -87,7 +84,6 @@ const routes = [
                 index: '/platformSettingsother',
             }
         },
-      // 系统管理
       {
         path: '/departmentManage',
         name: 'departmentManage',
@@ -177,18 +173,16 @@ const routes = [
   }
 ]
 
-// 路由自动化注册（默认注册到index的children里面）(静态路由优先级高于动态自动路由)
-const requireComponent = require.context('../views', true, /\.vue$/) // 找到 modules 路径下的所有文件
-const names = requireComponent.keys()
-const autoRouters = getAutoRouterList(names)
-function getAutoRouterList(names) {
+const viewModules = import.meta.glob('../views/**/*.vue')
+
+function getAutoRouterList() {
     const routerList = [];
-    names.forEach((name, index) => {
-        if(name.indexOf("/components/")==-1 && name !='./index.vue' &&  name !='./login.vue' &&  name !='./lyterminal.vue'){
+    const viewKeys = Object.keys(viewModules)
+    viewKeys.forEach((name) => {
+        if(name.indexOf("/components/")==-1 && !name.includes('index.vue') && !name.includes('login.vue') && !name.includes('lyterminal.vue')){
             let isSame = false
-            const componentConfig = requireComponent(name)
-            const componentName = name.split('/').pop()?.split('.')[0]//根据路径截取name文件名（去除后缀和前面目录）
-            for(var i=0;i<routes.length;i++){
+            const componentName = name.split('/').pop()?.split('.')[0]
+            for(let i=0;i<routes.length;i++){
                 if(routes[i].path=="/"||routes[i].path=="/login" ||routes[i].path=="/lyterminal"){
                     continue
                 }
@@ -197,7 +191,7 @@ function getAutoRouterList(names) {
                     break
                 }
                 if(routes[i].path === '/index' && routes[i].children.length>0){
-                    for(var s=0;s<routes[i].children.length;s++){
+                    for(let s=0;s<routes[i].children.length;s++){
                           if(routes[i].children[s].name === componentName){
                               isSame = true
                               break
@@ -210,7 +204,7 @@ function getAutoRouterList(names) {
                 routerList.push({
                     path: path,
                     name: componentName,
-                    component:componentConfig.default,
+                    component: viewModules[name],
                     meta: {
                         requireAuth: true,
                         index: path,
@@ -220,7 +214,7 @@ function getAutoRouterList(names) {
         }
 
     });
-    for(var t=0;t<routes.length;t++){
+    for(let t=0;t<routes.length;t++){
         if(routes[t].path == '/index'){
             routerList.forEach(drouter=>{
                 routes[t].children.push(drouter)
@@ -231,22 +225,20 @@ function getAutoRouterList(names) {
     return routerList;
 }
 
+getAutoRouterList()
+
 const router = createRouter({
-  //history模式
-  // history: createWebHistory(process.env.BASE_URL),
-  //hash模式
   history: createWebHashHistory(),
   routes: routes
 })
 
-//判断访问路径路由name是否存在
 function isRouterNameExist(name){
     let isExist = false
     if(name){
         if(routes.some(item=> name == item.name)){
             return true
         }
-        for(var t=0;t<routes.length;t++){
+        for(let t=0;t<routes.length;t++){
             if(routes[t].children && routes[t].children.length>0){
                 if(routes[t].children.some(item=> name == item.name)){
                     isExist = true
@@ -259,14 +251,13 @@ function isRouterNameExist(name){
     }
     return isExist
 }
-//判断访问路径路由path是否存在
 function isRouterPathExist(path){
     let isExist = false
     if(path){
         if(routes.some(item=>path == item.path)){
             return true
         }
-        for(var t=0;t<routes.length;t++){
+        for(let t=0;t<routes.length;t++){
             if(routes[t].children && routes[t].children.length>0){
                 if(routes[t].children.some(item=> path == item.path)){
                     isExist = true
@@ -280,19 +271,13 @@ function isRouterPathExist(path){
     return isExist
 }
 
-/**
- * 路由拦截
- * 权限验证
- */
 router.beforeEach((to, from, next) => {
     const store = useMutitabsStore()
-    // 白名单
     const whiteList = ['buttonConfig', 'menuManage', 'lyterminal', 'buttonManage','lyFilePreview']
-    // 进度条
     NProgress.start()
     let userId = store.userId ? store.userId : ''
-    if (to.meta.requireAuth) { // 判断该路由是否需要登录权限
-        if (userId) { // 通过vuex state获取当前的token是否存在
+    if (to.meta.requireAuth) {
+        if (userId) {
             let menuList = JSON.parse(getStorage('menuList'))
             if(menuList && (menuList.filter(item=>item.url == to.name).length > 0 || (whiteList.indexOf(to.name) !== -1))) {
                 if(to.path){
@@ -375,7 +360,6 @@ router.beforeEach((to, from, next) => {
         }
     }
 })
-//在路由跳转后用NProgress.done()标记下结束
 router.afterEach(() => {
   NProgress.done()
 })

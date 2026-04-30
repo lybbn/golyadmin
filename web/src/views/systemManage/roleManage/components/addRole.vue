@@ -34,7 +34,7 @@
 
 <script>
     import {apiSystemRoleEdit,apiSystemRoleAdd} from '@/api/api'
-    import LyDialog from "@/components/dialog/dialog";
+    import LyDialog from "@/components/dialog/dialog.vue";
     export default {
         components: {LyDialog},
         emits: ['refreshData'],

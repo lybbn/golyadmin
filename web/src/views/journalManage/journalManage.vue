@@ -120,7 +120,7 @@
     import {ref,reactive,onMounted,onBeforeUnmount,nextTick} from 'vue'
     import { ElMessage,ElMessageBox } from 'element-plus';
     import {systemOperationlog,systemOperationlogDelete,systemOperationlogDeletealllogsDelete} from '@/api/api'
-    import Pagination from "@/components/Pagination";
+    import Pagination from "@/components/Pagination.vue";
     import {dateFormats,hasPermission,formatDateTime} from "@/utils/util";
     import useTableHight from '@/mixins/useTableHight';
     import { useRouter,useRoute } from 'vue-router'

@@ -19,7 +19,7 @@
     import {ref, onMounted,getCurrentInstance,computed} from 'vue'
     import navcon from '@/components/navcon.vue'
     import leftnav from '@/components/leftnav.vue'
-    import Mutitabs from "@/components/mutitabs";
+    import Mutitabs from "@/components/mutitabs.vue";
     import {useMutitabsStore} from "@/store/mutitabs";
     import {useSiteThemeStore} from "@/store/siteTheme";
 

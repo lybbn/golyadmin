@@ -20,8 +20,8 @@
 </template>
 
 <script>
-    import LyBarEchart from "./barEchart";
-    import LyLineEchart from "./lineEchart";
+    import LyBarEchart from "./barEchart.vue";
+    import LyLineEchart from "./lineEchart.vue";
     export default {
         name: "LyEchartcard",
         components: {LyLineEchart, LyBarEchart},

@@ -13,11 +13,11 @@ export const init = {
   draggable_modal: true,//模态窗口允许拖动
   inline: false,//内联模式
   cleanup: true,
-  language_url: 'static/tinymce/langs/zh_CN.js', // 引入语言包文件
+  language_url: '/static/tinymce/langs/zh_CN.js', // 引入语言包文件
   language: 'zh_CN', // 语言类型
   // content_css: true,
-  skin_url: 'static/tinymce/skins/ui/oxide', // 皮肤：浅色
-  // skin_url: 'static/tinymce/skins/ui/oxide-dark',//皮肤：暗色
+  skin_url: '/static/tinymce/skins/ui/oxide', // 皮肤：浅色
+  // skin_url: '/static/tinymce/skins/ui/oxide-dark',//皮肤：暗色
 
   plugins: buttonPlugins, // 插件配置
   toolbar: toolbar, // 工具栏配置，设为false则隐藏

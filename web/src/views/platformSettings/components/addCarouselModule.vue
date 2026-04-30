@@ -42,7 +42,7 @@
 <script>
     import {platformsettingsLunboimgAdd,platformsettingsLunboimgEdit,platformsettingsUploadPlatformImg} from "@/api/api";
     import {url} from '@/api/url'
-    import LyDialog from "../../../components/dialog/dialog";
+    import LyDialog from "../../../components/dialog/dialog.vue";
     export default {
         components: {LyDialog},
         emits: ['refreshData'],

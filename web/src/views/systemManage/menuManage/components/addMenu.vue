@@ -78,8 +78,8 @@
     import {apiSystemMenu,apiSystemMenuAdd,apiSystemMenuEdit,systemMenuTree} from '@/api/api'
     import XEUtils from "xe-utils";
     import {menuicons} from "@/utils/menuTree.js"
-    import LyDialog from "@/components/dialog/dialog";
-    import LYChooseIcons from "@/components/icons/chooseIcons";
+    import LyDialog from "@/components/dialog/dialog.vue";
+    import LYChooseIcons from "@/components/icons/chooseIcons.vue";
     import {deepClone} from "@/utils/util";
     export default {
         components: {LYChooseIcons, LyDialog},

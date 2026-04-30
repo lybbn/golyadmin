@@ -98,10 +98,10 @@
 		data() {
 			return {
 				init: {
-					language_url: 'static/tinymce/langs/zh_CN.js',
+					language_url: '/static/tinymce/langs/zh_CN.js',
 					language: 'zh_CN',
-					skin_url: 'static/tinymce/skins/ui/oxide',
-					content_css: "static/tinymce/skins/content/default/content.css",
+					skin_url: '/static/tinymce/skins/ui/oxide',
+					content_css: "/static/tinymce/skins/content/default/content.css",
 					emoticons_database_url: 'tinymce/plugins/emoticons/js/emojis.js',
 					lineheight_formats: '0.5 0.8 1 1.2 1.5 1.75 2 2.5 3 4 5', // 行高配置，也可配置成"12px 14px 16px 20px"这种形式
 					menubar: false,

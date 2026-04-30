@@ -63,10 +63,10 @@
     </div>
 </template>
 <script>
-    import PaginationModule from "@/components/Pagination";
+    import PaginationModule from "@/components/Pagination.vue";
     import {dateFormats,getTableHeight} from "@/utils/util";
     import {platformsettingsOther,platformsettingsOtherDelete,superOerateGet,superOerateSet} from '@/api/api'
-    import AddModuleOther from "./components/addModuleOther";
+    import AddModuleOther from "./components/addModuleOther.vue";
     export default {
         components:{
             AddModuleOther,

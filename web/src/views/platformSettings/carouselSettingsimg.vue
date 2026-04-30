@@ -41,8 +41,8 @@
 
 </template>
 <script>
-    import addModule from "./components/addCarouselModule";
-    import Pagination from "@/components/Pagination";
+    import addModule from "./components/addCarouselModule.vue";
+    import Pagination from "@/components/Pagination.vue";
     import {dateFormats,getTableHeight} from "@/utils/util";
     import {platformsettingsLunboimg,platformsettingsLunboimgDelete} from '@/api/api'
     export default {

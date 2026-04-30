@@ -97,7 +97,7 @@
     </div>
 </template>
 <script>
-    import addMenu from "./components/addMenu";
+    import addMenu from "./components/addMenu.vue";
     import {dateFormats, getTableHeight, setStorage} from "@/utils/util";
     import {apiSystemMenu, apiSystemMenuDelete, apiSystemWebRouter} from '@/api/api'
     import XEUtils from "xe-utils";

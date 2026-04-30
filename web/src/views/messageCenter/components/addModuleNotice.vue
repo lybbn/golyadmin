@@ -54,10 +54,10 @@
 
 <script>
     import {messagesMessagenoticeAdd,messagesMessagenoticeEdit,UsersUsers} from "@/api/api";
-    import TEditor from '@/components/TEditor'
-    import LyDialog from "@/components/dialog/dialog";
+    import TEditor from '@/components/TEditor.vue'
+    import LyDialog from "@/components/dialog/dialog.vue";
     import {deepClone} from "@/utils/util";
-    import LyTableSelect from "@/components/lyTableSelect";
+    import LyTableSelect from "@/components/lyTableSelect.vue";
     export default {
         components: {LyDialog, TEditor,LyTableSelect},
         emits: ['refreshData'],

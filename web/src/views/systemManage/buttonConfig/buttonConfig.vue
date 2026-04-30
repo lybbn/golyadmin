@@ -41,7 +41,7 @@
     import {ref,reactive,onMounted,onBeforeUnmount,nextTick} from 'vue'
     import { ElMessage,ElMessageBox } from 'element-plus';
     import {dateFormats,formatDateTime, hasPermission} from "@/utils/util";
-    import AddButton from "./components/addButton";
+    import AddButton from "./components/addButton.vue";
     import {systemMenuButton,systemMenuButtonDelete} from '@/api/api'
     import useTableHight from '@/mixins/useTableHight';
     import { useRouter,useRoute } from 'vue-router'

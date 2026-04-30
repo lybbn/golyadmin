@@ -5,7 +5,7 @@ import { uniqueId } from 'lodash'
 import { request } from '@/api/service'
 import XEUtils from 'xe-utils'
 import { frameInRoutes } from '@/router/routes'
-const _import = require('@/libs/util.import.' + process.env.NODE_ENV)
+const _import = (path) => import(/* @vite-ignore */ path)
 import {setStorage,getStorage} from '@/utils/util'
 /**
  * @description 给菜单数据补充上 path 字段

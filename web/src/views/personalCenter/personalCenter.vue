@@ -67,7 +67,7 @@
 <script>
     import {systemUserUserInfoEdit,systemUserUserInfo,systemUserChangePassword} from '@/api/api'
     import {useMutitabsStore} from "@/store/mutitabs";
-    import lyPasswordStrength from "@/components/password/lyPasswordStrength";
+    import lyPasswordStrength from "@/components/password/lyPasswordStrength.vue";
     export default {
         components:{lyPasswordStrength},
         name: "personalCenter",

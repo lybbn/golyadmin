@@ -74,8 +74,8 @@
 <script setup>
     import {ref,reactive,onMounted,onBeforeUnmount,nextTick} from 'vue'
     import { ElMessage,ElMessageBox } from 'element-plus';
-    import addRole from "./components/addRole";
-    import Pagination from "@/components/Pagination";
+    import addRole from "./components/addRole.vue";
+    import Pagination from "@/components/Pagination.vue";
     import {formatDateTime,hasPermission} from "@/utils/util";
     import {apiSystemRole,apiSystemRoleDelete} from '@/api/api'
     import useTableHight from '@/mixins/useTableHight';

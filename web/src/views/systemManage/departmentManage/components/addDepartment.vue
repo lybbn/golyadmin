@@ -42,7 +42,7 @@
 <script>
     import {deepClone} from '@/utils/util'
     import {apiSystemDeptAdd,apiSystemDept,apiSystemDeptEdit} from '@/api/api'
-    import LyDialog from "@/components/dialog/dialog";
+    import LyDialog from "@/components/dialog/dialog.vue";
     import XEUtils from "xe-utils";
     export default {
         components: {LyDialog},

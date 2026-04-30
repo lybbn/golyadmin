@@ -197,13 +197,14 @@
 <script>
     //ly-crud需要的组件/方法
     import {dateFormats,getTableHeight} from "@/utils/util";
-    import Pagination from "@/components/Pagination";
-    import LyRender from "./render/render";
-    import LyDialog from "./dialog/dialog";
-    import LyUploadAvatar from "./upload/avatar";
-    import TEditor from "@/components/TEditor";
-    import LyUploadGoods from "./upload/goods";
-    import LyArea from "./area/lyarea";
+    import Pagination from "@/components/Pagination.vue";
+    import LyRender from "./render/render.vue";
+    import LyDialog from "./dialog/dialog.vue";
+    import LyUploadAvatar from "./upload/avatar.vue";
+    import TEditor from "@/components/TEditor.vue";
+    import LyUploadGoods from "./upload/goods.vue";
+    import LyArea from "./area/lyarea.vue";
+    import defaultAvatarImg from '../assets/img/avatar.jpg'
     export default {
         components:{
             LyArea,
@@ -229,7 +230,7 @@
                     limit: 10,
                     total: 0,
                 },
-                defaultImg:require('../assets/img/avatar.jpg'),
+                defaultImg:defaultAvatarImg,
                 statusList:[
                     {id:1,name:'是'},
                     {id:0,name:'否'}

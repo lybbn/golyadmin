@@ -12,8 +12,8 @@
 </template>
 
 <script>
-    import LyGrowcard from "@/components/analysis/growCard";
-    import LyEchartcard from "@/components/analysis/echartCard";
+    import LyGrowcard from "@/components/analysis/growCard.vue";
+    import LyEchartcard from "@/components/analysis/echartCard.vue";
     export default {
         name: "analysis",
         components: {LyEchartcard, LyGrowcard},

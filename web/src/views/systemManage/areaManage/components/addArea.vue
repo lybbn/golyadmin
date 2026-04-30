@@ -43,9 +43,8 @@
 </template>
 
 <script>
-    import utils from '@/utils/util'
     import {addressAreaAdd,addressArea,addressAreaEdit} from '@/api/api'
-    import LyDialog from "../../../../components/dialog/dialog";
+    import LyDialog from "../../../../components/dialog/dialog.vue";
     export default {
         name: "addArea",
         components: {LyDialog},

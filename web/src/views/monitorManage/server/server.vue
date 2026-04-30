@@ -42,9 +42,9 @@
 </template>
 
 <script>
-    import LyStatuscard from "@/components/monitor/statusCard";
+    import LyStatuscard from "@/components/monitor/statusCard.vue";
     import {monitorGetSystemInfo} from '@/api/api'
-    import LyMonitorEchartcard from "@/components/monitor/echartCard";
+    import LyMonitorEchartcard from "@/components/monitor/echartCard.vue";
     export default {
         name: "server",
         components: {LyMonitorEchartcard, LyStatuscard},

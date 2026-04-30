@@ -47,7 +47,7 @@
 <script>
 
     import * as Icons from '@element-plus/icons-vue'
-    import LyDialog from "@/components/dialog/dialog";
+    import LyDialog from "@/components/dialog/dialog.vue";
     import {getIconList} from "@/icons/icon-list"
     import {deepClone} from "@/utils/util";
 

@@ -122,9 +122,9 @@
 
 <script>
     import {platformsettingsSysconfig,platformsettingsSysconfigDelete,platformsettingsSysconfigEdit,platformsettingsSysconfigSavecontent} from '@/api/api'
-    import TEditor from '@/components/TEditor'
-    import LyUploadAvatar from "@/components/upload/avatar"
-    import fileMultipleUpload from '@/components/upload/lyfileUpload'
+    import TEditor from '@/components/TEditor.vue'
+    import LyUploadAvatar from "@/components/upload/avatar.vue"
+    import fileMultipleUpload from '@/components/upload/lyfileUpload.vue'
     export default {
         name: 'formItem',
         components: {

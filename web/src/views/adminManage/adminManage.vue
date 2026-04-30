@@ -96,8 +96,8 @@
 <script setup>
     import {ref,reactive,onMounted,onBeforeUnmount,nextTick} from 'vue'
     import { ElMessage,ElMessageBox } from 'element-plus';
-    import addAdmin from "./components/addAdmin";
-    import Pagination from "@/components/Pagination";
+    import addAdmin from "./components/addAdmin.vue";
+    import Pagination from "@/components/Pagination.vue";
     import {dateFormats,formatDateTime, hasPermission} from "@/utils/util";
     import {apiSystemUser,apiSystemUserDelte} from '@/api/api'
     import useTableHight from '@/mixins/useTableHight';

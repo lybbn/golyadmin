@@ -60,7 +60,7 @@
 
 <script>
     import {apiSystemUserAdd,apiSystemUserEdit,apiSystemRole,apiSystemDept} from "@/api/api";
-    import LyDialog from "@/components/dialog/dialog";
+    import LyDialog from "@/components/dialog/dialog.vue";
     import { deepClone } from "@/utils/util";
     import XEUtils from "xe-utils";
     export default {

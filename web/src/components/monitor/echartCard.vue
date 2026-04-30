@@ -31,7 +31,7 @@
 </template>
 
 <script>
-    import LyLineEchart from "./lyLineEchart";
+    import LyLineEchart from "./lyLineEchart.vue";
     export default {
         name: "LyMonitorEchartcard",
         components: {LyLineEchart},

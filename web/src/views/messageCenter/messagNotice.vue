@@ -77,8 +77,8 @@
     </div>
 </template>
 <script>
-    import addModule from "./components/addModuleNotice";
-    import Pagination from "@/components/Pagination";
+    import addModule from "./components/addModuleNotice.vue";
+    import Pagination from "@/components/Pagination.vue";
     import {dateFormats,getTableHeight} from "@/utils/util";
     import {messagesMessagenotice,messagesMessagenoticeDelete} from '@/api/api'
     export default {

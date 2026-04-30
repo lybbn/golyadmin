@@ -1,7 +1,7 @@
-import LyPictureMultipleUpload from '@/components/upload/mutiple-pictures'
-import LyPictureSingleUpload from '@/components/upload/single-picture'
-import LyFileMultipleUpload from '@/components/upload/lyfileUpload'
-import LyTeditor from '@/components/teditorjs/lyTEditor'
+import LyPictureMultipleUpload from '@/components/upload/mutiple-pictures.vue'
+import LyPictureSingleUpload from '@/components/upload/single-picture.vue'
+import LyFileMultipleUpload from '@/components/upload/lyfileUpload.vue'
+import LyTeditor from '@/components/teditorjs/lyTEditor.vue'
 
 export default {
     install(app) {

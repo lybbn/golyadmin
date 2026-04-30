@@ -38,10 +38,10 @@
 
 <script setup>
     import {ref, onMounted,onBeforeUnmount,nextTick,getCurrentInstance} from 'vue'
-    import AddModuleGroup from "./components/addModuleGroup";
+    import AddModuleGroup from "./components/addModuleGroup.vue";
     import {platformsettingsSysconfig} from '@/api/api'
-    import AddModuleContent from "./components/addModuleContent";
-    import FormItem from "./components/formItem";
+    import AddModuleContent from "./components/addModuleContent.vue";
+    import FormItem from "./components/formItem.vue";
     import {hasPermission} from "@/utils/util";
     import { useRoute } from "vue-router";
 

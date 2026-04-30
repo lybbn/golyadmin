@@ -83,8 +83,8 @@
 
 <script>
     import {platformsettingsOtherAdd,platformsettingsOtherEdit,platformsettingsUploadPlatformImg} from "@/api/api";
-    import TEditor from '@/components/TEditor'
-    import LyDialog from "../../../components/dialog/dialog";
+    import TEditor from '@/components/TEditor.vue'
+    import LyDialog from "../../../components/dialog/dialog.vue";
     export default {
         components: {LyDialog, TEditor },
         emits: ['refreshData'],

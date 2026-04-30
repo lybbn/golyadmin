@@ -13,16 +13,17 @@
 
 <script lang="jsx">
     import {UsersUsers,UsersUsersAdd,UsersUsersDelete,UsersUsersEdit,UsersUsersdisableEdit,UsersUsersExportexecl} from '@/api/api'
-    import LyCrud from "@/components/lycrud";
+    import LyCrud from "@/components/lycrud.vue";
     import templateData from "@/components/dict/crudTemplateData"
     import {formatDateTime,hasPermission} from "@/utils/util";
     import { h,resolveComponent } from 'vue';
+    import defaultAvatarImg from '../../assets/img/avatar.jpg'
     export default {
         // name: "userManageCrud",
         components: {LyCrud},
         data(){
             return{
-                defaultImg:require('../../assets/img/avatar.jpg'),
+                defaultImg:defaultAvatarImg,
                 //crud配置
                 crudConfig:{
                     //crud请求方法配置

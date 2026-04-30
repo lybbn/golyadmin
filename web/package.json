@@ -7,21 +7,23 @@
   },
   "version": "1.0.1",
   "private": true,
+  "type": "module",
   "scripts": {
     "start": "npm run dev",
-    "dev": "vue-cli-service serve",
-    "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix"
   },
   "dependencies": {
     "@element-plus/icons-vue": "^2.3.2",
     "@tinymce/tinymce-vue": "^5.1.0",
     "axios": "^1.15.2",
-    "core-js": "^3.49.0",
     "cropper": "^4.1.0",
     "crypto-js": "^4.2.0",
     "echarts": "^5.6.0",
     "element-plus": "^2.13.7",
+    "fast-glob": "^3.3.3",
     "file-saver": "^2.0.5",
     "js-base64": "^3.7.8",
     "js-md5": "^0.8.3",
@@ -41,31 +43,12 @@
     "xe-utils": "^3.9.1"
   },
   "devDependencies": {
-    "@babel/core": "^7.29.0",
-    "@babel/eslint-parser": "^7.28.6",
-    "@vue/babel-plugin-jsx": "^1.4.0",
-    "@vue/cli-plugin-babel": "~5.0.9",
-    "@vue/cli-plugin-router": "~5.0.9",
-    "@vue/cli-service": "~5.0.9",
-    "@vue/compiler-sfc": "^3.5.33",
-    "compression-webpack-plugin": "^11.1.0",
+    "@vitejs/plugin-vue": "^5.2.3",
+    "@vitejs/plugin-vue-jsx": "^4.2.0",
     "sass": "^1.99.0",
-    "sass-loader": "^14.2.1",
-    "svg-sprite-loader": "^6.0.11"
-  },
-  "eslintConfig": {
-    "root": true,
-    "env": {
-      "node": true
-    },
-    "extends": [
-      "plugin:vue/vue3-essential",
-      "eslint:recommended"
-    ],
-    "parserOptions": {
-      "parser": "@babel/eslint-parser"
-    },
-    "rules": {}
+    "vite": "^6.3.4",
+    "vite-plugin-compression": "^0.5.1",
+    "vite-plugin-svg-icons": "^2.0.1"
   },
   "browserslist": [
     "> 1%",
