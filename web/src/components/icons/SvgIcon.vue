@@ -11,7 +11,7 @@
  */
 -->
 <template>
-    <el-icon v-if="isEleIcon" :style="style">
+    <el-icon v-if="isEleIcon" :style="style" class="lybbnfixlag">
         <component
             v-if="iconName"
             :is="iconName"
@@ -76,5 +76,10 @@
     .svg-icon-lyicon{
         height: 1em;
         width: 1em;
+    }
+    .lybbnfixlag {
+        /* transform: translateZ(0);
+        will-change: transform; */
+        font-size: 1.28em !important;
     }
 </style>
