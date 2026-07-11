@@ -21,10 +21,32 @@ type BaseApi struct {
 type UserApi struct {
 }
 
+// UserInfoResponse 登录响应中用户信息DTO，仅包含前端需要的字段
+type UserInfoResponse struct {
+	ID          uint                 `json:"id"`
+	UUID        string               `json:"uuid"`
+	Username    string               `json:"username"`
+	Name        string               `json:"name"`
+	Nickname    string               `json:"nickname"`
+	Avatar      string               `json:"avatar"`
+	Mobile      string               `json:"mobile"`
+	Email       string               `json:"email"`
+	Gender      string               `json:"gender"`
+	DeptId      uint                 `json:"dept_id"`
+	Dept        *system.LyadminDept  `json:"dept"`
+	Post        []system.LyadminPost `json:"post"`
+	Role        []system.LyadminRole `json:"role"`
+	RoleIds     []uint               `json:"roleIds"`
+	IsStaff     bool                 `json:"is_staff"`
+	IsSuperuser bool                 `json:"is_superuser"`
+	IsActive    bool                 `json:"is_active"`
+	Identity    int                  `json:"identity"`
+}
+
 type LoginResponse struct {
-	User      system.LyadminUsers `json:"user"`
-	Access    string              `json:"access"`
-	ExpiresAt int64               `json:"expiresAt"`
+	User      UserInfoResponse `json:"user"`
+	Access    string           `json:"access"`
+	ExpiresAt int64            `json:"expiresAt"`
 }
 
 // Login
@@ -106,9 +128,34 @@ func (b *BaseApi) IssueJwtToken(c *gin.Context, user system.LyadminUsers) {
 		return
 	}
 
+	var userRoleIds []uint
+	for _, v := range user.Role {
+		userRoleIds = append(userRoleIds, v.ID)
+	}
+	userInfo := UserInfoResponse{
+		ID:          uint(user.ID),
+		UUID:        user.UUID,
+		Username:    user.Username,
+		Name:        user.Name,
+		Nickname:    user.Nickname,
+		Avatar:      user.Avatar,
+		Mobile:      user.Mobile,
+		Email:       user.Email,
+		Gender:      user.Gender,
+		DeptId:      user.DeptId,
+		Dept:        user.Dept,
+		Post:        user.Post,
+		Role:        user.Role,
+		RoleIds:     userRoleIds,
+		IsStaff:     user.IsStaff,
+		IsSuperuser: user.IsSuperuser,
+		IsActive:    user.IsActive,
+		Identity:    user.Identity,
+	}
+
 	if global.GL_CONFIG.System.UseMultipoint {
 		response.SuccessResponse(LoginResponse{
-			User:      user,
+			User:      userInfo,
 			Access:    token,
 			ExpiresAt: claims.RegisteredClaims.ExpiresAt.Unix() * 1000,
 		}, "登录成功", c)
@@ -122,7 +169,7 @@ func (b *BaseApi) IssueJwtToken(c *gin.Context, user system.LyadminUsers) {
 			return
 		}
 		response.SuccessResponse(LoginResponse{
-			User:      user,
+			User:      userInfo,
 			Access:    token,
 			ExpiresAt: claims.RegisteredClaims.ExpiresAt.Unix() * 1000,
 		}, "登录成功", c)
@@ -141,7 +188,7 @@ func (b *BaseApi) IssueJwtToken(c *gin.Context, user system.LyadminUsers) {
 			return
 		}
 		response.SuccessResponse(LoginResponse{
-			User:      user,
+			User:      userInfo,
 			Access:    token,
 			ExpiresAt: claims.RegisteredClaims.ExpiresAt.Unix() * 1000,
 		}, "登录成功", c)

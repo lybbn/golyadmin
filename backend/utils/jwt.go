@@ -94,6 +94,9 @@ func GetClaims(c *gin.Context) (*CustomClaims, error) {
 	authHeader := c.Request.Header.Get("Authorization")
 	// 按空格分割
 	parts := strings.SplitN(authHeader, " ", 2)
+	if len(parts) != 2 {
+		return nil, errors.New("无效的Authorization头格式")
+	}
 	// parts[1]是获取到的tokenString，我们使用之前定义好的解析JWT的函数来解析它
 	token := parts[1]
 	j := NewJWT()

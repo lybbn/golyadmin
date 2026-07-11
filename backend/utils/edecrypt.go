@@ -2,6 +2,7 @@ package utils
 
 import (
 	"crypto/md5"
+	"crypto/subtle"
 	"encoding/hex"
 
 	"golang.org/x/crypto/bcrypt"
@@ -40,5 +41,5 @@ func MakePasswordSalt(password string, salt string) string {
 // CheckPasswordSalt 对比明文密码和数据库的哈希值和加盐值
 func CheckPasswordSalt(password, hash string, salt string) bool {
 	passwordHash := MakePasswordSalt(password, salt)
-	return hash == passwordHash
+	return subtle.ConstantTimeCompare([]byte(hash), []byte(passwordHash)) == 1
 }
