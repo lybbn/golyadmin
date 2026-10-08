@@ -4,8 +4,9 @@
 
 <script>
 	import * as echarts from 'echarts';
-	import echartsTheme from '@/components/analysis/lySmallEcharts/echartsTheme.js';
-	echarts.registerTheme('echartsTheme', echartsTheme);
+	import { registerLyChartThemes, lyChartTheme } from '@/components/analysis/echartsTheme.js';
+	// 全量 echarts 与 echarts/core 主题注册表相互独立，此处需单独注册（v4 亮/暗主题）
+	registerLyChartThemes(echarts);
 	const unwarp = (obj) => obj && (obj.__v_raw || obj.valueOf() || obj);
 
 	export default {
@@ -60,7 +61,7 @@
 		},
 		methods: {
 			draw(){
-				var myChart = echarts.init(this.$refs.lyEcharts, 'T');
+				var myChart = echarts.init(this.$refs.lyEcharts, lyChartTheme());
 				myChart.setOption(this.myOptions);
 				this.myChart = myChart;
 				window.addEventListener('resize', () => myChart.resize());

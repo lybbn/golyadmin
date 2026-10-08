@@ -13,7 +13,7 @@
                 </el-form-item>
                 <el-form-item label="登录密码：" prop="password">
                     <el-input v-model.trim="formData.password" clearable show-password></el-input>
-                    <el-alert title="编辑模式时密码为空，表示不修改密码" type="info" show-icon/>
+                    <div class="ly-form-tip">编辑模式时密码为空，表示不修改密码</div>
                 </el-form-item>
                 <el-form-item label="手机号：" prop="mobile">
                     <el-input v-model.trim="formData.mobile"></el-input>
@@ -222,8 +222,5 @@
     }
 </script>
 <style scoped>
-.el-alert{
-    padding:3px 16px;
-}
 </style>
 

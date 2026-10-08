@@ -10,8 +10,8 @@
                 </el-form-item>
                 <el-form-item label="目标类型：" prop="target_type">
                     <el-radio-group v-model="formData.target_type">
-                        <el-radio :label="1"  border>平台公告</el-radio>
-                        <el-radio :label="2"  border>按用户</el-radio>
+                        <el-radio :value="1"  border>平台公告</el-radio>
+                        <el-radio :value="2"  border>按用户</el-radio>
                     </el-radio-group>
                 </el-form-item>
                 <el-form-item label="发送对象：" prop="target_user" v-if="formData.target_type == 2" class="is-required">

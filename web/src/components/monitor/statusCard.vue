@@ -173,12 +173,18 @@
     .space-inner{
     }
     .lycard{
-        background: var(--el-bg-color);
-        /*box-shadow: var(--el-box-shadow-light);*/
-        border: 1px solid var(--el-border-color-light);
+        border-radius: var(--ly-radius-md);
+        background: var(--ly-glass-bg);
+        backdrop-filter: var(--ly-glass-blur);
+        -webkit-backdrop-filter: var(--ly-glass-blur);
+        border: 1px solid var(--ly-glass-border);
+        box-shadow: var(--ly-glass-highlight), var(--ly-shadow-card);
+    }
+    .lycard:hover{
+        box-shadow: var(--ly-glass-highlight), var(--ly-shadow-card-hover);
     }
     .space-header{
-        border-bottom: 1px solid var(--el-color-info-light-7);
+        border-bottom: 1px solid var(--ly-line-soft);
         font-size: 14px;
         padding: 4px;
         display: flex;

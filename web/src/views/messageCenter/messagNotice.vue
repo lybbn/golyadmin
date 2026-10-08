@@ -22,7 +22,8 @@
                 <el-form-item label="" v-show="hasPermission('messagNotice','Create')"><el-button size="default" icon="Plus" @click="addModule" type="primary">新增</el-button></el-form-item>
             </el-form>
         </div>
-        <el-table :height="'calc('+(tableHeight)+'px)'" border :data="tableData" ref="tableref" v-loading="loadingPage" style="width: 100%">
+        <div class="table-container">
+            <el-table :height="'calc('+(tableHeight)+'px)'" border :data="tableData" ref="tableref" v-loading="loadingPage" style="width: 100%">
             <el-table-column type="index" width="60" align="center" label="序号">
                 <template #default="scope">
                     <span v-text="getIndex(scope.$index)"></span>
@@ -72,6 +73,7 @@
                 </template>
             </el-table-column>
         </el-table>
+        </div>
         <Pagination v-bind:child-msg="pageparm" @callFather="callFather"></Pagination>
         <add-module ref="addModuleFlag" @refreshData="getData"></add-module>
     </div>

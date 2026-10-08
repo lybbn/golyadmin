@@ -32,7 +32,7 @@
                 </el-form-item>
             </el-form>
         </div>
-
+        <div class="table-container">
         <el-table
                 :max-height="tableHeight"
                 border
@@ -70,7 +70,7 @@
             </el-table-column>
             <el-table-column width="90" label="状态">
                 <template #default="scope">
-                    <el-tag v-if="scope.row.status==1" type="">启用</el-tag>
+                    <el-tag v-if="scope.row.status==1" type="primary">启用</el-tag>
                     <el-tag v-else type="danger">禁用</el-tag>
                 </template>
             </el-table-column>
@@ -93,6 +93,7 @@
                 </template>
             </el-table-column>
         </el-table>
+        </div>
         <add-menu ref="addMenuFlag"  @refreshData="refreshData"></add-menu>
     </div>
 </template>

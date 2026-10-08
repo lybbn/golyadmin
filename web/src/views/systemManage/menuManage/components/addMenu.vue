@@ -18,14 +18,14 @@
                 </el-form-item>
                 <el-form-item label="侧边栏可见：" prop="visible">
                     <el-radio-group v-model="formData.visible" >
-                        <el-radio :label="true">是</el-radio>
-                        <el-radio :label="false">否</el-radio>
+                        <el-radio :value="true">是</el-radio>
+                        <el-radio :value="false">否</el-radio>
                     </el-radio-group>
                 </el-form-item>
                 <el-form-item label="是否目录：" prop="is_catalog">
                     <el-radio-group v-model="formData.is_catalog" >
-                        <el-radio :label="true">是</el-radio>
-                        <el-radio :label="false">否</el-radio>
+                        <el-radio :value="true">是</el-radio>
+                        <el-radio :value="false">否</el-radio>
                     </el-radio-group>
                     <span style="font-size: 7px;color: red;">*【否】会自动创建crud API按钮，需自行填写API地址</span>
                 </el-form-item>
@@ -56,12 +56,12 @@
                 </el-form-item>
                 <el-form-item label="路由地址：" prop="web_path">
                     <el-input v-model.trim="formData.web_path" ></el-input>
-                    <el-alert title="请填写xxx.vue中的name或文件名作为路由地址" type="info" show-icon/>
+                    <div class="ly-form-tip">请填写xxx.vue中的name或文件名作为路由地址</div>
                 </el-form-item>
                 <el-form-item label="状态：" prop="status">
                     <el-radio-group v-model="formData.status" style="width: 300px">
-                        <el-radio :label="true">启用</el-radio>
-                        <el-radio :label="false">禁用</el-radio>
+                        <el-radio :value="true">启用</el-radio>
+                        <el-radio :value="false">禁用</el-radio>
                     </el-radio-group>
                 </el-form-item>
 
@@ -273,9 +273,6 @@
         width: 90px;
         margin-left: 10px;
         vertical-align: bottom;
-    }
-    .el-alert{
-        padding:3px 16px;
     }
 </style>
 

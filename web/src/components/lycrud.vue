@@ -70,7 +70,8 @@
                             <el-checkbox :indeterminate="drawerIndeterminate" @change="handleDrawerCheckAllChange">全选 {{ "("+drawerCheckedValue.length+"/"+tableColumns.length+")"}}</el-checkbox>
                             <el-divider style="margin:  5px auto"></el-divider>
                             <el-checkbox-group v-model="drawerCheckedValue" @change="handleDrawerColumnsChange" style="overflow: auto;display: flex;flex-direction: column">
-                                <el-checkbox  v-for="ckitem in tableColumns" :key="ckitem.prop" :label="ckitem.label" :checked="!ckitem.hidden"></el-checkbox>
+                                <!-- EP 2.13：label 不再作 value，value 定值、label 仅作显示文本 -->
+                                <el-checkbox  v-for="ckitem in tableColumns" :key="ckitem.prop" :value="ckitem.label" :label="ckitem.label" :checked="!ckitem.hidden"></el-checkbox>
                             </el-checkbox-group>
                             <template #reference>
                                 <el-button link type="primary">
@@ -170,10 +171,10 @@
                                 </el-option>
                             </el-select>
                             <el-radio-group v-else-if="fitem.type=='radio'" :disabled="isFormItemEditDisabled(fitem.form.editDisabled)" v-model="formData[fitem.prop]" @change="fitem.form.valueChange">
-                                <el-radio :label="rditem.value" v-for="(rditem,rdindex) in fitem.form.options">{{rditem.label}}</el-radio>
+                                <el-radio :value="rditem.value" v-for="(rditem,rdindex) in fitem.form.options">{{rditem.label}}</el-radio>
                             </el-radio-group>
                             <el-checkbox-group v-else-if="fitem.type=='checkbox'" :disabled="isFormItemEditDisabled(fitem.form.editDisabled)" v-model="formData[fitem.prop]" @change="fitem.form.valueChange">
-                                <el-checkbox v-if="fitem.options"  v-for="option in fitem.options" :label="option.label" />
+                                <el-checkbox v-if="fitem.options"  v-for="option in fitem.options" :value="option.label" :label="option.label" />
                             </el-checkbox-group>
                             <ly-upload-avatar v-else-if="fitem.type=='image-avatar'" :disabled="isFormItemEditDisabled(fitem.form.editDisabled)" v-model="formData[fitem.prop]" :width="fitem.form.width?fitem.form.width+'px':'80px'" :height="fitem.form.width?fitem.form.width+'px':'80px'"></ly-upload-avatar>
                             <ly-upload-goods v-else-if="fitem.type=='image-goods'" :disabled="isFormItemEditDisabled(fitem.form.editDisabled)" v-model="formData[fitem.prop]"></ly-upload-goods>
@@ -682,12 +683,12 @@
         display: flex;
         justify-content: space-between;
         font-size: 14px;
-        background: var(--el-bg-color);
+        background: transparent;
         padding: 8px;
         /*box-shadow: 0 0 4px #cccccc;*/
         /*box-shadow: 0 0 4px rgba(0, 0, 0, .12);*/
-        border-top: 1px solid var(--el-border-color-lighter);
-        border-left: 1px solid var(--el-border-color-lighter);
-        border-right: 1px solid var(--el-border-color-lighter);
+        border-top: 1px solid var(--ly-line-soft);
+        border-left: 1px solid var(--ly-line-soft);
+        border-right: 1px solid var(--ly-line-soft);
     }
 </style>

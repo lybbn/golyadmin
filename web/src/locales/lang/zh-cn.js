@@ -1,6 +1,15 @@
 export default {
 	login: {
 		loginInTitle: '用户登录',
+		workspaceTitle: '让管理工作更清晰',
+		workspaceSubtitle: '统一入口，轻松掌握业务与数据。',
+		loginPrompt: '请输入账号信息以继续',
+		accountLabel: '账号',
+		passwordLabel: '密码',
+		codeLabel: '验证码',
+		refreshCaptcha: '刷新验证码',
+		language: '切换语言',
+		toggleTheme: '切换主题',
 		loginAccount: '请输入账号',
 		loginPWD: '请输入密码',
 		code: '验证码',

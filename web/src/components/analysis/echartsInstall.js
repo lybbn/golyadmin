@@ -41,5 +41,9 @@ echarts.use([
     LineChart,
 ]);
 
+// 注册 v4 玻璃拟态图表主题（亮 lyv4 / 暗 lyv4-dark，定义见 echartsTheme.js）
+import { registerLyChartThemes } from "./echartsTheme";
+registerLyChartThemes(echarts);
+
 // 导出
 export default echarts;

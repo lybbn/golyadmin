@@ -124,7 +124,7 @@ const routes = [
         }
       },
       {
-        path: 'buttonConfig',
+        path: '/buttonConfig',
         name: 'buttonConfig',
         component: () => import('../views/systemManage/buttonConfig/buttonConfig.vue'),
         meta: {

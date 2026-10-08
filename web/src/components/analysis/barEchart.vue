@@ -7,6 +7,7 @@
     // import * as echarts from 'echarts'
     // 按需引入echarts
     import echarts from "@/components/analysis/echartsInstall";
+    import { lyChartTheme } from "@/components/analysis/echartsTheme";
 
     let myChart = null
     let option = {
@@ -28,7 +29,7 @@
     onMounted(() => {//需要获取到element,所以是onMounted的Hook
         setTimeout(() => {
             nextTick(()=>{
-                myChart = echarts.init(lyechartmain.value);
+                myChart = echarts.init(lyechartmain.value, lyChartTheme());
                 myChart.setOption(option);
             })
         },300)

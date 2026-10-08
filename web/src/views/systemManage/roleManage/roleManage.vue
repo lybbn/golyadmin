@@ -39,7 +39,7 @@
 <!--                </el-table-column>-->
                 <el-table-column min-width="120" label="状态">
                     <template #default="scope">
-                        <el-tag v-if="scope.row.status==1" type="">启用</el-tag>
+                        <el-tag v-if="scope.row.status==1" type="primary">启用</el-tag>
                         <el-tag v-else>禁用</el-tag>
                     </template>
                 </el-table-column>

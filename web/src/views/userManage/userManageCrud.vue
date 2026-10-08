@@ -58,7 +58,7 @@
                     },
                     //crud按钮配置
                     rowHandle:{
-                        width: 180,//操作列宽度,0表示不显示表格操作列
+                        width: 190,//操作列宽度,0表示不显示表格操作列
                         fixed:"right",//固定操作列在右侧
                         permission:{//增删改查按钮权限控制（是否显示）
                             add:this.hasPermission(this.$route.name,'Create'),//bool型 this.$options.name获取当前组件的name本例为userManageCrud

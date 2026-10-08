@@ -229,6 +229,7 @@
         align-items: center;
         cursor: pointer;
         justify-content: center;
+        margin-left: auto; /* 右侧图标组贴右（原由 header-auth 版权块的 auto 占位顶右，删除后由其接管） */
         padding-right: 15px;
         background-color: var(--l-header-bg) !important;
     }

@@ -9,6 +9,12 @@ import $bus from '@/utils/bus'
 import './assets/css/common.scss'
 import './assets/css/elementplus-theme-dark-css-vars.css'
 
+// v4 玻璃拟态主题（tokens → app 布局皮肤 → fix EP 覆盖 → dark 补充）
+import './assets/lybbn/css/tokens.scss'
+import './assets/lybbn/css/app.scss'
+import './assets/lybbn/css/fix.scss'
+import './assets/lybbn/css/dark.scss'
+
 import 'virtual:svg-icons-register'
 
 import App from './App.vue'

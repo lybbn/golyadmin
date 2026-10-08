@@ -264,27 +264,35 @@
     .myeltas1{
         /*padding: 0 8px 0 8px;*/
         height: 100%;
+        min-height: 0;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+    }
+    .myeltas1 > .lyadmin-main-content {
+        flex: 1 1 0%;
+        flex-basis: 0;
+        min-height: 0;
+        min-width: 0;
+        overflow: auto;
     }
     .myeltas2{
         /*height: 48px;*/
-        height: 33px;
-        box-sizing: border-box;
-        /*padding-top: 8px;*/
+        /* 顶部呼吸空隙（悬浮式标签条）：必须用 margin 上8/下-8 抵消实现，净占位与原版自然高度一致。
+           禁止用固定 height+padding 占位（曾改 height:41px+padding-top:8 多占 7px）——
+           useTableHight.js 的表格高度公式（innerHeight-搜索区-178）按原骨架常量校准，
+           标签条多占几像素 .lyadmin-main-content 就会冒出几像素空滚动条（实测恰好 scrolling=7） */
+        margin-top: 8px;
+        margin-bottom: -8px;
     }
     .myeltas2 .el-tabs__header{
         margin: 0;
     }
     .myeltas2 .el-tabs__nav .el-tabs__item.is-active {
         color: #fff;
-        /*color: var(--el-color-primary);*/
-        /*background-color: var(--l-changetab-bg);*/
-        /*border-top-color: var(--l-tabs-active-bg);*/
-        /*border-bottom-color: var(--l-tabs-active-bg);*/
-        border-color: var(--l-tabs-active-bg);
-        background-color: var(--l-tabs-active-bg) !important;
-        /*box-shadow: 0 0 5px #cccccc;*/
-        /*box-shadow: 0 0 2px rgba(0, 0, 0, .12);*/
-        /*border-bottom: none;*/
+        border-color: transparent;
+        background: var(--ly-gradient-primary) !important;
+        box-shadow: var(--ly-sidebar-active-shadow);
     }
     .myeltas2 .el-tabs__nav .el-tabs__item{
         transition:none;
@@ -318,11 +326,7 @@
     }
     .myeltas2 .el-tabs__nav-wrap{
         background: var(--l-changetab-bg);
-        border-color: transparent;
-        /*box-shadow: 0 0 3px #cccccc;*/
-        /*box-shadow: 0 0 2px rgba(0, 0, 0, .12);*/
-        border: 1px solid var(--el-border-color-light);
-        /*border-bottom: 1px solid var(--el-border-color-light);*/
+        border: none;
     }
     /*去除顶部线*/
     .myeltas2 .el-tabs__header {
@@ -339,7 +343,7 @@
     /*字体大小*/
     .myeltas2  .el-tabs__item{
         font-size: 13px;
-        color: #808695;
+        color: var(--ly-text-2);
         height: 30px;
         line-height: 30px;
         padding: 0 15px;
@@ -349,19 +353,19 @@
         line-height: 35px;
         font-size: 17px;
     }
-    /*自定义右键菜单*/
+    /*自定义右键菜单（玻璃规格与 app.scss 全局规则一致，此处为兜底来源）*/
     .contextmenu {
         width: 130px;
         margin: 0;
-        border: 1px solid #ccc;
+        border: 1px solid var(--ly-glass-border);
         background: var(--l-changetab-right-menu);
         z-index: 3000;
         position: absolute;
         list-style-type: none;
         padding: 5px 0;
-        border-radius: 4px;
+        border-radius: var(--ly-radius-md);
         font-size: 14px;
-        box-shadow: 1px 1px 3px 0 #cccccc;
+        box-shadow: var(--ly-shadow-card);
     }
     .contextmenu li {
         margin: 0;

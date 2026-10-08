@@ -178,19 +178,48 @@
     .space-inner{
     }
     .lycard{
-        background: var(--el-bg-color);
-        /*box-shadow: var(--el-box-shadow-light);*/
-        border: 1px solid var(--el-border-color-light);
+        border-radius: var(--ly-radius-md);
+        background: var(--ly-glass-bg);
+        backdrop-filter: var(--ly-glass-blur);
+        -webkit-backdrop-filter: var(--ly-glass-blur);
+        border: 1px solid var(--ly-glass-border);
+        box-shadow: var(--ly-glass-highlight), var(--ly-shadow-card);
+        overflow: hidden;
     }
-    .lymonitor-info{
+    /* border-card tabs：表头玻璃化内嵌于玻璃卡（双类稳压全局 seg 化规则与 EP border-card 实底） */
+    .lycard.el-tabs--border-card > :deep(.el-tabs__header){
+        background: transparent !important;
+        border-bottom: none !important;
+        padding: 10px 12px 0 12px !important;
+        width: auto !important;
+        border-radius: 0;
+    }
+    .lycard.el-tabs--border-card > :deep(.el-tabs__content){
+        background: transparent;
+    }
+    .lymonitor-info,
+    .lymonitor-info-disk{
         display: flex;
         width: 100%;
         text-align: center;
         align-items: center;
         justify-content: center;
         column-gap: 5%;
+        row-gap: 8px;
+        flex-wrap: wrap; /* 窄屏允许换行，不挤压文字 */
         font-size: 13px;
         line-height: 20px;
+    }
+    /* 图例项禁止收缩换行：el-select 默认宽度会吞掉整行，把「上行」等文字挤成竖排 */
+    .lymonitor-info .lymonitor-info-item,
+    .lymonitor-info-disk .lymonitor-info-item{
+        flex-shrink: 0;
+        white-space: nowrap;
+    }
+    .lymonitor-info .el-select,
+    .lymonitor-info-disk .el-select{
+        flex-shrink: 0;
+        width: 200px; /* 下拉限宽，与图例同行居中 */
     }
     .lymonitor-info .lyico-up {
         width: 12px;

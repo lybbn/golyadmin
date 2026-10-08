@@ -1,12 +1,13 @@
 <template>
     <div>
         <div ref="tableSelect">
-            <el-breadcrumb separator-class="el-icon-arrow-right" style="margin-bottom: 16px;margin-top: 10px;">
+            <el-breadcrumb separator="/" style="margin-bottom: 16px;margin-top: 10px;">
                 <el-breadcrumb-item :to="{ path: '/menuManage' }">菜单管理</el-breadcrumb-item>
                 <el-breadcrumb-item >按钮管理</el-breadcrumb-item>
             </el-breadcrumb>
         </div>
 
+        <div class="table-container">
         <el-table
             :height="tableHeight"
             border
@@ -32,6 +33,7 @@
                 </template>
             </el-table-column>
         </el-table>
+        </div>
         <add-button ref="addButtonFlag" @refreshData="getData"></add-button>
     </div>
 </template>

@@ -47,7 +47,7 @@
                 <el-table-column min-width="120" prop="email" label="邮箱"></el-table-column>
                 <el-table-column min-width="90"  label="状态">
                     <template #default="scope">
-                        <el-tag v-if="scope.row.status==1" type="">启用</el-tag>
+                        <el-tag v-if="scope.row.status==1" type="primary">启用</el-tag>
                         <el-tag v-else type="danger">禁用</el-tag>
                     </template>
                 </el-table-column>

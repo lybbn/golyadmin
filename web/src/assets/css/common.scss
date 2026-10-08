@@ -222,7 +222,7 @@ input, textarea {
     width: 100vw;
     height: 100vh;
     z-index: 99;
-    background:var(--el-bg-color);
+    background:var(--ly-dialog-bg, var(--el-bg-color));
 }
 .ly-is-full-design{
     position: fixed;

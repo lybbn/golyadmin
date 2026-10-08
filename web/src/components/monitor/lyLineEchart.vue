@@ -6,6 +6,7 @@
     import {onBeforeUnmount, onMounted, reactive, watch,ref,nextTick,markRaw} from "vue";
     // 按需引入echarts
     import echarts from "@/components/analysis/echartsInstall";
+    import { lyChartTheme } from "@/components/analysis/echartsTheme";
 
     const props = defineProps(['modelValue'])
     const emit = defineEmits(['update:modelValue'])
@@ -26,7 +27,7 @@
     let lyechartmain = ref(null)
     onMounted(() => {//需要获取到element,所以是onMounted的Hook
         setTimeout(() => {
-            myChart.value = markRaw(echarts.init(lyechartmain.value));
+            myChart.value = markRaw(echarts.init(lyechartmain.value, lyChartTheme()));
             nextTick(()=>{
                 state.contentValue = props.modelValue
                 addData(state.contentValue.up,state.contentValue.down)

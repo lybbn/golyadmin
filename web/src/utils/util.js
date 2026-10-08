@@ -261,7 +261,11 @@ function hasPermission(url,btnName) {
 }
 
 function getTableHeight(tableSelectHeight,allowPage=true){
-    var pagination_height = allowPage?178:0;
+    /* pagination_height 是骨架校准常量（非分页真实高度）：header 60 + 标签条 40 + 内容区
+       上下 padding 20 + 搜索区间距/表格边框/分页区间距等约 64。
+       v4 玻璃化后 .table-container 增加 2px 边框、分页区间距累计多 6px，实测三页
+       （journalManage/adminManage/roleManage）.lyadmin-main-content 均溢出 6px，故 178→184 */
+    var pagination_height = allowPage?184:0;
     let height = (window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight) - tableSelectHeight;
     var ua = navigator.userAgent;
     //获取当前设备类型（安卓或苹果）

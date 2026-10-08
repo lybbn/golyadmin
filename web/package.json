@@ -5,7 +5,7 @@
     "email": "1042594286@qq.com",
     "url": "https://gitee.com/lybbn"
   },
-  "version": "1.0.1",
+  "version": "2.0.1",
   "private": true,
   "type": "module",
   "scripts": {
@@ -16,13 +16,13 @@
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix"
   },
   "dependencies": {
-    "@element-plus/icons-vue": "^2.3.2",
+    "@element-plus/icons-vue": "2.3.2",
     "@tinymce/tinymce-vue": "^5.1.0",
     "axios": "^1.15.2",
     "cropper": "^4.1.0",
     "crypto-js": "^4.2.0",
     "echarts": "^5.6.0",
-    "element-plus": "^2.13.7",
+    "element-plus": "2.14.7",
     "fast-glob": "^3.3.3",
     "file-saver": "^2.0.5",
     "js-base64": "^3.7.8",

@@ -79,12 +79,26 @@
     .space-inner{
     }
     .lycard{
-        border-radius: var(--el-card-border-radius);
-        background: var(--el-bg-color);
-        /*box-shadow: var(--el-box-shadow-light);*/
-        border: 1px solid var(--el-border-color-light);
+        border-radius: var(--ly-radius-md);
+        background: var(--ly-glass-bg);
+        backdrop-filter: var(--ly-glass-blur);
+        -webkit-backdrop-filter: var(--ly-glass-blur);
+        border: 1px solid var(--ly-glass-border);
+        box-shadow: var(--ly-glass-highlight), var(--ly-shadow-card);
+        overflow: hidden;
     }
     .lycard:hover{
-        box-shadow: var(--el-box-shadow-light);
+        box-shadow: var(--ly-glass-highlight), var(--ly-shadow-card-hover);
+    }
+    /* border-card tabs：表头玻璃化内嵌于玻璃卡（双类 (0,4,0) 稳压全局 seg 化规则与 EP border-card 实底） */
+    .lycard.el-tabs--border-card > :deep(.el-tabs__header){
+        background: transparent !important;
+        border-bottom: none !important;
+        padding: 10px 12px 0 12px !important;
+        width: auto !important;
+        border-radius: 0;
+    }
+    .lycard.el-tabs--border-card > :deep(.el-tabs__content){
+        background: transparent;
     }
 </style>

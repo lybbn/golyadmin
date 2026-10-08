@@ -6,7 +6,7 @@
                     <div class="space-header">
                         <div class="space-header-title">{{item.title}}</div>
                         <div class="space-header-extend-right">
-                            <el-tag :type="item.time.type">
+                            <el-tag :type="item.time.type || 'primary'"><!-- 空 type 回退 primary：EP 2.13 el-tag 校验不再接受空字符串 -->
                                 {{item.time.name}}
                             </el-tag>
                         </div>
@@ -94,16 +94,18 @@
     .space-inner{
     }
     .lycard{
-        border-radius: var(--el-card-border-radius);
-        background: var(--el-bg-color);
-        /*box-shadow: var(--el-box-shadow-light);*/
-        border: 1px solid var(--el-border-color-light);
+        border-radius: var(--ly-radius-md);
+        background: var(--ly-glass-bg);
+        backdrop-filter: var(--ly-glass-blur);
+        -webkit-backdrop-filter: var(--ly-glass-blur);
+        border: 1px solid var(--ly-glass-border);
+        box-shadow: var(--ly-glass-highlight), var(--ly-shadow-card);
     }
     .lycard:hover{
-        box-shadow: var(--el-box-shadow-light);
+        box-shadow: var(--ly-glass-highlight), var(--ly-shadow-card-hover);
     }
     .space-header{
-        border-bottom: 1px solid var(--el-color-info-light-7);
+        border-bottom: 1px solid var(--ly-line-soft);
         font-size: 14px;
         padding: 2px;
         display: flex;

@@ -1,6 +1,15 @@
 export default {
 	login: {
 		loginInTitle: 'User Login',
+		workspaceTitle: 'A clearer way to manage',
+		workspaceSubtitle: 'One place to keep business and data in view.',
+		loginPrompt: 'Enter your account details to continue',
+		accountLabel: 'Account',
+		passwordLabel: 'Password',
+		codeLabel: 'Captcha',
+		refreshCaptcha: 'Refresh captcha',
+		language: 'Change language',
+		toggleTheme: 'Toggle theme',
 		loginAccount: 'Please input Account',
 		loginPWD: 'Please input Password',
 		code: 'Captcha',

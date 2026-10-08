@@ -16,8 +16,8 @@
 <!--                </el-form-item>-->
                 <el-form-item label="状态：" prop="status">
                     <el-radio-group v-model="formData.status" style="width: 300px">
-                        <el-radio :label="true">启用</el-radio>
-                        <el-radio :label="false">禁用</el-radio>
+                        <el-radio :value="true">启用</el-radio>
+                        <el-radio :value="false">禁用</el-radio>
                     </el-radio-group>
                 </el-form-item>
                 <el-form-item label="排序：" prop="sort">

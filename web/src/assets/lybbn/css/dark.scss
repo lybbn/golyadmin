@@ -1,0 +1,76 @@
+/* ============================================================
+   golyadmin v4 暗色补充覆盖（语义 token 已由 tokens.scss 的 html.dark 切换，
+   此处仅补结构性暗色规则）
+   ============================================================ */
+
+html.dark {
+	--el-text-color-primary: #d0d0d0;
+	--el-color-primary-dark-2: var(--el-color-primary-light-2) !important;
+	--el-color-primary-light-9: var(--el-color-primary-dark-8) !important;
+	--el-color-primary-light-8: var(--el-color-primary-dark-7) !important;
+	--el-color-primary-light-7: var(--el-color-primary-dark-6) !important;
+	--el-color-primary-light-5: var(--el-color-primary-dark-4) !important;
+	--el-color-primary-light-3: var(--el-color-primary-dark-3) !important;
+
+	#app { background: transparent; }
+
+	/* 框架玻璃（token 值已由 tokens.scss 下发，此处只补结构边框） */
+	.index-header { border-bottom-color: var(--ly-glass-border); }
+	.lyadmin-side { box-shadow: var(--ly-glass-highlight), 0 2px 4px rgba(0, 0, 0, 0.20), 0 12px 32px rgba(0, 0, 0, 0.30) !important; }
+	.myeltas2 { background: var(--ly-glass-bg); }
+	.lyadmin-side .el-menu-item,
+	.lyadmin-side .el-sub-menu__title { color: var(--ly-text-2); }
+
+	/* 表格暗色 */
+	.el-table {
+		--el-table-tr-bg-color: transparent;
+		--el-table-header-bg-color: transparent;
+		--el-table-header-text-color: var(--ly-text-2);
+		--el-table-text-color: var(--ly-text-1);
+		--el-table-border-color: var(--ly-line-soft);
+		--el-table-row-hover-bg-color: rgba(88, 140, 255, 0.08);
+		background: transparent;
+	}
+	.el-table th.el-table__cell {
+		background: linear-gradient(180deg, #2A3450 0%, #232C46 100%) !important;
+		border-bottom: 1px solid rgba(255, 255, 255, 0.09);
+	}
+	.el-table tbody tr:hover > td.el-table__cell { background: linear-gradient(90deg, rgba(88, 140, 255, 0.10), rgba(108, 155, 255, 0.06)) !important; }
+	.el-table .el-table__body-wrapper,
+	.el-table .el-table__header-wrapper { background: transparent !important; }
+	.el-table .el-table-fixed-column--left,
+	.el-table .el-table-fixed-column--right { background: transparent !important; }
+	.el-table.el-table--scrollable-x .el-table-fixed-column--left,
+	.el-table.el-table--scrollable-x .el-table-fixed-column--right { background: var(--ly-table-fixed-bg) !important; }
+	.el-table th.el-table__cell.el-table-fixed-column--left,
+	.el-table th.el-table__cell.el-table-fixed-column--right { background: linear-gradient(180deg, #2A3450 0%, #232C46 100%) !important; }
+
+	/* 卡片 */
+	.el-card { background: var(--ly-glass-bg); border-color: var(--ly-glass-border); }
+
+	/* 滚动条 */
+	::-webkit-scrollbar-thumb { background-color: rgba(163, 166, 173, 0.3); }
+	::-webkit-scrollbar-thumb:hover { background-color: rgba(163, 166, 173, 0.5); }
+
+	/* 组件容器 */
+	.el-header, .el-main.nopadding, .el-footer { background: transparent; border-color: var(--el-border-color-light); }
+	.el-main { background: transparent; }
+	.el-aside { background: var(--el-bg-color-overlay); border-color: var(--el-border-color-light); }
+	.el-table th.is-sortable:hover { background: rgba(255, 255, 255, 0.04); }
+
+	/* 标签页 dark 药丸 */
+	.myeltas2 .el-tabs__item.is-active {
+		background: var(--ly-gradient-primary) !important;
+		color: #fff !important;
+	}
+
+	/* 右键菜单 */
+	.contextmenu { background: var(--ly-glass-bg-strong) !important; }
+
+	/* 登录 */
+	.login_bg { background-color: var(--el-bg-color); }
+
+	/* 最大化按钮 */
+	.lymain-maximize-exit { background: rgba(68, 67, 67, 0.2); }
+	.lymain-maximize-exit:hover { background: rgba(68, 67, 67, 0.8); }
+}

@@ -1,0 +1,300 @@
+/* ============================================================
+   golyadmin v4 布局皮肤（基于 tokens.scss 语义变量）
+   覆盖 .lyadmin-* 布局类与旧版 --l-* 变量引用点
+   ============================================================ */
+
+/* ---- 全局基线 ---- */
+/* html 不能带背景（common.scss 曾对 html+body 同设背景）：
+   html 有背景时 body 背景不再上浮为画布，会盖住 z-index:-1 的极光组件 */
+html { background: transparent !important; }
+body {
+	background-color: var(--ly-bg-page, #EEF2FB);
+	background-image: var(--ly-page-gradient, none);
+	background-attachment: fixed;
+	color: var(--ly-text-1, #1B2340);
+	font-family: var(--ly-font-family);
+	-webkit-font-smoothing: antialiased;
+}
+/* 全局滚动条 */
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-thumb { background-color: rgba(27, 35, 64, 0.14); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background-color: rgba(27, 35, 64, 0.24); }
+::-webkit-scrollbar-track { background-color: transparent; }
+html.dark ::-webkit-scrollbar-thumb { background-color: rgba(163, 166, 173, 0.3); }
+html.dark ::-webkit-scrollbar-thumb:hover { background-color: rgba(163, 166, 173, 0.5); }
+
+/* ---- 顶栏玻璃化（navcon.vue / views/index.vue） ---- */
+.index-header,
+.lyadmin-header {
+	/* 就地重声明 --l-header-bg：App.vue 启动时会把 menuHeaderColor（旧主题色）以
+	   内联 style 注入到 <html>（siteTheme.js setMenuHeaderColor），内联注入的变量值
+	   优先级高于 tokens.scss 的 :root 重映射；此处利用 CSS 变量"继承链就近取胜"，
+	   让头部内所有 var(--l-header-bg) 引用（navcon el-menu 内联背景、.ly-header-right、
+	   菜单激活项）全部回落到玻璃 token，且不破坏「布局设置」的菜单颜色功能 */
+	--l-header-bg: var(--ly-header-bg);
+	height: var(--ly-topbar-height, 60px) !important;
+	background: var(--ly-header-bg) !important;
+	backdrop-filter: var(--ly-glass-blur);
+	-webkit-backdrop-filter: var(--ly-glass-blur);
+	border-bottom: 1px solid var(--ly-header-border);
+	box-shadow: var(--ly-glass-highlight);
+	position: relative;
+	z-index: 5;
+}
+/* 顶栏内 el-menu（navcon 传了 background-color/text-color="#ffffff"，EP 2.13 将
+   background-color 转成内联 background-color 样式，须用属性级 !important 压制；
+   同时撑满 header 宽度，避免收缩为内容宽导致右侧图标区不靠右） */
+.index-header .el-menu,
+.lyadmin-header .el-menu {
+	width: 100% !important;
+	flex: 1 1 auto;
+	min-width: 0;
+	background: transparent !important;
+	--el-menu-bg-color: transparent !important;
+	--el-menu-text-color: var(--ly-text-2) !important;
+	--el-menu-hover-text-color: var(--el-color-primary) !important;
+	--el-menu-active-color: var(--el-color-primary) !important;
+	--el-menu-hover-bg-color: transparent !important;
+}
+/* 顶栏右侧交互区：navcon scoped 里写死了 var(--l-header-bg) 背景（含 !important），
+   双类选择器 (0,3,0) 压过 scoped 的 (0,2,0)，避免右侧出现亮斑 */
+.index-header .ly-header-right.ly-header-right,
+.lyadmin-header .ly-header-right.ly-header-right { background: transparent !important; }
+/* 顶栏头像：v4 规格（白描边 + 主色投影） */
+.index-header .el-avatar,
+.lyadmin-header .el-avatar {
+	border: 2px solid #fff;
+	box-shadow: var(--ly-shadow-primary);
+	background: var(--ly-gradient-primary);
+	color: #fff;
+	font-weight: 500;
+}
+.index-header .el-menu-item:hover,
+.index-header .el-menu-item.is-active,
+.lyadmin-header .el-menu-item:hover,
+.lyadmin-header .el-menu-item.is-active { background: transparent !important; }
+/* 顶栏图标/文字（navcon 内联 color:white 与 scoped 白色文字，统一换语义色） */
+.index-header .el-icon,
+.lyadmin-header .el-icon { color: var(--ly-text-2) !important; }
+.index-header .right-dropdown-center,
+.lyadmin-header .right-dropdown-center { color: var(--ly-text-2) !important; }
+.index-header .divleft span,
+.lyadmin-header .divleft span { color: var(--ly-text-1) !important; }
+.index-header .divleft .login-inner,
+.lyadmin-header .divleft .login-inner { color: var(--ly-text-1) !important; }
+.index-header .el-dropdown-link,
+.lyadmin-header .el-dropdown-link { color: var(--ly-text-2) !important; display: flex; align-items: center; gap: 4px; }
+/* 顶栏 hover 交互区（图标按钮） */
+.index-header .ly-header-right > span,
+.lyadmin-header .ly-header-right > span {
+	border-radius: 8px;
+	transition: background var(--ly-duration-fast), transform var(--ly-duration-fast);
+}
+.index-header .ly-header-right > span:hover,
+.lyadmin-header .ly-header-right > span:hover {
+	background: var(--ly-gradient-soft);
+}
+/* ---- 侧栏玻璃化（views/index.vue .lyadmin-side / leftnav.vue） ----
+   v4 经典布局：浮动圆角玻璃面板，离边 14px */
+.lyadmin-side {
+	margin: 14px 0 14px 14px !important;
+	border-radius: var(--ly-radius-xl) !important;
+	overflow: hidden;
+	background-color: var(--ly-menu-bg) !important;
+	backdrop-filter: var(--ly-glass-blur);
+	-webkit-backdrop-filter: var(--ly-glass-blur);
+	border: 1px solid var(--ly-glass-border) !important;
+	box-shadow: var(--ly-glass-highlight), 0 2px 4px rgba(27, 35, 64, 0.03), 0 12px 32px rgba(27, 35, 64, 0.06) !important;
+	transition: width 0.3s, background var(--ly-duration-slow), border-color var(--ly-duration-slow);
+}
+/* 侧栏菜单容器：全透明，覆盖 leftnav 的 var(--l-header-bg) 背景 */
+.lyadmin-side .el-menu {
+	background-color: transparent !important;
+	--el-menu-bg-color: transparent !important;
+	--el-menu-text-color: var(--ly-text-2) !important;
+	--el-menu-active-color: var(--el-color-primary) !important;
+	--el-menu-hover-bg-color: transparent;
+	border-right: none !important;
+}
+/* 菜单项：严格对齐 v4 设计稿（42px 视觉高 / 11px 圆角 / 3px 间距用透明边框实现） */
+.lyadmin-side .el-menu-item,
+.lyadmin-side .el-sub-menu__title {
+	height: 48px; box-sizing: border-box; line-height: 42px;
+	border: 3px solid transparent; background-clip: padding-box;
+	border-radius: 14px; margin: 0 10px; position: relative;
+	transition: background var(--ly-duration-fast), color var(--ly-duration-fast), box-shadow var(--ly-duration-normal);
+}
+/* hover：v4 淡蓝渐变 + 文字主题色 */
+.lyadmin-side .el-menu-item:hover,
+.lyadmin-side .el-sub-menu__title:hover {
+	background-color: transparent;
+	background-image: var(--ly-gradient-soft);
+	color: var(--el-color-primary) !important;
+}
+/* 点击后的焦点残留会套 hover 底色，清除 */
+.lyadmin-side .el-menu-item:focus,
+.lyadmin-side .el-menu-item:focus-visible,
+.lyadmin-side .el-sub-menu__title:focus,
+.lyadmin-side .el-sub-menu__title:focus-visible { background-color: transparent !important; background-image: none !important; }
+/* 激活：主渐变 + 白字 + 柔和投影 + 流光扫过 */
+.lyadmin-side .el-menu-item.is-active,
+.lyadmin-side .el-menu-item.is-active:focus,
+.lyadmin-side .el-menu-item.is-active:hover {
+	background-color: transparent !important;
+	background-image: var(--ly-gradient-primary) !important;
+	color: #fff !important; font-weight: 500;
+	box-shadow: var(--ly-sidebar-active-shadow);
+}
+.lyadmin-side .el-menu-item.is-active::after {
+	content: ""; position: absolute; inset: 3px; border-radius: var(--ly-sidebar-item-radius);
+	background: linear-gradient(105deg, transparent 42%, rgba(255, 255, 255, 0.25) 50%, transparent 58%);
+	background-size: 250% 100%; background-position: 120% 0;
+	animation: ly-sheen 4.5s ease-in-out 0.8s infinite; pointer-events: none;
+}
+@keyframes ly-sheen {
+	0% { background-position: 120% 0; }
+	55%, 100% { background-position: -120% 0; }
+}
+/* 间距用 3px 边框必须永远透明（EP 休眠规则会把展开父级边框涂蓝） */
+.lyadmin-side .el-menu-item,
+.lyadmin-side .el-menu-item.is-active,
+.lyadmin-side .el-sub-menu__title,
+.lyadmin-side .el-sub-menu.is-active .el-sub-menu__title { border-color: transparent !important; }
+/* 折叠态：图标绝对居中 + 隐藏文字 */
+.lyadmin-side .el-menu--collapse .el-menu-item,
+.lyadmin-side .el-menu--collapse .el-sub-menu__title {
+	padding-left: 0 !important; padding-right: 0 !important;
+	text-align: center; justify-content: center; margin-left: 8px; margin-right: 8px;
+}
+.lyadmin-side .el-menu--collapse .el-menu-item > span,
+.lyadmin-side .el-menu--collapse .el-sub-menu__title > span { display: none !important; }
+.lyadmin-side .el-menu--collapse .el-menu-item .el-icon,
+.lyadmin-side .el-menu--collapse .el-sub-menu__title .el-sub-menu__icon-arrow {
+	position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); margin: 0;
+}
+/* 侧栏折叠按钮（leftnav .lyadmin-side-bottom，scoped 白色文字） */
+.lyadmin-side .lyadmin-side-bottom {
+	color: var(--ly-text-2) !important;
+	border-top: 1px solid var(--ly-glass-border);
+}
+.lyadmin-side .lyadmin-side-bottom:hover { color: var(--el-color-primary) !important; }
+
+/* ---- 主体区域 ---- */
+.index-main { background: transparent !important; }
+/* 内容区背景透明（golyadmin 无全局 lycontainer padding，内容 padding 由
+   mutitabs.vue 的 .lyadmin-main-content{padding:10px} 统一提供——本文件不再声明
+   padding，避免同特异性 !important 双头管理、靠加载顺序定胜负的隐性冲突） */
+.lyadmin-main-content { background: transparent !important; }
+.lyadmin-body { background: transparent; }
+
+/* ---- 多标签栏（mutitabs.vue .myeltas2）----
+   v4 悬浮式：标签条透明，标签直接浮在页面渐变上（0.66 白玻璃在浅色底上
+   会读作一条死白横带，与顶栏玻璃条形成「双白带」）；结构分隔由顶栏自身的
+   border-bottom 提供，激活=主渐变胶囊、hover=淡蓝胶囊 */
+.myeltas1 { background: transparent; }
+.myeltas2 {
+	background: transparent;
+	border-bottom: none;
+	box-shadow: none;
+}
+.myeltas2 .el-tabs__nav-wrap,
+.myeltas2 .el-tabs__nav { background: transparent !important; border: none !important; }
+.myeltas2 .el-tabs__item {
+	border: none !important;
+	border-radius: 8px !important;
+	margin: 0 2px !important;
+	color: var(--ly-text-2) !important;
+	transition: color var(--ly-duration-fast), background-color var(--ly-duration-fast), box-shadow var(--ly-duration-fast);
+}
+.myeltas2 .el-tabs__item:hover { color: var(--el-color-primary) !important; background: var(--ly-gradient-soft); }
+.myeltas2 .el-tabs__item.is-active {
+	color: #fff !important;
+	background: var(--ly-gradient-primary) !important;
+	box-shadow: var(--ly-sidebar-active-shadow);
+}
+.myeltas2 .el-tabs__item.is-active:before { background: #fff !important; }
+/* 右键菜单：玻璃弹层 */
+.contextmenu {
+	border: 1px solid var(--ly-glass-border) !important;
+	background: var(--ly-glass-bg-strong) !important;
+	backdrop-filter: var(--ly-glass-blur);
+	-webkit-backdrop-filter: var(--ly-glass-blur);
+	border-radius: var(--ly-radius-md) !important;
+	box-shadow: var(--ly-shadow-card) !important;
+	padding: 6px !important;
+}
+.contextmenu li { border-radius: 8px; margin: 2px 4px; transition: all var(--ly-duration-fast) ease; }
+.contextmenu li:hover {
+	background: rgba(58, 123, 255, 0.08) !important;
+	color: var(--el-color-primary) !important;
+}
+
+/* ---- lycrud 表格容器玻璃化（.tableSelect 搜索区 / .table 表格区） ---- */
+.tableSelect {
+	background: var(--ly-glass-bg-soft) !important;
+	backdrop-filter: var(--ly-glass-blur);
+	-webkit-backdrop-filter: var(--ly-glass-blur);
+	border: 1px solid var(--ly-glass-border) !important;
+	border-radius: var(--ly-radius-lg) !important;
+	box-shadow: var(--ly-glass-highlight);
+	padding: 10px 12px !important;
+}
+.lycrud .table,
+.table {
+	background: var(--ly-glass-bg) !important;
+	backdrop-filter: var(--ly-glass-blur);
+	-webkit-backdrop-filter: var(--ly-glass-blur);
+	border: 1px solid var(--ly-glass-border) !important;
+	border-radius: var(--ly-radius-lg) !important;
+	box-shadow: var(--ly-glass-highlight), var(--ly-shadow-card) !important;
+}
+/* 表格工具栏（tableToolBar）内嵌于玻璃卡 */
+.tableToolBar { border-bottom: 1px solid var(--ly-line-soft) !important; }
+/* 自定义页面（非 lyTable 封装）的表格区玻璃卡：通知公告/我的消息/登录日志/操作日志 */
+.table-container {
+	flex: 1;
+	min-height: 0;
+	display: flex;
+	flex-direction: column;
+	background: var(--ly-glass-bg);
+	backdrop-filter: var(--ly-glass-blur);
+	-webkit-backdrop-filter: var(--ly-glass-blur);
+	border: 1px solid var(--ly-glass-border);
+	border-radius: var(--ly-radius-lg);
+	box-shadow: var(--ly-glass-highlight), var(--ly-shadow-card);
+	overflow: hidden;
+}
+
+/* ---- 登录页（login.vue / loginsimple.vue）---- */
+.login_bg {
+	background-image: var(--ly-page-gradient, none) !important;
+	background-color: var(--ly-bg-page) !important;
+}
+
+/* ---- 页面最大化（App.vue .lymain-maximize）---- */
+.lyadmin.lymain-maximize {
+	.lymain-maximize-exit { display: block; }
+	.myeltas1 { position: fixed !important; left: 0; top: 0; width: 100vw; height: 100vh; padding: 0; }
+	.myeltas2, .lyadmin-header, .lyadmin-side { display: none; }
+}
+
+/* ---- 路由页面入场过渡（fill 必须 backwards 而非 both，
+   both 会永久持有 transform 使页面容器成为 fixed 弹窗遮罩的包含块） ---- */
+.index-main .el-scrollbar__view > *,
+.index-main > * { animation: ly-view-in var(--ly-duration-normal) backwards; }
+@keyframes ly-view-in {
+	from { opacity: 0; transform: translateY(10px); }
+	to { opacity: 1; transform: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+	.index-main .el-scrollbar__view > *,
+	.index-main > * { animation: none; }
+}
+
+/* ---- 表单内轻提示（替代塞进表单项的 el-alert，后者通栏灰底过重） ---- */
+.ly-form-tip {
+	font-size: 12px;
+	line-height: 1.6;
+	color: var(--ly-text-3);
+	margin-top: 4px;
+}

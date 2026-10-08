@@ -11,10 +11,10 @@
                 </el-form-item>
                 <el-form-item label="类型：" v-show="loadingTitle=='新增'">
                     <el-radio-group v-model="formData.type" :disabled="loadingTitle=='编辑'">
-                        <el-radio :label="1">正常值</el-radio>
-                        <el-radio :label="2">富文本</el-radio>
-                        <el-radio :label="3">图片</el-radio>
-                        <el-radio :label="4">视频</el-radio>
+                        <el-radio :value="1">正常值</el-radio>
+                        <el-radio :value="2">富文本</el-radio>
+                        <el-radio :value="3">图片</el-radio>
+                        <el-radio :value="4">视频</el-radio>
                     </el-radio-group>
                 </el-form-item>
                 <el-form-item label="" v-if="formData.type==2">

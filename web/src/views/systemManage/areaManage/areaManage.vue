@@ -24,7 +24,8 @@
         </div>
 
         <div class="table">
-            <el-table height="calc(100vh - 185px)" border row-key="id" :data="tableData" v-loading="loadingPage" style="width: 100%" lazy :load="loadChild" :tree-props="{children: 'children', hasChildren: 'hasChildren'}">
+            <!-- height 账本 192 = 骨架 120（顶栏 60+标签条 40+padding 20）+ 搜索区 72（旧值 185 按原 33px 标签条校准） -->
+            <el-table height="calc(100vh - 192px)" border row-key="id" :data="tableData" v-loading="loadingPage" style="width: 100%" lazy :load="loadChild" :tree-props="{children: 'children', hasChildren: 'hasChildren'}">
                 <el-table-column type="index" width="70" align="center" label="序号"></el-table-column>
                 <el-table-column min-width="180" prop="name" label="地区名称"></el-table-column>
                 <el-table-column min-width="100" prop="id" label="地区编码"></el-table-column>

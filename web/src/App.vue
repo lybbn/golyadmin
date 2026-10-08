@@ -2,12 +2,6 @@
     <el-config-provider :locale="locale" :size="siteThemeStore.elementSize" :zIndex="siteThemeStore.elementzIndex">
         <router-view></router-view>
     </el-config-provider>
-    <!-- 授权后可以删除-->
-    <div class="golyadmin-auth">
-        <span>Powered by golyadmin</span>
-        <el-divider direction="vertical"></el-divider>
-        <span>Copyright golyadmin团队</span>
-    </div>
 </template>
 <script setup>
     import {ref, onMounted,watch,computed } from 'vue'
@@ -75,21 +69,5 @@
         .el-pagination__jump,
         .el-pagination__sizes {display: none!important;}
     }
-    }
-    // 授权样式
-    .golyadmin-auth {
-        font-size: 0.6em;
-        position: fixed;
-        left:150px;
-        right:0;
-        bottom: -1px;
-        text-align: center;
-        color: #757171;
-        background-image: linear-gradient(to left, #e4e2e2, #b6b5b5, #9c9b9b, #aaa9a9, #888585, #acaaaa, #e4e2e2);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        -webkit-background-size: 200% 100%;
-        z-index: 99999;
-        line-height:1.5;
     }
 </style>

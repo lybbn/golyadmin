@@ -1,5 +1,6 @@
 <template>
   <el-container class="index-con">
+    <lyAurora></lyAurora>
     <el-header class="index-header lyadmin-header">
       <navcon></navcon>
     </el-header>
@@ -20,6 +21,7 @@
     import navcon from '@/components/navcon.vue'
     import leftnav from '@/components/leftnav.vue'
     import Mutitabs from "@/components/mutitabs.vue";
+    import lyAurora from '@/components/lyAurora/lyAurora.vue';
     import {useMutitabsStore} from "@/store/mutitabs";
     import {useSiteThemeStore} from "@/store/siteTheme";
 
@@ -54,7 +56,7 @@
     height: 100%;
     display: flex;
     flex: 1;
-    overflow: auto;
+    overflow: hidden; /* 固定区，纵横向不进不出（防横向溢出在纵向冒成空滚动条） */
     /*overflow-y: auto;*/
   }
   .hg100{
@@ -102,7 +104,7 @@
     /*padding: 8px 10px 0 10px;*/
     /*width: 100%;*/
     padding: 0;
-    height: 100%;
+    min-width: 0; /* flex 子项允许收缩到内容宽以下，防表格略宽时把外层横向撑破 */
   }
   .index-header{
     padding: 0px;

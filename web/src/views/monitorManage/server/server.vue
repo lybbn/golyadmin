@@ -162,7 +162,8 @@
                 if(this.isFull){
                     this.tableHeight =(window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight) +'px'
                 }else{
-                    this.tableHeight =(window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight) - 113 +'px'
+                    // 骨架账本 120 = 顶栏 60 + 标签条净高 40 + 内容区 padding 20（旧值 113 按原 33px 标签条校准）
+                    this.tableHeight =(window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight) - 120 +'px'
                 }
                 this.handleResize()
 
@@ -185,10 +186,11 @@
         display: none;
     }
     .lycard{
-        background: var(--el-bg-color);
+        background: var(--ly-glass-bg-soft);
         /*box-shadow: var(--el-box-shadow-light);*/
         height: 30px;
-        border: 1px solid var(--el-border-color-light);
+        border: 1px solid var(--ly-glass-border);
+        border-radius: 10px;
         display: flex;
         justify-content: space-between;
         align-items: center;

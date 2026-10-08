@@ -294,14 +294,16 @@
     display: flex;
     align-items: center;
     .login-container {
-      border-radius: 10px;
+      border-radius: 16px;
       margin: 0px auto;
       width: 350px;
       padding: 30px 35px 15px 35px;
-      background: var(--el-bg-color);
-      border: 1px solid #eaeaea;
+      background: var(--ly-glass-bg-strong);
+      backdrop-filter: var(--ly-glass-blur);
+      -webkit-backdrop-filter: var(--ly-glass-blur);
+      border: 1px solid var(--ly-glass-border);
       text-align: left;
-      box-shadow: 0 0 20px 2px rgba(0, 0, 0, 0.1);
+      box-shadow: var(--ly-glass-highlight), var(--ly-shadow-card);
     }
     .title {
       margin: 0px auto 40px auto;

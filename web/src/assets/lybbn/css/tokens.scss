@@ -1,0 +1,194 @@
+/* ============================================================
+   golyadmin v4 玻璃拟态主题 Design Tokens
+   三层架构：Primitive(原始值) → Semantic(语义) → Component(组件)
+   语义层桥接 Element Plus 运行时变量：
+   - --el-color-primary 由 siteTheme.js 运行时设置（config COLOR=#3A7BFF）
+   - 切换主题色/暗色模式时整套 token 自动跟随
+   同时将旧版 --l-* 变量（common.scss/布局组件引用）重映射到玻璃 token，
+   使既有组件无需改逻辑即可跟随 v4 视觉
+   ============================================================ */
+
+/* === LAYER 1: PRIMITIVE 原始值 === */
+:root {
+	/* 品牌蓝色阶（主色以 --el-color-primary 为准，此处为阶梯兜底） */
+	--ly-blue-700: #234FB8;
+	--ly-blue-600: #2E66E8;
+	--ly-blue-500: #3A7BFF;
+	--ly-blue-400: #6C9BFF;
+	--ly-blue-300: #8FB6FF;
+	--ly-blue-100: #DCE7FF;
+	--ly-blue-050: #EEF2FB;
+
+	/* 辅助色 */
+	--ly-cyan-400: #22D2EE;
+	--ly-cyan-300: #5CE0F5;
+	--ly-slate-700: #33406B;
+	--ly-slate-500: #4A5A96;
+
+	/* 墨色文字阶 */
+	--ly-ink-900: #1B2340;
+	--ly-ink-600: #5A6480;
+	--ly-ink-400: #9AA3BC;
+
+	/* 圆角 */
+	--ly-radius-sm: 9px;
+	--ly-radius-md: 12px;
+	--ly-radius-lg: 16px;
+	--ly-radius-xl: 18px;
+
+	/* 动效时长 */
+	--ly-duration-fast: 150ms;
+	--ly-duration-normal: 250ms;
+	--ly-duration-slow: 400ms;
+
+	/* 字体 */
+	--ly-font-family: "PingFang SC", "Microsoft YaHei", "Helvetica Neue", Arial, sans-serif;
+}
+
+/* === LAYER 2: SEMANTIC 语义层 === */
+:root {
+	/* 主色（运行时跟随 siteTheme.js 的 --el-color-primary） */
+	--ly-color-primary: var(--el-color-primary, var(--ly-blue-500));
+	--ly-color-primary-deep: var(--ly-blue-600);
+	--ly-color-primary-deep: color-mix(in srgb, var(--el-color-primary, var(--ly-blue-500)) 78%, #16255B);
+	--ly-color-on-primary: #ffffff;
+
+	/* 文字 */
+	--ly-text-1: var(--ly-ink-900);
+	--ly-text-2: var(--ly-ink-600);
+	--ly-text-3: var(--ly-ink-400);
+
+	/* 背景 */
+	--ly-bg-page: var(--ly-blue-050);
+	/* 页面整体冷调渐变：降饱和保冷感，避免内容卡大面积发蓝
+	   （多层蓝叠加教训：玻璃底带蓝 + 页面渐变带蓝 + 元素渐变罩 + saturate 放大，
+	   四层累加后整体发蓝；不允许改回蓝调 #EAF1FF→#DEE8FF） */
+	--ly-page-gradient: linear-gradient(158deg, #F3F6FA 0%, #EFF3F9 42%, #E9EEF7 100%);
+
+	/* 玻璃拟态（近中性冷白，保留微弱冷调与极光协调，避免大面积纯白/发蓝） */
+	--ly-glass-blur: saturate(125%) blur(20px); /* saturate 已从 160% 收敛：160% 会把透进来的蓝再加饱和一轮 */
+	--ly-glass-bg: rgba(249, 250, 253, 0.72);
+	--ly-glass-bg-strong: rgba(250, 251, 254, 0.84);
+	--ly-glass-bg-soft: rgba(249, 250, 253, 0.55);
+	--ly-glass-border: rgba(255, 255, 255, 0.55);
+	--ly-line-soft: rgba(27, 35, 64, 0.08);
+	--ly-glass-highlight: inset 0 1px 0 rgba(255, 255, 255, 0.60);
+	--ly-table-fixed-bg: #F5F8FC; /* 取玻璃卡叠页面背景后的实际渲染色，随玻璃底转近中性 */
+	/* 弹窗底对齐 v4 cmd-panel 玻璃级透明度（0.93 会读作死白，玻璃感全无） */
+	--ly-dialog-bg: rgba(250, 252, 255, 0.82);
+
+	/* 顶栏文字/悬停 */
+	--ly-header-text: var(--ly-slate-700);
+	--ly-header-item-hover: rgba(27, 35, 64, 0.06);
+
+	/* 渐变（深端在前，白字对比度 ≥4.5:1） */
+	--ly-gradient-primary: linear-gradient(135deg, var(--ly-color-primary-deep) 0%, var(--ly-color-primary) 100%);
+	--ly-gradient-soft: linear-gradient(135deg, rgba(58, 123, 255, 0.12), rgba(108, 155, 255, 0.12));
+
+	/* 阴影 */
+	--ly-shadow-card: 0 2px 4px rgba(27, 35, 64, 0.04), 0 12px 32px rgba(27, 35, 64, 0.08);
+	--ly-shadow-card-hover: 0 4px 8px rgba(27, 35, 64, 0.05), 0 20px 48px rgba(58, 123, 255, 0.16);
+	--ly-shadow-primary: 0 4px 12px rgba(58, 123, 255, 0.35);
+	--ly-shadow-dialog: 0 24px 64px rgba(27, 35, 64, 0.22);
+
+	/* 焦点环 */
+	--ly-focus-ring: 0 0 0 3px rgba(58, 123, 255, 0.30);
+
+	/* 极光光斑强度 */
+	--ly-aurora-opacity: 0.34;
+}
+
+/* === LAYER 3: COMPONENT 组件层 === */
+:root {
+	/* 顶栏（旧版 --l-header-bg 被布局组件引用，重映射到玻璃值） */
+	--ly-header-bg: rgba(248, 250, 255, 0.78);
+	--ly-header-border: var(--ly-glass-border);
+	--l-header-bg: var(--ly-header-bg);
+
+	/* 侧栏（--ly-menu-bg 必须在 html.dark 覆盖，否则暗色下侧栏残留亮色面板） */
+	--ly-menu-bg: rgba(244, 248, 255, 0.68);
+	--ly-menu-width: 200px;
+	--ly-sidebar-item-radius: 11px;
+	--ly-sidebar-active-shadow: 0 6px 16px rgba(46, 102, 232, 0.38);
+	--ly-gradient-active: var(--ly-gradient-primary);
+
+	/* 卡片 */
+	--ly-card-bg: var(--ly-glass-bg);
+	--ly-card-border: var(--ly-glass-border);
+	--ly-card-radius: var(--ly-radius-lg);
+
+	/* 主按钮 */
+	--ly-btn-primary-shadow: var(--ly-shadow-primary);
+	--ly-btn-default-bg: rgba(255, 255, 255, 0.5);
+
+	/* 输入框聚焦光环 */
+	--ly-input-focus-ring: 0 0 0 3px rgba(58, 123, 255, 0.14);
+}
+
+/* ---- 旧版 --l-* 变量重映射（golyadmin 既有组件自动跟随玻璃 token） ---- */
+:root {
+	--l-app-bg: var(--ly-bg-page);
+	--l-main-bg: var(--ly-bg-page);
+	--l-searchtoolbar-bg: var(--ly-glass-bg-soft);
+	--l-headertitle-bg: transparent;
+	--l-nprogress-color: var(--el-color-primary);
+	--l-order-statics: rgba(58, 123, 255, 0.08);
+	--l-main-sidebar-menu-hover-bg: var(--el-color-primary);
+	--l-main-sidebar-menu-active-bg: transparent;
+	--l-changetab-bg: transparent;
+	--l-changetab-border: transparent;
+	--l-tabs-active-bg: var(--el-color-primary);
+	--l-changetab-right-menu: var(--ly-glass-bg-strong);
+	--l-changetab-right-menu-hover-bg: rgba(58, 123, 255, 0.08);
+}
+
+/* 暗色模式：仅覆盖语义层（框架通过 html.dark 切换） */
+html.dark {
+	--ly-text-1: #E8ECF6;
+	--ly-text-2: #A8B1C9;
+	--ly-text-3: #6B7490;
+	--ly-bg-page: #131829;
+	--ly-page-gradient: none; /* 暗色不叠蓝调渐变，靠极光光斑 */
+	--ly-glass-bg: rgba(30, 37, 58, 0.62);
+	--ly-glass-bg-strong: rgba(30, 37, 58, 0.80);
+	--ly-glass-bg-soft: rgba(30, 37, 58, 0.45);
+	--ly-glass-border: rgba(255, 255, 255, 0.10);
+	--ly-line-soft: rgba(255, 255, 255, 0.09);
+	--ly-glass-highlight: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+	--ly-table-fixed-bg: #1D2337;
+	--ly-dialog-bg: rgba(30, 37, 58, 0.86);
+	--ly-header-bg: rgba(28, 34, 54, 0.82);
+	--ly-menu-bg: rgba(30, 37, 58, 0.55);
+	--ly-header-text: #E8ECF6;
+	--ly-header-item-hover: rgba(255, 255, 255, 0.10);
+	--ly-shadow-card: 0 2px 4px rgba(0, 0, 0, 0.20), 0 12px 32px rgba(0, 0, 0, 0.30);
+	--ly-shadow-dialog: 0 24px 64px rgba(0, 0, 0, 0.45);
+	--ly-aurora-opacity: 0.20;
+	--ly-btn-default-bg: rgba(255, 255, 255, 0.06);
+
+	/* 旧版变量暗色值 */
+	--l-header-bg: var(--ly-glass-bg-strong);
+	--l-app-bg: var(--ly-bg-page);
+	--l-main-bg: var(--ly-bg-page);
+	--l-changetab-bg: transparent;
+	--l-changetab-right-menu: var(--ly-glass-bg-strong);
+	--l-changetab-right-menu-hover-bg: rgba(88, 140, 255, 0.18);
+	--l-main-sidebar-menu-hover-bg: var(--el-color-primary);
+	--l-main-sidebar-menu-active-bg: transparent;
+	--l-tabs-active-bg: var(--el-color-primary);
+	--l-searchtoolbar-bg: rgba(255, 255, 255, 0.06);
+}
+
+/* 全局可用性基线 */
+@media (prefers-reduced-motion: reduce) {
+	:root {
+		--ly-duration-fast: 1ms;
+		--ly-duration-normal: 1ms;
+		--ly-duration-slow: 1ms;
+	}
+	*, *::before, *::after {
+		animation-duration: 0.01ms !important;
+		animation-iteration-count: 1 !important;
+		transition-duration: 0.01ms !important;
+	}
+}

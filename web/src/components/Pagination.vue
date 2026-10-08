@@ -51,10 +51,6 @@
     .lyPagination-page{
         display: flex;
         align-items: center;
-        background: var(--el-fill-color-blank);
-        border-bottom: 1px solid var(--el-border-color-lighter);
-        border-left: 1px solid var(--el-border-color-lighter);
-        border-right: 1px solid var(--el-border-color-lighter);
     }
     .lyPagination-page-bk{
         display: flex;

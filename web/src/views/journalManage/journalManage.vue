@@ -43,8 +43,9 @@
                 </el-form-item>
             </el-form>
         </div>
-        <el-table  :height="tableHeight"  border :data="tableData" ref="tableref" v-loading="loadingPage" style="width: 100%">
-            <el-table-column type="index" width="60" align="center" label="序号">
+        <div class="table-container">
+            <el-table  :height="tableHeight"  border :data="tableData" ref="tableref" v-loading="loadingPage" style="width: 100%">
+            <el-table-column type="index" width="65" align="center" label="序号">
                 <template #default="scope">
                     <span v-text="getIndex(scope.$index)"></span>
                 </template>
@@ -68,7 +69,7 @@
                     </div>
                 </template>
             </el-table-column>
-            <el-table-column width="70" label="状态码">
+            <el-table-column width="80" label="状态码">
                 <template #default="scope">
                     <el-tag :type="scope.row.code === 200?'success':'warning'">{{ scope.row.code }}</el-tag>
                 </template>
@@ -112,6 +113,7 @@
                 </template>
             </el-table-column>
         </el-table>
+        </div>
         <Pagination v-bind:child-msg="pageparm" @callFather="callFather"></Pagination>
     </div>
 </template>

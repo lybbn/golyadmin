@@ -156,17 +156,8 @@
   }
   .el-menu-item.is-active {
     position: relative;
-    /*background-color: rgb(48, 54, 62) !important;*/
-    background-color: var(--l-main-sidebar-menu-active-bg) !important;
-    &:before{
-      width: 2px;
-      height: 100%;
-      position: absolute;
-      left: 0;
-      top: 0;
-      background: var(--l-main-sidebar-menu-hover-bg);
-      display: block;
-    }
+    /* 激活胶囊（渐变+流光）由全局 app.scss 的 .lyadmin-side .el-menu-item.is-active 接管 */
+    background-color: transparent !important;
   }
   .el-menu-bg {
     background-color: #1f2d3d !important;
@@ -179,7 +170,7 @@
   }
 
   .router-link-active{
-    color: #ffd04b;
+    color: var(--el-color-primary);
   }
   .aside span{
     display: none;

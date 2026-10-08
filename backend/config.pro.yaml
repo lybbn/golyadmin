@@ -1,0 +1,79 @@
+# 服务端配置【生产环境】
+# 使用方式: ① 设置环境变量 GOLYADMIN_ENV=prod 后直接运行各命令，自动加载本文件
+#           ② 或显式指定: golyadmin start -c config.pro.yaml
+# 上线前必须逐项核对: jwt.secret-key、数据库/redis 密码、cors 白名单
+system:
+  run-mode: release # 生产环境必须 release
+  host: 0.0.0.0
+  http-port: 9000
+  is-cors: true # 前后端分离部署（nginx 反代同域）时可关闭
+  db-type: mysql
+  use-multipoint: true
+  router-prefix: "/api"
+  upload-dir: "media/uploadfile/"
+  url-prefix: https://your-domain.com # 改为实际站点域名
+  is-demo: false
+  is-swagger: false # 生产环境关闭 swagger
+  gorm-log-mode: "error" # 生产环境仅记录错误
+  gorm-log-zap: true
+
+# jwt 认证（上线前必须更换 secret-key！可用: openssl rand -base64 48 生成）
+jwt:
+  secret-key: CHANGE-ME-to-a-long-random-string-before-deploy
+  expires-time: 7d
+  buffer-time: 1d
+
+# 验证码配置
+captcha:
+  captcha-type: string
+  key-length: 5
+  img-width: 240
+  img-height: 85
+
+# 数据库（改为生产库连接信息）
+databases:
+  - db-type: mysql
+    alias-name: "default"
+    path: "127.0.0.1"
+    port: "3306"
+    config: "charset=utf8mb4&parseTime=True&loc=Local&timeout=1s"
+    db-name: "lyadmin_go"
+    username: "lyadmin" # 使用最小权限账号，禁止 root
+    password: "CHANGE-ME"
+    engine: "InnoDB"
+    max-idle-conns: 20
+    max-open-conns: 100
+
+# redis（改为生产 redis 连接信息，建议设置密码）
+redis:
+  db: 0
+  addr: 127.0.0.1:6379
+  password: "CHANGE-ME"
+
+# https 配置（golyadmin 自身支持 https 时可配置启用，nginx 反代场景一般关闭）
+ssl:
+  enable: false
+  domain: your-domain.com
+  key-file: utils/keys/server.key
+  cert-file: utils/keys/server.pem
+
+# zap 日志配置（生产: json 格式落盘）
+zap:
+  level: info
+  format: json # 线上部署使用 json 便于采集分析
+  prefix: "[gitee.com/lybbn/golyadmin]"
+  director: logs
+  show-line: true
+  encode-level: LowercaseLevelEncoder
+  stacktrace-key: stacktrace
+  log-in-console: false # 生产环境日志只写文件不刷控制台
+
+# 跨域配置（生产建议 whitelist 或 strict-whitelist，填实际前端域名）
+cors:
+  mode: whitelist
+  whitelist:
+    - allow-origin: https://your-frontend-domain.com
+      allow-headers: Content-Type,AccessToken,X-CSRF-Token,Authorization,Token
+      allow-methods: POST,GET,PUT,DELETE,PATCH
+      expose-headers: Content-Length,Access-Control-Allow-Origin,Access-Control-Allow-Headers,Content-Type
+      allow-credentials: true
