@@ -77,4 +77,4 @@ cd backend && swag init    # 生成文档，访问 http://localhost:9000/api/swa
 ## 交流
 
 - 开发者WX号：laoyanyj
-- QQ群 golyadmin交流01群：810799958
+- QQ群 django-vue-lyadmin交流02群：877020250
