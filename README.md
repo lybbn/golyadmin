@@ -6,11 +6,27 @@
 
 **在线体验**：https://golyadmin.lybbn.cn 账号：admin 密码：123456
 
+## 预览
+
+### 登录
+
+![登录](https://foruda.gitee.com/images/1791452186708619922/c76648d0_4823422.png "登录")
+
+### 首页
+
+![首页](https://foruda.gitee.com/images/1791452220036403818/ced54768_4823422.png "首页")
+
 ## 内置功能
 
 - DashBoard 数据分析、面向配置的 CRUD、服务器实时监控面板（Windows/Linux）
 - 部门管理（树结构 + 数据权限）、菜单管理（按钮/接口权限）、角色管理（菜单/数据权限）、权限管理
 - 管理员管理、用户管理、个人中心、操作日志
+
+本框架适合作为 Go Web 快速开发基座：自身只保留精简的基础功能，配合 AI 编程助手按描述直接生成业务模块代码，实现业务功能的快速开发。
+
+## 技能
+
+- `golyadmin-module-scaffold` 技能：AI 配合描述直接生成业务模块五层代码（model/service/api/router + 前端页面 + 菜单按钮种子）
 
 特别鸣谢：部分设计模式参考 [gin-vue-admin](https://github.com/flipped-aurora/gin-vue-admin)
 
