@@ -2,6 +2,7 @@ package initialize
 
 import (
 	"net/http"
+	"os"
 
 	docs "gitee.com/lybbn/golyadmin/docs"
 	"gitee.com/lybbn/golyadmin/global"
@@ -20,12 +21,16 @@ func Routers() *gin.Engine {
 	Router := gin.Default()
 	systemRouter := router.RouterGroupApp.System
 
-	// 集成部署web端（不使用nginx）
-	// 前端执行打包命令 npm run build。把打包后的dist目录放入backend，然后在打开下面4行注释
-	// Router.LoadHTMLGlob("./dist/*.html") // npm打包成dist的路径
-	// Router.Static("/favicon.ico", "./dist/favicon.ico")
-	// Router.Static("/static", "./dist/static")   // dist里面的静态资源
-	// Router.StaticFile("/", "./dist/index.html") // 前端网页入口页面
+	// 集成部署web端（不使用nginx，后端直接托管前端页面）
+	// 前端执行 npm run build 后，把 dist 目录放入 backend 下即可自动启用（无需改代码）；
+	// dist 不存在（本地开发后端单独跑）时自动跳过，不影响开发
+	if _, err := os.Stat("./dist/index.html"); err == nil {
+		Router.LoadHTMLGlob("./dist/*.html")        // npm打包成dist的路径
+		Router.Static("/favicon.ico", "./dist/favicon.ico")
+		Router.Static("/static", "./dist/static")   // dist里面的静态资源
+		Router.StaticFile("/", "./dist/index.html") // 前端网页入口页面
+		global.GL_LOG.Info("集成部署模式：后端托管 web/dist 前端页面")
+	}
 
 	// 配置静态目录,用于访问文件上传等静态文件
 	Router.Static("/media", "./media")

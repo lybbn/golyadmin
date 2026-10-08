@@ -2,8 +2,8 @@ import { version } from '../../package.json'
 
 const isDev = import.meta.env.DEV
 
-const API_DOMAIN = isDev ? "127.0.0.1:9000" : "golyadmin.lybbn.cn"
-const API_BASEURL = isDev ? "http://"+ API_DOMAIN +"/api/" : "https://"+ API_DOMAIN +"/api/"
+const API_DOMAIN = isDev ? "127.0.0.1:9000" : ""
+const API_BASEURL = isDev ? "http://"+ API_DOMAIN +"/api/" : "/api/"
 const VITE_APP_PROXY = false
 
 export default {
