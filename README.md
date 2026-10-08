@@ -72,7 +72,7 @@ cd backend && swag init    # 生成文档，访问 http://localhost:9000/api/swa
 
 ## 商用注意事项
 
-商用请遵守 Apache2.0 协议并保留作者文件头部等信息声明。捐赠任意金额即可去除页面底部版权信息（支付宝/微信打赏码见 [django-vue-lyadmin](https://gitee.com/lybbn/django-vue-lyadmin) 项目页）。
+商用请遵守 Apache2.0 协议并保留作者文件头部等信息声明。
 
 ## 交流
 
