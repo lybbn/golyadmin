@@ -27,7 +27,7 @@
                         <el-radio :value="true">是</el-radio>
                         <el-radio :value="false">否</el-radio>
                     </el-radio-group>
-                    <span style="font-size: 7px;color: red;">*【否】会自动创建crud API按钮，需自行填写API地址</span>
+                    <span class="ly-form-tip" style="color: var(--el-color-danger);">*【否】会自动创建crud API按钮，需自行填写API地址</span>
                 </el-form-item>
                 <el-form-item label="图标：" prop="icon">
 <!--                    <el-input v-model.trim="formData.icon" ></el-input>-->

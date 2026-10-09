@@ -18,7 +18,7 @@
             </template>
             {{iconText?iconText:"请选择图标"}}
         </el-button>
-        <ly-dialog  v-model="dialogVisible" :title="dialogTitle" width="50%" :before-close="handleClose">
+        <ly-dialog v-model="dialogVisible" :title="dialogTitle" width="50%" :append-to-body="true" :before-close="handleClose">
             <div style="display: flex">
                 <el-input  size="large" v-model="searchIconText" clearable class="searchinput" placeholder="搜索如：avatar" prefix-icon="Search"></el-input>
                 <el-button size="large" icon="Delete" @click="deleteAll" type="danger">清除</el-button>
